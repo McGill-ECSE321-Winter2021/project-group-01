@@ -3,9 +3,11 @@
 
 package ca.mcgill.ecse321.autoRepair.model;
 import java.util.*;
+import javax.persistence.*;
 
 // line 84 "../../../../../AutoRepair.ump"
 // line 186 "../../../../../AutoRepair.ump"
+@Entity
 public abstract class BookableService
 {
 
@@ -71,6 +73,7 @@ public abstract class BookableService
     return wasSet;
   }
 
+  @Id
   public String getName()
   {
     return name;
@@ -92,6 +95,7 @@ public abstract class BookableService
     return aReminder;
   }
 
+  @ManyToMany
   public List<Reminder> getReminders()
   {
     List<Reminder> newReminders = Collections.unmodifiableList(reminders);
@@ -122,6 +126,7 @@ public abstract class BookableService
     return aReview;
   }
 
+  @OneToMany
   public List<Review> getReviews()
   {
     List<Review> newReviews = Collections.unmodifiableList(reviews);
@@ -146,6 +151,7 @@ public abstract class BookableService
     return index;
   }
   /* Code from template association_GetOne */
+  @ManyToOne
   public AutoRepairShopSytem getAutoRepairShopSytem()
   {
     return autoRepairShopSytem;
@@ -157,6 +163,7 @@ public abstract class BookableService
     return aAppointment;
   }
 
+  @OneToMany
   public List<Appointment> getAppointments()
   {
     List<Appointment> newAppointments = Collections.unmodifiableList(appointments);

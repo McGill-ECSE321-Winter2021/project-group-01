@@ -3,9 +3,11 @@
 
 package ca.mcgill.ecse321.autoRepair.model;
 import java.util.*;
+import javax.persistence.*;
 
 // line 60 "../../../../../AutoRepair.ump"
 // line 170 "../../../../../AutoRepair.ump"
+@Entity
 public class Business
 {
 
@@ -105,6 +107,7 @@ public class Business
     return aBusinessHour;
   }
 
+  @OneToMany
   public List<OperatingHour> getBusinessHours()
   {
     List<OperatingHour> newBusinessHours = Collections.unmodifiableList(businessHours);
@@ -135,6 +138,7 @@ public class Business
     return aHoliday;
   }
 
+  @OneToMany
   public List<TimeSlot> getHolidays()
   {
     List<TimeSlot> newHolidays = Collections.unmodifiableList(holidays);

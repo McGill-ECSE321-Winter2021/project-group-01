@@ -3,9 +3,12 @@
 
 package ca.mcgill.ecse321.autoRepair.model;
 import java.util.*;
+import javax.persistence.*;
 
 // line 46 "../../../../../AutoRepair.ump"
 // line 160 "../../../../../AutoRepair.ump"
+
+@Entity
 public class Car
 {
 
@@ -101,6 +104,7 @@ public class Car
     return transmission;
   }
 
+  @Id
   public String getPlateNumber()
   {
     return plateNumber;
@@ -116,6 +120,7 @@ public class Car
     return getWithPlateNumber(aPlateNumber) != null;
   }
   /* Code from template association_GetOne */
+  @ManyToOne
   public Customer getCustomer()
   {
     return customer;

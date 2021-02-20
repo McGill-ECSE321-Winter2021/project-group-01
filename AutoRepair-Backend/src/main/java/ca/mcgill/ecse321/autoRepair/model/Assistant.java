@@ -3,9 +3,12 @@
 
 package ca.mcgill.ecse321.autoRepair.model;
 import java.util.*;
+import javax.persistence.*;
+
 
 // line 54 "../../../../../AutoRepair.ump"
 // line 165 "../../../../../AutoRepair.ump"
+@Entity
 public class Assistant extends User
 {
 
@@ -42,6 +45,7 @@ public class Assistant extends User
     return aReminder;
   }
 
+  @OneToMany
   public List<Reminder> getReminders()
   {
     List<Reminder> newReminders = Collections.unmodifiableList(reminders);
@@ -66,6 +70,7 @@ public class Assistant extends User
     return index;
   }
   /* Code from template association_GetOne */
+  @OneToOne
   public AutoRepairShopSytem getAutoRepairShopSytem()
   {
     return autoRepairShopSytem;

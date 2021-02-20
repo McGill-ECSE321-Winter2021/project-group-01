@@ -3,9 +3,11 @@
 
 package ca.mcgill.ecse321.autoRepair.model;
 import java.util.*;
+import javax.persistence.*;
 
 // line 97 "../../../../../AutoRepair.ump"
 // line 196 "../../../../../AutoRepair.ump"
+@Entity
 public class ServiceCombo extends BookableService
 {
 
@@ -20,7 +22,7 @@ public class ServiceCombo extends BookableService
   //------------------------
   // CONSTRUCTOR
   //------------------------
-
+ 
   public ServiceCombo(String aName, AutoRepairShopSytem aAutoRepairShopSytem)
   {
     super(aName, aAutoRepairShopSytem);
@@ -31,6 +33,7 @@ public class ServiceCombo extends BookableService
   // INTERFACE
   //------------------------
   /* Code from template association_GetOne */
+  @ManyToOne
   public ComboItem getMainService()
   {
     return mainService;

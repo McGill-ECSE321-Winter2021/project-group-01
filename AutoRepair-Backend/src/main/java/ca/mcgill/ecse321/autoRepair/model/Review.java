@@ -2,9 +2,11 @@
 /*This code was generated using the UMPLE 1.30.1.5099.60569f335 modeling language!*/
 
 package ca.mcgill.ecse321.autoRepair.model;
+import javax.persistence.*;
 
 // line 119 "../../../../../AutoRepair.ump"
 // line 217 "../../../../../AutoRepair.ump"
+@Entity
 public class Review
 {
 
@@ -81,11 +83,13 @@ public class Review
     return autoRepairShopSytem;
   }
   /* Code from template association_GetOne */
+  @ManyToOne
   public Customer getCustomer()
   {
     return customer;
   }
   /* Code from template association_GetOne */
+  @ManyToOne
   public BookableService getBookableService()
   {
     return bookableService;

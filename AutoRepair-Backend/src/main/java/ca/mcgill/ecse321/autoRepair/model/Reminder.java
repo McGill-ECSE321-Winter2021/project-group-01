@@ -6,8 +6,13 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.*;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
 // line 114 "../../../../../AutoRepair.ump"
 // line 212 "../../../../../AutoRepair.ump"
+@Entity
 public class Reminder
 {
 
@@ -95,17 +100,18 @@ public class Reminder
     return autoRepairShopSytem;
   }
   /* Code from template association_GetOne */
+  @ManyToOne
   public Customer getCustomer()
   {
     return customer;
   }
   /* Code from template association_GetMany */
+  @ManyToOne
   public BookableService getBookableService(int index)
   {
     BookableService aBookableService = bookableServices.get(index);
     return aBookableService;
   }
-
   public List<BookableService> getBookableServices()
   {
     List<BookableService> newBookableServices = Collections.unmodifiableList(bookableServices);

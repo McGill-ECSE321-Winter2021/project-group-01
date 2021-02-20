@@ -25,13 +25,13 @@ This project consists on building a system for an Auto-repair car shop. Customer
 | Tamara Zard Aboujaoudeh | Software Developer, Testing, Documentation |                25  | -       | -       | -       |
 
 
-## Sprint 1 (Due Friday,February 19)
+## Sprint 1 
 ### Roles and Tasks
-| Name                    | Roles/Tasks                     | 
-| ------------------------| --------------------------------|
-| Robert Aprahamian       | Requirements, Use Case Diagrams |                
-| Fadi Tawfik Beshay      | Requirements, Use Case Diagrams |               
-| Eric Chehata            | Requirements, Use Case Diagrams |               
-| Mohammad Saeid Nafar    | Requirements, Use Case Diagrams |               
-| Marc Saber              | Requirements, Use Case Diagrams |               
-| Tamara Zard Aboujaoudeh | Requirements, Use Case Diagrams |               
+| Name                    | Roles/Tasks                                                               | 
+| ------------------------| --------------------------------------------------------------------------|
+| Robert Aprahamian       | Requirements, Use Case Diagrams, Domain Model, Gradle/Spring/Heroku setup |                
+| Fadi Tawfik Beshay      | Requirements, Use Case Diagrams, Domain Model, Gradle/Spring/Heroku setup |               
+| Eric Chehata            | Requirements, Use Case Diagrams, Domain Model, Gradle/Spring/Heroku setup |               
+| Mohammad Saeid Nafar    | Requirements, Use Case Diagrams, Domain Model, Gradle/Spring/Heroku setup |               
+| Marc Saber              | Requirements, Use Case Diagrams, Domain Model, Gradle/Spring/Heroku setup |               
+| Tamara Zard Aboujaoudeh | Requirements, Use Case Diagrams, Domain Model, Gradle/Spring/Heroku setup |               

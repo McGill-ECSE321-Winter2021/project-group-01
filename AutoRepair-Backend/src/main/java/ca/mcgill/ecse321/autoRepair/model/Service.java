@@ -3,9 +3,11 @@
 
 package ca.mcgill.ecse321.autoRepair.model;
 import java.util.*;
+import javax.persistence.*;
 
 // line 91 "../../../../../AutoRepair.ump"
 // line 191 "../../../../../AutoRepair.ump"
+@Entity
 public class Service extends BookableService
 {
 

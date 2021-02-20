@@ -4,9 +4,11 @@
 package ca.mcgill.ecse321.autoRepair.model;
 import java.sql.Date;
 import java.sql.Time;
+import javax.persistence.*;
 
 // line 77 "../../../../../AutoRepair.ump"
 // line 181 "../../../../../AutoRepair.ump"
+@Entity
 public class TimeSlot
 {
 

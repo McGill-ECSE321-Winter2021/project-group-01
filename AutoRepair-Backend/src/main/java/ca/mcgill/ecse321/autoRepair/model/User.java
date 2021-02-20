@@ -3,9 +3,11 @@
 
 package ca.mcgill.ecse321.autoRepair.model;
 import java.util.*;
+import javax.persistence.*;
 
 // line 17 "../../../../../AutoRepair.ump"
 // line 140 "../../../../../AutoRepair.ump"
+@Entity
 public abstract class User
 {
 
@@ -26,7 +28,6 @@ public abstract class User
   //------------------------
   // CONSTRUCTOR
   //------------------------
-
   public User(String aUsername, String aPassword)
   {
     password = aPassword;
@@ -66,7 +67,7 @@ public abstract class User
     wasSet = true;
     return wasSet;
   }
-
+  @Id
   public String getUsername()
   {
     return username;

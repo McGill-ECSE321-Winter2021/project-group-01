@@ -21,6 +21,7 @@ public class Appointment
   private List<ComboItem> chosenItems;
   private TimeSlot timeSlot;
   private AutoRepairShopSytem autoRepairShopSytem;
+  private String id;
 
   //------------------------
   // CONSTRUCTOR
@@ -48,6 +49,11 @@ public class Appointment
     {
       throw new RuntimeException("Unable to create appointment due to autoRepairShopSytem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
+  }
+  
+  @Id
+  public String getId() {
+	  return this.id;
   }
 
   //------------------------

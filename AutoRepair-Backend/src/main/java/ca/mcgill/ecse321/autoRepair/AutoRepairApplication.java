@@ -9,13 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @SpringBootApplication
 public class AutoRepairApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(AutoRepairApplication.class, args);
-  }
+	public static void main(String[] args) {
+		SpringApplication.run(AutoRepairApplication.class, args);
+	}
 
-  @RequestMapping("/")
-  public String greeting(){
-    return "Hello world!";
-  }
-
+	@RequestMapping("/")
+	public String greeting() {
+		return "Hello world!";
+	}
 }

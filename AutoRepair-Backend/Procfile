@@ -1,0 +1,1 @@
+web: java -jar AutoRepair-Backend/build/libs/AutoRepair-Backend-0.0.1-SNAPSHOT.jar

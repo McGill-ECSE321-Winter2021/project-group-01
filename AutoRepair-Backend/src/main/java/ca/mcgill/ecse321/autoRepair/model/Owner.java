@@ -4,8 +4,12 @@
 package ca.mcgill.ecse321.autoRepair.model;
 import java.util.*;
 
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+
 // line 23 "../../../../../AutoRepair.ump"
 // line 145 "../../../../../AutoRepair.ump"
+@Entity
 public class Owner extends User
 {
 
@@ -34,6 +38,7 @@ public class Owner extends User
   // INTERFACE
   //------------------------
   /* Code from template association_GetOne */
+  @OneToOne
   public AutoRepairShopSytem getAutoRepairShopSytem()
   {
     return autoRepairShopSytem;

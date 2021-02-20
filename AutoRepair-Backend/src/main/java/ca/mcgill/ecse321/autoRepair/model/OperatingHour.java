@@ -4,8 +4,11 @@
 package ca.mcgill.ecse321.autoRepair.model;
 import java.sql.Time;
 
+import javax.persistence.Entity;
+
 // line 70 "../../../../../AutoRepair.ump"
 // line 176 "../../../../../AutoRepair.ump"
+@Entity
 public class OperatingHour
 {
 

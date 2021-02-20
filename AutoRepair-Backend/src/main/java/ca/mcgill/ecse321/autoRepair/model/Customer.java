@@ -3,11 +3,17 @@
 
 package ca.mcgill.ecse321.autoRepair.model;
 import java.util.*;
+
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
 import java.sql.Date;
 import java.sql.Time;
 
 // line 27 "../../../../../AutoRepair.ump"
 // line 150 "../../../../../AutoRepair.ump"
+@Entity
 public class Customer extends User
 {
 
@@ -104,7 +110,8 @@ public class Customer extends User
     Car aCar = cars.get(index);
     return aCar;
   }
-
+  
+  @OneToMany
   public List<Car> getCars()
   {
     List<Car> newCars = Collections.unmodifiableList(cars);
@@ -134,7 +141,8 @@ public class Customer extends User
     Reminder aReminder = reminders.get(index);
     return aReminder;
   }
-
+  
+  @OneToMany
   public List<Reminder> getReminders()
   {
     List<Reminder> newReminders = Collections.unmodifiableList(reminders);
@@ -164,7 +172,8 @@ public class Customer extends User
     Review aReview = reviews.get(index);
     return aReview;
   }
-
+  
+  @OneToMany
   public List<Review> getReviews()
   {
     List<Review> newReviews = Collections.unmodifiableList(reviews);
@@ -189,6 +198,7 @@ public class Customer extends User
     return index;
   }
   /* Code from template association_GetOne */
+  @OneToOne
   public Profile getProfile()
   {
     return profile;
@@ -205,6 +215,7 @@ public class Customer extends User
     return aAppointment;
   }
 
+  @OneToMany
   public List<Appointment> getAppointments()
   {
     List<Appointment> newAppointments = Collections.unmodifiableList(appointments);

@@ -3,8 +3,12 @@
 
 package ca.mcgill.ecse321.autoRepair.model;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+
 // line 103 "../../../../../AutoRepair.ump"
 // line 201 "../../../../../AutoRepair.ump"
+@Entity
 public class ComboItem
 {
 
@@ -48,7 +52,7 @@ public class ComboItem
     wasSet = true;
     return wasSet;
   }
-
+  
   public boolean getMandatory()
   {
     return mandatory;
@@ -59,11 +63,13 @@ public class ComboItem
     return mandatory;
   }
   /* Code from template association_GetOne */
+  @ManyToOne
   public Service getService()
   {
     return service;
   }
   /* Code from template association_GetOne */
+  @ManyToOne
   public ServiceCombo getServiceCombo()
   {
     return serviceCombo;

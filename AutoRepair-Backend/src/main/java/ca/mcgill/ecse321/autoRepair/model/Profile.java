@@ -4,8 +4,12 @@
 package ca.mcgill.ecse321.autoRepair.model;
 import java.util.*;
 
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+
 // line 37 "../../../../../AutoRepair.ump"
 // line 155 "../../../../../AutoRepair.ump"
+@Entity
 public class Profile
 {
 
@@ -136,6 +140,7 @@ public class Profile
     return email;
   }
   /* Code from template association_GetOne */
+  @OneToOne
   public Customer getCustomer()
   {
     return customer;

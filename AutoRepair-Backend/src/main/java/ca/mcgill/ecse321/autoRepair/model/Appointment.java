@@ -60,6 +60,7 @@ public class Appointment
     return customer;
   }
   /* Code from template association_GetOne */
+  @ManyToOne
   public BookableService getBookableService()
   {
     return bookableService;
@@ -71,6 +72,7 @@ public class Appointment
     return aChosenItem;
   }
 
+  @ManyToMany
   public List<ComboItem> getChosenItems()
   {
     List<ComboItem> newChosenItems = Collections.unmodifiableList(chosenItems);
@@ -95,11 +97,13 @@ public class Appointment
     return index;
   }
   /* Code from template association_GetOne */
+  @OneToOne
   public TimeSlot getTimeSlot()
   {
     return timeSlot;
   }
   /* Code from template association_GetOne */
+  @ManyToOne
   public AutoRepairShopSytem getAutoRepairShopSytem()
   {
     return autoRepairShopSytem;

@@ -1,0 +1,220 @@
+namespace ca.mcgill.ecse321.autoRepair.model;
+
+class AutoRepairShopSytem{
+  1 <@>- 0..1 Business business;
+  1 <@>- 0..1 Owner owner;
+  1 <@>- 0..1 Assistant assistant;
+  1 <@>- * Customer customers;
+  1 <@>- * OperatingHour operatingHours;
+  1 <@>- * Appointment appointments;
+  1 <@>- * TimeSlot timeSlots;
+  1 <@>- * BookableService bookableServices;
+  1 <@>- * Reminder reminders;
+  1 <@>- * Review reviews;	
+}
+
+
+class User {
+  abstract;
+  unique username;
+  password;
+}
+
+class Owner {
+  isA User;
+}
+
+class Customer {
+  isA User;
+  int noShow;
+  int show;
+  1 <@>- 1..* Car cars;
+  1 -- * Reminder reminders;
+  1 -- * Review reviews;
+  1 <@>- 1 Profile profile;
+}
+
+class Profile {
+  firstName;
+lastName;
+ address;
+ zipCode;
+  phoneNumber;
+  email;
+}
+
+class Car{
+
+  model;
+  enum CarTransmission {manual, automatic}
+  CarTransmission transmission;
+  unique plateNumber;
+}
+
+class Assistant{
+  isA User;
+  0..1 -> * Reminder reminders;
+  
+}
+
+class Business {
+  name;
+  address;
+  phoneNumber;
+  email;
+  0..1 -> * OperatingHour businessHours;
+  0..1 -> * TimeSlot holidays;
+
+}
+
+class OperatingHour {
+  enum DayOfWeek { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
+  DayOfWeek dayOfWeek;
+  Time startTime;
+  Time endTime;
+}
+  
+class TimeSlot {
+  Date startDate;
+  Time startTime;
+  Date endDate;
+  Time endTime;
+}
+
+class BookableService {
+  abstract;
+  unique name;
+  * -- * Reminder reminders;
+  1 -- * Review reviews;
+}
+
+class Service {
+  isA BookableService;
+  int duration;
+
+  }
+
+class ServiceCombo {
+  isA BookableService;
+  * -> 0..1 ComboItem mainService;
+  1 <@>- 2..* ComboItem services;
+}
+
+class ComboItem {
+  Boolean mandatory;
+  * -> 1 Service service;
+}
+
+class Appointment {
+  * -- 1 Customer customer;
+  * -- 1 BookableService bookableService;
+  * -> * ComboItem chosenItems;
+  0..1 -> 1 TimeSlot timeSlot;
+  
+}class Reminder
+{
+  description;
+    Date date;
+  Time time;
+}class Review
+{
+  description;
+  int serviceRating;
+}//$?[End_of_model]$?
+
+namespace -;
+
+
+class AutoRepairShopSytem
+{
+  position 50 30 109 45;
+  position.association AutoRepairShopSytem__Business:business 126,40 0,10;
+  position.association Assistant:assistant__AutoRepairShopSytem 142,40 0,10;
+  position.association AutoRepairShopSytem__OperatingHour:operatingHours 121,40 0,10;
+  position.association Appointment:appointments__AutoRepairShopSytem 137,40 0,10;
+  position.association AutoRepairShopSytem__BookableService:bookableServices 156,2 0,10;
+  position.association AutoRepairShopSytem__Reminder:reminders 156,1 0,10;
+  position.association AutoRepairShopSytem__Review:reviews 156,11 0,10;
+}
+
+class User
+{
+  position 50 130 109 45;
+}
+
+class Owner
+{
+  position 50 230 109 45;
+}
+
+class Customer
+{
+  position 50 330 109 45;
+}
+
+class Profile
+{
+  position 50 430 109 45;
+}
+
+class Car
+{
+  position 250 30 109 45;
+}
+
+class Assistant
+{
+  position 250 130 109 45;
+}
+
+class Business
+{
+  position 250 230 109 45;
+  position.association Business__TimeSlot:holidays 12,109 30,0;
+}
+
+class OperatingHour
+{
+  position 250 330 109 45;
+}
+
+class TimeSlot
+{
+  position 250 430 109 45;
+}
+
+class BookableService
+{
+  position 450 30 109 45;
+}
+
+class Service
+{
+  position 450 130 109 45;
+}
+
+class ServiceCombo
+{
+  position 450 230 109 45;
+}
+
+class ComboItem
+{
+  position 450 330 109 45;
+}
+
+class Appointment
+{
+  position 450 430 109 45;
+  position.association Appointment__TimeSlot:timeSlot 0,10 123,2;
+}
+
+class Reminder
+{
+  position 650 30 109 45;
+}
+
+class Review
+{
+  position 650 130 109 45;
+}

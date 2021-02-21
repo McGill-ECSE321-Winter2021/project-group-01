@@ -35,6 +35,7 @@ public class Owner extends User
   // INTERFACE
   //------------------------
   /* Code from template association_GetOne */
+  @OneToOne
   public AutoRepairShopSytem getAutoRepairShopSytem()
   {
     return autoRepairShopSytem;

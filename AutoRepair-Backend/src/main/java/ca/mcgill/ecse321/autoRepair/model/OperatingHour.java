@@ -135,6 +135,7 @@ public class OperatingHour
     return endTime;
   }
   /* Code from template association_GetOne */
+  @ManyToOne
   public AutoRepairShopSytem getAutoRepairShopSytem()
   {
     return autoRepairShopSytem;

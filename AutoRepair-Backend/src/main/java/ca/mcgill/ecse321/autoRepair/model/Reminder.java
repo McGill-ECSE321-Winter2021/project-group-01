@@ -138,11 +138,13 @@ public class Reminder
     return time;
   }
   /* Code from template association_GetOne */
+  @ManyToOne
   public AutoRepairShopSytem getAutoRepairShopSytem()
   {
     return autoRepairShopSytem;
   }
   /* Code from template association_GetOne */
+  @ManyToOne
   public Customer getCustomer()
   {
     return customer;

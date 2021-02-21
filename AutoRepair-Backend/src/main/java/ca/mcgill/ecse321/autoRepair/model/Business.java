@@ -153,6 +153,7 @@ public class Business
     return aBusinessHour;
   }
 
+  @OneToMany
   public List<OperatingHour> getBusinessHours()
   {
     List<OperatingHour> newBusinessHours = Collections.unmodifiableList(businessHours);
@@ -183,6 +184,7 @@ public class Business
     return aHoliday;
   }
 
+  @OneToMany
   public List<TimeSlot> getHolidays()
   {
     List<TimeSlot> newHolidays = Collections.unmodifiableList(holidays);
@@ -207,6 +209,7 @@ public class Business
     return index;
   }
   /* Code from template association_GetOne */
+  @OneToOne
   public AutoRepairShopSytem getAutoRepairShopSytem()
   {
     return autoRepairShopSytem;

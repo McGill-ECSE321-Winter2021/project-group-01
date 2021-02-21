@@ -145,6 +145,7 @@ public class TimeSlot
     return endTime;
   }
   /* Code from template association_GetOne */
+  @ManyToOne
   public AutoRepairShopSytem getAutoRepairShopSytem()
   {
     return autoRepairShopSytem;

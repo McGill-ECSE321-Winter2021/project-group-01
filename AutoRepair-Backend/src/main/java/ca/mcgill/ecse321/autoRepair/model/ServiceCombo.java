@@ -33,6 +33,7 @@ public class ServiceCombo extends BookableService
   // INTERFACE
   //------------------------
   /* Code from template association_GetOne */
+  @ManyToOne
   public ComboItem getMainService()
   {
     return mainService;
@@ -50,6 +51,7 @@ public class ServiceCombo extends BookableService
     return aService;
   }
 
+  @OneToMany
   public List<ComboItem> getServices()
   {
     List<ComboItem> newServices = Collections.unmodifiableList(services);

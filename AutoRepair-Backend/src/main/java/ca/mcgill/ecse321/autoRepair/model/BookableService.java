@@ -95,6 +95,7 @@ public abstract class BookableService
     return aReminder;
   }
 
+  @ManyToMany
   public List<Reminder> getReminders()
   {
     List<Reminder> newReminders = Collections.unmodifiableList(reminders);
@@ -125,6 +126,7 @@ public abstract class BookableService
     return aReview;
   }
 
+  @OneToMany
   public List<Review> getReviews()
   {
     List<Review> newReviews = Collections.unmodifiableList(reviews);
@@ -149,6 +151,7 @@ public abstract class BookableService
     return index;
   }
   /* Code from template association_GetOne */
+  @ManyToOne
   public AutoRepairShopSytem getAutoRepairShopSytem()
   {
     return autoRepairShopSytem;
@@ -160,6 +163,7 @@ public abstract class BookableService
     return aAppointment;
   }
 
+  @OneToMany
   public List<Appointment> getAppointments()
   {
     List<Appointment> newAppointments = Collections.unmodifiableList(appointments);

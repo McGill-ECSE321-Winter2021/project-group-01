@@ -107,6 +107,7 @@ public class Customer extends User
     return aCar;
   }
 
+  @OneToMany
   public List<Car> getCars()
   {
     List<Car> newCars = Collections.unmodifiableList(cars);
@@ -137,6 +138,7 @@ public class Customer extends User
     return aReminder;
   }
 
+  @OneToMany
   public List<Reminder> getReminders()
   {
     List<Reminder> newReminders = Collections.unmodifiableList(reminders);
@@ -167,6 +169,7 @@ public class Customer extends User
     return aReview;
   }
 
+  @OneToMany
   public List<Review> getReviews()
   {
     List<Review> newReviews = Collections.unmodifiableList(reviews);
@@ -191,6 +194,7 @@ public class Customer extends User
     return index;
   }
   /* Code from template association_GetOne */
+  @OneToOne
   public Profile getProfile()
   {
     return profile;

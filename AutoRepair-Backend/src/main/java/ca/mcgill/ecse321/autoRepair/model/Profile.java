@@ -188,6 +188,7 @@ public class Profile
     return email;
   }
   /* Code from template association_GetOne */
+  @OneToOne
   public Customer getCustomer()
   {
     return customer;

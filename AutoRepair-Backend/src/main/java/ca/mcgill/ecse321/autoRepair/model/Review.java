@@ -125,16 +125,19 @@ public class Review
     return serviceRating;
   }
   /* Code from template association_GetOne */
+  @ManyToOne
   public AutoRepairShopSytem getAutoRepairShopSytem()
   {
     return autoRepairShopSytem;
   }
   /* Code from template association_GetOne */
+  @ManyToOne
   public Customer getCustomer()
   {
     return customer;
   }
   /* Code from template association_GetOne */
+  @ManyToOne
   public BookableService getBookableService()
   {
     return bookableService;

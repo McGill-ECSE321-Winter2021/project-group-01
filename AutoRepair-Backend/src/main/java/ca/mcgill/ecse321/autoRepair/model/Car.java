@@ -119,6 +119,7 @@ public class Car
     return getWithPlateNumber(aPlateNumber) != null;
   }
   /* Code from template association_GetOne */
+  @ManyToOne
   public Customer getCustomer()
   {
     return customer;

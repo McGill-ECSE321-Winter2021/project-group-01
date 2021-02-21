@@ -108,11 +108,13 @@ public class ComboItem
     return mandatory;
   }
   /* Code from template association_GetOne */
+  @ManyToOne
   public Service getService()
   {
     return service;
   }
   /* Code from template association_GetOne */
+  @ManyToOne
   public ServiceCombo getServiceCombo()
   {
     return serviceCombo;

@@ -1,10 +1,5 @@
 package ca.mcgill.ecse321.autoRepair.dao;
 
-<<<<<<< Updated upstream
-public class ProfileRepository {
-
-}
-=======
 import org.springframework.data.repository.CrudRepository;
 
 import ca.mcgill.ecse321.autoRepair.model.Profile;
@@ -17,4 +12,3 @@ public interface ProfileRepository extends CrudRepository<Profile, String>{
     boolean existsByCustomer(Customer person);
 
 }
->>>>>>> Stashed changes

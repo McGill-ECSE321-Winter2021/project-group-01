@@ -7,21 +7,15 @@ import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.Month;
 
+import ca.mcgill.ecse321.autoRepair.model.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import ca.mcgill.ecse321.autoRepair.model.Appointment;
-import ca.mcgill.ecse321.autoRepair.model.Assistant;
-import ca.mcgill.ecse321.autoRepair.model.AutoRepairShopSystem;
-import ca.mcgill.ecse321.autoRepair.model.Customer;
-import ca.mcgill.ecse321.autoRepair.model.Profile;
-import ca.mcgill.ecse321.autoRepair.model.Service;
-import ca.mcgill.ecse321.autoRepair.model.TimeSlot;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -33,6 +27,14 @@ public class TestAutoRepairPersistence {
 	private AssistantRepository assistantRepository;
 	@Autowired
 	private AutoRepairRepository autoRepairRepository;
+	@Autowired
+	private OwnerRepository ownerRepository;
+	@Autowired
+	private ProfileRepository profileRepository;
+	@Autowired
+	private ReminderRepository reminderRepository;
+	@Autowired
+	private CustomerRepository customerRepository;
 	
 	
 	@AfterEach
@@ -41,6 +43,10 @@ public class TestAutoRepairPersistence {
 		autoRepairRepository.deleteAll();
 		assistantRepository.deleteAll();
 		appointmentRepository.deleteAll();
+		profileRepository.deleteAll();
+		ownerRepository.deleteAll();
+		reminderRepository.deleteAll();
+
 	}
 	
 	@Test
@@ -102,8 +108,61 @@ public class TestAutoRepairPersistence {
 		testAppointment = appointmentRepository.findAppointmentByTimeSlot(testSlot);
 		assertNotNull(testAppointment);
 		assertEquals(testSlot, testAppointment.getTimeSlot());
+	}
 
+	@Test
+	public void testPersistAndLoadOwner() {
+		AutoRepairShopSystem repairShopSystem = new AutoRepairShopSystem("1");
+		String name = "TestOwner";
+		// First example for object save/load
+		Owner owner = new Owner(name,"12345", repairShopSystem);
+		// First example for attribute save/load
+		ownerRepository.save(owner);
 
+		owner= null;
+
+		owner = ownerRepository.findOwnerByName(name);
+		assertNotNull(owner);
+		assertEquals(name, owner.getUsername());
+	}
+
+	@Test
+	public void testPersistAndLoadReminder() {
+		AutoRepairShopSystem repairShopSystem = new AutoRepairShopSystem("1");
+		Customer customer = new Customer("TestCustomer", "12345",0,0, null, repairShopSystem);
+		BookableService service = new Service("TestService", repairShopSystem,10);
+
+		customerRepository.save(customer);
+		//Add to bookable service repository
+		Date date = java.sql.Date.valueOf(LocalDate.of(2020, Month.JANUARY, 31));
+		Time time = java.sql.Time.valueOf(LocalTime.of(11, 35));
+		Reminder reminder = new Reminder("id1","TestReminder",date, time, repairShopSystem,customer);
+		reminderRepository.save(reminder);
+		String reminderId= "id1";
+		reminder =null;
+
+		reminder = reminderRepository.findByCustomerAndServiceName(customer,service);
+		assertNotNull(reminder);
+		assertEquals(reminderId, reminder.getId());
+		assertEquals(customer.getUsername(), reminder.getCustomer().getUsername());
+
+	}
+
+	@Test
+	public void testPersistAndLoadProfile() {
+		AutoRepairShopSystem repairShopSystem = new AutoRepairShopSystem("1");
+		Customer customer = new Customer("TestCustomer", "12345",0,0, null, repairShopSystem);
+		Profile testProfile = new Profile("profileId", "Test", "Profile", "Test Address", "Test zip", "4388661234",
+				"Test email");
+		customerRepository.save(customer);
+		profileRepository.save(testProfile);
+		String profileId = "profileId";
+		testProfile = null;
+
+		testProfile = profileRepository.findByCustomer(customer);
+		assertNotNull(testProfile);
+		assertEquals(profileId, testProfile.getId());
+		assertEquals(customer.getUsername(), testProfile.getCustomer().getUsername());
 	}
 
 }

@@ -97,7 +97,8 @@ public class ComboItem
   {
     return getWithId(aId) != null;
   }
-
+  
+@Transient
   public boolean getMandatory()
   {
     return mandatory;

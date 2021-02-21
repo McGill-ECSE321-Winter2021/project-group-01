@@ -210,7 +210,6 @@ public class Customer extends User
     Appointment aAppointment = appointments.get(index);
     return aAppointment;
   }
-
   public List<Appointment> getAppointments()
   {
     List<Appointment> newAppointments = Collections.unmodifiableList(appointments);

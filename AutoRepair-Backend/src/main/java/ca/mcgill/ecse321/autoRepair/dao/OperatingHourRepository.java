@@ -1,5 +1,11 @@
 package ca.mcgill.ecse321.autoRepair.dao;
 
-public class OperatingHourRepository {
+import org.springframework.data.repository.CrudRepository;
+
+import ca.mcgill.ecse321.autoRepair.model.OperatingHour;
+
+public interface OperatingHourRepository extends CrudRepository{
+	
+	//OperatingHour findPersonByName(String name);
 
 }

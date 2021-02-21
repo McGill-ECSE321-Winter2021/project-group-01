@@ -1,3 +1,4 @@
+  
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.30.1.5099.60569f335 modeling language!*/
 
@@ -31,13 +32,13 @@ public class Business
   //Business Associations
   private List<OperatingHour> businessHours;
   private List<TimeSlot> holidays;
-  private AutoRepairShopSytem autoRepairShopSytem;
+  private AutoRepairShopSystem AutoRepairShopSystem;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Business(String aId, String aName, String aAddress, String aPhoneNumber, String aEmail, AutoRepairShopSytem aAutoRepairShopSytem)
+  public Business(String aId, String aName, String aAddress, String aPhoneNumber, String aEmail, AutoRepairShopSystem aAutoRepairShopSystem)
   {
     name = aName;
     address = aAddress;
@@ -49,10 +50,10 @@ public class Business
     }
     businessHours = new ArrayList<OperatingHour>();
     holidays = new ArrayList<TimeSlot>();
-    boolean didAddAutoRepairShopSytem = setAutoRepairShopSytem(aAutoRepairShopSytem);
-    if (!didAddAutoRepairShopSytem)
+    boolean didAddAutoRepairShopSystem = setAutoRepairShopSystem(aAutoRepairShopSystem);
+    if (!didAddAutoRepairShopSystem)
     {
-      throw new RuntimeException("Unable to create business due to autoRepairShopSytem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+      throw new RuntimeException("Unable to create business due to AutoRepairShopSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
   }
 
@@ -210,9 +211,9 @@ public class Business
   }
   /* Code from template association_GetOne */
   @OneToOne
-  public AutoRepairShopSytem getAutoRepairShopSytem()
+  public AutoRepairShopSystem getAutoRepairShopSystem()
   {
-    return autoRepairShopSytem;
+    return AutoRepairShopSystem;
   }
   /* Code from template association_MinimumNumberOfMethod */
   public static int minimumNumberOfBusinessHours()
@@ -329,29 +330,29 @@ public class Business
     return wasAdded;
   }
   /* Code from template association_SetOneToOptionalOne */
-  public boolean setAutoRepairShopSytem(AutoRepairShopSytem aNewAutoRepairShopSytem)
+  public boolean setAutoRepairShopSystem(AutoRepairShopSystem aNewAutoRepairShopSystem)
   {
     boolean wasSet = false;
-    if (aNewAutoRepairShopSytem == null)
+    if (aNewAutoRepairShopSystem == null)
     {
-      //Unable to setAutoRepairShopSytem to null, as business must always be associated to a autoRepairShopSytem
+      //Unable to setAutoRepairShopSystem to null, as business must always be associated to a AutoRepairShopSystem
       return wasSet;
     }
     
-    Business existingBusiness = aNewAutoRepairShopSytem.getBusiness();
+    Business existingBusiness = aNewAutoRepairShopSystem.getBusiness();
     if (existingBusiness != null && !equals(existingBusiness))
     {
-      //Unable to setAutoRepairShopSytem, the current autoRepairShopSytem already has a business, which would be orphaned if it were re-assigned
+      //Unable to setAutoRepairShopSystem, the current AutoRepairShopSystem already has a business, which would be orphaned if it were re-assigned
       return wasSet;
     }
     
-    AutoRepairShopSytem anOldAutoRepairShopSytem = autoRepairShopSytem;
-    autoRepairShopSytem = aNewAutoRepairShopSytem;
-    autoRepairShopSytem.setBusiness(this);
+    AutoRepairShopSystem anOldAutoRepairShopSystem = AutoRepairShopSystem;
+    AutoRepairShopSystem = aNewAutoRepairShopSystem;
+    AutoRepairShopSystem.setBusiness(this);
 
-    if (anOldAutoRepairShopSytem != null)
+    if (anOldAutoRepairShopSystem != null)
     {
-      anOldAutoRepairShopSytem.setBusiness(null);
+      anOldAutoRepairShopSystem.setBusiness(null);
     }
     wasSet = true;
     return wasSet;
@@ -362,11 +363,11 @@ public class Business
     businesssById.remove(getId());
     businessHours.clear();
     holidays.clear();
-    AutoRepairShopSytem existingAutoRepairShopSytem = autoRepairShopSytem;
-    autoRepairShopSytem = null;
-    if (existingAutoRepairShopSytem != null)
+    AutoRepairShopSystem existingAutoRepairShopSystem = AutoRepairShopSystem;
+    AutoRepairShopSystem = null;
+    if (existingAutoRepairShopSystem != null)
     {
-      existingAutoRepairShopSytem.setBusiness(null);
+      existingAutoRepairShopSystem.setBusiness(null);
     }
   }
 
@@ -379,6 +380,7 @@ public class Business
             "address" + ":" + getAddress()+ "," +
             "phoneNumber" + ":" + getPhoneNumber()+ "," +
             "email" + ":" + getEmail()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "autoRepairShopSytem = "+(getAutoRepairShopSytem()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShopSytem())):"null");
+            "  " + "AutoRepairShopSystem = "+(getAutoRepairShopSystem()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShopSystem())):"null");
   }
 }
+

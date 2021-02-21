@@ -153,7 +153,7 @@ public class Business
     return aBusinessHour;
   }
 
-  @OneToMany
+  @OneToMany(cascade = { CascadeType.ALL })
   public List<OperatingHour> getBusinessHours()
   {
     List<OperatingHour> newBusinessHours = Collections.unmodifiableList(businessHours);
@@ -188,7 +188,7 @@ public class Business
     return aHoliday;
   }
 
-  @OneToMany
+  @OneToMany(cascade = { CascadeType.ALL })
   public List<TimeSlot> getHolidays()
   {
     List<TimeSlot> newHolidays = Collections.unmodifiableList(holidays);

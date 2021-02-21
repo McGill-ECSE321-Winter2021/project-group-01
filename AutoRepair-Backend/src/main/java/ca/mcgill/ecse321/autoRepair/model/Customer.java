@@ -107,7 +107,7 @@ public class Customer extends User
     return aCar;
   }
 
-  @OneToMany
+  @OneToMany(cascade = { CascadeType.ALL })
   public List<Car> getCars()
   {
     List<Car> newCars = Collections.unmodifiableList(cars);
@@ -145,7 +145,7 @@ public class Customer extends User
     return aReminder;
   }
 
-  @OneToMany
+  @OneToMany(cascade = { CascadeType.ALL })
   public List<Reminder> getReminders()
   {
     List<Reminder> newReminders = Collections.unmodifiableList(reminders);
@@ -180,7 +180,7 @@ public class Customer extends User
     return aReview;
   }
 
-  @OneToMany
+  @OneToMany(cascade = { CascadeType.ALL })
   public List<Review> getReviews()
   {
     List<Review> newReviews = Collections.unmodifiableList(reviews);
@@ -225,6 +225,7 @@ public class Customer extends User
     return AutoRepairShopSystem;
   }
   /* Code from template association_GetMany */
+  @OneToMany
   public Appointment getAppointment(int index)
   {
     Appointment aAppointment = appointments.get(index);

@@ -159,6 +159,10 @@ public class Business
     List<OperatingHour> newBusinessHours = Collections.unmodifiableList(businessHours);
     return newBusinessHours;
   }
+  
+  public void setBusinessHours(List<OperatingHour> businessHours) {
+	  this.businessHours=businessHours;
+  }
 
   public int numberOfBusinessHours()
   {
@@ -189,6 +193,10 @@ public class Business
   {
     List<TimeSlot> newHolidays = Collections.unmodifiableList(holidays);
     return newHolidays;
+  }
+  
+  public void setHolidays(List<TimeSlot> holidays) {
+	  this.holidays=holidays;
   }
 
   public int numberOfHolidays()

@@ -101,6 +101,10 @@ public abstract class BookableService
     List<Reminder> newReminders = Collections.unmodifiableList(reminders);
     return newReminders;
   }
+  
+  public void setReminders(List<Reminder> reminders) {
+	  this.reminders=reminders;
+  }
 
   public int numberOfReminders()
   {
@@ -132,6 +136,10 @@ public abstract class BookableService
     List<Review> newReviews = Collections.unmodifiableList(reviews);
     return newReviews;
   }
+  
+  public void setReviews(List<Review> reviews) {
+		this.reviews=reviews;
+  }
 
   public int numberOfReviews()
   {
@@ -156,6 +164,8 @@ public abstract class BookableService
   {
     return AutoRepairShopSystem;
   }
+  
+
   /* Code from template association_GetMany */
   public Appointment getAppointment(int index)
   {
@@ -168,6 +178,10 @@ public abstract class BookableService
   {
     List<Appointment> newAppointments = Collections.unmodifiableList(appointments);
     return newAppointments;
+  }
+  
+  public void setAppointments(List<Appointment> appointments) {
+		this.appointments=appointments;
   }
 
   public int numberOfAppointments()

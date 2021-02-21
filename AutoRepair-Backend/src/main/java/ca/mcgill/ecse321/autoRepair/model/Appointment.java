@@ -128,6 +128,10 @@ public class Appointment
     List<ComboItem> newChosenItems = Collections.unmodifiableList(chosenItems);
     return newChosenItems;
   }
+  
+  public void setChosenItems(List<ComboItem> chosenItems) {
+	  this.chosenItems=chosenItems;
+  }
 
   public int numberOfChosenItems()
   {

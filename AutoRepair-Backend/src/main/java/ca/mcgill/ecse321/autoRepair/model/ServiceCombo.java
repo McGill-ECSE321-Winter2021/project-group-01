@@ -23,9 +23,9 @@ public class ServiceCombo extends BookableService
   // CONSTRUCTOR
   //------------------------
 
-  public ServiceCombo(String aName, AutoRepairShopSytem aAutoRepairShopSytem)
+  public ServiceCombo(String aName, AutoRepairShopSystem aAutoRepairShopSystem)
   {
-    super(aName, aAutoRepairShopSytem);
+    super(aName, aAutoRepairShopSystem);
     services = new ArrayList<ComboItem>();
   }
 

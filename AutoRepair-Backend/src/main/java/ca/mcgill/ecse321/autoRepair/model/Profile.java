@@ -37,7 +37,7 @@ public class Profile
   // CONSTRUCTOR
   //------------------------
 
-  public Profile(String aId, String aFirstName, String aLastName, String aAddress, String aZipCode, String aPhoneNumber, String aEmail, Customer aCustomer)
+  public Profile(String aId, String aFirstName, String aLastName, String aAddress, String aZipCode, String aPhoneNumber, String aEmail)
   {
     firstName = aFirstName;
     lastName = aLastName;
@@ -49,14 +49,9 @@ public class Profile
     {
       throw new RuntimeException("Cannot create due to duplicate id. See http://manual.umple.org?RE003ViolationofUniqueness.html");
     }
-    if (aCustomer == null || aCustomer.getProfile() != null)
-    {
-      throw new RuntimeException("Unable to create Profile due to aCustomer. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    customer = aCustomer;
   }
 
-  public Profile(String aId, String aFirstName, String aLastName, String aAddress, String aZipCode, String aPhoneNumber, String aEmail, String aUsernameForCustomer, String aPasswordForCustomer, int aNoShowForCustomer, int aShowForCustomer, AutoRepairShopSytem aAutoRepairShopSytemForCustomer)
+  public Profile(String aId, String aFirstName, String aLastName, String aAddress, String aZipCode, String aPhoneNumber, String aEmail, String aUsernameForCustomer, String aPasswordForCustomer, int aNoShowForCustomer, int aShowForCustomer, AutoRepairShopSystem aAutoRepairShopSystemForCustomer)
   {
     if (!setId(aId))
     {
@@ -68,7 +63,7 @@ public class Profile
     zipCode = aZipCode;
     phoneNumber = aPhoneNumber;
     email = aEmail;
-    customer = new Customer(aUsernameForCustomer, aPasswordForCustomer, aNoShowForCustomer, aShowForCustomer, this, aAutoRepairShopSytemForCustomer);
+    customer = new Customer(aUsernameForCustomer, aPasswordForCustomer, aNoShowForCustomer, aShowForCustomer, this, aAutoRepairShopSystemForCustomer);
   }
 
   //------------------------

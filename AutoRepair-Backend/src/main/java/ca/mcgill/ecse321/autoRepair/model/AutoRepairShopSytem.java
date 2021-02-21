@@ -2,20 +2,29 @@
 /*This code was generated using the UMPLE 1.30.1.5099.60569f335 modeling language!*/
 
 package ca.mcgill.ecse321.autoRepair.model;
-import java.util.*;
 import javax.persistence.*;
+import java.util.*;
 import java.sql.Time;
 import java.sql.Date;
 
 // line 3 "../../../../../AutoRepair.ump"
-// line 128 "../../../../../AutoRepair.ump"
+// line 152 "../../../../../AutoRepair.ump"
 @Entity
 public class AutoRepairShopSytem
 {
 
   //------------------------
+  // STATIC VARIABLES
+  //------------------------
+
+  private static Map<String, AutoRepairShopSytem> autorepairshopsytemsById = new HashMap<String, AutoRepairShopSytem>();
+
+  //------------------------
   // MEMBER VARIABLES
   //------------------------
+
+  //AutoRepairShopSytem Attributes
+  private String id;
 
   //AutoRepairShopSytem Associations
   private Business business;
@@ -33,8 +42,12 @@ public class AutoRepairShopSytem
   // CONSTRUCTOR
   //------------------------
 
-  public AutoRepairShopSytem()
+  public AutoRepairShopSytem(String aId)
   {
+    if (!setId(aId))
+    {
+      throw new RuntimeException("Cannot create due to duplicate id. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+    }
     customers = new ArrayList<Customer>();
     operatingHours = new ArrayList<OperatingHour>();
     appointments = new ArrayList<Appointment>();
@@ -47,8 +60,42 @@ public class AutoRepairShopSytem
   //------------------------
   // INTERFACE
   //------------------------
+
+  public boolean setId(String aId)
+  {
+    boolean wasSet = false;
+    String anOldId = getId();
+    if (anOldId != null && anOldId.equals(aId)) {
+      return true;
+    }
+    if (hasWithId(aId)) {
+      return wasSet;
+    }
+    id = aId;
+    wasSet = true;
+    if (anOldId != null) {
+      autorepairshopsytemsById.remove(anOldId);
+    }
+    autorepairshopsytemsById.put(aId, this);
+    return wasSet;
+  }
+
+  @Id
+  public String getId()
+  {
+    return id;
+  }
+  /* Code from template attribute_GetUnique */
+  public static AutoRepairShopSytem getWithId(String aId)
+  {
+    return autorepairshopsytemsById.get(aId);
+  }
+  /* Code from template attribute_HasUnique */
+  public static boolean hasWithId(String aId)
+  {
+    return getWithId(aId) != null;
+  }
   /* Code from template association_GetOne */
-  @OneToOne
   public Business getBusiness()
   {
     return business;
@@ -60,7 +107,6 @@ public class AutoRepairShopSytem
     return has;
   }
   /* Code from template association_GetOne */
-  @OneToOne
   public Owner getOwner()
   {
     return owner;
@@ -72,7 +118,6 @@ public class AutoRepairShopSytem
     return has;
   }
   /* Code from template association_GetOne */
-  @OneToOne
   public Assistant getAssistant()
   {
     return assistant;
@@ -90,7 +135,6 @@ public class AutoRepairShopSytem
     return aCustomer;
   }
 
-  @OneToMany(cascade={CascadeType.ALL})
   public List<Customer> getCustomers()
   {
     List<Customer> newCustomers = Collections.unmodifiableList(customers);
@@ -120,8 +164,7 @@ public class AutoRepairShopSytem
     OperatingHour aOperatingHour = operatingHours.get(index);
     return aOperatingHour;
   }
-  
-  @OneToMany(cascade={CascadeType.ALL})
+
   public List<OperatingHour> getOperatingHours()
   {
     List<OperatingHour> newOperatingHours = Collections.unmodifiableList(operatingHours);
@@ -152,7 +195,6 @@ public class AutoRepairShopSytem
     return aAppointment;
   }
 
-  @OneToMany(cascade={CascadeType.ALL})
   public List<Appointment> getAppointments()
   {
     List<Appointment> newAppointments = Collections.unmodifiableList(appointments);
@@ -183,7 +225,6 @@ public class AutoRepairShopSytem
     return aTimeSlot;
   }
 
-  @OneToMany(cascade={CascadeType.ALL})
   public List<TimeSlot> getTimeSlots()
   {
     List<TimeSlot> newTimeSlots = Collections.unmodifiableList(timeSlots);
@@ -214,7 +255,6 @@ public class AutoRepairShopSytem
     return aBookableService;
   }
 
-  @OneToMany(cascade={CascadeType.ALL})
   public List<BookableService> getBookableServices()
   {
     List<BookableService> newBookableServices = Collections.unmodifiableList(bookableServices);
@@ -245,7 +285,6 @@ public class AutoRepairShopSytem
     return aReminder;
   }
 
-  @OneToMany(cascade={CascadeType.ALL})
   public List<Reminder> getReminders()
   {
     List<Reminder> newReminders = Collections.unmodifiableList(reminders);
@@ -276,7 +315,6 @@ public class AutoRepairShopSytem
     return aReview;
   }
 
-  @OneToMany(cascade={CascadeType.ALL})
   public List<Review> getReviews()
   {
     List<Review> newReviews = Collections.unmodifiableList(reviews);
@@ -459,9 +497,9 @@ public class AutoRepairShopSytem
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public OperatingHour addOperatingHour(OperatingHour.DayOfWeek aDayOfWeek, Time aStartTime, Time aEndTime)
+  public OperatingHour addOperatingHour(String aId, OperatingHour.DayOfWeek aDayOfWeek, Time aStartTime, Time aEndTime)
   {
-    return new OperatingHour(aDayOfWeek, aStartTime, aEndTime, this);
+    return new OperatingHour(aId, aDayOfWeek, aStartTime, aEndTime, this);
   }
 
   public boolean addOperatingHour(OperatingHour aOperatingHour)
@@ -531,9 +569,9 @@ public class AutoRepairShopSytem
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Appointment addAppointment(Customer aCustomer, BookableService aBookableService, TimeSlot aTimeSlot)
+  public Appointment addAppointment(String aId, Customer aCustomer, BookableService aBookableService, TimeSlot aTimeSlot)
   {
-    return new Appointment(aCustomer, aBookableService, aTimeSlot, this);
+    return new Appointment(aId, aCustomer, aBookableService, aTimeSlot, this);
   }
 
   public boolean addAppointment(Appointment aAppointment)
@@ -603,9 +641,9 @@ public class AutoRepairShopSytem
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public TimeSlot addTimeSlot(Date aStartDate, Time aStartTime, Date aEndDate, Time aEndTime)
+  public TimeSlot addTimeSlot(String aId, Date aStartDate, Time aStartTime, Date aEndDate, Time aEndTime)
   {
-    return new TimeSlot(aStartDate, aStartTime, aEndDate, aEndTime, this);
+    return new TimeSlot(aId, aStartDate, aStartTime, aEndDate, aEndTime, this);
   }
 
   public boolean addTimeSlot(TimeSlot aTimeSlot)
@@ -744,9 +782,9 @@ public class AutoRepairShopSytem
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Reminder addReminder(String aDescription, Date aDate, Time aTime, Customer aCustomer)
+  public Reminder addReminder(String aId, String aDescription, Date aDate, Time aTime, Customer aCustomer)
   {
-    return new Reminder(aDescription, aDate, aTime, this, aCustomer);
+    return new Reminder(aId, aDescription, aDate, aTime, this, aCustomer);
   }
 
   public boolean addReminder(Reminder aReminder)
@@ -816,9 +854,9 @@ public class AutoRepairShopSytem
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Review addReview(String aDescription, int aServiceRating, Customer aCustomer, BookableService aBookableService)
+  public Review addReview(String aId, String aDescription, int aServiceRating, Customer aCustomer, BookableService aBookableService)
   {
-    return new Review(aDescription, aServiceRating, this, aCustomer, aBookableService);
+    return new Review(aId, aDescription, aServiceRating, this, aCustomer, aBookableService);
   }
 
   public boolean addReview(Review aReview)
@@ -885,6 +923,7 @@ public class AutoRepairShopSytem
 
   public void delete()
   {
+    autorepairshopsytemsById.remove(getId());
     Business existingBusiness = business;
     business = null;
     if (existingBusiness != null)
@@ -957,4 +996,13 @@ public class AutoRepairShopSytem
     
   }
 
+
+  public String toString()
+  {
+    return super.toString() + "["+
+            "id" + ":" + getId()+ "]" + System.getProperties().getProperty("line.separator") +
+            "  " + "business = "+(getBusiness()!=null?Integer.toHexString(System.identityHashCode(getBusiness())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + "owner = "+(getOwner()!=null?Integer.toHexString(System.identityHashCode(getOwner())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + "assistant = "+(getAssistant()!=null?Integer.toHexString(System.identityHashCode(getAssistant())):"null");
+  }
 }

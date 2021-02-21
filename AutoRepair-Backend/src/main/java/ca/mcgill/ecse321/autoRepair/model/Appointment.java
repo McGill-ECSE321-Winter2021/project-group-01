@@ -2,18 +2,27 @@
 /*This code was generated using the UMPLE 1.30.1.5099.60569f335 modeling language!*/
 
 package ca.mcgill.ecse321.autoRepair.model;
-import java.util.*;
 import javax.persistence.*;
+import java.util.*;
 
-// line 108 "../../../../../AutoRepair.ump"
-// line 206 "../../../../../AutoRepair.ump"
+// line 126 "../../../../../AutoRepair.ump"
+// line 224 "../../../../../AutoRepair.ump"
 @Entity
 public class Appointment
 {
 
   //------------------------
+  // STATIC VARIABLES
+  //------------------------
+
+  private static Map<String, Appointment> appointmentsById = new HashMap<String, Appointment>();
+
+  //------------------------
   // MEMBER VARIABLES
   //------------------------
+
+  //Appointment Attributes
+  private String id;
 
   //Appointment Associations
   private Customer customer;
@@ -21,14 +30,17 @@ public class Appointment
   private List<ComboItem> chosenItems;
   private TimeSlot timeSlot;
   private AutoRepairShopSytem autoRepairShopSytem;
-  private String id;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Appointment(Customer aCustomer, BookableService aBookableService, TimeSlot aTimeSlot, AutoRepairShopSytem aAutoRepairShopSytem)
+  public Appointment(String aId, Customer aCustomer, BookableService aBookableService, TimeSlot aTimeSlot, AutoRepairShopSytem aAutoRepairShopSytem)
   {
+    if (!setId(aId))
+    {
+      throw new RuntimeException("Cannot create due to duplicate id. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+    }
     boolean didAddCustomer = setCustomer(aCustomer);
     if (!didAddCustomer)
     {
@@ -50,23 +62,51 @@ public class Appointment
       throw new RuntimeException("Unable to create appointment due to autoRepairShopSytem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
   }
-  
-  @Id
-  public String getId() {
-	  return this.id;
-  }
 
   //------------------------
   // INTERFACE
   //------------------------
+
+  public boolean setId(String aId)
+  {
+    boolean wasSet = false;
+    String anOldId = getId();
+    if (anOldId != null && anOldId.equals(aId)) {
+      return true;
+    }
+    if (hasWithId(aId)) {
+      return wasSet;
+    }
+    id = aId;
+    wasSet = true;
+    if (anOldId != null) {
+      appointmentsById.remove(anOldId);
+    }
+    appointmentsById.put(aId, this);
+    return wasSet;
+  }
+
+  @Id
+  public String getId()
+  {
+    return id;
+  }
+  /* Code from template attribute_GetUnique */
+  public static Appointment getWithId(String aId)
+  {
+    return appointmentsById.get(aId);
+  }
+  /* Code from template attribute_HasUnique */
+  public static boolean hasWithId(String aId)
+  {
+    return getWithId(aId) != null;
+  }
   /* Code from template association_GetOne */
-  @ManyToOne
   public Customer getCustomer()
   {
     return customer;
   }
   /* Code from template association_GetOne */
-  @ManyToOne
   public BookableService getBookableService()
   {
     return bookableService;
@@ -78,7 +118,6 @@ public class Appointment
     return aChosenItem;
   }
 
-  @ManyToMany
   public List<ComboItem> getChosenItems()
   {
     List<ComboItem> newChosenItems = Collections.unmodifiableList(chosenItems);
@@ -103,13 +142,11 @@ public class Appointment
     return index;
   }
   /* Code from template association_GetOne */
-  @OneToOne
   public TimeSlot getTimeSlot()
   {
     return timeSlot;
   }
   /* Code from template association_GetOne */
-  @ManyToOne
   public AutoRepairShopSytem getAutoRepairShopSytem()
   {
     return autoRepairShopSytem;
@@ -242,6 +279,7 @@ public class Appointment
 
   public void delete()
   {
+    appointmentsById.remove(getId());
     Customer placeholderCustomer = customer;
     this.customer = null;
     if(placeholderCustomer != null)
@@ -264,4 +302,14 @@ public class Appointment
     }
   }
 
+
+  public String toString()
+  {
+    return super.toString() + "["+
+            "id" + ":" + getId()+ "]" + System.getProperties().getProperty("line.separator") +
+            "  " + "customer = "+(getCustomer()!=null?Integer.toHexString(System.identityHashCode(getCustomer())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + "bookableService = "+(getBookableService()!=null?Integer.toHexString(System.identityHashCode(getBookableService())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + "timeSlot = "+(getTimeSlot()!=null?Integer.toHexString(System.identityHashCode(getTimeSlot())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + "autoRepairShopSytem = "+(getAutoRepairShopSytem()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShopSytem())):"null");
+  }
 }

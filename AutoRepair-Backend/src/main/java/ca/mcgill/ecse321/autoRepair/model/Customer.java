@@ -2,17 +2,13 @@
 /*This code was generated using the UMPLE 1.30.1.5099.60569f335 modeling language!*/
 
 package ca.mcgill.ecse321.autoRepair.model;
+import javax.persistence.*;
 import java.util.*;
-
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-
 import java.sql.Date;
 import java.sql.Time;
 
-// line 27 "../../../../../AutoRepair.ump"
-// line 150 "../../../../../AutoRepair.ump"
+// line 30 "../../../../../AutoRepair.ump"
+// line 169 "../../../../../AutoRepair.ump"
 @Entity
 public class Customer extends User
 {
@@ -58,7 +54,7 @@ public class Customer extends User
     appointments = new ArrayList<Appointment>();
   }
 
-  public Customer(String aUsername, String aPassword, int aNoShow, int aShow, String aFirstNameForProfile, String aLastNameForProfile, String aAddressForProfile, String aZipCodeForProfile, String aPhoneNumberForProfile, String aEmailForProfile, AutoRepairShopSytem aAutoRepairShopSytem)
+  public Customer(String aUsername, String aPassword, int aNoShow, int aShow, String aIdForProfile, String aFirstNameForProfile, String aLastNameForProfile, String aAddressForProfile, String aZipCodeForProfile, String aPhoneNumberForProfile, String aEmailForProfile, AutoRepairShopSytem aAutoRepairShopSytem)
   {
     super(aUsername, aPassword);
     noShow = aNoShow;
@@ -66,7 +62,7 @@ public class Customer extends User
     cars = new ArrayList<Car>();
     reminders = new ArrayList<Reminder>();
     reviews = new ArrayList<Review>();
-    profile = new Profile(aFirstNameForProfile, aLastNameForProfile, aAddressForProfile, aZipCodeForProfile, aPhoneNumberForProfile, aEmailForProfile, this);
+    profile = new Profile(aIdForProfile, aFirstNameForProfile, aLastNameForProfile, aAddressForProfile, aZipCodeForProfile, aPhoneNumberForProfile, aEmailForProfile, this);
     boolean didAddAutoRepairShopSytem = setAutoRepairShopSytem(aAutoRepairShopSytem);
     if (!didAddAutoRepairShopSytem)
     {
@@ -110,8 +106,7 @@ public class Customer extends User
     Car aCar = cars.get(index);
     return aCar;
   }
-  
-  @OneToMany
+
   public List<Car> getCars()
   {
     List<Car> newCars = Collections.unmodifiableList(cars);
@@ -141,8 +136,7 @@ public class Customer extends User
     Reminder aReminder = reminders.get(index);
     return aReminder;
   }
-  
-  @OneToMany
+
   public List<Reminder> getReminders()
   {
     List<Reminder> newReminders = Collections.unmodifiableList(reminders);
@@ -172,8 +166,7 @@ public class Customer extends User
     Review aReview = reviews.get(index);
     return aReview;
   }
-  
-  @OneToMany
+
   public List<Review> getReviews()
   {
     List<Review> newReviews = Collections.unmodifiableList(reviews);
@@ -198,7 +191,6 @@ public class Customer extends User
     return index;
   }
   /* Code from template association_GetOne */
-  @OneToOne
   public Profile getProfile()
   {
     return profile;
@@ -215,7 +207,6 @@ public class Customer extends User
     return aAppointment;
   }
 
-  @OneToMany
   public List<Appointment> getAppointments()
   {
     List<Appointment> newAppointments = Collections.unmodifiableList(appointments);
@@ -337,9 +328,9 @@ public class Customer extends User
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Reminder addReminder(String aDescription, Date aDate, Time aTime, AutoRepairShopSytem aAutoRepairShopSytem)
+  public Reminder addReminder(String aId, String aDescription, Date aDate, Time aTime, AutoRepairShopSytem aAutoRepairShopSytem)
   {
-    return new Reminder(aDescription, aDate, aTime, aAutoRepairShopSytem, this);
+    return new Reminder(aId, aDescription, aDate, aTime, aAutoRepairShopSytem, this);
   }
 
   public boolean addReminder(Reminder aReminder)
@@ -409,9 +400,9 @@ public class Customer extends User
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Review addReview(String aDescription, int aServiceRating, AutoRepairShopSytem aAutoRepairShopSytem, BookableService aBookableService)
+  public Review addReview(String aId, String aDescription, int aServiceRating, AutoRepairShopSytem aAutoRepairShopSytem, BookableService aBookableService)
   {
-    return new Review(aDescription, aServiceRating, aAutoRepairShopSytem, this, aBookableService);
+    return new Review(aId, aDescription, aServiceRating, aAutoRepairShopSytem, this, aBookableService);
   }
 
   public boolean addReview(Review aReview)
@@ -500,9 +491,9 @@ public class Customer extends User
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Appointment addAppointment(BookableService aBookableService, TimeSlot aTimeSlot, AutoRepairShopSytem aAutoRepairShopSytem)
+  public Appointment addAppointment(String aId, BookableService aBookableService, TimeSlot aTimeSlot, AutoRepairShopSytem aAutoRepairShopSytem)
   {
-    return new Appointment(this, aBookableService, aTimeSlot, aAutoRepairShopSytem);
+    return new Appointment(aId, this, aBookableService, aTimeSlot, aAutoRepairShopSytem);
   }
 
   public boolean addAppointment(Appointment aAppointment)

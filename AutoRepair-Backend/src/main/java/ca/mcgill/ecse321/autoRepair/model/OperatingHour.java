@@ -2,12 +2,12 @@
 /*This code was generated using the UMPLE 1.30.1.5099.60569f335 modeling language!*/
 
 package ca.mcgill.ecse321.autoRepair.model;
+import javax.persistence.*;
+import java.util.*;
 import java.sql.Time;
 
-import javax.persistence.Entity;
-
-// line 70 "../../../../../AutoRepair.ump"
-// line 176 "../../../../../AutoRepair.ump"
+// line 79 "../../../../../AutoRepair.ump"
+// line 194 "../../../../../AutoRepair.ump"
 @Entity
 public class OperatingHour
 {
@@ -19,10 +19,17 @@ public class OperatingHour
   public enum DayOfWeek { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
 
   //------------------------
+  // STATIC VARIABLES
+  //------------------------
+
+  private static Map<String, OperatingHour> operatinghoursById = new HashMap<String, OperatingHour>();
+
+  //------------------------
   // MEMBER VARIABLES
   //------------------------
 
   //OperatingHour Attributes
+  private String id;
   private DayOfWeek dayOfWeek;
   private Time startTime;
   private Time endTime;
@@ -34,11 +41,15 @@ public class OperatingHour
   // CONSTRUCTOR
   //------------------------
 
-  public OperatingHour(DayOfWeek aDayOfWeek, Time aStartTime, Time aEndTime, AutoRepairShopSytem aAutoRepairShopSytem)
+  public OperatingHour(String aId, DayOfWeek aDayOfWeek, Time aStartTime, Time aEndTime, AutoRepairShopSytem aAutoRepairShopSytem)
   {
     dayOfWeek = aDayOfWeek;
     startTime = aStartTime;
     endTime = aEndTime;
+    if (!setId(aId))
+    {
+      throw new RuntimeException("Cannot create due to duplicate id. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+    }
     boolean didAddAutoRepairShopSytem = setAutoRepairShopSytem(aAutoRepairShopSytem);
     if (!didAddAutoRepairShopSytem)
     {
@@ -49,6 +60,25 @@ public class OperatingHour
   //------------------------
   // INTERFACE
   //------------------------
+
+  public boolean setId(String aId)
+  {
+    boolean wasSet = false;
+    String anOldId = getId();
+    if (anOldId != null && anOldId.equals(aId)) {
+      return true;
+    }
+    if (hasWithId(aId)) {
+      return wasSet;
+    }
+    id = aId;
+    wasSet = true;
+    if (anOldId != null) {
+      operatinghoursById.remove(anOldId);
+    }
+    operatinghoursById.put(aId, this);
+    return wasSet;
+  }
 
   public boolean setDayOfWeek(DayOfWeek aDayOfWeek)
   {
@@ -72,6 +102,22 @@ public class OperatingHour
     endTime = aEndTime;
     wasSet = true;
     return wasSet;
+  }
+
+  @Id
+  public String getId()
+  {
+    return id;
+  }
+  /* Code from template attribute_GetUnique */
+  public static OperatingHour getWithId(String aId)
+  {
+    return operatinghoursById.get(aId);
+  }
+  /* Code from template attribute_HasUnique */
+  public static boolean hasWithId(String aId)
+  {
+    return getWithId(aId) != null;
   }
 
   public DayOfWeek getDayOfWeek()
@@ -115,6 +161,7 @@ public class OperatingHour
 
   public void delete()
   {
+    operatinghoursById.remove(getId());
     AutoRepairShopSytem placeholderAutoRepairShopSytem = autoRepairShopSytem;
     this.autoRepairShopSytem = null;
     if(placeholderAutoRepairShopSytem != null)
@@ -126,7 +173,8 @@ public class OperatingHour
 
   public String toString()
   {
-    return super.toString() + "["+ "]" + System.getProperties().getProperty("line.separator") +
+    return super.toString() + "["+
+            "id" + ":" + getId()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "dayOfWeek" + "=" + (getDayOfWeek() != null ? !getDayOfWeek().equals(this)  ? getDayOfWeek().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "startTime" + "=" + (getStartTime() != null ? !getStartTime().equals(this)  ? getStartTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "endTime" + "=" + (getEndTime() != null ? !getEndTime().equals(this)  ? getEndTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +

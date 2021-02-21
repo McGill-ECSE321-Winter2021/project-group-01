@@ -2,22 +2,27 @@
 /*This code was generated using the UMPLE 1.30.1.5099.60569f335 modeling language!*/
 
 package ca.mcgill.ecse321.autoRepair.model;
+import javax.persistence.*;
 import java.util.*;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-
-// line 37 "../../../../../AutoRepair.ump"
-// line 155 "../../../../../AutoRepair.ump"
+// line 41 "../../../../../AutoRepair.ump"
+// line 174 "../../../../../AutoRepair.ump"
 @Entity
 public class Profile
 {
+
+  //------------------------
+  // STATIC VARIABLES
+  //------------------------
+
+  private static Map<String, Profile> profilesById = new HashMap<String, Profile>();
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
 
   //Profile Attributes
+  private String id;
   private String firstName;
   private String lastName;
   private String address;
@@ -32,7 +37,7 @@ public class Profile
   // CONSTRUCTOR
   //------------------------
 
-  public Profile(String aFirstName, String aLastName, String aAddress, String aZipCode, String aPhoneNumber, String aEmail, Customer aCustomer)
+  public Profile(String aId, String aFirstName, String aLastName, String aAddress, String aZipCode, String aPhoneNumber, String aEmail, Customer aCustomer)
   {
     firstName = aFirstName;
     lastName = aLastName;
@@ -40,6 +45,10 @@ public class Profile
     zipCode = aZipCode;
     phoneNumber = aPhoneNumber;
     email = aEmail;
+    if (!setId(aId))
+    {
+      throw new RuntimeException("Cannot create due to duplicate id. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+    }
     if (aCustomer == null || aCustomer.getProfile() != null)
     {
       throw new RuntimeException("Unable to create Profile due to aCustomer. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
@@ -47,8 +56,12 @@ public class Profile
     customer = aCustomer;
   }
 
-  public Profile(String aFirstName, String aLastName, String aAddress, String aZipCode, String aPhoneNumber, String aEmail, String aUsernameForCustomer, String aPasswordForCustomer, int aNoShowForCustomer, int aShowForCustomer, AutoRepairShopSytem aAutoRepairShopSytemForCustomer)
+  public Profile(String aId, String aFirstName, String aLastName, String aAddress, String aZipCode, String aPhoneNumber, String aEmail, String aUsernameForCustomer, String aPasswordForCustomer, int aNoShowForCustomer, int aShowForCustomer, AutoRepairShopSytem aAutoRepairShopSytemForCustomer)
   {
+    if (!setId(aId))
+    {
+      throw new RuntimeException("Cannot create due to duplicate id. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+    }
     firstName = aFirstName;
     lastName = aLastName;
     address = aAddress;
@@ -61,6 +74,25 @@ public class Profile
   //------------------------
   // INTERFACE
   //------------------------
+
+  public boolean setId(String aId)
+  {
+    boolean wasSet = false;
+    String anOldId = getId();
+    if (anOldId != null && anOldId.equals(aId)) {
+      return true;
+    }
+    if (hasWithId(aId)) {
+      return wasSet;
+    }
+    id = aId;
+    wasSet = true;
+    if (anOldId != null) {
+      profilesById.remove(anOldId);
+    }
+    profilesById.put(aId, this);
+    return wasSet;
+  }
 
   public boolean setFirstName(String aFirstName)
   {
@@ -110,6 +142,22 @@ public class Profile
     return wasSet;
   }
 
+  @Id
+  public String getId()
+  {
+    return id;
+  }
+  /* Code from template attribute_GetUnique */
+  public static Profile getWithId(String aId)
+  {
+    return profilesById.get(aId);
+  }
+  /* Code from template attribute_HasUnique */
+  public static boolean hasWithId(String aId)
+  {
+    return getWithId(aId) != null;
+  }
+
   public String getFirstName()
   {
     return firstName;
@@ -140,7 +188,6 @@ public class Profile
     return email;
   }
   /* Code from template association_GetOne */
-  @OneToOne
   public Customer getCustomer()
   {
     return customer;
@@ -148,6 +195,7 @@ public class Profile
 
   public void delete()
   {
+    profilesById.remove(getId());
     Customer existingCustomer = customer;
     customer = null;
     if (existingCustomer != null)
@@ -160,6 +208,7 @@ public class Profile
   public String toString()
   {
     return super.toString() + "["+
+            "id" + ":" + getId()+ "," +
             "firstName" + ":" + getFirstName()+ "," +
             "lastName" + ":" + getLastName()+ "," +
             "address" + ":" + getAddress()+ "," +

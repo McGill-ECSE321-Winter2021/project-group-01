@@ -1,6 +1,8 @@
 namespace ca.mcgill.ecse321.autoRepair.model;
 
 class AutoRepairShopSytem{
+  depend javax.persistence.*;
+  unique id;
   1 <@>- 0..1 Business business;
   1 <@>- 0..1 Owner owner;
   1 <@>- 0..1 Assistant assistant;
@@ -15,16 +17,19 @@ class AutoRepairShopSytem{
 
 
 class User {
+  depend javax.persistence.*;
   abstract;
   unique username;
   password;
 }
 
 class Owner {
+  depend javax.persistence.*;
   isA User;
 }
 
 class Customer {
+  depend javax.persistence.*;
   isA User;
   int noShow;
   int show;
@@ -35,16 +40,18 @@ class Customer {
 }
 
 class Profile {
+  depend javax.persistence.*;
+  unique id;
   firstName;
-lastName;
- address;
- zipCode;
+  lastName;
+  address;
+  zipCode;
   phoneNumber;
   email;
 }
 
 class Car{
-
+  depend javax.persistence.*;
   model;
   enum CarTransmission {manual, automatic}
   CarTransmission transmission;
@@ -52,12 +59,15 @@ class Car{
 }
 
 class Assistant{
+  depend javax.persistence.*;
   isA User;
   0..1 -> * Reminder reminders;
   
 }
 
 class Business {
+  depend javax.persistence.*;
+  unique id;
   name;
   address;
   phoneNumber;
@@ -68,6 +78,8 @@ class Business {
 }
 
 class OperatingHour {
+  depend javax.persistence.*;
+  unique id;
   enum DayOfWeek { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
   DayOfWeek dayOfWeek;
   Time startTime;
@@ -75,6 +87,8 @@ class OperatingHour {
 }
   
 class TimeSlot {
+  depend javax.persistence.*;
+  unique id;
   Date startDate;
   Time startTime;
   Date endDate;
@@ -82,6 +96,7 @@ class TimeSlot {
 }
 
 class BookableService {
+  depend javax.persistence.*;
   abstract;
   unique name;
   * -- * Reminder reminders;
@@ -89,23 +104,29 @@ class BookableService {
 }
 
 class Service {
+  depend javax.persistence.*;
   isA BookableService;
   int duration;
 
   }
 
 class ServiceCombo {
+  depend javax.persistence.*;
   isA BookableService;
   * -> 0..1 ComboItem mainService;
   1 <@>- 2..* ComboItem services;
 }
 
 class ComboItem {
+  depend javax.persistence.*;
+  unique id;
   Boolean mandatory;
   * -> 1 Service service;
 }
 
 class Appointment {
+  depend javax.persistence.*;
+  unique id;
   * -- 1 Customer customer;
   * -- 1 BookableService bookableService;
   * -> * ComboItem chosenItems;
@@ -113,11 +134,15 @@ class Appointment {
   
 }class Reminder
 {
+  depend javax.persistence.*;
+  unique id;
   description;
     Date date;
   Time time;
 }class Review
 {
+  depend javax.persistence.*;
+  unique id;
   description;
   int serviceRating;
 }//$?[End_of_model]$?
@@ -128,13 +153,8 @@ namespace -;
 class AutoRepairShopSytem
 {
   position 50 30 109 45;
-  position.association AutoRepairShopSytem__Business:business 126,40 0,10;
-  position.association Assistant:assistant__AutoRepairShopSytem 142,40 0,10;
-  position.association AutoRepairShopSytem__OperatingHour:operatingHours 121,40 0,10;
-  position.association Appointment:appointments__AutoRepairShopSytem 137,40 0,10;
-  position.association AutoRepairShopSytem__BookableService:bookableServices 156,2 0,10;
-  position.association AutoRepairShopSytem__Reminder:reminders 156,1 0,10;
-  position.association AutoRepairShopSytem__Review:reviews 156,11 0,10;
+  position.association AutoRepairShopSytem__Business:business 134,57 0,10;
+  position.association Assistant:assistant__AutoRepairShopSytem 156,57 0,10;
 }
 
 class User
@@ -170,7 +190,6 @@ class Assistant
 class Business
 {
   position 250 230 109 45;
-  position.association Business__TimeSlot:holidays 12,109 30,0;
 }
 
 class OperatingHour
@@ -206,7 +225,6 @@ class ComboItem
 class Appointment
 {
   position 450 430 109 45;
-  position.association Appointment__TimeSlot:timeSlot 0,10 123,2;
 }
 
 class Reminder

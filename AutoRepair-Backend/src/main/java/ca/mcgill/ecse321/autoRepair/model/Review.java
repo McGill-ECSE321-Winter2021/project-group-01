@@ -3,18 +3,26 @@
 
 package ca.mcgill.ecse321.autoRepair.model;
 import javax.persistence.*;
+import java.util.*;
 
-// line 119 "../../../../../AutoRepair.ump"
-// line 217 "../../../../../AutoRepair.ump"
+// line 141 "../../../../../AutoRepair.ump"
+// line 234 "../../../../../AutoRepair.ump"
 @Entity
 public class Review
 {
+
+  //------------------------
+  // STATIC VARIABLES
+  //------------------------
+
+  private static Map<String, Review> reviewsById = new HashMap<String, Review>();
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
 
   //Review Attributes
+  private String id;
   private String description;
   private int serviceRating;
 
@@ -27,10 +35,14 @@ public class Review
   // CONSTRUCTOR
   //------------------------
 
-  public Review(String aDescription, int aServiceRating, AutoRepairShopSytem aAutoRepairShopSytem, Customer aCustomer, BookableService aBookableService)
+  public Review(String aId, String aDescription, int aServiceRating, AutoRepairShopSytem aAutoRepairShopSytem, Customer aCustomer, BookableService aBookableService)
   {
     description = aDescription;
     serviceRating = aServiceRating;
+    if (!setId(aId))
+    {
+      throw new RuntimeException("Cannot create due to duplicate id. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+    }
     boolean didAddAutoRepairShopSytem = setAutoRepairShopSytem(aAutoRepairShopSytem);
     if (!didAddAutoRepairShopSytem)
     {
@@ -52,6 +64,25 @@ public class Review
   // INTERFACE
   //------------------------
 
+  public boolean setId(String aId)
+  {
+    boolean wasSet = false;
+    String anOldId = getId();
+    if (anOldId != null && anOldId.equals(aId)) {
+      return true;
+    }
+    if (hasWithId(aId)) {
+      return wasSet;
+    }
+    id = aId;
+    wasSet = true;
+    if (anOldId != null) {
+      reviewsById.remove(anOldId);
+    }
+    reviewsById.put(aId, this);
+    return wasSet;
+  }
+
   public boolean setDescription(String aDescription)
   {
     boolean wasSet = false;
@@ -66,6 +97,22 @@ public class Review
     serviceRating = aServiceRating;
     wasSet = true;
     return wasSet;
+  }
+
+  @Id
+  public String getId()
+  {
+    return id;
+  }
+  /* Code from template attribute_GetUnique */
+  public static Review getWithId(String aId)
+  {
+    return reviewsById.get(aId);
+  }
+  /* Code from template attribute_HasUnique */
+  public static boolean hasWithId(String aId)
+  {
+    return getWithId(aId) != null;
   }
 
   public String getDescription()
@@ -83,13 +130,11 @@ public class Review
     return autoRepairShopSytem;
   }
   /* Code from template association_GetOne */
-  @ManyToOne
   public Customer getCustomer()
   {
     return customer;
   }
   /* Code from template association_GetOne */
-  @ManyToOne
   public BookableService getBookableService()
   {
     return bookableService;
@@ -154,6 +199,7 @@ public class Review
 
   public void delete()
   {
+    reviewsById.remove(getId());
     AutoRepairShopSytem placeholderAutoRepairShopSytem = autoRepairShopSytem;
     this.autoRepairShopSytem = null;
     if(placeholderAutoRepairShopSytem != null)
@@ -178,6 +224,7 @@ public class Review
   public String toString()
   {
     return super.toString() + "["+
+            "id" + ":" + getId()+ "," +
             "description" + ":" + getDescription()+ "," +
             "serviceRating" + ":" + getServiceRating()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "autoRepairShopSytem = "+(getAutoRepairShopSytem()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShopSytem())):"null") + System.getProperties().getProperty("line.separator") +

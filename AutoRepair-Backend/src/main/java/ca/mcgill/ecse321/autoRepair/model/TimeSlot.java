@@ -2,21 +2,29 @@
 /*This code was generated using the UMPLE 1.30.1.5099.60569f335 modeling language!*/
 
 package ca.mcgill.ecse321.autoRepair.model;
+import javax.persistence.*;
+import java.util.*;
 import java.sql.Date;
 import java.sql.Time;
-import javax.persistence.*;
 
-// line 77 "../../../../../AutoRepair.ump"
-// line 181 "../../../../../AutoRepair.ump"
+// line 88 "../../../../../AutoRepair.ump"
+// line 199 "../../../../../AutoRepair.ump"
 @Entity
 public class TimeSlot
 {
+
+  //------------------------
+  // STATIC VARIABLES
+  //------------------------
+
+  private static Map<String, TimeSlot> timeslotsById = new HashMap<String, TimeSlot>();
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
 
   //TimeSlot Attributes
+  private String id;
   private Date startDate;
   private Time startTime;
   private Date endDate;
@@ -29,12 +37,16 @@ public class TimeSlot
   // CONSTRUCTOR
   //------------------------
 
-  public TimeSlot(Date aStartDate, Time aStartTime, Date aEndDate, Time aEndTime, AutoRepairShopSytem aAutoRepairShopSytem)
+  public TimeSlot(String aId, Date aStartDate, Time aStartTime, Date aEndDate, Time aEndTime, AutoRepairShopSytem aAutoRepairShopSytem)
   {
     startDate = aStartDate;
     startTime = aStartTime;
     endDate = aEndDate;
     endTime = aEndTime;
+    if (!setId(aId))
+    {
+      throw new RuntimeException("Cannot create due to duplicate id. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+    }
     boolean didAddAutoRepairShopSytem = setAutoRepairShopSytem(aAutoRepairShopSytem);
     if (!didAddAutoRepairShopSytem)
     {
@@ -45,6 +57,25 @@ public class TimeSlot
   //------------------------
   // INTERFACE
   //------------------------
+
+  public boolean setId(String aId)
+  {
+    boolean wasSet = false;
+    String anOldId = getId();
+    if (anOldId != null && anOldId.equals(aId)) {
+      return true;
+    }
+    if (hasWithId(aId)) {
+      return wasSet;
+    }
+    id = aId;
+    wasSet = true;
+    if (anOldId != null) {
+      timeslotsById.remove(anOldId);
+    }
+    timeslotsById.put(aId, this);
+    return wasSet;
+  }
 
   public boolean setStartDate(Date aStartDate)
   {
@@ -76,6 +107,22 @@ public class TimeSlot
     endTime = aEndTime;
     wasSet = true;
     return wasSet;
+  }
+
+  @Id
+  public String getId()
+  {
+    return id;
+  }
+  /* Code from template attribute_GetUnique */
+  public static TimeSlot getWithId(String aId)
+  {
+    return timeslotsById.get(aId);
+  }
+  /* Code from template attribute_HasUnique */
+  public static boolean hasWithId(String aId)
+  {
+    return getWithId(aId) != null;
   }
 
   public Date getStartDate()
@@ -124,6 +171,7 @@ public class TimeSlot
 
   public void delete()
   {
+    timeslotsById.remove(getId());
     AutoRepairShopSytem placeholderAutoRepairShopSytem = autoRepairShopSytem;
     this.autoRepairShopSytem = null;
     if(placeholderAutoRepairShopSytem != null)
@@ -135,7 +183,8 @@ public class TimeSlot
 
   public String toString()
   {
-    return super.toString() + "["+ "]" + System.getProperties().getProperty("line.separator") +
+    return super.toString() + "["+
+            "id" + ":" + getId()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "startDate" + "=" + (getStartDate() != null ? !getStartDate().equals(this)  ? getStartDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "startTime" + "=" + (getStartTime() != null ? !getStartTime().equals(this)  ? getStartTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "endDate" + "=" + (getEndDate() != null ? !getEndDate().equals(this)  ? getEndDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +

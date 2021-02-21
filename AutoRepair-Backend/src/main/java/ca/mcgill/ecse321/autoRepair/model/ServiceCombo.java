@@ -2,11 +2,11 @@
 /*This code was generated using the UMPLE 1.30.1.5099.60569f335 modeling language!*/
 
 package ca.mcgill.ecse321.autoRepair.model;
-import java.util.*;
 import javax.persistence.*;
+import java.util.*;
 
-// line 97 "../../../../../AutoRepair.ump"
-// line 196 "../../../../../AutoRepair.ump"
+// line 112 "../../../../../AutoRepair.ump"
+// line 214 "../../../../../AutoRepair.ump"
 @Entity
 public class ServiceCombo extends BookableService
 {
@@ -22,7 +22,7 @@ public class ServiceCombo extends BookableService
   //------------------------
   // CONSTRUCTOR
   //------------------------
- 
+
   public ServiceCombo(String aName, AutoRepairShopSytem aAutoRepairShopSytem)
   {
     super(aName, aAutoRepairShopSytem);
@@ -33,7 +33,6 @@ public class ServiceCombo extends BookableService
   // INTERFACE
   //------------------------
   /* Code from template association_GetOne */
-  @ManyToOne
   public ComboItem getMainService()
   {
     return mainService;
@@ -94,9 +93,9 @@ public class ServiceCombo extends BookableService
     return 2;
   }
   /* Code from template association_AddMandatoryManyToOne */
-  public ComboItem addService(boolean aMandatory, Service aService)
+  public ComboItem addService(String aId, boolean aMandatory, Service aService)
   {
-    ComboItem aNewService = new ComboItem(aMandatory, aService, this);
+    ComboItem aNewService = new ComboItem(aId, aMandatory, aService, this);
     return aNewService;
   }
 

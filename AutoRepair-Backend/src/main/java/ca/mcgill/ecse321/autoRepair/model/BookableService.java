@@ -2,11 +2,11 @@
 /*This code was generated using the UMPLE 1.30.1.5099.60569f335 modeling language!*/
 
 package ca.mcgill.ecse321.autoRepair.model;
-import java.util.*;
 import javax.persistence.*;
+import java.util.*;
 
-// line 84 "../../../../../AutoRepair.ump"
-// line 186 "../../../../../AutoRepair.ump"
+// line 97 "../../../../../AutoRepair.ump"
+// line 204 "../../../../../AutoRepair.ump"
 @Entity
 public abstract class BookableService
 {
@@ -95,7 +95,6 @@ public abstract class BookableService
     return aReminder;
   }
 
-  @ManyToMany
   public List<Reminder> getReminders()
   {
     List<Reminder> newReminders = Collections.unmodifiableList(reminders);
@@ -126,7 +125,6 @@ public abstract class BookableService
     return aReview;
   }
 
-  @OneToMany
   public List<Review> getReviews()
   {
     List<Review> newReviews = Collections.unmodifiableList(reviews);
@@ -151,7 +149,6 @@ public abstract class BookableService
     return index;
   }
   /* Code from template association_GetOne */
-  @ManyToOne
   public AutoRepairShopSytem getAutoRepairShopSytem()
   {
     return autoRepairShopSytem;
@@ -163,7 +160,6 @@ public abstract class BookableService
     return aAppointment;
   }
 
-  @OneToMany
   public List<Appointment> getAppointments()
   {
     List<Appointment> newAppointments = Collections.unmodifiableList(appointments);
@@ -275,9 +271,9 @@ public abstract class BookableService
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Review addReview(String aDescription, int aServiceRating, AutoRepairShopSytem aAutoRepairShopSytem, Customer aCustomer)
+  public Review addReview(String aId, String aDescription, int aServiceRating, AutoRepairShopSytem aAutoRepairShopSytem, Customer aCustomer)
   {
-    return new Review(aDescription, aServiceRating, aAutoRepairShopSytem, aCustomer, this);
+    return new Review(aId, aDescription, aServiceRating, aAutoRepairShopSytem, aCustomer, this);
   }
 
   public boolean addReview(Review aReview)
@@ -366,9 +362,9 @@ public abstract class BookableService
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Appointment addAppointment(Customer aCustomer, TimeSlot aTimeSlot, AutoRepairShopSytem aAutoRepairShopSytem)
+  public Appointment addAppointment(String aId, Customer aCustomer, TimeSlot aTimeSlot, AutoRepairShopSytem aAutoRepairShopSytem)
   {
-    return new Appointment(aCustomer, this, aTimeSlot, aAutoRepairShopSytem);
+    return new Appointment(aId, aCustomer, this, aTimeSlot, aAutoRepairShopSytem);
   }
 
   public boolean addAppointment(Appointment aAppointment)

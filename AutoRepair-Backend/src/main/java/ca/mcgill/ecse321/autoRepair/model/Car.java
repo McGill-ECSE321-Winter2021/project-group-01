@@ -2,12 +2,11 @@
 /*This code was generated using the UMPLE 1.30.1.5099.60569f335 modeling language!*/
 
 package ca.mcgill.ecse321.autoRepair.model;
-import java.util.*;
 import javax.persistence.*;
+import java.util.*;
 
-// line 46 "../../../../../AutoRepair.ump"
-// line 160 "../../../../../AutoRepair.ump"
-
+// line 52 "../../../../../AutoRepair.ump"
+// line 179 "../../../../../AutoRepair.ump"
 @Entity
 public class Car
 {
@@ -120,7 +119,6 @@ public class Car
     return getWithPlateNumber(aPlateNumber) != null;
   }
   /* Code from template association_GetOne */
-  @ManyToOne
   public Customer getCustomer()
   {
     return customer;

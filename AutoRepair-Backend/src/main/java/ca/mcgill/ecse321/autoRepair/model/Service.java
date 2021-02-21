@@ -2,11 +2,10 @@
 /*This code was generated using the UMPLE 1.30.1.5099.60569f335 modeling language!*/
 
 package ca.mcgill.ecse321.autoRepair.model;
-import java.util.*;
 import javax.persistence.*;
 
-// line 91 "../../../../../AutoRepair.ump"
-// line 191 "../../../../../AutoRepair.ump"
+// line 105 "../../../../../AutoRepair.ump"
+// line 209 "../../../../../AutoRepair.ump"
 @Entity
 public class Service extends BookableService
 {

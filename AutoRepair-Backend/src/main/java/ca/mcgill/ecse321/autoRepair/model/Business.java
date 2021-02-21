@@ -2,20 +2,27 @@
 /*This code was generated using the UMPLE 1.30.1.5099.60569f335 modeling language!*/
 
 package ca.mcgill.ecse321.autoRepair.model;
-import java.util.*;
 import javax.persistence.*;
+import java.util.*;
 
-// line 60 "../../../../../AutoRepair.ump"
-// line 170 "../../../../../AutoRepair.ump"
+// line 67 "../../../../../AutoRepair.ump"
+// line 189 "../../../../../AutoRepair.ump"
 @Entity
 public class Business
 {
+
+  //------------------------
+  // STATIC VARIABLES
+  //------------------------
+
+  private static Map<String, Business> businesssById = new HashMap<String, Business>();
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
 
   //Business Attributes
+  private String id;
   private String name;
   private String address;
   private String phoneNumber;
@@ -30,12 +37,16 @@ public class Business
   // CONSTRUCTOR
   //------------------------
 
-  public Business(String aName, String aAddress, String aPhoneNumber, String aEmail, AutoRepairShopSytem aAutoRepairShopSytem)
+  public Business(String aId, String aName, String aAddress, String aPhoneNumber, String aEmail, AutoRepairShopSytem aAutoRepairShopSytem)
   {
     name = aName;
     address = aAddress;
     phoneNumber = aPhoneNumber;
     email = aEmail;
+    if (!setId(aId))
+    {
+      throw new RuntimeException("Cannot create due to duplicate id. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+    }
     businessHours = new ArrayList<OperatingHour>();
     holidays = new ArrayList<TimeSlot>();
     boolean didAddAutoRepairShopSytem = setAutoRepairShopSytem(aAutoRepairShopSytem);
@@ -48,6 +59,25 @@ public class Business
   //------------------------
   // INTERFACE
   //------------------------
+
+  public boolean setId(String aId)
+  {
+    boolean wasSet = false;
+    String anOldId = getId();
+    if (anOldId != null && anOldId.equals(aId)) {
+      return true;
+    }
+    if (hasWithId(aId)) {
+      return wasSet;
+    }
+    id = aId;
+    wasSet = true;
+    if (anOldId != null) {
+      businesssById.remove(anOldId);
+    }
+    businesssById.put(aId, this);
+    return wasSet;
+  }
 
   public boolean setName(String aName)
   {
@@ -81,6 +111,22 @@ public class Business
     return wasSet;
   }
 
+  @Id
+  public String getId()
+  {
+    return id;
+  }
+  /* Code from template attribute_GetUnique */
+  public static Business getWithId(String aId)
+  {
+    return businesssById.get(aId);
+  }
+  /* Code from template attribute_HasUnique */
+  public static boolean hasWithId(String aId)
+  {
+    return getWithId(aId) != null;
+  }
+
   public String getName()
   {
     return name;
@@ -107,7 +153,6 @@ public class Business
     return aBusinessHour;
   }
 
-  @OneToMany
   public List<OperatingHour> getBusinessHours()
   {
     List<OperatingHour> newBusinessHours = Collections.unmodifiableList(businessHours);
@@ -138,7 +183,6 @@ public class Business
     return aHoliday;
   }
 
-  @OneToMany
   public List<TimeSlot> getHolidays()
   {
     List<TimeSlot> newHolidays = Collections.unmodifiableList(holidays);
@@ -312,6 +356,7 @@ public class Business
 
   public void delete()
   {
+    businesssById.remove(getId());
     businessHours.clear();
     holidays.clear();
     AutoRepairShopSytem existingAutoRepairShopSytem = autoRepairShopSytem;
@@ -326,6 +371,7 @@ public class Business
   public String toString()
   {
     return super.toString() + "["+
+            "id" + ":" + getId()+ "," +
             "name" + ":" + getName()+ "," +
             "address" + ":" + getAddress()+ "," +
             "phoneNumber" + ":" + getPhoneNumber()+ "," +

@@ -2,21 +2,27 @@
 /*This code was generated using the UMPLE 1.30.1.5099.60569f335 modeling language!*/
 
 package ca.mcgill.ecse321.autoRepair.model;
+import javax.persistence.*;
+import java.util.*;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-
-// line 103 "../../../../../AutoRepair.ump"
-// line 201 "../../../../../AutoRepair.ump"
+// line 119 "../../../../../AutoRepair.ump"
+// line 219 "../../../../../AutoRepair.ump"
 @Entity
 public class ComboItem
 {
+
+  //------------------------
+  // STATIC VARIABLES
+  //------------------------
+
+  private static Map<String, ComboItem> comboitemsById = new HashMap<String, ComboItem>();
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
 
   //ComboItem Attributes
+  private String id;
   private boolean mandatory;
 
   //ComboItem Associations
@@ -27,9 +33,13 @@ public class ComboItem
   // CONSTRUCTOR
   //------------------------
 
-  public ComboItem(boolean aMandatory, Service aService, ServiceCombo aServiceCombo)
+  public ComboItem(String aId, boolean aMandatory, Service aService, ServiceCombo aServiceCombo)
   {
     mandatory = aMandatory;
+    if (!setId(aId))
+    {
+      throw new RuntimeException("Cannot create due to duplicate id. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+    }
     if (!setService(aService))
     {
       throw new RuntimeException("Unable to create ComboItem due to aService. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
@@ -45,6 +55,25 @@ public class ComboItem
   // INTERFACE
   //------------------------
 
+  public boolean setId(String aId)
+  {
+    boolean wasSet = false;
+    String anOldId = getId();
+    if (anOldId != null && anOldId.equals(aId)) {
+      return true;
+    }
+    if (hasWithId(aId)) {
+      return wasSet;
+    }
+    id = aId;
+    wasSet = true;
+    if (anOldId != null) {
+      comboitemsById.remove(anOldId);
+    }
+    comboitemsById.put(aId, this);
+    return wasSet;
+  }
+
   public boolean setMandatory(boolean aMandatory)
   {
     boolean wasSet = false;
@@ -52,7 +81,23 @@ public class ComboItem
     wasSet = true;
     return wasSet;
   }
-  
+
+  @Id
+  public String getId()
+  {
+    return id;
+  }
+  /* Code from template attribute_GetUnique */
+  public static ComboItem getWithId(String aId)
+  {
+    return comboitemsById.get(aId);
+  }
+  /* Code from template attribute_HasUnique */
+  public static boolean hasWithId(String aId)
+  {
+    return getWithId(aId) != null;
+  }
+
   public boolean getMandatory()
   {
     return mandatory;
@@ -63,13 +108,11 @@ public class ComboItem
     return mandatory;
   }
   /* Code from template association_GetOne */
-  @ManyToOne
   public Service getService()
   {
     return service;
   }
   /* Code from template association_GetOne */
-  @ManyToOne
   public ServiceCombo getServiceCombo()
   {
     return serviceCombo;
@@ -118,6 +161,7 @@ public class ComboItem
 
   public void delete()
   {
+    comboitemsById.remove(getId());
     service = null;
     ServiceCombo placeholderServiceCombo = serviceCombo;
     this.serviceCombo = null;
@@ -131,6 +175,7 @@ public class ComboItem
   public String toString()
   {
     return super.toString() + "["+
+            "id" + ":" + getId()+ "," +
             "mandatory" + ":" + getMandatory()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "service = "+(getService()!=null?Integer.toHexString(System.identityHashCode(getService())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "serviceCombo = "+(getServiceCombo()!=null?Integer.toHexString(System.identityHashCode(getServiceCombo())):"null");

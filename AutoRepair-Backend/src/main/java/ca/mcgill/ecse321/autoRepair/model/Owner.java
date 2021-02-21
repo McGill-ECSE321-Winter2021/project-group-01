@@ -2,13 +2,10 @@
 /*This code was generated using the UMPLE 1.30.1.5099.60569f335 modeling language!*/
 
 package ca.mcgill.ecse321.autoRepair.model;
-import java.util.*;
+import javax.persistence.*;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-
-// line 23 "../../../../../AutoRepair.ump"
-// line 145 "../../../../../AutoRepair.ump"
+// line 26 "../../../../../AutoRepair.ump"
+// line 164 "../../../../../AutoRepair.ump"
 @Entity
 public class Owner extends User
 {
@@ -38,7 +35,6 @@ public class Owner extends User
   // INTERFACE
   //------------------------
   /* Code from template association_GetOne */
-  @OneToOne
   public AutoRepairShopSytem getAutoRepairShopSytem()
   {
     return autoRepairShopSytem;

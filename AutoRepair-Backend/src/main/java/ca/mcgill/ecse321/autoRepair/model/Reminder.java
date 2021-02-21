@@ -2,25 +2,29 @@
 /*This code was generated using the UMPLE 1.30.1.5099.60569f335 modeling language!*/
 
 package ca.mcgill.ecse321.autoRepair.model;
+import javax.persistence.*;
+import java.util.*;
 import java.sql.Date;
 import java.sql.Time;
-import java.util.*;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-
-// line 114 "../../../../../AutoRepair.ump"
-// line 212 "../../../../../AutoRepair.ump"
+// line 134 "../../../../../AutoRepair.ump"
+// line 229 "../../../../../AutoRepair.ump"
 @Entity
 public class Reminder
 {
+
+  //------------------------
+  // STATIC VARIABLES
+  //------------------------
+
+  private static Map<String, Reminder> remindersById = new HashMap<String, Reminder>();
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
 
   //Reminder Attributes
+  private String id;
   private String description;
   private Date date;
   private Time time;
@@ -34,11 +38,15 @@ public class Reminder
   // CONSTRUCTOR
   //------------------------
 
-  public Reminder(String aDescription, Date aDate, Time aTime, AutoRepairShopSytem aAutoRepairShopSytem, Customer aCustomer)
+  public Reminder(String aId, String aDescription, Date aDate, Time aTime, AutoRepairShopSytem aAutoRepairShopSytem, Customer aCustomer)
   {
     description = aDescription;
     date = aDate;
     time = aTime;
+    if (!setId(aId))
+    {
+      throw new RuntimeException("Cannot create due to duplicate id. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+    }
     boolean didAddAutoRepairShopSytem = setAutoRepairShopSytem(aAutoRepairShopSytem);
     if (!didAddAutoRepairShopSytem)
     {
@@ -55,6 +63,25 @@ public class Reminder
   //------------------------
   // INTERFACE
   //------------------------
+
+  public boolean setId(String aId)
+  {
+    boolean wasSet = false;
+    String anOldId = getId();
+    if (anOldId != null && anOldId.equals(aId)) {
+      return true;
+    }
+    if (hasWithId(aId)) {
+      return wasSet;
+    }
+    id = aId;
+    wasSet = true;
+    if (anOldId != null) {
+      remindersById.remove(anOldId);
+    }
+    remindersById.put(aId, this);
+    return wasSet;
+  }
 
   public boolean setDescription(String aDescription)
   {
@@ -80,6 +107,22 @@ public class Reminder
     return wasSet;
   }
 
+  @Id
+  public String getId()
+  {
+    return id;
+  }
+  /* Code from template attribute_GetUnique */
+  public static Reminder getWithId(String aId)
+  {
+    return remindersById.get(aId);
+  }
+  /* Code from template attribute_HasUnique */
+  public static boolean hasWithId(String aId)
+  {
+    return getWithId(aId) != null;
+  }
+
   public String getDescription()
   {
     return description;
@@ -100,18 +143,17 @@ public class Reminder
     return autoRepairShopSytem;
   }
   /* Code from template association_GetOne */
-  @ManyToOne
   public Customer getCustomer()
   {
     return customer;
   }
   /* Code from template association_GetMany */
-  @ManyToOne
   public BookableService getBookableService(int index)
   {
     BookableService aBookableService = bookableServices.get(index);
     return aBookableService;
   }
+
   public List<BookableService> getBookableServices()
   {
     List<BookableService> newBookableServices = Collections.unmodifiableList(bookableServices);
@@ -258,6 +300,7 @@ public class Reminder
 
   public void delete()
   {
+    remindersById.remove(getId());
     AutoRepairShopSytem placeholderAutoRepairShopSytem = autoRepairShopSytem;
     this.autoRepairShopSytem = null;
     if(placeholderAutoRepairShopSytem != null)
@@ -282,6 +325,7 @@ public class Reminder
   public String toString()
   {
     return super.toString() + "["+
+            "id" + ":" + getId()+ "," +
             "description" + ":" + getDescription()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "date" + "=" + (getDate() != null ? !getDate().equals(this)  ? getDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "time" + "=" + (getTime() != null ? !getTime().equals(this)  ? getTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +

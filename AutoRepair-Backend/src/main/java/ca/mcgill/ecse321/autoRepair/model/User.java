@@ -8,6 +8,7 @@ import java.util.*;
 // line 19 "../../../../../AutoRepair.ump"
 // line 159 "../../../../../AutoRepair.ump"
 @Entity
+@Table(name = "Users")
 public abstract class User
 {
 

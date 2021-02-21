@@ -17,20 +17,20 @@ public class Assistant extends User
 
   //Assistant Associations
   private List<Reminder> reminders;
-  private AutoRepairShopSytem autoRepairShopSytem;
+  private AutoRepairShopSystem AutoRepairShopSystem;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Assistant(String aUsername, String aPassword, AutoRepairShopSytem aAutoRepairShopSytem)
+  public Assistant(String aUsername, String aPassword, AutoRepairShopSystem aAutoRepairShopSystem)
   {
     super(aUsername, aPassword);
     reminders = new ArrayList<Reminder>();
-    boolean didAddAutoRepairShopSytem = setAutoRepairShopSytem(aAutoRepairShopSytem);
-    if (!didAddAutoRepairShopSytem)
+    boolean didAddAutoRepairShopSystem = setAutoRepairShopSystem(aAutoRepairShopSystem);
+    if (!didAddAutoRepairShopSystem)
     {
-      throw new RuntimeException("Unable to create assistant due to autoRepairShopSytem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+      throw new RuntimeException("Unable to create assistant due to AutoRepairShopSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
   }
 
@@ -70,9 +70,9 @@ public class Assistant extends User
   }
   /* Code from template association_GetOne */
   @OneToOne
-  public AutoRepairShopSytem getAutoRepairShopSytem()
+  public AutoRepairShopSystem getAutoRepairShopSystem()
   {
-    return autoRepairShopSytem;
+    return AutoRepairShopSystem;
   }
   /* Code from template association_MinimumNumberOfMethod */
   public static int minimumNumberOfReminders()
@@ -132,29 +132,29 @@ public class Assistant extends User
     return wasAdded;
   }
   /* Code from template association_SetOneToOptionalOne */
-  public boolean setAutoRepairShopSytem(AutoRepairShopSytem aNewAutoRepairShopSytem)
+  public boolean setAutoRepairShopSystem(AutoRepairShopSystem aNewAutoRepairShopSystem)
   {
     boolean wasSet = false;
-    if (aNewAutoRepairShopSytem == null)
+    if (aNewAutoRepairShopSystem == null)
     {
-      //Unable to setAutoRepairShopSytem to null, as assistant must always be associated to a autoRepairShopSytem
+      //Unable to setAutoRepairShopSystem to null, as assistant must always be associated to a AutoRepairShopSystem
       return wasSet;
     }
     
-    Assistant existingAssistant = aNewAutoRepairShopSytem.getAssistant();
+    Assistant existingAssistant = aNewAutoRepairShopSystem.getAssistant();
     if (existingAssistant != null && !equals(existingAssistant))
     {
-      //Unable to setAutoRepairShopSytem, the current autoRepairShopSytem already has a assistant, which would be orphaned if it were re-assigned
+      //Unable to setAutoRepairShopSystem, the current AutoRepairShopSystem already has a assistant, which would be orphaned if it were re-assigned
       return wasSet;
     }
     
-    AutoRepairShopSytem anOldAutoRepairShopSytem = autoRepairShopSytem;
-    autoRepairShopSytem = aNewAutoRepairShopSytem;
-    autoRepairShopSytem.setAssistant(this);
+    AutoRepairShopSystem anOldAutoRepairShopSystem = AutoRepairShopSystem;
+    AutoRepairShopSystem = aNewAutoRepairShopSystem;
+    AutoRepairShopSystem.setAssistant(this);
 
-    if (anOldAutoRepairShopSytem != null)
+    if (anOldAutoRepairShopSystem != null)
     {
-      anOldAutoRepairShopSytem.setAssistant(null);
+      anOldAutoRepairShopSystem.setAssistant(null);
     }
     wasSet = true;
     return wasSet;
@@ -163,11 +163,11 @@ public class Assistant extends User
   public void delete()
   {
     reminders.clear();
-    AutoRepairShopSytem existingAutoRepairShopSytem = autoRepairShopSytem;
-    autoRepairShopSytem = null;
-    if (existingAutoRepairShopSytem != null)
+    AutoRepairShopSystem existingAutoRepairShopSystem = AutoRepairShopSystem;
+    AutoRepairShopSystem = null;
+    if (existingAutoRepairShopSystem != null)
     {
-      existingAutoRepairShopSytem.setAssistant(null);
+      existingAutoRepairShopSystem.setAssistant(null);
     }
     super.delete();
   }

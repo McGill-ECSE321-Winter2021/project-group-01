@@ -1,11 +1,11 @@
 package ca.mcgill.ecse321.autoRepair.dao;
 import org.springframework.data.repository.CrudRepository;
 
-import ca.mcgill.ecse321.autoRepair.model.AutoRepairShopSytem;
+import ca.mcgill.ecse321.autoRepair.model.AutoRepairShopSystem;
 
-public interface AutoRepairRepository extends CrudRepository<AutoRepairShopSytem, String>{
+public interface AutoRepairRepository extends CrudRepository<AutoRepairShopSystem, String>{
 	
-	AutoRepairShopSytem findAutoRepairShopSystemById(String id);
+	AutoRepairShopSystem findAutoRepairShopSystemById(String id);
 }
 
 

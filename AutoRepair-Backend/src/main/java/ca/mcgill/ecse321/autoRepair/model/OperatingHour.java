@@ -35,13 +35,13 @@ public class OperatingHour
   private Time endTime;
 
   //OperatingHour Associations
-  private AutoRepairShopSytem autoRepairShopSytem;
+  private AutoRepairShopSystem AutoRepairShopSystem;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public OperatingHour(String aId, DayOfWeek aDayOfWeek, Time aStartTime, Time aEndTime, AutoRepairShopSytem aAutoRepairShopSytem)
+  public OperatingHour(String aId, DayOfWeek aDayOfWeek, Time aStartTime, Time aEndTime, AutoRepairShopSystem aAutoRepairShopSystem)
   {
     dayOfWeek = aDayOfWeek;
     startTime = aStartTime;
@@ -50,10 +50,10 @@ public class OperatingHour
     {
       throw new RuntimeException("Cannot create due to duplicate id. See http://manual.umple.org?RE003ViolationofUniqueness.html");
     }
-    boolean didAddAutoRepairShopSytem = setAutoRepairShopSytem(aAutoRepairShopSytem);
-    if (!didAddAutoRepairShopSytem)
+    boolean didAddAutoRepairShopSystem = setAutoRepairShopSystem(aAutoRepairShopSystem);
+    if (!didAddAutoRepairShopSystem)
     {
-      throw new RuntimeException("Unable to create operatingHour due to autoRepairShopSytem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+      throw new RuntimeException("Unable to create operatingHour due to AutoRepairShopSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
   }
 
@@ -136,26 +136,26 @@ public class OperatingHour
   }
   /* Code from template association_GetOne */
   @ManyToOne
-  public AutoRepairShopSytem getAutoRepairShopSytem()
+  public AutoRepairShopSystem getAutoRepairShopSystem()
   {
-    return autoRepairShopSytem;
+    return AutoRepairShopSystem;
   }
   /* Code from template association_SetOneToMany */
-  public boolean setAutoRepairShopSytem(AutoRepairShopSytem aAutoRepairShopSytem)
+  public boolean setAutoRepairShopSystem(AutoRepairShopSystem aAutoRepairShopSystem)
   {
     boolean wasSet = false;
-    if (aAutoRepairShopSytem == null)
+    if (aAutoRepairShopSystem == null)
     {
       return wasSet;
     }
 
-    AutoRepairShopSytem existingAutoRepairShopSytem = autoRepairShopSytem;
-    autoRepairShopSytem = aAutoRepairShopSytem;
-    if (existingAutoRepairShopSytem != null && !existingAutoRepairShopSytem.equals(aAutoRepairShopSytem))
+    AutoRepairShopSystem existingAutoRepairShopSystem = AutoRepairShopSystem;
+    AutoRepairShopSystem = aAutoRepairShopSystem;
+    if (existingAutoRepairShopSystem != null && !existingAutoRepairShopSystem.equals(aAutoRepairShopSystem))
     {
-      existingAutoRepairShopSytem.removeOperatingHour(this);
+      existingAutoRepairShopSystem.removeOperatingHour(this);
     }
-    autoRepairShopSytem.addOperatingHour(this);
+    AutoRepairShopSystem.addOperatingHour(this);
     wasSet = true;
     return wasSet;
   }
@@ -163,11 +163,11 @@ public class OperatingHour
   public void delete()
   {
     operatinghoursById.remove(getId());
-    AutoRepairShopSytem placeholderAutoRepairShopSytem = autoRepairShopSytem;
-    this.autoRepairShopSytem = null;
-    if(placeholderAutoRepairShopSytem != null)
+    AutoRepairShopSystem placeholderAutoRepairShopSystem = AutoRepairShopSystem;
+    this.AutoRepairShopSystem = null;
+    if(placeholderAutoRepairShopSystem != null)
     {
-      placeholderAutoRepairShopSytem.removeOperatingHour(this);
+      placeholderAutoRepairShopSystem.removeOperatingHour(this);
     }
   }
 
@@ -179,6 +179,6 @@ public class OperatingHour
             "  " + "dayOfWeek" + "=" + (getDayOfWeek() != null ? !getDayOfWeek().equals(this)  ? getDayOfWeek().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "startTime" + "=" + (getStartTime() != null ? !getStartTime().equals(this)  ? getStartTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "endTime" + "=" + (getEndTime() != null ? !getEndTime().equals(this)  ? getEndTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "autoRepairShopSytem = "+(getAutoRepairShopSytem()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShopSytem())):"null");
+            "  " + "AutoRepairShopSystem = "+(getAutoRepairShopSystem()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShopSystem())):"null");
   }
 }

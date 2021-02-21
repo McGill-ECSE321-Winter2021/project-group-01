@@ -8,6 +8,7 @@ import java.util.*;
 // line 126 "../../../../../AutoRepair.ump"
 // line 224 "../../../../../AutoRepair.ump"
 @Entity
+@Table(name = "Appointments")
 public class Appointment
 {
 
@@ -29,13 +30,13 @@ public class Appointment
   private BookableService bookableService;
   private List<ComboItem> chosenItems;
   private TimeSlot timeSlot;
-  private AutoRepairShopSytem autoRepairShopSytem;
+  private AutoRepairShopSystem AutoRepairShopSystem;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Appointment(String aId, Customer aCustomer, BookableService aBookableService, TimeSlot aTimeSlot, AutoRepairShopSytem aAutoRepairShopSytem)
+  public Appointment(String aId, Customer aCustomer, BookableService aBookableService, TimeSlot aTimeSlot, AutoRepairShopSystem aAutoRepairShopSystem)
   {
     if (!setId(aId))
     {
@@ -56,10 +57,10 @@ public class Appointment
     {
       throw new RuntimeException("Unable to create Appointment due to aTimeSlot. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
-    boolean didAddAutoRepairShopSytem = setAutoRepairShopSytem(aAutoRepairShopSytem);
-    if (!didAddAutoRepairShopSytem)
+    boolean didAddAutoRepairShopSystem = setAutoRepairShopSystem(aAutoRepairShopSystem);
+    if (!didAddAutoRepairShopSystem)
     {
-      throw new RuntimeException("Unable to create appointment due to autoRepairShopSytem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+      throw new RuntimeException("Unable to create appointment due to AutoRepairShopSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
   }
 
@@ -152,9 +153,9 @@ public class Appointment
   }
   /* Code from template association_GetOne */
   @ManyToOne
-  public AutoRepairShopSytem getAutoRepairShopSytem()
+  public AutoRepairShopSystem getAutoRepairShopSystem()
   {
-    return autoRepairShopSytem;
+    return AutoRepairShopSystem;
   }
   /* Code from template association_SetOneToMany */
   public boolean setCustomer(Customer aCustomer)
@@ -263,21 +264,21 @@ public class Appointment
     return wasSet;
   }
   /* Code from template association_SetOneToMany */
-  public boolean setAutoRepairShopSytem(AutoRepairShopSytem aAutoRepairShopSytem)
+  public boolean setAutoRepairShopSystem(AutoRepairShopSystem aAutoRepairShopSystem)
   {
     boolean wasSet = false;
-    if (aAutoRepairShopSytem == null)
+    if (aAutoRepairShopSystem == null)
     {
       return wasSet;
     }
 
-    AutoRepairShopSytem existingAutoRepairShopSytem = autoRepairShopSytem;
-    autoRepairShopSytem = aAutoRepairShopSytem;
-    if (existingAutoRepairShopSytem != null && !existingAutoRepairShopSytem.equals(aAutoRepairShopSytem))
+    AutoRepairShopSystem existingAutoRepairShopSystem = AutoRepairShopSystem;
+    AutoRepairShopSystem = aAutoRepairShopSystem;
+    if (existingAutoRepairShopSystem != null && !existingAutoRepairShopSystem.equals(aAutoRepairShopSystem))
     {
-      existingAutoRepairShopSytem.removeAppointment(this);
+      existingAutoRepairShopSystem.removeAppointment(this);
     }
-    autoRepairShopSytem.addAppointment(this);
+    AutoRepairShopSystem.addAppointment(this);
     wasSet = true;
     return wasSet;
   }
@@ -299,11 +300,11 @@ public class Appointment
     }
     chosenItems.clear();
     timeSlot = null;
-    AutoRepairShopSytem placeholderAutoRepairShopSytem = autoRepairShopSytem;
-    this.autoRepairShopSytem = null;
-    if(placeholderAutoRepairShopSytem != null)
+    AutoRepairShopSystem placeholderAutoRepairShopSystem = AutoRepairShopSystem;
+    this.AutoRepairShopSystem = null;
+    if(placeholderAutoRepairShopSystem != null)
     {
-      placeholderAutoRepairShopSytem.removeAppointment(this);
+      placeholderAutoRepairShopSystem.removeAppointment(this);
     }
   }
 
@@ -315,6 +316,6 @@ public class Appointment
             "  " + "customer = "+(getCustomer()!=null?Integer.toHexString(System.identityHashCode(getCustomer())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "bookableService = "+(getBookableService()!=null?Integer.toHexString(System.identityHashCode(getBookableService())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "timeSlot = "+(getTimeSlot()!=null?Integer.toHexString(System.identityHashCode(getTimeSlot())):"null") + System.getProperties().getProperty("line.separator") +
-            "  " + "autoRepairShopSytem = "+(getAutoRepairShopSytem()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShopSytem())):"null");
+            "  " + "AutoRepairShopSystem = "+(getAutoRepairShopSystem()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShopSystem())):"null");
   }
 }

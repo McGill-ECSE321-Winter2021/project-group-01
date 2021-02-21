@@ -17,7 +17,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ca.mcgill.ecse321.autoRepair.model.Appointment;
 import ca.mcgill.ecse321.autoRepair.model.Assistant;
-import ca.mcgill.ecse321.autoRepair.model.AutoRepairShopSytem;
+import ca.mcgill.ecse321.autoRepair.model.AutoRepairShopSystem;
 import ca.mcgill.ecse321.autoRepair.model.Customer;
 import ca.mcgill.ecse321.autoRepair.model.Profile;
 import ca.mcgill.ecse321.autoRepair.model.Service;
@@ -45,7 +45,7 @@ public class TestAutoRepairPersistence {
 	
 	@Test
 	public void testPersistAndLoadAssitant() {
-		AutoRepairShopSytem autoRepair = new AutoRepairShopSytem("1");
+		AutoRepairShopSystem autoRepair = new AutoRepairShopSystem("1");
 		String username = "testAssistant";
 		String password = "testPassword";
 		Assistant assistant = new Assistant(username, password, autoRepair);
@@ -61,7 +61,7 @@ public class TestAutoRepairPersistence {
 	@Test
 	public void testPersistAndLoadAutoRepair() {
 		String id = "1";
-		AutoRepairShopSytem autoRepair = new AutoRepairShopSytem(id);
+		AutoRepairShopSystem autoRepair = new AutoRepairShopSystem(id);
 		autoRepairRepository.save(autoRepair);
 
 		autoRepair = null;
@@ -73,7 +73,7 @@ public class TestAutoRepairPersistence {
 	
 	@Test
 	public void testPersistAndLoadAppointment() {
-		AutoRepairShopSytem autoRepair = new AutoRepairShopSytem("1");
+		AutoRepairShopSystem autoRepair = new AutoRepairShopSystem("1");
 		String username = "testCustomer";
 		String password = "testPassword";
 		Profile profile = new Profile("1", "Test", "Customer", "TestAddress", "55555", "+1514123456", "test@mail.ca");

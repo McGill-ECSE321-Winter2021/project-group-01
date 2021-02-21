@@ -30,7 +30,7 @@ public class Reminder
   private Time time;
 
   //Reminder Associations
-  private AutoRepairShopSytem autoRepairShopSytem;
+  private AutoRepairShopSystem AutoRepairShopSystem;
   private Customer customer;
   private List<BookableService> bookableServices;
 
@@ -38,7 +38,7 @@ public class Reminder
   // CONSTRUCTOR
   //------------------------
 
-  public Reminder(String aId, String aDescription, Date aDate, Time aTime, AutoRepairShopSytem aAutoRepairShopSytem, Customer aCustomer)
+  public Reminder(String aId, String aDescription, Date aDate, Time aTime, AutoRepairShopSystem aAutoRepairShopSystem, Customer aCustomer)
   {
     description = aDescription;
     date = aDate;
@@ -47,10 +47,10 @@ public class Reminder
     {
       throw new RuntimeException("Cannot create due to duplicate id. See http://manual.umple.org?RE003ViolationofUniqueness.html");
     }
-    boolean didAddAutoRepairShopSytem = setAutoRepairShopSytem(aAutoRepairShopSytem);
-    if (!didAddAutoRepairShopSytem)
+    boolean didAddAutoRepairShopSystem = setAutoRepairShopSystem(aAutoRepairShopSystem);
+    if (!didAddAutoRepairShopSystem)
     {
-      throw new RuntimeException("Unable to create reminder due to autoRepairShopSytem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+      throw new RuntimeException("Unable to create reminder due to AutoRepairShopSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
     boolean didAddCustomer = setCustomer(aCustomer);
     if (!didAddCustomer)
@@ -139,9 +139,9 @@ public class Reminder
   }
   /* Code from template association_GetOne */
   @ManyToOne
-  public AutoRepairShopSytem getAutoRepairShopSytem()
+  public AutoRepairShopSystem getAutoRepairShopSystem()
   {
-    return autoRepairShopSytem;
+    return AutoRepairShopSystem;
   }
   /* Code from template association_GetOne */
   @ManyToOne
@@ -180,21 +180,21 @@ public class Reminder
     return index;
   }
   /* Code from template association_SetOneToMany */
-  public boolean setAutoRepairShopSytem(AutoRepairShopSytem aAutoRepairShopSytem)
+  public boolean setAutoRepairShopSystem(AutoRepairShopSystem aAutoRepairShopSystem)
   {
     boolean wasSet = false;
-    if (aAutoRepairShopSytem == null)
+    if (aAutoRepairShopSystem == null)
     {
       return wasSet;
     }
 
-    AutoRepairShopSytem existingAutoRepairShopSytem = autoRepairShopSytem;
-    autoRepairShopSytem = aAutoRepairShopSytem;
-    if (existingAutoRepairShopSytem != null && !existingAutoRepairShopSytem.equals(aAutoRepairShopSytem))
+    AutoRepairShopSystem existingAutoRepairShopSystem = AutoRepairShopSystem;
+    AutoRepairShopSystem = aAutoRepairShopSystem;
+    if (existingAutoRepairShopSystem != null && !existingAutoRepairShopSystem.equals(aAutoRepairShopSystem))
     {
-      existingAutoRepairShopSytem.removeReminder(this);
+      existingAutoRepairShopSystem.removeReminder(this);
     }
-    autoRepairShopSytem.addReminder(this);
+    AutoRepairShopSystem.addReminder(this);
     wasSet = true;
     return wasSet;
   }
@@ -303,11 +303,11 @@ public class Reminder
   public void delete()
   {
     remindersById.remove(getId());
-    AutoRepairShopSytem placeholderAutoRepairShopSytem = autoRepairShopSytem;
-    this.autoRepairShopSytem = null;
-    if(placeholderAutoRepairShopSytem != null)
+    AutoRepairShopSystem placeholderAutoRepairShopSystem = AutoRepairShopSystem;
+    this.AutoRepairShopSystem = null;
+    if(placeholderAutoRepairShopSystem != null)
     {
-      placeholderAutoRepairShopSytem.removeReminder(this);
+      placeholderAutoRepairShopSystem.removeReminder(this);
     }
     Customer placeholderCustomer = customer;
     this.customer = null;
@@ -331,7 +331,7 @@ public class Reminder
             "description" + ":" + getDescription()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "date" + "=" + (getDate() != null ? !getDate().equals(this)  ? getDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "time" + "=" + (getTime() != null ? !getTime().equals(this)  ? getTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "autoRepairShopSytem = "+(getAutoRepairShopSytem()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShopSytem())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + "AutoRepairShopSystem = "+(getAutoRepairShopSystem()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShopSystem())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "customer = "+(getCustomer()!=null?Integer.toHexString(System.identityHashCode(getCustomer())):"null");
   }
 }

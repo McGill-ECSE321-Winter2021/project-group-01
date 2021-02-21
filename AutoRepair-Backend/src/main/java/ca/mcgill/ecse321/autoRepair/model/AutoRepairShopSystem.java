@@ -10,23 +10,24 @@ import java.sql.Date;
 // line 3 "../../../../../AutoRepair.ump"
 // line 152 "../../../../../AutoRepair.ump"
 @Entity
-public class AutoRepairShopSytem
+@Table(name = "Users")
+public class AutoRepairShopSystem
 {
 
 	//------------------------
 	// STATIC VARIABLES
 	//------------------------
 
-	private static Map<String, AutoRepairShopSytem> autorepairshopsytemsById = new HashMap<String, AutoRepairShopSytem>();
+	private static Map<String, AutoRepairShopSystem> AutoRepairShopSystemsById = new HashMap<String, AutoRepairShopSystem>();
 
 	//------------------------
 	// MEMBER VARIABLES
 	//------------------------
 
-	//AutoRepairShopSytem Attributes
+	//AutoRepairShopSystem Attributes
 	private String id;
 
-	//AutoRepairShopSytem Associations
+	//AutoRepairShopSystem Associations
 	private Business business;
 	private Owner owner;
 	private Assistant assistant;
@@ -42,7 +43,7 @@ public class AutoRepairShopSytem
 	// CONSTRUCTOR
 	//------------------------
 
-	public AutoRepairShopSytem(String aId)
+	public AutoRepairShopSystem(String aId)
 	{
 		if (!setId(aId))
 		{
@@ -74,9 +75,9 @@ public class AutoRepairShopSytem
 		id = aId;
 		wasSet = true;
 		if (anOldId != null) {
-			autorepairshopsytemsById.remove(anOldId);
+			AutoRepairShopSystemsById.remove(anOldId);
 		}
-		autorepairshopsytemsById.put(aId, this);
+		AutoRepairShopSystemsById.put(aId, this);
 		return wasSet;
 	}
 
@@ -86,9 +87,9 @@ public class AutoRepairShopSytem
 		return id;
 	}
 	/* Code from template attribute_GetUnique */
-	public static AutoRepairShopSytem getWithId(String aId)
+	public static AutoRepairShopSystem getWithId(String aId)
 	{
-		return autorepairshopsytemsById.get(aId);
+		return AutoRepairShopSystemsById.get(aId);
 	}
 	/* Code from template attribute_HasUnique */
 	public static boolean hasWithId(String aId)
@@ -352,24 +353,24 @@ public class AutoRepairShopSytem
 	public boolean setBusiness(Business aNewBusiness)
 	{
 		boolean wasSet = false;
-		if (business != null && !business.equals(aNewBusiness) && equals(business.getAutoRepairShopSytem()))
+		if (business != null && !business.equals(aNewBusiness) && equals(business.getAutoRepairShopSystem()))
 		{
 			//Unable to setBusiness, as existing business would become an orphan
 			return wasSet;
 		}
 
 		business = aNewBusiness;
-		AutoRepairShopSytem anOldAutoRepairShopSytem = aNewBusiness != null ? aNewBusiness.getAutoRepairShopSytem() : null;
+		AutoRepairShopSystem anOldAutoRepairShopSystem = aNewBusiness != null ? aNewBusiness.getAutoRepairShopSystem() : null;
 
-		if (!this.equals(anOldAutoRepairShopSytem))
+		if (!this.equals(anOldAutoRepairShopSystem))
 		{
-			if (anOldAutoRepairShopSytem != null)
+			if (anOldAutoRepairShopSystem != null)
 			{
-				anOldAutoRepairShopSytem.business = null;
+				anOldAutoRepairShopSystem.business = null;
 			}
 			if (business != null)
 			{
-				business.setAutoRepairShopSytem(this);
+				business.setAutoRepairShopSystem(this);
 			}
 		}
 		wasSet = true;
@@ -379,24 +380,24 @@ public class AutoRepairShopSytem
 	public boolean setOwner(Owner aNewOwner)
 	{
 		boolean wasSet = false;
-		if (owner != null && !owner.equals(aNewOwner) && equals(owner.getAutoRepairShopSytem()))
+		if (owner != null && !owner.equals(aNewOwner) && equals(owner.getAutoRepairShopSystem()))
 		{
 			//Unable to setOwner, as existing owner would become an orphan
 			return wasSet;
 		}
 
 		owner = aNewOwner;
-		AutoRepairShopSytem anOldAutoRepairShopSytem = aNewOwner != null ? aNewOwner.getAutoRepairShopSytem() : null;
+		AutoRepairShopSystem anOldAutoRepairShopSystem = aNewOwner != null ? aNewOwner.getAutoRepairShopSystem() : null;
 
-		if (!this.equals(anOldAutoRepairShopSytem))
+		if (!this.equals(anOldAutoRepairShopSystem))
 		{
-			if (anOldAutoRepairShopSytem != null)
+			if (anOldAutoRepairShopSystem != null)
 			{
-				anOldAutoRepairShopSytem.owner = null;
+				anOldAutoRepairShopSystem.owner = null;
 			}
 			if (owner != null)
 			{
-				owner.setAutoRepairShopSytem(this);
+				owner.setAutoRepairShopSystem(this);
 			}
 		}
 		wasSet = true;
@@ -406,24 +407,24 @@ public class AutoRepairShopSytem
 	public boolean setAssistant(Assistant aNewAssistant)
 	{
 		boolean wasSet = false;
-		if (assistant != null && !assistant.equals(aNewAssistant) && equals(assistant.getAutoRepairShopSytem()))
+		if (assistant != null && !assistant.equals(aNewAssistant) && equals(assistant.getAutoRepairShopSystem()))
 		{
 			//Unable to setAssistant, as existing assistant would become an orphan
 			return wasSet;
 		}
 
 		assistant = aNewAssistant;
-		AutoRepairShopSytem anOldAutoRepairShopSytem = aNewAssistant != null ? aNewAssistant.getAutoRepairShopSytem() : null;
+		AutoRepairShopSystem anOldAutoRepairShopSystem = aNewAssistant != null ? aNewAssistant.getAutoRepairShopSystem() : null;
 
-		if (!this.equals(anOldAutoRepairShopSytem))
+		if (!this.equals(anOldAutoRepairShopSystem))
 		{
-			if (anOldAutoRepairShopSytem != null)
+			if (anOldAutoRepairShopSystem != null)
 			{
-				anOldAutoRepairShopSytem.assistant = null;
+				anOldAutoRepairShopSystem.assistant = null;
 			}
 			if (assistant != null)
 			{
-				assistant.setAutoRepairShopSytem(this);
+				assistant.setAutoRepairShopSystem(this);
 			}
 		}
 		wasSet = true;
@@ -444,11 +445,11 @@ public class AutoRepairShopSytem
 	{
 		boolean wasAdded = false;
 		if (customers.contains(aCustomer)) { return false; }
-		AutoRepairShopSytem existingAutoRepairShopSytem = aCustomer.getAutoRepairShopSytem();
-		boolean isNewAutoRepairShopSytem = existingAutoRepairShopSytem != null && !this.equals(existingAutoRepairShopSytem);
-		if (isNewAutoRepairShopSytem)
+		AutoRepairShopSystem existingAutoRepairShopSystem = aCustomer.getAutoRepairShopSystem();
+		boolean isNewAutoRepairShopSystem = existingAutoRepairShopSystem != null && !this.equals(existingAutoRepairShopSystem);
+		if (isNewAutoRepairShopSystem)
 		{
-			aCustomer.setAutoRepairShopSytem(this);
+			aCustomer.setAutoRepairShopSystem(this);
 		}
 		else
 		{
@@ -461,8 +462,8 @@ public class AutoRepairShopSytem
 	public boolean removeCustomer(Customer aCustomer)
 	{
 		boolean wasRemoved = false;
-		//Unable to remove aCustomer, as it must always have a autoRepairShopSytem
-		if (!this.equals(aCustomer.getAutoRepairShopSytem()))
+		//Unable to remove aCustomer, as it must always have a AutoRepairShopSystem
+		if (!this.equals(aCustomer.getAutoRepairShopSystem()))
 		{
 			customers.remove(aCustomer);
 			wasRemoved = true;
@@ -516,11 +517,11 @@ public class AutoRepairShopSytem
 	{
 		boolean wasAdded = false;
 		if (operatingHours.contains(aOperatingHour)) { return false; }
-		AutoRepairShopSytem existingAutoRepairShopSytem = aOperatingHour.getAutoRepairShopSytem();
-		boolean isNewAutoRepairShopSytem = existingAutoRepairShopSytem != null && !this.equals(existingAutoRepairShopSytem);
-		if (isNewAutoRepairShopSytem)
+		AutoRepairShopSystem existingAutoRepairShopSystem = aOperatingHour.getAutoRepairShopSystem();
+		boolean isNewAutoRepairShopSystem = existingAutoRepairShopSystem != null && !this.equals(existingAutoRepairShopSystem);
+		if (isNewAutoRepairShopSystem)
 		{
-			aOperatingHour.setAutoRepairShopSytem(this);
+			aOperatingHour.setAutoRepairShopSystem(this);
 		}
 		else
 		{
@@ -533,8 +534,8 @@ public class AutoRepairShopSytem
 	public boolean removeOperatingHour(OperatingHour aOperatingHour)
 	{
 		boolean wasRemoved = false;
-		//Unable to remove aOperatingHour, as it must always have a autoRepairShopSytem
-		if (!this.equals(aOperatingHour.getAutoRepairShopSytem()))
+		//Unable to remove aOperatingHour, as it must always have a AutoRepairShopSystem
+		if (!this.equals(aOperatingHour.getAutoRepairShopSystem()))
 		{
 			operatingHours.remove(aOperatingHour);
 			wasRemoved = true;
@@ -588,11 +589,11 @@ public class AutoRepairShopSytem
 	{
 		boolean wasAdded = false;
 		if (appointments.contains(aAppointment)) { return false; }
-		AutoRepairShopSytem existingAutoRepairShopSytem = aAppointment.getAutoRepairShopSytem();
-		boolean isNewAutoRepairShopSytem = existingAutoRepairShopSytem != null && !this.equals(existingAutoRepairShopSytem);
-		if (isNewAutoRepairShopSytem)
+		AutoRepairShopSystem existingAutoRepairShopSystem = aAppointment.getAutoRepairShopSystem();
+		boolean isNewAutoRepairShopSystem = existingAutoRepairShopSystem != null && !this.equals(existingAutoRepairShopSystem);
+		if (isNewAutoRepairShopSystem)
 		{
-			aAppointment.setAutoRepairShopSytem(this);
+			aAppointment.setAutoRepairShopSystem(this);
 		}
 		else
 		{
@@ -605,8 +606,8 @@ public class AutoRepairShopSytem
 	public boolean removeAppointment(Appointment aAppointment)
 	{
 		boolean wasRemoved = false;
-		//Unable to remove aAppointment, as it must always have a autoRepairShopSytem
-		if (!this.equals(aAppointment.getAutoRepairShopSytem()))
+		//Unable to remove aAppointment, as it must always have a AutoRepairShopSystem
+		if (!this.equals(aAppointment.getAutoRepairShopSystem()))
 		{
 			appointments.remove(aAppointment);
 			wasRemoved = true;
@@ -660,11 +661,11 @@ public class AutoRepairShopSytem
 	{
 		boolean wasAdded = false;
 		if (timeSlots.contains(aTimeSlot)) { return false; }
-		AutoRepairShopSytem existingAutoRepairShopSytem = aTimeSlot.getAutoRepairShopSytem();
-		boolean isNewAutoRepairShopSytem = existingAutoRepairShopSytem != null && !this.equals(existingAutoRepairShopSytem);
-		if (isNewAutoRepairShopSytem)
+		AutoRepairShopSystem existingAutoRepairShopSystem = aTimeSlot.getAutoRepairShopSystem();
+		boolean isNewAutoRepairShopSystem = existingAutoRepairShopSystem != null && !this.equals(existingAutoRepairShopSystem);
+		if (isNewAutoRepairShopSystem)
 		{
-			aTimeSlot.setAutoRepairShopSytem(this);
+			aTimeSlot.setAutoRepairShopSystem(this);
 		}
 		else
 		{
@@ -677,8 +678,8 @@ public class AutoRepairShopSytem
 	public boolean removeTimeSlot(TimeSlot aTimeSlot)
 	{
 		boolean wasRemoved = false;
-		//Unable to remove aTimeSlot, as it must always have a autoRepairShopSytem
-		if (!this.equals(aTimeSlot.getAutoRepairShopSytem()))
+		//Unable to remove aTimeSlot, as it must always have a AutoRepairShopSystem
+		if (!this.equals(aTimeSlot.getAutoRepairShopSystem()))
 		{
 			timeSlots.remove(aTimeSlot);
 			wasRemoved = true;
@@ -729,11 +730,11 @@ public class AutoRepairShopSytem
 	{
 		boolean wasAdded = false;
 		if (bookableServices.contains(aBookableService)) { return false; }
-		AutoRepairShopSytem existingAutoRepairShopSytem = aBookableService.getAutoRepairShopSytem();
-		boolean isNewAutoRepairShopSytem = existingAutoRepairShopSytem != null && !this.equals(existingAutoRepairShopSytem);
-		if (isNewAutoRepairShopSytem)
+		AutoRepairShopSystem existingAutoRepairShopSystem = aBookableService.getAutoRepairShopSystem();
+		boolean isNewAutoRepairShopSystem = existingAutoRepairShopSystem != null && !this.equals(existingAutoRepairShopSystem);
+		if (isNewAutoRepairShopSystem)
 		{
-			aBookableService.setAutoRepairShopSytem(this);
+			aBookableService.setAutoRepairShopSystem(this);
 		}
 		else
 		{
@@ -746,8 +747,8 @@ public class AutoRepairShopSytem
 	public boolean removeBookableService(BookableService aBookableService)
 	{
 		boolean wasRemoved = false;
-		//Unable to remove aBookableService, as it must always have a autoRepairShopSytem
-		if (!this.equals(aBookableService.getAutoRepairShopSytem()))
+		//Unable to remove aBookableService, as it must always have a AutoRepairShopSystem
+		if (!this.equals(aBookableService.getAutoRepairShopSystem()))
 		{
 			bookableServices.remove(aBookableService);
 			wasRemoved = true;
@@ -801,11 +802,11 @@ public class AutoRepairShopSytem
 	{
 		boolean wasAdded = false;
 		if (reminders.contains(aReminder)) { return false; }
-		AutoRepairShopSytem existingAutoRepairShopSytem = aReminder.getAutoRepairShopSytem();
-		boolean isNewAutoRepairShopSytem = existingAutoRepairShopSytem != null && !this.equals(existingAutoRepairShopSytem);
-		if (isNewAutoRepairShopSytem)
+		AutoRepairShopSystem existingAutoRepairShopSystem = aReminder.getAutoRepairShopSystem();
+		boolean isNewAutoRepairShopSystem = existingAutoRepairShopSystem != null && !this.equals(existingAutoRepairShopSystem);
+		if (isNewAutoRepairShopSystem)
 		{
-			aReminder.setAutoRepairShopSytem(this);
+			aReminder.setAutoRepairShopSystem(this);
 		}
 		else
 		{
@@ -818,8 +819,8 @@ public class AutoRepairShopSytem
 	public boolean removeReminder(Reminder aReminder)
 	{
 		boolean wasRemoved = false;
-		//Unable to remove aReminder, as it must always have a autoRepairShopSytem
-		if (!this.equals(aReminder.getAutoRepairShopSytem()))
+		//Unable to remove aReminder, as it must always have a AutoRepairShopSystem
+		if (!this.equals(aReminder.getAutoRepairShopSystem()))
 		{
 			reminders.remove(aReminder);
 			wasRemoved = true;
@@ -873,11 +874,11 @@ public class AutoRepairShopSytem
 	{
 		boolean wasAdded = false;
 		if (reviews.contains(aReview)) { return false; }
-		AutoRepairShopSytem existingAutoRepairShopSytem = aReview.getAutoRepairShopSytem();
-		boolean isNewAutoRepairShopSytem = existingAutoRepairShopSytem != null && !this.equals(existingAutoRepairShopSytem);
-		if (isNewAutoRepairShopSytem)
+		AutoRepairShopSystem existingAutoRepairShopSystem = aReview.getAutoRepairShopSystem();
+		boolean isNewAutoRepairShopSystem = existingAutoRepairShopSystem != null && !this.equals(existingAutoRepairShopSystem);
+		if (isNewAutoRepairShopSystem)
 		{
-			aReview.setAutoRepairShopSytem(this);
+			aReview.setAutoRepairShopSystem(this);
 		}
 		else
 		{
@@ -890,8 +891,8 @@ public class AutoRepairShopSytem
 	public boolean removeReview(Review aReview)
 	{
 		boolean wasRemoved = false;
-		//Unable to remove aReview, as it must always have a autoRepairShopSytem
-		if (!this.equals(aReview.getAutoRepairShopSytem()))
+		//Unable to remove aReview, as it must always have a AutoRepairShopSystem
+		if (!this.equals(aReview.getAutoRepairShopSystem()))
 		{
 			reviews.remove(aReview);
 			wasRemoved = true;
@@ -933,27 +934,27 @@ public class AutoRepairShopSytem
 
 	public void delete()
 	{
-		autorepairshopsytemsById.remove(getId());
+		AutoRepairShopSystemsById.remove(getId());
 		Business existingBusiness = business;
 		business = null;
 		if (existingBusiness != null)
 		{
 			existingBusiness.delete();
-			existingBusiness.setAutoRepairShopSytem(null);
+			existingBusiness.setAutoRepairShopSystem(null);
 		}
 		Owner existingOwner = owner;
 		owner = null;
 		if (existingOwner != null)
 		{
 			existingOwner.delete();
-			existingOwner.setAutoRepairShopSytem(null);
+			existingOwner.setAutoRepairShopSystem(null);
 		}
 		Assistant existingAssistant = assistant;
 		assistant = null;
 		if (existingAssistant != null)
 		{
 			existingAssistant.delete();
-			existingAssistant.setAutoRepairShopSytem(null);
+			existingAssistant.setAutoRepairShopSystem(null);
 		}
 		while (customers.size() > 0)
 		{

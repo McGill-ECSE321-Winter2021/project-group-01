@@ -15,19 +15,19 @@ public class Owner extends User
   //------------------------
 
   //Owner Associations
-  private AutoRepairShopSytem autoRepairShopSytem;
+  private AutoRepairShopSystem AutoRepairShopSystem;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Owner(String aUsername, String aPassword, AutoRepairShopSytem aAutoRepairShopSytem)
+  public Owner(String aUsername, String aPassword, AutoRepairShopSystem aAutoRepairShopSystem)
   {
     super(aUsername, aPassword);
-    boolean didAddAutoRepairShopSytem = setAutoRepairShopSytem(aAutoRepairShopSytem);
-    if (!didAddAutoRepairShopSytem)
+    boolean didAddAutoRepairShopSystem = setAutoRepairShopSystem(aAutoRepairShopSystem);
+    if (!didAddAutoRepairShopSystem)
     {
-      throw new RuntimeException("Unable to create owner due to autoRepairShopSytem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+      throw new RuntimeException("Unable to create owner due to AutoRepairShopSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
   }
 
@@ -36,34 +36,34 @@ public class Owner extends User
   //------------------------
   /* Code from template association_GetOne */
   @OneToOne
-  public AutoRepairShopSytem getAutoRepairShopSytem()
+  public AutoRepairShopSystem getAutoRepairShopSystem()
   {
-    return autoRepairShopSytem;
+    return AutoRepairShopSystem;
   }
   /* Code from template association_SetOneToOptionalOne */
-  public boolean setAutoRepairShopSytem(AutoRepairShopSytem aNewAutoRepairShopSytem)
+  public boolean setAutoRepairShopSystem(AutoRepairShopSystem aNewAutoRepairShopSystem)
   {
     boolean wasSet = false;
-    if (aNewAutoRepairShopSytem == null)
+    if (aNewAutoRepairShopSystem == null)
     {
-      //Unable to setAutoRepairShopSytem to null, as owner must always be associated to a autoRepairShopSytem
+      //Unable to setAutoRepairShopSystem to null, as owner must always be associated to a AutoRepairShopSystem
       return wasSet;
     }
     
-    Owner existingOwner = aNewAutoRepairShopSytem.getOwner();
+    Owner existingOwner = aNewAutoRepairShopSystem.getOwner();
     if (existingOwner != null && !equals(existingOwner))
     {
-      //Unable to setAutoRepairShopSytem, the current autoRepairShopSytem already has a owner, which would be orphaned if it were re-assigned
+      //Unable to setAutoRepairShopSystem, the current AutoRepairShopSystem already has a owner, which would be orphaned if it were re-assigned
       return wasSet;
     }
     
-    AutoRepairShopSytem anOldAutoRepairShopSytem = autoRepairShopSytem;
-    autoRepairShopSytem = aNewAutoRepairShopSytem;
-    autoRepairShopSytem.setOwner(this);
+    AutoRepairShopSystem anOldAutoRepairShopSystem = AutoRepairShopSystem;
+    AutoRepairShopSystem = aNewAutoRepairShopSystem;
+    AutoRepairShopSystem.setOwner(this);
 
-    if (anOldAutoRepairShopSytem != null)
+    if (anOldAutoRepairShopSystem != null)
     {
-      anOldAutoRepairShopSytem.setOwner(null);
+      anOldAutoRepairShopSystem.setOwner(null);
     }
     wasSet = true;
     return wasSet;
@@ -71,11 +71,11 @@ public class Owner extends User
 
   public void delete()
   {
-    AutoRepairShopSytem existingAutoRepairShopSytem = autoRepairShopSytem;
-    autoRepairShopSytem = null;
-    if (existingAutoRepairShopSytem != null)
+    AutoRepairShopSystem existingAutoRepairShopSystem = AutoRepairShopSystem;
+    AutoRepairShopSystem = null;
+    if (existingAutoRepairShopSystem != null)
     {
-      existingAutoRepairShopSytem.setOwner(null);
+      existingAutoRepairShopSystem.setOwner(null);
     }
     super.delete();
   }

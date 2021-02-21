@@ -51,7 +51,7 @@ public class Profile
     }
   }
 
-  public Profile(String aId, String aFirstName, String aLastName, String aAddress, String aZipCode, String aPhoneNumber, String aEmail, String aUsernameForCustomer, String aPasswordForCustomer, int aNoShowForCustomer, int aShowForCustomer, AutoRepairShopSytem aAutoRepairShopSytemForCustomer)
+  public Profile(String aId, String aFirstName, String aLastName, String aAddress, String aZipCode, String aPhoneNumber, String aEmail, String aUsernameForCustomer, String aPasswordForCustomer, int aNoShowForCustomer, int aShowForCustomer, AutoRepairShopSystem aAutoRepairShopSystemForCustomer)
   {
     if (!setId(aId))
     {
@@ -63,7 +63,7 @@ public class Profile
     zipCode = aZipCode;
     phoneNumber = aPhoneNumber;
     email = aEmail;
-    customer = new Customer(aUsernameForCustomer, aPasswordForCustomer, aNoShowForCustomer, aShowForCustomer, this, aAutoRepairShopSytemForCustomer);
+    customer = new Customer(aUsernameForCustomer, aPasswordForCustomer, aNoShowForCustomer, aShowForCustomer, this, aAutoRepairShopSystemForCustomer);
   }
 
   //------------------------

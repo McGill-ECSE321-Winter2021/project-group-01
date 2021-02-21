@@ -26,14 +26,14 @@ public class Customer extends User
   private List<Reminder> reminders;
   private List<Review> reviews;
   private Profile profile;
-  private AutoRepairShopSytem autoRepairShopSytem;
+  private AutoRepairShopSystem AutoRepairShopSystem;
   private List<Appointment> appointments;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Customer(String aUsername, String aPassword, int aNoShow, int aShow, Profile aProfile, AutoRepairShopSytem aAutoRepairShopSytem)
+  public Customer(String aUsername, String aPassword, int aNoShow, int aShow, Profile aProfile, AutoRepairShopSystem aAutoRepairShopSystem)
   {
     super(aUsername, aPassword);
     noShow = aNoShow;
@@ -46,15 +46,15 @@ public class Customer extends User
       throw new RuntimeException("Unable to create Customer due to aProfile. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
     profile = aProfile;
-    boolean didAddAutoRepairShopSytem = setAutoRepairShopSytem(aAutoRepairShopSytem);
-    if (!didAddAutoRepairShopSytem)
+    boolean didAddAutoRepairShopSystem = setAutoRepairShopSystem(aAutoRepairShopSystem);
+    if (!didAddAutoRepairShopSystem)
     {
-      throw new RuntimeException("Unable to create customer due to autoRepairShopSytem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+      throw new RuntimeException("Unable to create customer due to AutoRepairShopSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
     appointments = new ArrayList<Appointment>();
   }
 
-  public Customer(String aUsername, String aPassword, int aNoShow, int aShow, String aIdForProfile, String aFirstNameForProfile, String aLastNameForProfile, String aAddressForProfile, String aZipCodeForProfile, String aPhoneNumberForProfile, String aEmailForProfile, AutoRepairShopSytem aAutoRepairShopSytem)
+  public Customer(String aUsername, String aPassword, int aNoShow, int aShow, String aIdForProfile, String aFirstNameForProfile, String aLastNameForProfile, String aAddressForProfile, String aZipCodeForProfile, String aPhoneNumberForProfile, String aEmailForProfile, AutoRepairShopSystem aAutoRepairShopSystem)
   {
     super(aUsername, aPassword);
     noShow = aNoShow;
@@ -63,10 +63,10 @@ public class Customer extends User
     reminders = new ArrayList<Reminder>();
     reviews = new ArrayList<Review>();
     profile = new Profile(aIdForProfile, aFirstNameForProfile, aLastNameForProfile, aAddressForProfile, aZipCodeForProfile, aPhoneNumberForProfile, aEmailForProfile);
-    boolean didAddAutoRepairShopSytem = setAutoRepairShopSytem(aAutoRepairShopSytem);
-    if (!didAddAutoRepairShopSytem)
+    boolean didAddAutoRepairShopSystem = setAutoRepairShopSystem(aAutoRepairShopSystem);
+    if (!didAddAutoRepairShopSystem)
     {
-      throw new RuntimeException("Unable to create customer due to autoRepairShopSytem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+      throw new RuntimeException("Unable to create customer due to AutoRepairShopSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
     appointments = new ArrayList<Appointment>();
   }
@@ -200,9 +200,9 @@ public class Customer extends User
     return profile;
   }
   /* Code from template association_GetOne */
-  public AutoRepairShopSytem getAutoRepairShopSytem()
+  public AutoRepairShopSystem getAutoRepairShopSystem()
   {
-    return autoRepairShopSytem;
+    return AutoRepairShopSystem;
   }
   /* Code from template association_GetMany */
   public Appointment getAppointment(int index)
@@ -332,9 +332,9 @@ public class Customer extends User
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Reminder addReminder(String aId, String aDescription, Date aDate, Time aTime, AutoRepairShopSytem aAutoRepairShopSytem)
+  public Reminder addReminder(String aId, String aDescription, Date aDate, Time aTime, AutoRepairShopSystem aAutoRepairShopSystem)
   {
-    return new Reminder(aId, aDescription, aDate, aTime, aAutoRepairShopSytem, this);
+    return new Reminder(aId, aDescription, aDate, aTime, aAutoRepairShopSystem, this);
   }
 
   public boolean addReminder(Reminder aReminder)
@@ -404,9 +404,9 @@ public class Customer extends User
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Review addReview(String aId, String aDescription, int aServiceRating, AutoRepairShopSytem aAutoRepairShopSytem, BookableService aBookableService)
+  public Review addReview(String aId, String aDescription, int aServiceRating, AutoRepairShopSystem aAutoRepairShopSystem, BookableService aBookableService)
   {
-    return new Review(aId, aDescription, aServiceRating, aAutoRepairShopSytem, this, aBookableService);
+    return new Review(aId, aDescription, aServiceRating, aAutoRepairShopSystem, this, aBookableService);
   }
 
   public boolean addReview(Review aReview)
@@ -471,21 +471,21 @@ public class Customer extends User
     return wasAdded;
   }
   /* Code from template association_SetOneToMany */
-  public boolean setAutoRepairShopSytem(AutoRepairShopSytem aAutoRepairShopSytem)
+  public boolean setAutoRepairShopSystem(AutoRepairShopSystem aAutoRepairShopSystem)
   {
     boolean wasSet = false;
-    if (aAutoRepairShopSytem == null)
+    if (aAutoRepairShopSystem == null)
     {
       return wasSet;
     }
 
-    AutoRepairShopSytem existingAutoRepairShopSytem = autoRepairShopSytem;
-    autoRepairShopSytem = aAutoRepairShopSytem;
-    if (existingAutoRepairShopSytem != null && !existingAutoRepairShopSytem.equals(aAutoRepairShopSytem))
+    AutoRepairShopSystem existingAutoRepairShopSystem = AutoRepairShopSystem;
+    AutoRepairShopSystem = aAutoRepairShopSystem;
+    if (existingAutoRepairShopSystem != null && !existingAutoRepairShopSystem.equals(aAutoRepairShopSystem))
     {
-      existingAutoRepairShopSytem.removeCustomer(this);
+      existingAutoRepairShopSystem.removeCustomer(this);
     }
-    autoRepairShopSytem.addCustomer(this);
+    AutoRepairShopSystem.addCustomer(this);
     wasSet = true;
     return wasSet;
   }
@@ -495,9 +495,9 @@ public class Customer extends User
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Appointment addAppointment(String aId, BookableService aBookableService, TimeSlot aTimeSlot, AutoRepairShopSytem aAutoRepairShopSytem)
+  public Appointment addAppointment(String aId, BookableService aBookableService, TimeSlot aTimeSlot, AutoRepairShopSystem aAutoRepairShopSystem)
   {
-    return new Appointment(aId, this, aBookableService, aTimeSlot, aAutoRepairShopSytem);
+    return new Appointment(aId, this, aBookableService, aTimeSlot, aAutoRepairShopSystem);
   }
 
   public boolean addAppointment(Appointment aAppointment)
@@ -587,11 +587,11 @@ public class Customer extends User
     {
       existingProfile.delete();
     }
-    AutoRepairShopSytem placeholderAutoRepairShopSytem = autoRepairShopSytem;
-    this.autoRepairShopSytem = null;
-    if(placeholderAutoRepairShopSytem != null)
+    AutoRepairShopSystem placeholderAutoRepairShopSystem = AutoRepairShopSystem;
+    this.AutoRepairShopSystem = null;
+    if(placeholderAutoRepairShopSystem != null)
     {
-      placeholderAutoRepairShopSytem.removeCustomer(this);
+      placeholderAutoRepairShopSystem.removeCustomer(this);
     }
     for(int i=appointments.size(); i > 0; i--)
     {
@@ -608,6 +608,6 @@ public class Customer extends User
             "noShow" + ":" + getNoShow()+ "," +
             "show" + ":" + getShow()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "profile = "+(getProfile()!=null?Integer.toHexString(System.identityHashCode(getProfile())):"null") + System.getProperties().getProperty("line.separator") +
-            "  " + "autoRepairShopSytem = "+(getAutoRepairShopSytem()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShopSytem())):"null");
+            "  " + "AutoRepairShopSystem = "+(getAutoRepairShopSystem()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShopSystem())):"null");
   }
 }

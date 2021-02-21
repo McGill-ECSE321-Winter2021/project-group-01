@@ -138,7 +138,7 @@ public class AutoRepairShopSytem
 		return aCustomer;
 	}
 
-	@OneToMany(cascade=(CascadeType.ALL))
+	@OneToMany(cascade = { CascadeType.ALL })
 	public List<Customer> getCustomers()
 	{
 		List<Customer> newCustomers = Collections.unmodifiableList(customers);
@@ -169,7 +169,7 @@ public class AutoRepairShopSytem
 		return aOperatingHour;
 	}
 
-	@OneToMany(cascade=(CascadeType.ALL))
+	@OneToMany(cascade = { CascadeType.ALL })
 	public List<OperatingHour> getOperatingHours()
 	{
 		List<OperatingHour> newOperatingHours = Collections.unmodifiableList(operatingHours);
@@ -200,7 +200,7 @@ public class AutoRepairShopSytem
 		return aAppointment;
 	}
 
-	@OneToMany(cascade=(CascadeType.ALL))
+	@OneToMany(cascade = { CascadeType.ALL })
 	public List<Appointment> getAppointments()
 	{
 		List<Appointment> newAppointments = Collections.unmodifiableList(appointments);
@@ -231,7 +231,7 @@ public class AutoRepairShopSytem
 		return aTimeSlot;
 	}
 
-	@OneToMany(cascade=(CascadeType.ALL))
+	@OneToMany(cascade = { CascadeType.ALL })
 	public List<TimeSlot> getTimeSlots()
 	{
 		List<TimeSlot> newTimeSlots = Collections.unmodifiableList(timeSlots);
@@ -262,7 +262,7 @@ public class AutoRepairShopSytem
 		return aBookableService;
 	}
 	
-	@OneToMany(cascade=(CascadeType.ALL))
+	@OneToMany(cascade = { CascadeType.ALL })
 	public List<BookableService> getBookableServices()
 	{
 		List<BookableService> newBookableServices = Collections.unmodifiableList(bookableServices);
@@ -293,7 +293,7 @@ public class AutoRepairShopSytem
 		return aReminder;
 	}
 
-	@OneToMany(cascade=(CascadeType.ALL))
+	@OneToMany(cascade = { CascadeType.ALL })
 	public List<Reminder> getReminders()
 	{
 		List<Reminder> newReminders = Collections.unmodifiableList(reminders);
@@ -324,7 +324,7 @@ public class AutoRepairShopSytem
 		return aReview;
 	}
 
-	@OneToMany(cascade=(CascadeType.ALL))
+	@OneToMany(cascade = { CascadeType.ALL })
 	public List<Review> getReviews()
 	{
 		List<Review> newReviews = Collections.unmodifiableList(reviews);

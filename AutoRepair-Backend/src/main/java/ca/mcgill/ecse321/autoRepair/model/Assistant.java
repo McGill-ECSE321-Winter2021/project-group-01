@@ -44,7 +44,7 @@ public class Assistant extends User
     return aReminder;
   }
 
-  @OneToMany
+  @OneToMany(cascade = { CascadeType.ALL })
   public List<Reminder> getReminders()
   {
     List<Reminder> newReminders = Collections.unmodifiableList(reminders);

@@ -119,12 +119,13 @@ public class Car
     return getWithPlateNumber(aPlateNumber) != null;
   }
   /* Code from template association_GetOne */
-  @ManyToOne
+  @ManyToOne(optional = false)
   public Customer getCustomer()
   {
     return customer;
   }
   /* Code from template association_SetOneToMandatoryMany */
+  @Transient
   public boolean setCustomer(Customer aCustomer)
   {
     boolean wasSet = false;

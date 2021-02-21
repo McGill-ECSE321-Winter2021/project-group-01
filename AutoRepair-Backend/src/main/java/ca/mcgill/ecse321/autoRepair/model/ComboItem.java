@@ -97,24 +97,25 @@ public class ComboItem
   {
     return getWithId(aId) != null;
   }
-
+  @Transient
   public boolean getMandatory()
   {
     return mandatory;
   }
   /* Code from template attribute_IsBoolean */
+  @Transient
   public boolean isMandatory()
   {
     return mandatory;
   }
   /* Code from template association_GetOne */
-  @ManyToOne
+  @ManyToOne(optional = false)
   public Service getService()
   {
     return service;
   }
   /* Code from template association_GetOne */
-  @ManyToOne
+  @ManyToOne(optional = false)
   public ServiceCombo getServiceCombo()
   {
     return serviceCombo;

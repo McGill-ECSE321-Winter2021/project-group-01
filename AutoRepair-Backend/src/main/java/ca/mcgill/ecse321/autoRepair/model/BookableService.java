@@ -95,7 +95,7 @@ public abstract class BookableService
     return aReminder;
   }
 
-  @ManyToMany
+  @ManyToMany(cascade = { CascadeType.ALL })
   public List<Reminder> getReminders()
   {
     List<Reminder> newReminders = Collections.unmodifiableList(reminders);
@@ -126,7 +126,7 @@ public abstract class BookableService
     return aReview;
   }
 
-  @OneToMany
+  @OneToMany(cascade = { CascadeType.ALL })
   public List<Review> getReviews()
   {
     List<Review> newReviews = Collections.unmodifiableList(reviews);
@@ -151,7 +151,7 @@ public abstract class BookableService
     return index;
   }
   /* Code from template association_GetOne */
-  @ManyToOne
+  @ManyToOne(optional = false)
   public AutoRepairShopSytem getAutoRepairShopSytem()
   {
     return autoRepairShopSytem;
@@ -163,7 +163,7 @@ public abstract class BookableService
     return aAppointment;
   }
 
-  @OneToMany
+  @OneToMany(cascade = { CascadeType.ALL })
   public List<Appointment> getAppointments()
   {
     List<Appointment> newAppointments = Collections.unmodifiableList(appointments);

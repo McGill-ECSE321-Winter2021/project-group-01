@@ -52,6 +52,10 @@ public class Assistant extends User
     return newReminders;
   }
 
+  public void setReminders(List<Reminder> reminders) {
+	  this.reminders=reminders;
+  }
+  
   public int numberOfReminders()
   {
     int number = reminders.size();

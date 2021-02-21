@@ -144,6 +144,10 @@ public class AutoRepairShopSystem
 		List<Customer> newCustomers = Collections.unmodifiableList(customers);
 		return newCustomers;
 	}
+	
+	public void setCustomers(List<Customer> customers) {
+		this.customers=customers;
+	}
 
 	public int numberOfCustomers()
 	{
@@ -175,6 +179,10 @@ public class AutoRepairShopSystem
 		List<OperatingHour> newOperatingHours = Collections.unmodifiableList(operatingHours);
 		return newOperatingHours;
 	}
+	
+	public void setOperatingHours(List<OperatingHour> hours) {
+		this.operatingHours=hours;
+	}
 
 	public int numberOfOperatingHours()
 	{
@@ -205,6 +213,10 @@ public class AutoRepairShopSystem
 	{
 		List<Appointment> newAppointments = Collections.unmodifiableList(appointments);
 		return newAppointments;
+	}
+	
+	public void setAppointments(List<Appointment> appointments) {
+		this.appointments=appointments;
 	}
 
 	public int numberOfAppointments()
@@ -238,6 +250,10 @@ public class AutoRepairShopSystem
 		return newTimeSlots;
 	}
 
+	public void setTimeSlots(List<TimeSlot> timeSlots) {
+		this.timeSlots=timeSlots;
+	}
+	
 	public int numberOfTimeSlots()
 	{
 		int number = timeSlots.size();
@@ -269,6 +285,10 @@ public class AutoRepairShopSystem
 		return newBookableServices;
 	}
 
+	public void setBookableServices(List<BookableService> services) {
+		this.bookableServices=services;
+	}
+	
 	public int numberOfBookableServices()
 	{
 		int number = bookableServices.size();
@@ -298,6 +318,10 @@ public class AutoRepairShopSystem
 	{
 		List<Reminder> newReminders = Collections.unmodifiableList(reminders);
 		return newReminders;
+	}
+	
+	public void setReminders(List<Reminder> reminders) {
+		this.reminders=reminders;
 	}
 
 	public int numberOfReminders()
@@ -329,6 +353,10 @@ public class AutoRepairShopSystem
 	{
 		List<Review> newReviews = Collections.unmodifiableList(reviews);
 		return newReviews;
+	}
+	
+	public void setReviews(List<Review> reviews) {
+		this.reviews=reviews;
 	}
 
 	public int numberOfReviews()

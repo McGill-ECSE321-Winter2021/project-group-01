@@ -188,6 +188,10 @@ public class Profile
   {
     return customer;
   }
+  
+  public void setCustomer(Customer customer) {
+	  this.customer=customer;
+  }
 
   public void delete()
   {

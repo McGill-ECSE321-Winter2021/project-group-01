@@ -58,9 +58,10 @@ public class ServiceCombo extends BookableService
     return newServices;
   }
   
-  public void setChosenItems(List<ComboItem> services) {
+  public void setServices(List<ComboItem> services) {
 	  this.services=services;
   }
+
 
   public int numberOfServices()
   {
@@ -88,6 +89,7 @@ public class ServiceCombo extends BookableService
     return wasSet;
   }
   /* Code from template association_IsNumberOfValidMethod */
+ @Transient
   public boolean isNumberOfServicesValid()
   {
     boolean isValid = numberOfServices() >= minimumNumberOfServices();

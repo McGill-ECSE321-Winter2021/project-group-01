@@ -180,7 +180,7 @@ public class Customer extends User
     return aReview;
   }
 
-  @OneToMany(cascade = { CascadeType.ALL })
+  @OneToMany
   public List<Review> getReviews()
   {
     List<Review> newReviews = Collections.unmodifiableList(reviews);

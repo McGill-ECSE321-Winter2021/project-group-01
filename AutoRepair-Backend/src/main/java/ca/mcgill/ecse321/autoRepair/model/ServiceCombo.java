@@ -57,6 +57,10 @@ public class ServiceCombo extends BookableService
     List<ComboItem> newServices = Collections.unmodifiableList(services);
     return newServices;
   }
+  
+  public void setChosenItems(List<ComboItem> services) {
+	  this.services=services;
+  }
 
   public int numberOfServices()
   {

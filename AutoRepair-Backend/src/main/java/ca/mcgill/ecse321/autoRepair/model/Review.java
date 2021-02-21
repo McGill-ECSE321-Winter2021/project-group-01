@@ -130,11 +130,15 @@ public class Review
   {
     return AutoRepairShopSystem;
   }
+
   /* Code from template association_GetOne */
   @ManyToOne
   public Customer getCustomer()
   {
     return customer;
+  }
+  public void SetCustomer(Customer customer) {
+	 this.customer=customer;
   }
   /* Code from template association_GetOne */
   @ManyToOne
@@ -142,6 +146,7 @@ public class Review
   {
     return bookableService;
   }
+  
   /* Code from template association_SetOneToMany */
   public boolean setAutoRepairShopSystem(AutoRepairShopSystem aAutoRepairShopSystem)
   {

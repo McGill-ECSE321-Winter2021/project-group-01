@@ -150,6 +150,7 @@ public class TimeSlot
   {
     return AutoRepairShopSystem;
   }
+   
   /* Code from template association_SetOneToMany */
   public boolean setAutoRepairShopSystem(AutoRepairShopSystem aAutoRepairShopSystem)
   {

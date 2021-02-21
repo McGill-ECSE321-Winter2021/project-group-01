@@ -143,12 +143,14 @@ public class Reminder
   {
     return AutoRepairShopSystem;
   }
+
   /* Code from template association_GetOne */
   @ManyToOne
   public Customer getCustomer()
   {
     return customer;
   }
+ 
   /* Code from template association_GetMany */
   public BookableService getBookableService(int index)
   {
@@ -162,6 +164,10 @@ public class Reminder
     List<BookableService> newBookableServices = Collections.unmodifiableList(bookableServices);
     return newBookableServices;
   }
+  public void setBookableServices(List<BookableService> bookableServices) {
+	  this.bookableServices=bookableServices;
+  }
+  
 
   public int numberOfBookableServices()
   {

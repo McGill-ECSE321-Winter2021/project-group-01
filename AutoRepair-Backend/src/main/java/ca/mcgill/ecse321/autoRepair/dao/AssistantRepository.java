@@ -1,5 +1,11 @@
 package ca.mcgill.ecse321.autoRepair.dao;
 
-public class AssistantRepository {
+import org.springframework.data.repository.CrudRepository;
 
+import ca.mcgill.ecse321.autoRepair.model.Assistant;
+
+
+public interface AssistantRepository extends CrudRepository<Assistant, String>{
+	
+	Assistant findAssistantByUsername(String username);
 }

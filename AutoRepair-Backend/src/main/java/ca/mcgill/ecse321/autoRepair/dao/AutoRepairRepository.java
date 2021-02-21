@@ -1,19 +1,11 @@
 package ca.mcgill.ecse321.autoRepair.dao;
+import org.springframework.data.repository.CrudRepository;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.util.List;
+import ca.mcgill.ecse321.autoRepair.model.AutoRepairShopSytem;
 
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
-
-@Repository
-public class AutoRepairRepository {
-
-
+public interface AutoRepairRepository extends CrudRepository<AutoRepairShopSytem, String>{
+	
+	AutoRepairShopSytem findAutoRepairShopSystemById(String id);
 }
+
+

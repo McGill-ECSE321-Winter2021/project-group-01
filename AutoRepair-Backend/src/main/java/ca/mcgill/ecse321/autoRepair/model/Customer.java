@@ -62,7 +62,7 @@ public class Customer extends User
     cars = new ArrayList<Car>();
     reminders = new ArrayList<Reminder>();
     reviews = new ArrayList<Review>();
-    profile = new Profile(aIdForProfile, aFirstNameForProfile, aLastNameForProfile, aAddressForProfile, aZipCodeForProfile, aPhoneNumberForProfile, aEmailForProfile, this);
+    profile = new Profile(aIdForProfile, aFirstNameForProfile, aLastNameForProfile, aAddressForProfile, aZipCodeForProfile, aPhoneNumberForProfile, aEmailForProfile);
     boolean didAddAutoRepairShopSytem = setAutoRepairShopSytem(aAutoRepairShopSytem);
     if (!didAddAutoRepairShopSytem)
     {

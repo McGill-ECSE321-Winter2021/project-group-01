@@ -27,14 +27,14 @@ public abstract class BookableService
   //BookableService Associations
   private List<Reminder> reminders;
   private List<Review> reviews;
-  private AutoRepairShopSytem autoRepairShopSytem;
+  private AutoRepairShopSystem AutoRepairShopSystem;
   private List<Appointment> appointments;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public BookableService(String aName, AutoRepairShopSytem aAutoRepairShopSytem)
+  public BookableService(String aName, AutoRepairShopSystem aAutoRepairShopSystem)
   {
     if (!setName(aName))
     {
@@ -42,10 +42,10 @@ public abstract class BookableService
     }
     reminders = new ArrayList<Reminder>();
     reviews = new ArrayList<Review>();
-    boolean didAddAutoRepairShopSytem = setAutoRepairShopSytem(aAutoRepairShopSytem);
-    if (!didAddAutoRepairShopSytem)
+    boolean didAddAutoRepairShopSystem = setAutoRepairShopSystem(aAutoRepairShopSystem);
+    if (!didAddAutoRepairShopSystem)
     {
-      throw new RuntimeException("Unable to create bookableService due to autoRepairShopSytem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+      throw new RuntimeException("Unable to create bookableService due to AutoRepairShopSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
     appointments = new ArrayList<Appointment>();
   }
@@ -95,7 +95,7 @@ public abstract class BookableService
     return aReminder;
   }
 
-  @ManyToMany(cascade = { CascadeType.ALL })
+  @ManyToMany
   public List<Reminder> getReminders()
   {
     List<Reminder> newReminders = Collections.unmodifiableList(reminders);
@@ -126,7 +126,7 @@ public abstract class BookableService
     return aReview;
   }
 
-  @OneToMany(cascade = { CascadeType.ALL })
+  @OneToMany
   public List<Review> getReviews()
   {
     List<Review> newReviews = Collections.unmodifiableList(reviews);
@@ -151,10 +151,10 @@ public abstract class BookableService
     return index;
   }
   /* Code from template association_GetOne */
-  @ManyToOne(optional = false)
-  public AutoRepairShopSytem getAutoRepairShopSytem()
+  @ManyToOne
+  public AutoRepairShopSystem getAutoRepairShopSystem()
   {
-    return autoRepairShopSytem;
+    return AutoRepairShopSystem;
   }
   /* Code from template association_GetMany */
   public Appointment getAppointment(int index)
@@ -163,7 +163,7 @@ public abstract class BookableService
     return aAppointment;
   }
 
-  @OneToMany(cascade = { CascadeType.ALL })
+  @OneToMany
   public List<Appointment> getAppointments()
   {
     List<Appointment> newAppointments = Collections.unmodifiableList(appointments);
@@ -275,9 +275,9 @@ public abstract class BookableService
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Review addReview(String aId, String aDescription, int aServiceRating, AutoRepairShopSytem aAutoRepairShopSytem, Customer aCustomer)
+  public Review addReview(String aId, String aDescription, int aServiceRating, AutoRepairShopSystem aAutoRepairShopSystem, Customer aCustomer)
   {
-    return new Review(aId, aDescription, aServiceRating, aAutoRepairShopSytem, aCustomer, this);
+    return new Review(aId, aDescription, aServiceRating, aAutoRepairShopSystem, aCustomer, this);
   }
 
   public boolean addReview(Review aReview)
@@ -342,21 +342,21 @@ public abstract class BookableService
     return wasAdded;
   }
   /* Code from template association_SetOneToMany */
-  public boolean setAutoRepairShopSytem(AutoRepairShopSytem aAutoRepairShopSytem)
+  public boolean setAutoRepairShopSystem(AutoRepairShopSystem aAutoRepairShopSystem)
   {
     boolean wasSet = false;
-    if (aAutoRepairShopSytem == null)
+    if (aAutoRepairShopSystem == null)
     {
       return wasSet;
     }
 
-    AutoRepairShopSytem existingAutoRepairShopSytem = autoRepairShopSytem;
-    autoRepairShopSytem = aAutoRepairShopSytem;
-    if (existingAutoRepairShopSytem != null && !existingAutoRepairShopSytem.equals(aAutoRepairShopSytem))
+    AutoRepairShopSystem existingAutoRepairShopSystem = AutoRepairShopSystem;
+    AutoRepairShopSystem = aAutoRepairShopSystem;
+    if (existingAutoRepairShopSystem != null && !existingAutoRepairShopSystem.equals(aAutoRepairShopSystem))
     {
-      existingAutoRepairShopSytem.removeBookableService(this);
+      existingAutoRepairShopSystem.removeBookableService(this);
     }
-    autoRepairShopSytem.addBookableService(this);
+    AutoRepairShopSystem.addBookableService(this);
     wasSet = true;
     return wasSet;
   }
@@ -366,9 +366,9 @@ public abstract class BookableService
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Appointment addAppointment(String aId, Customer aCustomer, TimeSlot aTimeSlot, AutoRepairShopSytem aAutoRepairShopSytem)
+  public Appointment addAppointment(String aId, Customer aCustomer, TimeSlot aTimeSlot, AutoRepairShopSystem aAutoRepairShopSystem)
   {
-    return new Appointment(aId, aCustomer, this, aTimeSlot, aAutoRepairShopSytem);
+    return new Appointment(aId, aCustomer, this, aTimeSlot, aAutoRepairShopSystem);
   }
 
   public boolean addAppointment(Appointment aAppointment)
@@ -447,11 +447,11 @@ public abstract class BookableService
       Review aReview = reviews.get(i - 1);
       aReview.delete();
     }
-    AutoRepairShopSytem placeholderAutoRepairShopSytem = autoRepairShopSytem;
-    this.autoRepairShopSytem = null;
-    if(placeholderAutoRepairShopSytem != null)
+    AutoRepairShopSystem placeholderAutoRepairShopSystem = AutoRepairShopSystem;
+    this.AutoRepairShopSystem = null;
+    if(placeholderAutoRepairShopSystem != null)
     {
-      placeholderAutoRepairShopSytem.removeBookableService(this);
+      placeholderAutoRepairShopSystem.removeBookableService(this);
     }
     for(int i=appointments.size(); i > 0; i--)
     {
@@ -465,6 +465,6 @@ public abstract class BookableService
   {
     return super.toString() + "["+
             "name" + ":" + getName()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "autoRepairShopSytem = "+(getAutoRepairShopSytem()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShopSytem())):"null");
+            "  " + "AutoRepairShopSystem = "+(getAutoRepairShopSystem()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShopSystem())):"null");
   }
 }

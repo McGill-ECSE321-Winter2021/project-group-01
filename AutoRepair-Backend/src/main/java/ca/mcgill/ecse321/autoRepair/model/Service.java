@@ -21,9 +21,9 @@ public class Service extends BookableService
   // CONSTRUCTOR
   //------------------------
 
-  public Service(String aName, AutoRepairShopSytem aAutoRepairShopSytem, int aDuration)
+  public Service(String aName, AutoRepairShopSystem aAutoRepairShopSystem, int aDuration)
   {
-    super(aName, aAutoRepairShopSytem);
+    super(aName, aAutoRepairShopSystem);
     duration = aDuration;
   }
 

@@ -97,6 +97,7 @@ public class ComboItem
   {
     return getWithId(aId) != null;
   }
+
   @Transient
   public boolean getMandatory()
   {
@@ -109,13 +110,13 @@ public class ComboItem
     return mandatory;
   }
   /* Code from template association_GetOne */
-  @ManyToOne(optional = false)
+  @ManyToOne
   public Service getService()
   {
     return service;
   }
   /* Code from template association_GetOne */
-  @ManyToOne(optional = false)
+  @ManyToOne
   public ServiceCombo getServiceCombo()
   {
     return serviceCombo;

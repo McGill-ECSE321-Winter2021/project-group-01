@@ -1,5 +1,9 @@
 package ca.mcgill.ecse321.autoRepair.dao;
 
-public class ServiceRepository {
+import org.springframework.data.repository.CrudRepository;
+
+import ca.mcgill.ecse321.autoRepair.model.Owner;
+
+public interface ServiceRepository extends CrudRepository<Owner, String>{
 
 }

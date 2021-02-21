@@ -156,6 +156,7 @@ public class Reminder
     return aBookableService;
   }
 
+  @ManyToMany
   public List<BookableService> getBookableServices()
   {
     List<BookableService> newBookableServices = Collections.unmodifiableList(bookableServices);

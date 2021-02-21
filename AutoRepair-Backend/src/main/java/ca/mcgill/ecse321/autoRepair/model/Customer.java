@@ -200,6 +200,7 @@ public class Customer extends User
     return profile;
   }
   /* Code from template association_GetOne */
+  @ManyToOne
   public AutoRepairShopSystem getAutoRepairShopSystem()
   {
     return AutoRepairShopSystem;
@@ -211,6 +212,7 @@ public class Customer extends User
     return aAppointment;
   }
 
+  @OneToMany
   public List<Appointment> getAppointments()
   {
     List<Appointment> newAppointments = Collections.unmodifiableList(appointments);

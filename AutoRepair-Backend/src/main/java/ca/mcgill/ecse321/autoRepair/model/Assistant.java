@@ -8,6 +8,7 @@ import java.util.*;
 // line 60 "../../../../../AutoRepair.ump"
 // line 184 "../../../../../AutoRepair.ump"
 @Entity
+@Table(name="Assistant")
 public class Assistant extends User
 {
 

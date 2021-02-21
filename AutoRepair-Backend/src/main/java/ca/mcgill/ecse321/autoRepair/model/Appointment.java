@@ -103,13 +103,13 @@ public class Appointment
     return getWithId(aId) != null;
   }
   /* Code from template association_GetOne */
-  @ManyToOne
+  @ManyToOne(targetEntity = Customer.class)
   public Customer getCustomer()
   {
     return customer;
   }
   /* Code from template association_GetOne */
-  @ManyToOne
+  @ManyToOne(targetEntity = BookableService.class)
   public BookableService getBookableService()
   {
     return bookableService;
@@ -122,6 +122,7 @@ public class Appointment
   }
 
   @ManyToMany
+  @Column(name="Chosen_Items")
   public List<ComboItem> getChosenItems()
   {
     List<ComboItem> newChosenItems = Collections.unmodifiableList(chosenItems);
@@ -152,7 +153,7 @@ public class Appointment
     return timeSlot;
   }
   /* Code from template association_GetOne */
-  @ManyToOne
+  @ManyToOne(targetEntity = AutoRepairShopSystem.class)  
   public AutoRepairShopSystem getAutoRepairShopSystem()
   {
     return AutoRepairShopSystem;

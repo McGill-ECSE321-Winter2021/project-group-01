@@ -25,6 +25,8 @@ public class Assistant extends User
   // CONSTRUCTOR
   //------------------------
 
+  public Assistant(){ super();}
+
   public Assistant(String aUsername, String aPassword, AutoRepairShopSystem aAutoRepairShopSystem)
   {
     super(aUsername, aPassword);
@@ -49,6 +51,7 @@ public class Assistant extends User
   @OneToMany(cascade = { CascadeType.ALL })
   public List<Reminder> getReminders()
   {
+    if(reminders==null) return null;
     List<Reminder> newReminders = Collections.unmodifiableList(reminders);
     return newReminders;
   }

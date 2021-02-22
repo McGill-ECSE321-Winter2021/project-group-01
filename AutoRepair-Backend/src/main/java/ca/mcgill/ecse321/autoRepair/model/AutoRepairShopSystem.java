@@ -351,7 +351,7 @@ public class AutoRepairShopSystem
 		return aReview;
 	}
 
-	@OneToMany(cascade=(CascadeType.ALL), mappedBy = "autoRepairShopSystem")
+	@OneToMany(cascade={CascadeType.ALL}, mappedBy = "autoRepairShopSystem")
 	public List<Review> getReviews()
 	{
 		List<Review> newReviews = Collections.unmodifiableList(reviews);

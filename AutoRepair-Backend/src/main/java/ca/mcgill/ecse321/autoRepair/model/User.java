@@ -30,6 +30,8 @@ public abstract class User
   // CONSTRUCTOR
   //------------------------
 
+  public User(){};
+
   public User(String aUsername, String aPassword)
   {
     password = aPassword;

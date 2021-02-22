@@ -34,29 +34,28 @@ public class Car{
     return plateNumber;
   }
 
-  public void setPlateNumber(String plateNumber) {
-    this.plateNumber = plateNumber;
-  }
+  private Customer customer;
+
   @ManyToOne
   public Customer getCustomer() {
     return customer;
   }
-
   public void setCustomer(Customer customer) {
     this.customer = customer;
   }
 
-  private String plateNumber;
+  public void setPlateNumber(String plateNumber) {
+    this.plateNumber = plateNumber;
+  }
 
-  private Customer customer;
+  private String plateNumber;
 
   public String toString()
   {
     return super.toString() + "["+
             "model" + ":" + getModel()+ "," +
             "plateNumber" + ":" + getPlateNumber()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "transmission" + "=" + (getTransmission() != null ? !getTransmission().equals(this)  ? getTransmission().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "customer = "+(getCustomer()!=null?Integer.toHexString(System.identityHashCode(getCustomer())):"null");
+            "  " + "transmission" + "=" + (getTransmission() != null ? !getTransmission().equals(this)  ? getTransmission().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator");
   }
 
 }

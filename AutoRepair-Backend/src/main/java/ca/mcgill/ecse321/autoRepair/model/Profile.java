@@ -14,7 +14,6 @@ public class Profile
   private String zipCode;
   private String phoneNumber;
   private String email;
-  private Customer customer;
 
 
   public Profile(String aFirstName, String aLastName, String aAddress, String aZipCode, String aPhoneNumber, String aEmail)
@@ -36,6 +35,17 @@ public class Profile
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   public Long getId() {
     return id;
+  }
+
+  private Customer customer;
+  @OneToOne(cascade = { CascadeType.ALL })
+  public Customer getCustomer()
+  {
+    return customer;
+  }
+
+  public void setCustomer(Customer customer) {
+    this.customer=customer;
   }
 
   public void setId(Long id) {
@@ -91,17 +101,6 @@ public class Profile
   }
 
 
-  @OneToOne(fetch = FetchType.LAZY)
-  public Customer getCustomer()
-  {
-    return customer;
-  }
-
-  public void setCustomer(Customer customer) {
-    this.customer=customer;
-  }
-
-
   public String toString()
   {
     return super.toString() + "["+
@@ -111,7 +110,6 @@ public class Profile
             "address" + ":" + getAddress()+ "," +
             "zipCode" + ":" + getZipCode()+ "," +
             "phoneNumber" + ":" + getPhoneNumber()+ "," +
-            "email" + ":" + getEmail()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "customer = "+(getCustomer()!=null?Integer.toHexString(System.identityHashCode(getCustomer())):"null");
+            "email" + ":" + getEmail()+ "]" + System.getProperties().getProperty("line.separator");
   }
 }

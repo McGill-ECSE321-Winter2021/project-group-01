@@ -17,7 +17,7 @@ public class Reminder
   private Date date;
   private Time time;
   private Customer customer;
-  private List<BookableService> bookableServices;
+  private BookableService bookableService;
 
 
 //  public Reminder(long aId, String aDescription, Date aDate, Time aTime, AutoRepairShopSystem aAutoRepairShopSystem, Customer aCustomer)
@@ -79,14 +79,14 @@ public class Reminder
   }
 
 
-  @ManyToMany(fetch = FetchType.LAZY, mappedBy = "reminders")
-  public List<BookableService> getBookableServices()
+  @ManyToOne(fetch = FetchType.LAZY)
+  public BookableService getBookableService()
   {
-    return this.bookableServices;
+    return this.bookableService;
   }
 
-  public void setBookableServices(List<BookableService> bookableServices) {
-    this.bookableServices=bookableServices;
+  public void setBookableService(BookableService bookableService) {
+    this.bookableService=bookableService;
   }
 
 

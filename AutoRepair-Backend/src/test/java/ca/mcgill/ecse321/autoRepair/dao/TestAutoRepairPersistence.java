@@ -89,25 +89,14 @@ public class TestAutoRepairPersistence {
 		assistantRepository.save(assistant);
 
 
-//		assistant = null;
+		assistant = null;
 
 		assistant = assistantRepository.findAssistantByUsername(username);
 		assertNotNull(assistant);
 		assertEquals(username, assistant.getUsername());
 	}
 	
-//	//@Test
-//	public void testPersistAndLoadAutoRepair() {
-//		String id = "1";
-//		AutoRepairShopSystem autoRepair = new AutoRepairShopSystem(id);
-//		autoRepairRepository.save(autoRepair);
-//
-//		autoRepair = null;
-//
-//		autoRepair = autoRepairRepository.findAutoRepairShopSystemById(id);
-//		assertNotNull(autoRepair);
-//		assertEquals(id, autoRepair.getId());
-//	}
+
 //	
 //	//@Test
 //	public void testPersistAndLoadAppointment() {
@@ -180,10 +169,12 @@ public class TestAutoRepairPersistence {
 //
 //	}
 //
-//	//@Test
+//	@Test
 //	public void testPersistAndLoadProfile() {
-//		AutoRepairShopSystem repairShopSystem = new AutoRepairShopSystem("1");
-//		Customer customer = new Customer("TestCustomer", "12345",0,0, null, repairShopSystem);
+//		
+//		Customer customer = new Customer();
+//		customer.setUsername(username);
+//		
 //		Profile testProfile = new Profile("profileId", "Test", "Profile", "Test Address", "Test zip", "4388661234",
 //				"Test email");
 //		customerRepository.save(customer);
@@ -196,5 +187,31 @@ public class TestAutoRepairPersistence {
 //		assertEquals(profileId, testProfile.getId());
 //		assertEquals(customer.getUsername(), testProfile.getCustomer().getUsername());
 //	}
+	
+	@Test
+	public void testPersistAndLoadBusiness() {
+		String name = "AutoRepair";
+		String address = "Address";
+		String phoneNumber = "514-000-9999";
+		String email = "autorepair@mcgill.ca";
+		Business business = new Business();
+		business.setName(name);
+		business.setAddress(address);
+		business.setPhoneNumber(phoneNumber);
+		business.setEmail(email);
+
+		businessRepository.save(business);
+		
+
+		business = null;
+
+		business = businessRepository.findBusinessByName(name);
+
+		assertNotNull(business);
+		assertEquals(name, business.getName());
+		assertEquals(address, business.getAddress());
+		assertEquals(phoneNumber, business.getPhoneNumber());
+		assertEquals(email, business.getEmail());
+	}
 
 }

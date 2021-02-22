@@ -182,10 +182,15 @@ public class TestAutoRepairPersistence {
 		String address = "Address";
 		String phoneNumber = "514-000-9999";
 		String email = "autorepair@mcgill.ca";
-		Business business = new Business(name, address, phoneNumber, email,
-				autoRepair);
-		
+		Business business = new Business();
+		business.setName(name);
+		business.setAddress(address);
+		business.setPhoneNumber(phoneNumber);
+		business.setEmail(email);
+		business.setAutoRepairShopSystem(autoRepair);
+
 		businessRepository.save(business);
+
 		business = null;
 
 		business = businessRepository.findBusinessByName(name);

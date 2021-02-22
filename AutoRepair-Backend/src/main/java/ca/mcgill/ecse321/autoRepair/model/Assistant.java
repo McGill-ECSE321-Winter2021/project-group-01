@@ -1,194 +1,36 @@
-
-  
-/*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.30.1.5099.60569f335 modeling language!*/
-
 package ca.mcgill.ecse321.autoRepair.model;
-import javax.persistence.*;
-import java.util.*;
 
-// line 60 "../../../../../AutoRepair.ump"
-// line 184 "../../../../../AutoRepair.ump"
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import java.util.List;
+
 @Entity
-public class Assistant extends User
-{
-
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
-
-  //Assistant Associations
-  private List<Reminder> reminders;
-  private AutoRepairShopSystem AutoRepairShopSystem;
-
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
-
-  public Assistant(String aUsername, String aPassword, AutoRepairShopSystem aAutoRepairShopSystem)
-  {
-    super(aUsername, aPassword);
-    reminders = new ArrayList<Reminder>();
-    boolean didAddAutoRepairShopSystem = isSetAutoRepairShopSystem(aAutoRepairShopSystem);
-    if (!didAddAutoRepairShopSystem)
-    {
-      throw new RuntimeException("Unable to create assistant due to AutoRepairShopSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-  }
-  
-  public Assistant() {
-	  super();
-  }
-
-  //------------------------
-  // INTERFACE
-  //------------------------
-  /* Code from template association_GetMany */
-  public Reminder getReminder(int index)
-  {
-    Reminder aReminder = reminders.get(index);
-    return aReminder;
-  }
-
-  @OneToMany(cascade = { CascadeType.ALL })
-  public List<Reminder> getReminders()
-  {
-	if (reminders==null) {
-		return null;
+public class Assistant extends User {
+	public Assistant(){
+		super();
 	}
-    List<Reminder> newReminders = Collections.unmodifiableList(reminders);
-    return newReminders;
-	  //return this.reminders;
-  }
 
-  public void setReminders(List<Reminder> reminders) {
-	  this.reminders=reminders;
-  }
-  
-  public int numberOfReminders()
-  {
-    int number = reminders.size();
-    return number;
-  }
+	@OneToMany
+	public List<Reminder> getReminders() {
+		return reminders;
+	}
 
-  public boolean hasReminders()
-  {
-    boolean has = reminders.size() > 0;
-    return has;
-  }
+	public void setReminders(List<Reminder> reminders) {
+		this.reminders = reminders;
+	}
 
-  public int indexOfReminder(Reminder aReminder)
-  {
-    int index = reminders.indexOf(aReminder);
-    return index;
-  }
-  /* Code from template association_GetOne */
-  @OneToOne(fetch = FetchType.LAZY)
-  public AutoRepairShopSystem getAutoRepairShopSystem()
-  {
-    return AutoRepairShopSystem;
-  }
-  /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfReminders()
-  {
-    return 0;
-  }
-  /* Code from template association_AddUnidirectionalMany */
-  public boolean addReminder(Reminder aReminder)
-  {
-    boolean wasAdded = false;
-    if (reminders.contains(aReminder)) { return false; }
-    reminders.add(aReminder);
-    wasAdded = true;
-    return wasAdded;
-  }
+	private List<Reminder> reminders;
 
-  public boolean removeReminder(Reminder aReminder)
-  {
-    boolean wasRemoved = false;
-    if (reminders.contains(aReminder))
-    {
-      reminders.remove(aReminder);
-      wasRemoved = true;
-    }
-    return wasRemoved;
-  }
-  /* Code from template association_AddIndexControlFunctions */
-  public boolean addReminderAt(Reminder aReminder, int index)
-  {  
-    boolean wasAdded = false;
-    if(addReminder(aReminder))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfReminders()) { index = numberOfReminders() - 1; }
-      reminders.remove(aReminder);
-      reminders.add(index, aReminder);
-      wasAdded = true;
-    }
-    return wasAdded;
-  }
+	@OneToOne
+	public AutoRepairShopSystem getAutoRepairShopSystem() {
+		return autoRepairShopSystem;
+	}
 
-  public boolean addOrMoveReminderAt(Reminder aReminder, int index)
-  {
-    boolean wasAdded = false;
-    if(reminders.contains(aReminder))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfReminders()) { index = numberOfReminders() - 1; }
-      reminders.remove(aReminder);
-      reminders.add(index, aReminder);
-      wasAdded = true;
-    } 
-    else 
-    {
-      wasAdded = addReminderAt(aReminder, index);
-    }
-    return wasAdded;
-  }
-  /* Code from template association_SetOneToOptionalOne */
-  @Transient
-  public boolean isSetAutoRepairShopSystem(AutoRepairShopSystem aNewAutoRepairShopSystem)
-  {
-    boolean wasSet = false;
-    if (aNewAutoRepairShopSystem == null)
-    {
-      //Unable to setAutoRepairShopSystem to null, as assistant must always be associated to a AutoRepairShopSystem
-      return wasSet;
-    }
-    
-    Assistant existingAssistant = aNewAutoRepairShopSystem.getAssistant();
-    if (existingAssistant != null && !equals(existingAssistant))
-    {
-      //Unable to setAutoRepairShopSystem, the current AutoRepairShopSystem already has a assistant, which would be orphaned if it were re-assigned
-      return wasSet;
-    }
-    
-    AutoRepairShopSystem anOldAutoRepairShopSystem = AutoRepairShopSystem;
-    AutoRepairShopSystem = aNewAutoRepairShopSystem;
-    AutoRepairShopSystem.setAssistant(this);
+	public void setAutoRepairShopSystem(AutoRepairShopSystem autoRepairShopSystem) {
+		this.autoRepairShopSystem = autoRepairShopSystem;
+	}
 
-    if (anOldAutoRepairShopSystem != null)
-    {
-      anOldAutoRepairShopSystem.setAssistant(null);
-    }
-    wasSet = true;
-    return wasSet;
-  }
-  
-  public void setAutoRepairShopSystem(AutoRepairShopSystem autoRepair) {
-	  this.AutoRepairShopSystem=autoRepair;
-  }
-
-  public void delete()
-  {
-    reminders.clear();
-    AutoRepairShopSystem existingAutoRepairShopSystem = AutoRepairShopSystem;
-    AutoRepairShopSystem = null;
-    if (existingAutoRepairShopSystem != null)
-    {
-      existingAutoRepairShopSystem.setAssistant(null);
-    }
-    super.delete();
-  }
+	private AutoRepairShopSystem autoRepairShopSystem;
 
 }

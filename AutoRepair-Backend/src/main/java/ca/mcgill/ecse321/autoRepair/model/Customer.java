@@ -19,11 +19,10 @@ public class Customer extends User
 	private List<Reminder> reminders;
 	private List<Review> reviews;
 	private Profile profile;
-	private AutoRepairShopSystem AutoRepairShopSystem;
 	private List<Appointment> appointments;
 
 
-	public Customer(String aUsername, String aPassword, int aNoShow, int aShow, Profile aProfile, AutoRepairShopSystem aAutoRepairShopSystem)
+	public Customer(String aUsername, String aPassword, int aNoShow, int aShow, Profile aProfile)
 	{
 		super(aUsername, aPassword);
 		noShow = aNoShow;
@@ -100,16 +99,6 @@ public class Customer extends User
 		this.profile=profile;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	public AutoRepairShopSystem getAutoRepairShopSystem()
-	{
-		return AutoRepairShopSystem;
-	}
-	
-	public void setAutoRepairShopSystem (AutoRepairShopSystem autoRepair) {
-		this.AutoRepairShopSystem=autoRepair;
-	}
-
 
 	@OneToMany(cascade = { CascadeType.ALL }, mappedBy = "customer")
 	public List<Appointment> getAppointments()
@@ -129,6 +118,6 @@ public class Customer extends User
 				"noShow" + ":" + getNoShow()+ "," +
 				"show" + ":" + getShow()+ "]" + System.getProperties().getProperty("line.separator") +
 				"  " + "profile = "+(getProfile()!=null?Integer.toHexString(System.identityHashCode(getProfile())):"null") + System.getProperties().getProperty("line.separator") +
-				"  " + "AutoRepairShopSystem = "+(getAutoRepairShopSystem()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShopSystem())):"null");
+				"  " + "AutoRepairShopSystem = ";
 	}
 }

@@ -13,7 +13,7 @@ public class OperatingHour
 
 	public enum DayOfWeek { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
 
-	private long id;
+	private Long id;
 
 
 
@@ -21,16 +21,12 @@ public class OperatingHour
 	private Time startTime;
 	private Time endTime;
 
-	private AutoRepairShopSystem autoRepairShopSystem;
 
-
-
-	public OperatingHour(DayOfWeek aDayOfWeek, Time aStartTime, Time aEndTime, AutoRepairShopSystem aAutoRepairShopSystem)
+	public OperatingHour(DayOfWeek aDayOfWeek, Time aStartTime, Time aEndTime)
 	{
 		dayOfWeek = aDayOfWeek;
 		startTime = aStartTime;
 		endTime = aEndTime;
-		this.autoRepairShopSystem=aAutoRepairShopSystem;
 	}
 
 	public OperatingHour() {
@@ -39,11 +35,11 @@ public class OperatingHour
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -72,18 +68,6 @@ public class OperatingHour
 	}
 
 
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	public AutoRepairShopSystem getAutoRepairShopSystem()
-	{
-		return autoRepairShopSystem;
-	}
-
-
-	public void setAutoRepairShopSystem(AutoRepairShopSystem autoRepairShopSystem) {
-		this.autoRepairShopSystem = autoRepairShopSystem;
-	}
-
 	public String toString()
 	{
 		return super.toString() + "["+
@@ -91,6 +75,6 @@ public class OperatingHour
 				"  " + "dayOfWeek" + "=" + (getDayOfWeek() != null ? !getDayOfWeek().equals(this)  ? getDayOfWeek().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
 				"  " + "startTime" + "=" + (getStartTime() != null ? !getStartTime().equals(this)  ? getStartTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
 				"  " + "endTime" + "=" + (getEndTime() != null ? !getEndTime().equals(this)  ? getEndTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-				"  " + "AutoRepairShopSystem = "+(getAutoRepairShopSystem()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShopSystem())):"null");
+				"  " + "AutoRepairShopSystem = ";
 	}
 }

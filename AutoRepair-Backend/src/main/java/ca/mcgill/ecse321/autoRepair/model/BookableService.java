@@ -12,11 +12,9 @@ public abstract class BookableService{
 	private String name;
 	private List<Reminder> reminders;
 	private List<Review> reviews;
-	private AutoRepairShopSystem autoRepairShopSystem;
 	
-	public  BookableService(String name, AutoRepairShopSystem autoRepairShopSystem) {
+	public  BookableService(String name) {
 		this.name=name;
-		this.autoRepairShopSystem=autoRepairShopSystem;
 		this.reviews=new ArrayList<Review>();
 		this.reminders= new ArrayList<Reminder>();
 	}
@@ -51,14 +49,6 @@ public abstract class BookableService{
 		this.reviews = reviews;
 	}
 
-	@ManyToOne
-	public AutoRepairShopSystem getAutoRepairShopSystem() {
-		return autoRepairShopSystem;
-	}
-
-	public void setAutoRepairShopSystem(ca.mcgill.ecse321.autoRepair.model.AutoRepairShopSystem autoRepairShopSystem) {
-		this.autoRepairShopSystem = autoRepairShopSystem;
-	}
 
 	@OneToMany(mappedBy = "bookableService")
 	public List<Appointment> getAppointments() {

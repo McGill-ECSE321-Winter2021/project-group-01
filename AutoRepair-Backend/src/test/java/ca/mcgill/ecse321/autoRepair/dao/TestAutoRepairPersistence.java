@@ -11,6 +11,8 @@ import java.time.Month;
 
 import ca.mcgill.ecse321.autoRepair.model.*;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,7 @@ public class TestAutoRepairPersistence {
 	private CustomerRepository customerRepository;
 	
 	
+	
 	@AfterEach
 	public void clearDatabase() {
 
@@ -51,18 +54,18 @@ public class TestAutoRepairPersistence {
 	
 	@Test
 	public void testPersistAndLoadAssitant() {
-		AutoRepairShopSystem autoRepair = new AutoRepairShopSystem();
+		//AutoRepairShopSystem autoRepair = new AutoRepairShopSystem();
 		String username = "testAssistant";
 		String password = "testPassword";
-//		Assistant assistant = new Assistant();
-//		assistant.setUsername(username);
-//		assistant.setPassword(password);
-//		assistant.setAutoRepairShopSystem(autoRepair);
-		Assistant assistant = new Assistant(username, password, autoRepair);
+		Assistant assistant = new Assistant();
+		assistant.setUsername(username);
+		assistant.setPassword(password);
+		assistant.setAutoRepairShopSystem(null);
+//		Assistant assistant = new Assistant(username, password, autoRepair);
 		assistantRepository.save(assistant);
 
 
-		assistant = null;
+//		assistant = null;
 
 		assistant = assistantRepository.findAssistantByUsername(username);
 		assertNotNull(assistant);

@@ -23,9 +23,9 @@ public abstract class User
   //------------------------
 
   //User Attributes
+  
   private String username;
   private String password;
-  private long id;
 
   //------------------------
   // CONSTRUCTOR
@@ -46,7 +46,7 @@ public abstract class User
   //------------------------
   // INTERFACE
   //------------------------
-
+ 
   public boolean setUsername(String aUsername)
   {
     boolean wasSet = false;
@@ -75,15 +75,6 @@ public abstract class User
   }
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  public long getId() {
-	  return this.id;
-  }
-  
-  public void setId(long id) {
-	  this.id = id;
-  }
-  
   public String getUsername()
   {
     return username;

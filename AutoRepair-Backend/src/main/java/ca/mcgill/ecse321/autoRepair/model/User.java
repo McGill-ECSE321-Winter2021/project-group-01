@@ -30,7 +30,6 @@ public abstract class User
   // CONSTRUCTOR
   //------------------------
 
-  public User(){};
 
   public User(String aUsername, String aPassword)
   {
@@ -76,7 +75,7 @@ public abstract class User
   }
 
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  //@GeneratedValue(strategy = GenerationType.SEQUENCE)
   public String getUsername()
   {
     return username;

@@ -54,7 +54,10 @@ public class TestAutoRepairPersistence {
 		AutoRepairShopSystem autoRepair = new AutoRepairShopSystem("1");
 		String username = "testAssistant";
 		String password = "testPassword";
-		Assistant assistant = new Assistant(username, password, autoRepair);
+		Assistant assistant = new Assistant();
+		assistant.setUsername(username);
+		assistant.setPassword(password);
+		assistant.setAutoRepairShopSystem(autoRepair);
 		assistantRepository.save(assistant);
 
 		assistant = null;

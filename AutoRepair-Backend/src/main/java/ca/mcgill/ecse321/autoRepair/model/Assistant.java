@@ -83,7 +83,8 @@ public class Assistant extends User
     return index;
   }
   /* Code from template association_GetOne */
-  @OneToOne(fetch = FetchType.LAZY)
+//  @OneToOne(fetch = FetchType.LAZY)
+  @OneToOne(mappedBy="assistant",cascade=CascadeType.ALL)
   public AutoRepairShopSystem getAutoRepairShopSystem()
   {
     return AutoRepairShopSystem;
@@ -154,23 +155,22 @@ public class Assistant extends User
       //Unable to setAutoRepairShopSystem to null, as assistant must always be associated to a AutoRepairShopSystem
       return wasSet;
     }
-    
-    Assistant existingAssistant = aNewAutoRepairShopSystem.getAssistant();
-    if (existingAssistant != null && !equals(existingAssistant))
-    {
-      //Unable to setAutoRepairShopSystem, the current AutoRepairShopSystem already has a assistant, which would be orphaned if it were re-assigned
-      return wasSet;
-    }
-    
-    AutoRepairShopSystem anOldAutoRepairShopSystem = AutoRepairShopSystem;
-    AutoRepairShopSystem = aNewAutoRepairShopSystem;
-    AutoRepairShopSystem.setAssistant(this);
+    if(aNewAutoRepairShopSystem.getAssistant()==null) {
+      Assistant existingAssistant = aNewAutoRepairShopSystem.getAssistant();
+      if (existingAssistant != null && !equals(existingAssistant)) {
+        //Unable to setAutoRepairShopSystem, the current AutoRepairShopSystem already has a assistant, which would be orphaned if it were re-assigned
+        return wasSet;
+      }
 
-    if (anOldAutoRepairShopSystem != null)
-    {
-      anOldAutoRepairShopSystem.setAssistant(null);
+      AutoRepairShopSystem anOldAutoRepairShopSystem = AutoRepairShopSystem;
+      AutoRepairShopSystem = aNewAutoRepairShopSystem;
+      AutoRepairShopSystem.setAssistant(this);
+
+      if (anOldAutoRepairShopSystem != null) {
+        anOldAutoRepairShopSystem.setAssistant(null);
+      }
+      wasSet = true;
     }
-    wasSet = true;
     return wasSet;
   }
 

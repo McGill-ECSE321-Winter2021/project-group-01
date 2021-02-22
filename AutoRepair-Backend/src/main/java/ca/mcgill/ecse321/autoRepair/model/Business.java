@@ -1,3 +1,4 @@
+  
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.30.1.5099.60569f335 modeling language!*/
 
@@ -8,6 +9,7 @@ import java.util.*;
 // line 67 "../../../../../AutoRepair.ump"
 // line 189 "../../../../../AutoRepair.ump"
 @Entity
+@Table(name = "business")
 public class Business
 {
 
@@ -112,6 +114,7 @@ public class Business
   }
 
   @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   public String getId()
   {
     return id;
@@ -217,7 +220,7 @@ public class Business
     return index;
   }
   /* Code from template association_GetOne */
-  @OneToOne
+  @OneToOne(fetch = FetchType.LAZY)
   public AutoRepairShopSystem getAutoRepairShopSystem()
   {
     return AutoRepairShopSystem;
@@ -390,3 +393,4 @@ public class Business
             "  " + "AutoRepairShopSystem = "+(getAutoRepairShopSystem()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShopSystem())):"null");
   }
 }
+

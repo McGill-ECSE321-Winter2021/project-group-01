@@ -35,7 +35,7 @@ public class Owner extends User
   // INTERFACE
   //------------------------
   /* Code from template association_GetOne */
-  @OneToOne
+  @OneToOne(fetch = FetchType.LAZY)
   public AutoRepairShopSystem getAutoRepairShopSystem()
   {
     return AutoRepairShopSystem;

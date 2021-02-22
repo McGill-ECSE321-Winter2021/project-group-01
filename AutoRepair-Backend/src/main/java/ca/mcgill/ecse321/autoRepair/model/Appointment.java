@@ -88,6 +88,7 @@ public class Appointment
   }
 
   @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   public String getId()
   {
     return id;
@@ -103,13 +104,13 @@ public class Appointment
     return getWithId(aId) != null;
   }
   /* Code from template association_GetOne */
-  @ManyToOne(targetEntity = Customer.class)
+  @ManyToOne(fetch = FetchType.LAZY)
   public Customer getCustomer()
   {
     return customer;
   }
   /* Code from template association_GetOne */
-  @ManyToOne(targetEntity = BookableService.class)
+  @ManyToOne(fetch = FetchType.LAZY)
   public BookableService getBookableService()
   {
     return bookableService;
@@ -121,8 +122,7 @@ public class Appointment
     return aChosenItem;
   }
 
-  @ManyToMany
-  @Column(name="Chosen_Items")
+  @ManyToMany(fetch=FetchType.LAZY)
   public List<ComboItem> getChosenItems()
   {
     List<ComboItem> newChosenItems = Collections.unmodifiableList(chosenItems);
@@ -151,13 +151,13 @@ public class Appointment
     return index;
   }
   /* Code from template association_GetOne */
-  @OneToOne
+  @OneToOne(fetch = FetchType.LAZY)
   public TimeSlot getTimeSlot()
   {
     return timeSlot;
   }
   /* Code from template association_GetOne */
-  @ManyToOne(targetEntity = AutoRepairShopSystem.class)  
+  @ManyToOne(fetch = FetchType.LAZY)  
   public AutoRepairShopSystem getAutoRepairShopSystem()
   {
     return AutoRepairShopSystem;

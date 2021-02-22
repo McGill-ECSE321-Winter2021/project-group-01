@@ -8,6 +8,7 @@ import java.util.*;
 // line 119 "../../../../../AutoRepair.ump"
 // line 219 "../../../../../AutoRepair.ump"
 @Entity
+@Table(name = "comboItems")
 public class ComboItem
 {
 
@@ -83,6 +84,7 @@ public class ComboItem
   }
 
   @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   public String getId()
   {
     return id;
@@ -110,13 +112,13 @@ public class ComboItem
     return mandatory;
   }
   /* Code from template association_GetOne */
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   public Service getService()
   {
     return service;
   }
   /* Code from template association_GetOne */
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   public ServiceCombo getServiceCombo()
   {
     return serviceCombo;

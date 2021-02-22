@@ -8,7 +8,7 @@ import java.util.*;
 // line 19 "../../../../../AutoRepair.ump"
 // line 159 "../../../../../AutoRepair.ump"
 @Entity
-@Table(name = "Users")
+@Table(name = "Accounts")
 public abstract class User
 {
 
@@ -71,6 +71,7 @@ public abstract class User
   }
 
   @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   public String getUsername()
   {
     return username;

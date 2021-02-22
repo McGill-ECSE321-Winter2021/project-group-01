@@ -8,6 +8,7 @@ import java.util.*;
 // line 141 "../../../../../AutoRepair.ump"
 // line 234 "../../../../../AutoRepair.ump"
 @Entity
+@Table(name = "reviews")
 public class Review
 {
 
@@ -100,6 +101,7 @@ public class Review
   }
 
   @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   public String getId()
   {
     return id;
@@ -125,23 +127,28 @@ public class Review
     return serviceRating;
   }
   /* Code from template association_GetOne */
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   public AutoRepairShopSystem getAutoRepairShopSystem()
   {
     return AutoRepairShopSystem;
   }
+
   /* Code from template association_GetOne */
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   public Customer getCustomer()
   {
     return customer;
   }
+  public void SetCustomer(Customer customer) {
+	 this.customer=customer;
+  }
   /* Code from template association_GetOne */
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   public BookableService getBookableService()
   {
     return bookableService;
   }
+  
   /* Code from template association_SetOneToMany */
   public boolean setAutoRepairShopSystem(AutoRepairShopSystem aAutoRepairShopSystem)
   {

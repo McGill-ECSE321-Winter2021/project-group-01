@@ -33,7 +33,7 @@ public class ServiceCombo extends BookableService
   // INTERFACE
   //------------------------
   /* Code from template association_GetOne */
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   public ComboItem getMainService()
   {
     return mainService;
@@ -51,12 +51,17 @@ public class ServiceCombo extends BookableService
     return aService;
   }
 
-  @OneToMany
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "serviceCombo")
   public List<ComboItem> getServices()
   {
     List<ComboItem> newServices = Collections.unmodifiableList(services);
     return newServices;
   }
+  
+  public void setServices(List<ComboItem> services) {
+	  this.services=services;
+  }
+
 
   public int numberOfServices()
   {
@@ -84,6 +89,7 @@ public class ServiceCombo extends BookableService
     return wasSet;
   }
   /* Code from template association_IsNumberOfValidMethod */
+ @Transient
   public boolean isNumberOfServicesValid()
   {
     boolean isValid = numberOfServices() >= minimumNumberOfServices();

@@ -1,3 +1,4 @@
+
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.30.1.5099.60569f335 modeling language!*/
 
@@ -10,6 +11,7 @@ import java.sql.Date;
 // line 3 "../../../../../AutoRepair.ump"
 // line 152 "../../../../../AutoRepair.ump"
 @Entity
+@Table(name="autoRepairShopSystem")
 public class AutoRepairShopSystem
 {
 
@@ -81,6 +83,7 @@ public class AutoRepairShopSystem
 	}
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	public String getId()
 	{
 		return id;
@@ -96,7 +99,7 @@ public class AutoRepairShopSystem
 		return getWithId(aId) != null;
 	}
 	/* Code from template association_GetOne */
-	@OneToOne
+	@OneToOne(mappedBy = "autoRepairShopSystem")
 	public Business getBusiness()
 	{
 		return business;
@@ -108,7 +111,7 @@ public class AutoRepairShopSystem
 		return has;
 	}
 	/* Code from template association_GetOne */
-	@OneToOne
+	@OneToOne(mappedBy = "autoRepairShopSystem")
 	public Owner getOwner()
 	{
 		return owner;
@@ -120,7 +123,7 @@ public class AutoRepairShopSystem
 		return has;
 	}
 	/* Code from template association_GetOne */
-	@OneToOne
+	@OneToOne(mappedBy = "autoRepairShopSystem")
 	public Assistant getAssistant()
 	{
 		return assistant;
@@ -138,7 +141,7 @@ public class AutoRepairShopSystem
 		return aCustomer;
 	}
 
-	@OneToMany(cascade={CascadeType.ALL})
+	@OneToMany(cascade={CascadeType.ALL}, mappedBy = "autoRepairShopSystem")
 	public List<Customer> getCustomers()
 	{
 		List<Customer> newCustomers = Collections.unmodifiableList(customers);
@@ -173,7 +176,7 @@ public class AutoRepairShopSystem
 		return aOperatingHour;
 	}
 
-	@OneToMany(cascade={CascadeType.ALL})
+	@OneToMany(cascade={CascadeType.ALL}, mappedBy = "autoRepairShopSystem")
 	public List<OperatingHour> getOperatingHours()
 	{
 		List<OperatingHour> newOperatingHours = Collections.unmodifiableList(operatingHours);
@@ -208,7 +211,7 @@ public class AutoRepairShopSystem
 		return aAppointment;
 	}
 
-	@OneToMany(cascade={CascadeType.ALL})
+	@OneToMany(cascade={CascadeType.ALL}, mappedBy = "autoRepairShopSystem")
 	public List<Appointment> getAppointments()
 	{
 		List<Appointment> newAppointments = Collections.unmodifiableList(appointments);
@@ -243,7 +246,7 @@ public class AutoRepairShopSystem
 		return aTimeSlot;
 	}
 
-	@OneToMany(cascade={CascadeType.ALL})
+	@OneToMany(cascade={CascadeType.ALL}, mappedBy = "autoRepairShopSystem")
 	public List<TimeSlot> getTimeSlots()
 	{
 		List<TimeSlot> newTimeSlots = Collections.unmodifiableList(timeSlots);
@@ -278,7 +281,7 @@ public class AutoRepairShopSystem
 		return aBookableService;
 	}
 
-	@OneToMany(cascade={CascadeType.ALL})
+	@OneToMany(cascade={CascadeType.ALL}, mappedBy = "autoRepairShopSystem")
 	public List<BookableService> getBookableServices()
 	{
 		List<BookableService> newBookableServices = Collections.unmodifiableList(bookableServices);
@@ -313,7 +316,7 @@ public class AutoRepairShopSystem
 		return aReminder;
 	}
 
-	@OneToMany(cascade= {CascadeType.ALL})
+	@OneToMany(cascade= {CascadeType.ALL}, mappedBy = "autoRepairShopSystem")
 	public List<Reminder> getReminders()
 	{
 		List<Reminder> newReminders = Collections.unmodifiableList(reminders);
@@ -348,7 +351,7 @@ public class AutoRepairShopSystem
 		return aReview;
 	}
 
-	@OneToMany(cascade=(CascadeType.ALL))
+	@OneToMany(cascade=(CascadeType.ALL), mappedBy = "autoRepairShopSystem")
 	public List<Review> getReviews()
 	{
 		List<Review> newReviews = Collections.unmodifiableList(reviews);

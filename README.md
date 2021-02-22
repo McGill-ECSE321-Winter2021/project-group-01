@@ -17,21 +17,21 @@ This project consists on building a system for an Auto-repair car shop. Customer
 
 | Name                    | Roles/Tasks                                | Sprint 1           | Sprint 2| Sprint 3| Sprint 4|
 | ------------------------| -------------------------------------------|--------------------|---------|---------|---------|
-| Robert Aprahamian       | Software Developer, Testing, Documentation |                25  | -       | -       | -       |
-| Fadi Tawfik Beshay      | Software Developer, Testing, Documentation |                25  | -       | -       | -       |
-| Eric Chehata            | Software Developer, Testing, Documentation |                25  | -       | -       | -       |  
-| Mohammad Saeid Nafar    | Software Developer, Testing, Documentation |                25  | -       | -       | -       |
-| Marc Saber              | Software Developer, Testing, Documentation |                25  | -       | -       | -       |
-| Tamara Zard Aboujaoudeh | Software Developer, Testing, Documentation |                25  | -       | -       | -       |
+| Robert Aprahamian       | Software Developer, Testing, Documentation |                35  | -       | -       | -       |
+| Fadi Tawfik Beshay      | Software Developer, Testing, Documentation |                35  | -       | -       | -       |
+| Eric Chehata            | Software Developer, Testing, Documentation |                35  | -       | -       | -       |  
+| Mohammad Saeid Nafar    | Software Developer, Testing, Documentation |                35  | -       | -       | -       |
+| Marc Saber              | Software Developer, Testing, Documentation |                35  | -       | -       | -       |
+| Tamara Zard Aboujaoudeh | Software Developer, Testing, Documentation |                35  | -       | -       | -       |
 
 
 ## Sprint 1 
 ### Roles and Tasks
-| Name                    | Roles/Tasks                                                               | 
-| ------------------------| --------------------------------------------------------------------------|
-| Robert Aprahamian       | Requirements, Use Case Diagrams, Domain Model, Gradle/Spring/Heroku setup |                
-| Fadi Tawfik Beshay      | Requirements, Use Case Diagrams, Domain Model, Gradle/Spring/Heroku setup |               
-| Eric Chehata            | Requirements, Use Case Diagrams, Domain Model, Gradle/Spring/Heroku setup |               
-| Mohammad Saeid Nafar    | Requirements, Use Case Diagrams, Domain Model, Gradle/Spring/Heroku setup |               
-| Marc Saber              | Requirements, Use Case Diagrams, Domain Model, Gradle/Spring/Heroku setup |               
-| Tamara Zard Aboujaoudeh | Requirements, Use Case Diagrams, Domain Model, Gradle/Spring/Heroku setup |               
+| Name                    | Roles/Tasks                                                                                    | 
+| ------------------------| -----------------------------------------------------------------------------------------------|
+| Robert Aprahamian       | Requirements, Use Case Diagrams, Domain Model, Gradle/Spring/Heroku setup , Persistence Testing|                
+| Fadi Tawfik Beshay      | Requirements, Use Case Diagrams, Domain Model, Gradle/Spring/Heroku setup , Persistence Testing|               
+| Eric Chehata            | Requirements, Use Case Diagrams, Domain Model, Gradle/Spring/Heroku setup , Persistence Testing|               
+| Mohammad Saeid Nafar    | Requirements, Use Case Diagrams, Domain Model, Gradle/Spring/Heroku setup , Persistence Testing|               
+| Marc Saber              | Requirements, Use Case Diagrams, Domain Model, Gradle/Spring/Heroku setup , Persistence Testing|               
+| Tamara Zard Aboujaoudeh | Requirements, Use Case Diagrams, Domain Model, Gradle/Spring/Heroku setup , Persistence Testing|               

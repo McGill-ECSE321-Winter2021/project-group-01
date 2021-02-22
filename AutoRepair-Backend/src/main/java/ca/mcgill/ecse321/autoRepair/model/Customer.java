@@ -1,5 +1,3 @@
-
-
 package ca.mcgill.ecse321.autoRepair.model;
 import javax.persistence.*;
 import java.util.*;
@@ -10,113 +8,87 @@ import java.sql.Time;
 public class Customer extends User
 {
 
-	private int noShow;
+  public Customer() {
+    super();
+  }
 
+  private int noShow;
 
+  public int getNoShow() {
+    return noShow;
+  }
 
-	private int show;
-	private List<Car> cars;
-	private List<Reminder> reminders;
-	private List<Review> reviews;
-	private Profile profile;
-	private AutoRepairShopSystem AutoRepairShopSystem;
-	private List<Appointment> appointments;
+  public void setNoShow(int noShow) {
+    this.noShow = noShow;
+  }
 
+  private int show;
 
-	public Customer() {
-		super();
-	}
+  public int getShow() {
+    return show;
+  }
 
-	public int getNoShow() {
-		return noShow;
-	}
+  public void setShow(int show) {
+    this.show = show;
+  }
 
-	public void setNoShow(int noShow) {
-		this.noShow = noShow;
-	}
+  private List<Car> cars;
+  @OneToMany(cascade = { CascadeType.ALL },mappedBy = "customer")
+  public List<Car> getCars() {
+    return cars;
+  }
 
-	public int getShow() {
-		return show;
-	}
+  public void setCars(List<Car> cars) {
+    this.cars = cars;
+  }
 
-	public void setShow(int show) {
-		this.show = show;
-	}
+  private List<Reminder> reminders;
+  @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "customer")
+  public List<Reminder> getReminders() {
+    return reminders;
+  }
 
-	@OneToMany(cascade = { CascadeType.ALL }, mappedBy = "customer")
-	public List<Car> getCars()
-	{
-		List<Car> newCars = Collections.unmodifiableList(cars);
-		return newCars;
-	}
+  public void setReminders(List<Reminder> reminders) {
+    this.reminders = reminders;
+  }
 
-	public void setCars(List<Car> cars) {
-		this.cars=cars;
-	}
+  private List<Review> reviews;
+  @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "customer")
+  public List<Review> getReviews() {
+    return reviews;
+  }
 
-	
+  public void setReviews(List<Review> reviews) {
+    this.reviews = reviews;
+  }
 
-	@OneToMany(cascade = { CascadeType.ALL }, mappedBy = "customer")
-	public List<Reminder> getReminders()
-	{
-		List<Reminder> newReminders = Collections.unmodifiableList(reminders);
-		return newReminders;
-	}
+  private Profile profile;
+  @OneToOne(mappedBy = "customer")
+  public Profile getProfile() {
+    return profile;
+  }
 
-	public void setReminders(List<Reminder> reminders) {
-		this.reminders=reminders;
-	}
+  public void setProfile(Profile profile) {
+    this.profile = profile;
+  }
 
-	@OneToMany(cascade = { CascadeType.ALL }, mappedBy = "customer")
-	public List<Review> getReviews()
-	{
-		List<Review> newReviews = Collections.unmodifiableList(reviews);
-		return newReviews;
-	}
+  private List<Appointment> appointments;
 
-	public void setReviews(List<Review> reviews) {
-		this.reviews=reviews;
-	}
+  @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "customer")
+  public List<Appointment> getAppointments() {
+    return appointments;
+  }
 
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "customer")
-	public Profile getProfile()
-	{
-		return profile;
-	}
+  public void setAppointments(List<Appointment> appointments) {
+    this.appointments = appointments;
+  }
 
-	public void setProfile(Profile profile) {
-		this.profile=profile;
-	}
+  public String toString()
+  {
+    return super.toString() + "["+
+            "noShow" + ":" + getNoShow()+ "," +
+            "show" + ":" + getShow()+ "]" + System.getProperties().getProperty("line.separator") +
+            "  " + "profile = "+(getProfile()!=null?Integer.toHexString(System.identityHashCode(getProfile())):"null") + System.getProperties().getProperty("line.separator");
+  }
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	public AutoRepairShopSystem getAutoRepairShopSystem()
-	{
-		return AutoRepairShopSystem;
-	}
-	
-	public void setAutoRepairShopSystem (AutoRepairShopSystem autoRepair) {
-		this.AutoRepairShopSystem=autoRepair;
-	}
-
-
-	@OneToMany(cascade = { CascadeType.ALL }, mappedBy = "customer")
-	public List<Appointment> getAppointments()
-	{
-		List<Appointment> newAppointments = Collections.unmodifiableList(appointments);
-		return newAppointments;
-	}
-
-	public void setAppointments(List<Appointment> appointments) {
-		this.appointments=appointments;
-	}
-
-
-	public String toString()
-	{
-		return super.toString() + "["+
-				"noShow" + ":" + getNoShow()+ "," +
-				"show" + ":" + getShow()+ "]" + System.getProperties().getProperty("line.separator") +
-				"  " + "profile = "+(getProfile()!=null?Integer.toHexString(System.identityHashCode(getProfile())):"null") + System.getProperties().getProperty("line.separator") +
-				"  " + "AutoRepairShopSystem = "+(getAutoRepairShopSystem()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShopSystem())):"null");
-	}
 }

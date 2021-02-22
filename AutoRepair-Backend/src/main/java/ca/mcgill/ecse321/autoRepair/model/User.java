@@ -8,35 +8,35 @@ public abstract class User
 
   public User(String username, String password)
   {
-	  this.username=username;
-	  this.password=password;
+    this.username=username;
+    this.password=password;
   }
 
-  public User() {  
+  public User() {
   }
 
   private String username;
-  
+
   @Id
   public String getUsername()
   {
     return this.username;
   }
-  
+
   public void setUsername(String username) {
-	  this.username=username;
+    this.username=username;
   }
-  
-  
-  
+
+
+
   private String password;
- 
+
   public String getPassword() {
-	  return this.password;
+    return this.password;
   }
-  
+
   public void setPassword(String password) {
-	  this.password=password;
+    this.password=password;
   }
 
 

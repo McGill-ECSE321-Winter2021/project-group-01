@@ -1,4 +1,3 @@
-
 package ca.mcgill.ecse321.autoRepair.model;
 import javax.persistence.*;
 import java.util.*;
@@ -13,15 +12,15 @@ public class ServiceCombo extends BookableService
   private List<ComboItem> services;
 
 
-  public ServiceCombo(String aName, AutoRepairShopSystem aAutoRepairShopSystem)
-  {
-    super(aName, aAutoRepairShopSystem);
-    services = new ArrayList<ComboItem>();
-  }
+//  public ServiceCombo(String aName, AutoRepairShopSystem aAutoRepairShopSystem)
+//  {
+//    super(aName, aAutoRepairShopSystem);
+//    services = new ArrayList<ComboItem>();
+//  }
 
-  
+
   public ServiceCombo() {
-	  super();
+    super();
   }
 
   @ManyToOne(fetch = FetchType.LAZY)
@@ -29,7 +28,7 @@ public class ServiceCombo extends BookableService
   {
     return mainService;
   }
-  
+
 
   public void setMainService(ComboItem aNewMainService)
   {
@@ -43,12 +42,12 @@ public class ServiceCombo extends BookableService
   {
     return this.services;
   }
-  
+
   public void setServices(List<ComboItem> services) {
-	  this.services=services;
+    this.services=services;
   }
 
 
-  
+
 
 }

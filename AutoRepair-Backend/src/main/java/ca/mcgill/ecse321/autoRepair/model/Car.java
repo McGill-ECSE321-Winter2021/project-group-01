@@ -9,7 +9,6 @@ public class Car{
   public Car(){
 
   }
- 
   public enum CarTransmission { Manual, Automatic }
   private String model;
   private CarTransmission transmission;
@@ -30,8 +29,6 @@ public class Car{
     this.transmission = transmission;
   }
 
-  private String plateNumber;
-  
   @Id
   public String getPlateNumber() {
     return plateNumber;
@@ -40,9 +37,6 @@ public class Car{
   public void setPlateNumber(String plateNumber) {
     this.plateNumber = plateNumber;
   }
-
-  private Customer customer;
-  
   @ManyToOne
   public Customer getCustomer() {
     return customer;
@@ -52,7 +46,9 @@ public class Car{
     this.customer = customer;
   }
 
+  private String plateNumber;
 
+  private Customer customer;
 
   public String toString()
   {

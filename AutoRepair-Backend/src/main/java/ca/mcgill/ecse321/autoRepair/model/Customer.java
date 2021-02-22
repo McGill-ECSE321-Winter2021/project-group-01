@@ -33,6 +33,7 @@ public class Customer extends User
   }
 
   private List<Car> cars;
+
   @OneToMany(cascade = { CascadeType.ALL },mappedBy = "customer")
   public List<Car> getCars() {
     return cars;
@@ -63,7 +64,8 @@ public class Customer extends User
   }
 
   private Profile profile;
-  @OneToOne(mappedBy = "customer")
+
+  @OneToOne(cascade = { CascadeType.ALL },mappedBy = "customer")
   public Profile getProfile() {
     return profile;
   }

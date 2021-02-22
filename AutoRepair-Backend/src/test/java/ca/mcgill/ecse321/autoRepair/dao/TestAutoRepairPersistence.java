@@ -28,8 +28,6 @@ public class TestAutoRepairPersistence {
 	@Autowired
 	private AssistantRepository assistantRepository;
 	@Autowired
-	private AutoRepairRepository autoRepairRepository;
-	@Autowired
 	private OwnerRepository ownerRepository;
 	@Autowired
 	private ProfileRepository profileRepository;
@@ -42,14 +40,15 @@ public class TestAutoRepairPersistence {
 	
 	
 	
-	@AfterEach
+	@BeforeEach
 	public void clearDatabase() {
 
-		autoRepairRepository.deleteAll();
-		assistantRepository.deleteAll();
-		appointmentRepository.deleteAll();
-		profileRepository.deleteAll();
-		ownerRepository.deleteAll();
+//		autoRepairRepository.deleteAll();
+//		assistantRepository.deleteAll();
+//		appointmentRepository.deleteAll();
+//		profileRepository.deleteAll();
+//		ownerRepository.deleteAll();
+		businessRepository.deleteAll();
 //		reminderRepository.deleteAll();
 
 	}
@@ -177,7 +176,6 @@ public class TestAutoRepairPersistence {
 
 	@Test
 	public void testPersistAndLoadBusiness() {
-		AutoRepairShopSystem autoRepair = new AutoRepairShopSystem();
 		String name = "AutoRepair";
 		String address = "Address";
 		String phoneNumber = "514-000-9999";
@@ -187,10 +185,9 @@ public class TestAutoRepairPersistence {
 		business.setAddress(address);
 		business.setPhoneNumber(phoneNumber);
 		business.setEmail(email);
-		business.setAutoRepairShopSystem(autoRepair);
 
-		autoRepairRepository.save(autoRepair);
 		businessRepository.save(business);
+		
 
 		business = null;
 

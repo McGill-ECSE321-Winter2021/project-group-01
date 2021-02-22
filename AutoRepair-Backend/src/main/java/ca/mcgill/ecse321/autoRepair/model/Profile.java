@@ -7,7 +7,7 @@ import java.util.*;
 public class Profile
 {
 
-	private long id;
+	private Long id;
 
 
 
@@ -37,11 +37,11 @@ public class Profile
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

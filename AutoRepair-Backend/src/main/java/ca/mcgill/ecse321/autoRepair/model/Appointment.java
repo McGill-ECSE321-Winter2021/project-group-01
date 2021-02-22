@@ -10,15 +10,15 @@ public class Appointment {
 	public Appointment(){
 
 	}
-	private long id;
+	private Long id;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	public long getId(){
+	@GeneratedValue
+	public Long getId(){
 		return this.id;
 	}
 
-	public void setId(long aId){
+	public void setId(Long aId){
 		this.id=aId;
 	}
 
@@ -64,17 +64,7 @@ public class Appointment {
 		this.timeSlot=aTimeSlot;
 	}
 
-	private AutoRepairShopSystem system;
-
-	@ManyToOne
-	public AutoRepairShopSystem getAutoRepairShopSystem(){
-		return this.system;
-	}
-
-	public void setAutoRepairShopSystem(AutoRepairShopSystem autoRepairShopSystem){
-		this.system=autoRepairShopSystem;
-	}
-
+	
 	public String toString()
 	{
 		return super.toString() + "["+
@@ -82,7 +72,7 @@ public class Appointment {
 				"  " + "customer = "+(getCustomer()!=null?Integer.toHexString(System.identityHashCode(getCustomer())):"null") + System.getProperties().getProperty("line.separator") +
 				"  " + "bookableService = "+(getBookableService()!=null?Integer.toHexString(System.identityHashCode(getBookableService())):"null") + System.getProperties().getProperty("line.separator") +
 				"  " + "timeSlot = "+(getTimeSlot()!=null?Integer.toHexString(System.identityHashCode(getTimeSlot())):"null") + System.getProperties().getProperty("line.separator") +
-				"  " + "AutoRepairShopSystem = "+(getAutoRepairShopSystem()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShopSystem())):"null");
+				"  " + "AutoRepairShopSystem = ";
 	}
 
 }

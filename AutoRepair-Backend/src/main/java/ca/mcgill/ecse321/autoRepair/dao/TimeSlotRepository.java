@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import ca.mcgill.ecse321.autoRepair.model.TimeSlot;
 
-public interface TimeSlotRepository extends CrudRepository<TimeSlot, String>{
+public interface TimeSlotRepository extends CrudRepository<TimeSlot, Long>{
 
 }

@@ -2,7 +2,6 @@ package ca.mcgill.ecse321.autoRepair.model;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import java.util.List;
 
 @Entity
@@ -21,16 +20,5 @@ public class Assistant extends User {
 	}
 
 	private List<Reminder> reminders;
-
-	@OneToOne
-	public AutoRepairShopSystem getAutoRepairShopSystem() {
-		return autoRepairShopSystem;
-	}
-
-	public void setAutoRepairShopSystem(AutoRepairShopSystem autoRepairShopSystem) {
-		this.autoRepairShopSystem = autoRepairShopSystem;
-	}
-
-	private AutoRepairShopSystem autoRepairShopSystem;
 
 }

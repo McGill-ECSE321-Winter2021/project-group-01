@@ -10,20 +10,18 @@ public class TimeSlot
 {
 
 
-	private long id;
+	private Long id;
 	private Date startDate;
 	private Time startTime;
 	private Date endDate;
 	private Time endTime;
-	private AutoRepairShopSystem AutoRepairShopSystem;
 	
-	public TimeSlot(Date aStartDate, Time aStartTime, Date aEndDate, Time aEndTime, AutoRepairShopSystem aAutoRepairShopSystem)
+	public TimeSlot(Date aStartDate, Time aStartTime, Date aEndDate, Time aEndTime)
 	{
 		startDate = aStartDate;
 		startTime = aStartTime;
 		endDate = aEndDate;
 		endTime = aEndTime;
-		this.AutoRepairShopSystem=aAutoRepairShopSystem;
 	}
 
 	public TimeSlot() {
@@ -33,11 +31,11 @@ public class TimeSlot
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	} 
 
@@ -74,26 +72,16 @@ public class TimeSlot
 		this.endTime = endTime;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	public AutoRepairShopSystem getAutoRepairShopSystem() {
-		return AutoRepairShopSystem;
-	}
-
-	public void setAutoRepairShopSystem(AutoRepairShopSystem autoRepairShopSystem) {
-		AutoRepairShopSystem = autoRepairShopSystem;
-	}
-
-
-	
 
 	public String toString()
-	{
-		return super.toString() + "["+
-				"id" + ":" + getId()+ "]" + System.getProperties().getProperty("line.separator") +
-				"  " + "startDate" + "=" + (getStartDate() != null ? !getStartDate().equals(this)  ? getStartDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-				"  " + "startTime" + "=" + (getStartTime() != null ? !getStartTime().equals(this)  ? getStartTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-				"  " + "endDate" + "=" + (getEndDate() != null ? !getEndDate().equals(this)  ? getEndDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-				"  " + "endTime" + "=" + (getEndTime() != null ? !getEndTime().equals(this)  ? getEndTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-				"  " + "AutoRepairShopSystem = "+(getAutoRepairShopSystem()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShopSystem())):"null");
-	}
+	  {
+	    return super.toString() + "["+
+	            "id" + ":" + getId()+ "]" + System.getProperties().getProperty("line.separator") +
+	            "  " + "startDate" + "=" + (getStartDate() != null ? !getStartDate().equals(this)  ? getStartDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+	            "  " + "startTime" + "=" + (getStartTime() != null ? !getStartTime().equals(this)  ? getStartTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+	            "  " + "endDate" + "=" + (getEndDate() != null ? !getEndDate().equals(this)  ? getEndDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+	            "  " + "endTime" + "=" + (getEndTime() != null ? !getEndTime().equals(this)  ? getEndTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator");
+	  }
 }
+
+	

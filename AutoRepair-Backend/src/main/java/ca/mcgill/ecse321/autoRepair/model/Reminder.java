@@ -10,24 +10,22 @@ import java.sql.Time;
 public class Reminder
 {
 
-	private long id;
+	private Long id;
 
 
 
 	private String description;
 	private Date date;
 	private Time time;
-	private AutoRepairShopSystem AutoRepairShopSystem;
 	private Customer customer;
 	private List<BookableService> bookableServices;
 
 
-	public Reminder(long aId, String aDescription, Date aDate, Time aTime, AutoRepairShopSystem aAutoRepairShopSystem, Customer aCustomer)
+	public Reminder(Long aId, String aDescription, Date aDate, Time aTime, Customer aCustomer)
 	{
 		description = aDescription;
 		date = aDate;
 		time = aTime;
-		this.AutoRepairShopSystem=aAutoRepairShopSystem;
 		this.customer=aCustomer;
 		this.bookableServices=new ArrayList<BookableService>();
 	}
@@ -38,11 +36,11 @@ public class Reminder
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -69,17 +67,6 @@ public class Reminder
 	public void setTime(Time time) {
 		this.time = time;
 	} 
-
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	public AutoRepairShopSystem getAutoRepairShopSystem()
-	{
-		return AutoRepairShopSystem;
-	}
-
-	public void setAutoRepairShopSystem(AutoRepairShopSystem autoRepairShopSystem) {
-		AutoRepairShopSystem = autoRepairShopSystem;
-	}
 
 
 
@@ -113,7 +100,7 @@ public class Reminder
 				"description" + ":" + getDescription()+ "]" + System.getProperties().getProperty("line.separator") +
 				"  " + "date" + "=" + (getDate() != null ? !getDate().equals(this)  ? getDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
 				"  " + "time" + "=" + (getTime() != null ? !getTime().equals(this)  ? getTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-				"  " + "AutoRepairShopSystem = "+(getAutoRepairShopSystem()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShopSystem())):"null") + System.getProperties().getProperty("line.separator") +
+				"  " + "AutoRepairShopSystem = "+ System.getProperties().getProperty("line.separator") +
 				"  " + "customer = "+(getCustomer()!=null?Integer.toHexString(System.identityHashCode(getCustomer())):"null");
 	}
 }

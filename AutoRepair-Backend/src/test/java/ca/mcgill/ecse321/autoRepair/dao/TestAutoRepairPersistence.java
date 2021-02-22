@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.stereotype.Repository;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
@@ -35,8 +36,8 @@ public class TestAutoRepairPersistence {
 //	private ReminderRepository reminderRepository;
 	@Autowired
 	private CustomerRepository customerRepository;
-	
-	
+
+
 	@AfterEach
 	public void clearDatabase() {
 
@@ -48,7 +49,7 @@ public class TestAutoRepairPersistence {
 //		reminderRepository.deleteAll();
 
 	}
-	
+
 	@Test
 	public void testPersistAndLoadAssistant() {
 		AutoRepairShopSystem autoRepair = new AutoRepairShopSystem();
@@ -68,7 +69,7 @@ public class TestAutoRepairPersistence {
 		assertNotNull(assistant);
 		assertEquals(username, assistant.getUsername());
 	}
-	
+
 //	//@Test
 //	public void testPersistAndLoadAutoRepair() {
 //		String id = "1";

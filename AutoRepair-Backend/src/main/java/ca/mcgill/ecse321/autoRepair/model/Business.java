@@ -57,6 +57,10 @@ public class Business
       throw new RuntimeException("Unable to create business due to AutoRepairShopSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
   }
+  
+  public Business() {
+	  
+  }
 
   //------------------------
   // INTERFACE

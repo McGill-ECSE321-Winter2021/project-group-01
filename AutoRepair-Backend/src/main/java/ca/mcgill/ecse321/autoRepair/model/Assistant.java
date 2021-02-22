@@ -25,8 +25,6 @@ public class Assistant extends User
   // CONSTRUCTOR
   //------------------------
 
-  public Assistant(){ super();}
-
   public Assistant(String aUsername, String aPassword, AutoRepairShopSystem aAutoRepairShopSystem)
   {
     super(aUsername, aPassword);
@@ -36,6 +34,10 @@ public class Assistant extends User
     {
       throw new RuntimeException("Unable to create assistant due to AutoRepairShopSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
+  }
+  
+  public Assistant() {
+	  super();
   }
 
   //------------------------
@@ -51,9 +53,12 @@ public class Assistant extends User
   @OneToMany(cascade = { CascadeType.ALL })
   public List<Reminder> getReminders()
   {
-    if(reminders==null) return null;
+	if (reminders==null) {
+		return null;
+	}
     List<Reminder> newReminders = Collections.unmodifiableList(reminders);
     return newReminders;
+	  //return this.reminders;
   }
 
   public void setReminders(List<Reminder> reminders) {

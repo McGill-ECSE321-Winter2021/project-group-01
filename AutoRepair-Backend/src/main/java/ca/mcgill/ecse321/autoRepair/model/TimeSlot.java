@@ -54,6 +54,10 @@ public class TimeSlot
       throw new RuntimeException("Unable to create timeSlot due to AutoRepairShopSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
   }
+  
+  public TimeSlot() {
+	  
+  }
 
   //------------------------
   // INTERFACE

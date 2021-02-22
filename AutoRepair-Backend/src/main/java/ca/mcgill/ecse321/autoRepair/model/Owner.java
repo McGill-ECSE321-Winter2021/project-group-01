@@ -30,6 +30,10 @@ public class Owner extends User
       throw new RuntimeException("Unable to create owner due to AutoRepairShopSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
   }
+  
+  public Owner() {
+	  super();
+  }
 
   //------------------------
   // INTERFACE

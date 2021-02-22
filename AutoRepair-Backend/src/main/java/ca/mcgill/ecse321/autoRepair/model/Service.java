@@ -26,6 +26,10 @@ public class Service extends BookableService
     super(aName, aAutoRepairShopSystem);
     duration = aDuration;
   }
+  
+  public Service() {
+	  super();
+  }
 
   //------------------------
   // INTERFACE

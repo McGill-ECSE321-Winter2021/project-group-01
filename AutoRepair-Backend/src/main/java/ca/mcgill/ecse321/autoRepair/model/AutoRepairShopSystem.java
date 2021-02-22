@@ -58,6 +58,10 @@ public class AutoRepairShopSystem
 		reminders = new ArrayList<Reminder>();
 		reviews = new ArrayList<Review>();
 	}
+	
+	public AutoRepairShopSystem() {
+		
+	}
 
 	//------------------------
 	// INTERFACE

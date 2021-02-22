@@ -60,6 +60,10 @@ public class Review
       throw new RuntimeException("Unable to create review due to bookableService. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
   }
+  
+  public Review() {
+	  
+  }
 
   //------------------------
   // INTERFACE

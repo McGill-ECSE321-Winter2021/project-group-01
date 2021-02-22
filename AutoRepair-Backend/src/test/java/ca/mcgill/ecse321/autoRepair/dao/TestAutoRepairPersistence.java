@@ -79,22 +79,22 @@ public class TestAutoRepairPersistence {
 
 	}
 	
-	@Test
-	public void testPersistAndLoadAssitant() {
-		String username = "testAssistant";
-		String password = "testPassword";
-		Assistant assistant = new Assistant();
-		assistant.setUsername(username);
-		assistant.setPassword(password);
-		assistantRepository.save(assistant);
-
-
-		assistant = null;
-
-		assistant = assistantRepository.findAssistantByUsername(username);
-		assertNotNull(assistant);
-		assertEquals(username, assistant.getUsername());
-	}
+//	@Test
+//	public void testPersistAndLoadAssitant() {
+//		String username = "testAssistant";
+//		String password = "testPassword";
+//		Assistant assistant = new Assistant();
+//		assistant.setUsername(username);
+//		assistant.setPassword(password);
+//		assistantRepository.save(assistant);
+//
+//
+//		assistant = null;
+//
+//		assistant = assistantRepository.findAssistantByUsername(username);
+//		assertNotNull(assistant);
+//		assertEquals(username, assistant.getUsername());
+//	}
 	
 //	//@Test
 //	public void testPersistAndLoadAutoRepair() {
@@ -196,5 +196,46 @@ public class TestAutoRepairPersistence {
 //		assertEquals(profileId, testProfile.getId());
 //		assertEquals(customer.getUsername(), testProfile.getCustomer().getUsername());
 //	}
+	
+//	@Test
+//	public void testPersistAndLoadCar() {
+//		
+//		Profile testProfile = new Profile();
+//		testProfile.setFirstName("TestName");
+//		testProfile.setAddress("Test Address");
+//		testProfile.setEmail("testemail@test.com");
+//		testProfile.setLastName("TestLastName");
+//		testProfile.setPhoneNumber("(123)456-7890");
+//		testProfile.setZipCode("H1V 3T2");
+//		profileRepository.save(testProfile);
+//		
+//		Customer customer = new Customer();
+//		customer.setUsername("testUsername");
+//		customer.setPassword("testPassword");
+//		customer.setNoShow(0);
+//		customer.setShow(0);
+//		customer.setProfile(testProfile);
+//		customerRepository.save(customer);
+//		
+//		String model = "testModel";
+//		String plateNumber = "123456";
+//		Car car = new Car();
+//		car.setCustomer(customer);
+//		car.setModel(model);
+//		car.setPlateNumber(plateNumber);
+//		car.setTransmission(Car.CarTransmission.Manual);
+//		carRepository.save(car);
+//
+//		car = null;
+//
+//		car = carRepository.findCarByPlateNumber(plateNumber);
+//		assertNotNull(car);
+//		assertEquals(plateNumber, car.getPlateNumber());
+//		assertEquals(model, car.getModel());
+//		assertEquals(customer, car.getCustomer());
+//		assertEquals(Car.CarTransmission.Manual, car.getTransmission());
+//	}
+	
+	
 
 }

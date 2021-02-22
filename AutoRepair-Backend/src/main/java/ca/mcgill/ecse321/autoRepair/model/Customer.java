@@ -23,18 +23,6 @@ public class Customer extends User
 	private List<Appointment> appointments;
 
 
-	public Customer(String aUsername, String aPassword, int aNoShow, int aShow, Profile aProfile, AutoRepairShopSystem aAutoRepairShopSystem)
-	{
-		super(aUsername, aPassword);
-		noShow = aNoShow;
-		show = aShow;
-		cars = new ArrayList<Car>();
-		reminders = new ArrayList<Reminder>();
-		reviews = new ArrayList<Review>();
-		this.profile=aProfile;
-		appointments = new ArrayList<Appointment>();
-	}
-
 	public Customer() {
 		super();
 	}

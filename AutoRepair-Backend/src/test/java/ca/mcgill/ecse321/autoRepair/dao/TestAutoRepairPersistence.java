@@ -11,11 +11,12 @@ import java.time.Month;
 
 import ca.mcgill.ecse321.autoRepair.model.*;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.stereotype.Repository;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
@@ -36,8 +37,9 @@ public class TestAutoRepairPersistence {
 //	private ReminderRepository reminderRepository;
 	@Autowired
 	private CustomerRepository customerRepository;
-
-
+	
+	
+	
 	@AfterEach
 	public void clearDatabase() {
 
@@ -49,27 +51,27 @@ public class TestAutoRepairPersistence {
 //		reminderRepository.deleteAll();
 
 	}
-
+	
 	@Test
-	public void testPersistAndLoadAssistant() {
-		AutoRepairShopSystem autoRepair = new AutoRepairShopSystem();
+	public void testPersistAndLoadAssitant() {
+		//AutoRepairShopSystem autoRepair = new AutoRepairShopSystem();
 		String username = "testAssistant";
 		String password = "testPassword";
 		Assistant assistant = new Assistant();
 		assistant.setUsername(username);
 		assistant.setPassword(password);
-		assistant.setAutoRepairShopSystem(autoRepair);
-	//	Assistant assistant = new Assistant(username, password, autoRepair);
+		assistant.setAutoRepairShopSystem(null);
+//		Assistant assistant = new Assistant(username, password, autoRepair);
 		assistantRepository.save(assistant);
 
 
-		assistant = null;
+//		assistant = null;
 
 		assistant = assistantRepository.findAssistantByUsername(username);
 		assertNotNull(assistant);
 		assertEquals(username, assistant.getUsername());
 	}
-
+	
 //	//@Test
 //	public void testPersistAndLoadAutoRepair() {
 //		String id = "1";

@@ -16,17 +16,16 @@ public abstract class User
   // STATIC VARIABLES
   //------------------------
 
- // private static Map<String, User> usersByUsername = new HashMap<String, User>();
+  private static Map<String, User> usersByUsername = new HashMap<String, User>();
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
 
   //User Attributes
-  @Column(unique = true)
+  
   private String username;
   private String password;
-  private long id;
 
   //------------------------
   // CONSTRUCTOR
@@ -35,11 +34,10 @@ public abstract class User
   public User(String aUsername, String aPassword)
   {
     password = aPassword;
-//    if (!setUsername(aUsername))
-//    {
-//      throw new RuntimeException("Cannot create due to duplicate username. See http://manual.umple.org?RE003ViolationofUniqueness.html");
-//    }
-    username=aUsername;
+    if (!setUsername(aUsername))
+    {
+      throw new RuntimeException("Cannot create due to duplicate username. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+    }
   }
 
   public User() {
@@ -48,25 +46,24 @@ public abstract class User
   //------------------------
   // INTERFACE
   //------------------------
-
-  public void setUsername(String aUsername)
+ 
+  public boolean setUsername(String aUsername)
   {
-    this.username=aUsername;
-//    boolean wasSet = false;
-//    String anOldUsername = getUsername();
-//    if (anOldUsername != null && anOldUsername.equals(aUsername)) {
-//      return true;
-//    }
-//    if (hasWithUsername(aUsername)) {
-//      return wasSet;
-//    }
-//    username = aUsername;
-//    wasSet = true;
-//    if (anOldUsername != null) {
-//      usersByUsername.remove(anOldUsername);
-//    }
-//    usersByUsername.put(aUsername, this);
-//    return wasSet;
+    boolean wasSet = false;
+    String anOldUsername = getUsername();
+    if (anOldUsername != null && anOldUsername.equals(aUsername)) {
+      return true;
+    }
+    if (hasWithUsername(aUsername)) {
+      return wasSet;
+    }
+    username = aUsername;
+    wasSet = true;
+    if (anOldUsername != null) {
+      usersByUsername.remove(anOldUsername);
+    }
+    usersByUsername.put(aUsername, this);
+    return wasSet;
   }
 
   public boolean setPassword(String aPassword)
@@ -78,39 +75,30 @@ public abstract class User
   }
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  public long getId() {
-	  return this.id;
-  }
-  
-  public void setId(long id) {
-	  this.id = id;
-  }
-  
   public String getUsername()
   {
     return username;
   }
   /* Code from template attribute_GetUnique */
-//  public static User getWithUsername(String aUsername)
-//  {
-//    return usersByUsername.get(aUsername);
-//  }
+  public static User getWithUsername(String aUsername)
+  {
+    return usersByUsername.get(aUsername);
+  }
   /* Code from template attribute_HasUnique */
-//  public static boolean hasWithUsername(String aUsername)
-//  {
-//    return getWithUsername(aUsername) != null;
-//  }
+  public static boolean hasWithUsername(String aUsername)
+  {
+    return getWithUsername(aUsername) != null;
+  }
 
   public String getPassword()
   {
     return password;
   }
 
-//  public void delete()
-//  {
-//    usersByUsername.remove(getUsername());
-//  }
+  public void delete()
+  {
+    usersByUsername.remove(getUsername());
+  }
 
 
   public String toString()

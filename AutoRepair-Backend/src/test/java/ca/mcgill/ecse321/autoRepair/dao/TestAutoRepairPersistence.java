@@ -98,24 +98,38 @@ public class TestAutoRepairPersistence {
 		assertNotNull(assistant);
 		assertEquals(username, assistant.getUsername());
 	}
-//	@Test
-//	public void testPersistAndLoadService() {
-//		String name = "service1";
-//		int duration = 30;
-//		Service testService = new Service();
-//		testService.setName(name);
-//		testService.setDuration(duration);
-//
-//		serviceRepository.save(testService);
-//
-//		testService = null;
-//
-//		testService=serviceRepository.findServiceByName("name");
-//
-//		assertNull(testService);
-//		assertEquals(name, testService.getName());
-//		assertEquals(duration, testService.getDuration());
-//	}
+	@Test
+	public void testPersistAndLoadService() {
+		String name = "service1";
+		int duration = 30;
+		Service testService = new Service();
+		testService.setName(name);
+		testService.setDuration(duration);
+
+		serviceRepository.save(testService);
+
+		testService = null;
+
+		testService=serviceRepository.findServiceByName(name);
+
+		assertNotNull(testService);
+		assertEquals(name, testService.getName());
+		assertEquals(duration, testService.getDuration());
+	}
+	@Test
+	public void testPersistAndLoadReview() {
+		Long id = 123L;
+		String description = "The service was great!";
+		int serviceRating = 5;
+		Review review = new Review();
+		review.setDescription(description);
+		review.setId(id);
+		review.setServiceRating(serviceRating);
+		reviewRepository.save(review);
+		assertEquals(id, review.getId());
+		assertEquals(description, review.getDescription());
+		assertEquals(serviceRating, review.getServiceRating());
+	}
 
 	@Test
 	public void testPersistAndLoadBusiness() {

@@ -5,5 +5,5 @@ import ca.mcgill.ecse321.autoRepair.model.Business;
 
 public interface BusinessRepository extends CrudRepository<Business, String> {
 
-	Business findBusinessById(String id);
+	Business findBusinessByName(String name);
 }

@@ -33,7 +33,7 @@ public class Customer extends User
   }
 
   private List<Car> cars;
-  @OneToMany(cascade = { CascadeType.ALL })
+  @OneToMany(cascade = { CascadeType.ALL },mappedBy = "customer")
   public List<Car> getCars() {
     return cars;
   }
@@ -43,7 +43,7 @@ public class Customer extends User
   }
 
   private List<Reminder> reminders;
-  @OneToMany(cascade = { CascadeType.ALL })
+  @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "customer")
   public List<Reminder> getReminders() {
     return reminders;
   }
@@ -53,7 +53,7 @@ public class Customer extends User
   }
 
   private List<Review> reviews;
-  @OneToMany(cascade = { CascadeType.ALL })
+  @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "customer")
   public List<Review> getReviews() {
     return reviews;
   }
@@ -63,7 +63,7 @@ public class Customer extends User
   }
 
   private Profile profile;
-  @OneToOne
+  @OneToOne(mappedBy = "customer")
   public Profile getProfile() {
     return profile;
   }
@@ -74,7 +74,7 @@ public class Customer extends User
 
   private List<Appointment> appointments;
 
-  @OneToMany(cascade = { CascadeType.ALL })
+  @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "customer")
   public List<Appointment> getAppointments() {
     return appointments;
   }

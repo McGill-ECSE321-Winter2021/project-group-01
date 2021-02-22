@@ -38,7 +38,7 @@ public class Review
   }
 
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   public Long getId() {
     return id;
   }
@@ -66,7 +66,7 @@ public class Review
 
 
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne
   public Customer getCustomer()
   {
     return customer;
@@ -77,7 +77,7 @@ public class Review
     this.customer=aCustomer;
   }
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne
   public BookableService getBookableService()
   {
     return bookableService;

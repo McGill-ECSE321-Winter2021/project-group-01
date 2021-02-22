@@ -12,7 +12,6 @@ public class Appointment {
     private Long id;
 
     @Id
-
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId(){
         return this.id;

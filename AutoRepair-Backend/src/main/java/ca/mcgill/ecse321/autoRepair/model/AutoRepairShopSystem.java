@@ -26,7 +26,7 @@ public class AutoRepairShopSystem
 	//------------------------
 
 	//AutoRepairShopSystem Attributes
-	private String id;
+	private long id;
 
 	//AutoRepairShopSystem Associations
 	private Business business;
@@ -44,12 +44,22 @@ public class AutoRepairShopSystem
 	// CONSTRUCTOR
 	//------------------------
 
-	public AutoRepairShopSystem(String aId)
-	{
-		if (!setId(aId))
-		{
-			throw new RuntimeException("Cannot create due to duplicate id. See http://manual.umple.org?RE003ViolationofUniqueness.html");
-		}
+//	public AutoRepairShopSystem(long aId)
+//	{
+////		if (!setId(aId))
+////		{
+////			throw new RuntimeException("Cannot create due to duplicate id. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+////		}
+//		customers = new ArrayList<Customer>();
+//		operatingHours = new ArrayList<OperatingHour>();
+//		appointments = new ArrayList<Appointment>();
+//		timeSlots = new ArrayList<TimeSlot>();
+//		bookableServices = new ArrayList<BookableService>();
+//		reminders = new ArrayList<Reminder>();
+//		reviews = new ArrayList<Review>();
+//	}
+	
+	public AutoRepairShopSystem() {
 		customers = new ArrayList<Customer>();
 		operatingHours = new ArrayList<OperatingHour>();
 		appointments = new ArrayList<Appointment>();
@@ -58,47 +68,47 @@ public class AutoRepairShopSystem
 		reminders = new ArrayList<Reminder>();
 		reviews = new ArrayList<Review>();
 	}
-	
-	public AutoRepairShopSystem() {
-		
-	}
 
 	//------------------------
 	// INTERFACE
 	//------------------------
 
-	public boolean setId(String aId)
-	{
-		boolean wasSet = false;
-		String anOldId = getId();
-		if (anOldId != null && anOldId.equals(aId)) {
-			return true;
-		}
-		if (hasWithId(aId)) {
-			return wasSet;
-		}
-		id = aId;
-		wasSet = true;
-		if (anOldId != null) {
-			AutoRepairShopSystemsById.remove(anOldId);
-		}
-		AutoRepairShopSystemsById.put(aId, this);
-		return wasSet;
+//	public boolean setId(long aId)
+//	{
+//		boolean wasSet = false;
+//		long anOldId = getId();
+//		if (anOldId != null && anOldId.equals(aId)) {
+//			return true;
+//		}
+//		if (hasWithId(aId)) {
+//			return wasSet;
+//		}
+//		id = aId;
+//		wasSet = true;
+//		if (anOldId != null) {
+//			AutoRepairShopSystemsById.remove(anOldId);
+//		}
+//		AutoRepairShopSystemsById.put(aId, this);
+//		return wasSet;
+//	}
+	
+	public void setId(long id) {
+		this.id=id;
 	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	public String getId()
+	public long getId()
 	{
 		return id;
 	}
 	/* Code from template attribute_GetUnique */
-	public static AutoRepairShopSystem getWithId(String aId)
+	public static AutoRepairShopSystem getWithId(long aId)
 	{
 		return AutoRepairShopSystemsById.get(aId);
 	}
 	/* Code from template attribute_HasUnique */
-	public static boolean hasWithId(String aId)
+	public static boolean hasWithId(long aId)
 	{
 		return getWithId(aId) != null;
 	}

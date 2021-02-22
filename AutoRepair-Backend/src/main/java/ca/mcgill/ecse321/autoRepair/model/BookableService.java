@@ -10,7 +10,6 @@ public abstract class BookableService{
   private String name;
   private List<Reminder> reminders;
   private List<Review> reviews;
-  private AutoRepairShopSystem AutoRepairShopSystem;
 
   public BookableService(){
 
@@ -40,15 +39,6 @@ public abstract class BookableService{
 
   public void setReviews(List<Review> reviews) {
     this.reviews = reviews;
-  }
-
-  @ManyToOne
-  public AutoRepairShopSystem getAutoRepairShopSystem() {
-    return AutoRepairShopSystem;
-  }
-
-  public void setAutoRepairShopSystem(ca.mcgill.ecse321.autoRepair.model.AutoRepairShopSystem autoRepairShopSystem) {
-    AutoRepairShopSystem = autoRepairShopSystem;
   }
 
   @OneToMany(mappedBy = "bookableService")

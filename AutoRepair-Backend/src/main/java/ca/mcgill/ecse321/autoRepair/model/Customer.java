@@ -71,16 +71,6 @@ public class Customer extends User
   public void setProfile(Profile profile) {
     this.profile = profile;
   }
-  private AutoRepairShopSystem AutoRepairShopSystem;
-
-  @ManyToOne
-  public AutoRepairShopSystem getAutoRepairShopSystem() {
-    return AutoRepairShopSystem;
-  }
-
-  public void setAutoRepairShopSystem(AutoRepairShopSystem autoRepairShopSystem) {
-    AutoRepairShopSystem = autoRepairShopSystem;
-  }
 
   private List<Appointment> appointments;
 
@@ -98,8 +88,7 @@ public class Customer extends User
     return super.toString() + "["+
             "noShow" + ":" + getNoShow()+ "," +
             "show" + ":" + getShow()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "profile = "+(getProfile()!=null?Integer.toHexString(System.identityHashCode(getProfile())):"null") + System.getProperties().getProperty("line.separator") +
-            "  " + "AutoRepairShopSystem = "+(getAutoRepairShopSystem()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShopSystem())):"null");
+            "  " + "profile = "+(getProfile()!=null?Integer.toHexString(System.identityHashCode(getProfile())):"null") + System.getProperties().getProperty("line.separator");
   }
 
 }

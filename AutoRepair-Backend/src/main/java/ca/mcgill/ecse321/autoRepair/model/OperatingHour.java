@@ -70,18 +70,6 @@ public class OperatingHour
     this.endTime = endTime;
   }
 
-  //OperatingHour Associations
-  private AutoRepairShopSystem AutoRepairShopSystem;
-
-  @ManyToOne
-  public AutoRepairShopSystem getAutoRepairShopSystem() {
-    return AutoRepairShopSystem;
-  }
-
-  public void setAutoRepairShopSystem(AutoRepairShopSystem autoRepairShopSystem) {
-    AutoRepairShopSystem = autoRepairShopSystem;
-  }
-
   public OperatingHour() {
   }
 

@@ -22,15 +22,5 @@ public class Assistant extends User {
 
   private List<Reminder> reminders;
 
-  @OneToOne
-  public AutoRepairShopSystem getAutoRepairShopSystem() {
-    return autoRepairShopSystem;
-  }
-
-  public void setAutoRepairShopSystem(AutoRepairShopSystem autoRepairShopSystem) {
-    this.autoRepairShopSystem = autoRepairShopSystem;
-  }
-
-  private AutoRepairShopSystem autoRepairShopSystem;
 
 }

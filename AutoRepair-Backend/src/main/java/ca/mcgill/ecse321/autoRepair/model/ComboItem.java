@@ -3,6 +3,7 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
+@Table(name = "ComboItems")
 public class ComboItem
 {
   private long id;

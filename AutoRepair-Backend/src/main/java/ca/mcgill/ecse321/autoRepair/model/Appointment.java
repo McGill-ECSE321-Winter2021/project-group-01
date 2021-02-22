@@ -63,25 +63,13 @@ public class Appointment {
         this.timeSlot=aTimeSlot;
     }
 
-    private AutoRepairShopSystem system;
-
-    @ManyToOne
-    public AutoRepairShopSystem getAutoRepairShopSystem(){
-        return this.system;
-    }
-
-    public void setAutoRepairShopSystem(AutoRepairShopSystem autoRepairShopSystem){
-        this.system=autoRepairShopSystem;
-    }
-
     public String toString()
     {
         return super.toString() + "["+
                 "id" + ":" + getId()+ "]" + System.getProperties().getProperty("line.separator") +
                 "  " + "customer = "+(getCustomer()!=null?Integer.toHexString(System.identityHashCode(getCustomer())):"null") + System.getProperties().getProperty("line.separator") +
                 "  " + "bookableService = "+(getBookableService()!=null?Integer.toHexString(System.identityHashCode(getBookableService())):"null") + System.getProperties().getProperty("line.separator") +
-                "  " + "timeSlot = "+(getTimeSlot()!=null?Integer.toHexString(System.identityHashCode(getTimeSlot())):"null") + System.getProperties().getProperty("line.separator") +
-                "  " + "AutoRepairShopSystem = "+(getAutoRepairShopSystem()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShopSystem())):"null");
+                "  " + "timeSlot = "+(getTimeSlot()!=null?Integer.toHexString(System.identityHashCode(getTimeSlot())):"null") + System.getProperties().getProperty("line.separator");
     }
 
 }

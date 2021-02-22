@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import ca.mcgill.ecse321.autoRepair.model.Profile;
 import ca.mcgill.ecse321.autoRepair.model.Customer;
 
-public interface ProfileRepository extends CrudRepository<Profile, String>{
+public interface ProfileRepository extends CrudRepository<Profile, Long>{
 
     Profile findByCustomer(Customer customer);
 

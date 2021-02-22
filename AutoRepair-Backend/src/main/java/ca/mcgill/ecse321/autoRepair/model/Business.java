@@ -66,18 +66,8 @@ public class Business{
     this.holidays = holidays;
   }
 
-  @OneToOne
-  public AutoRepairShopSystem getAutoRepairShopSystem() {
-    return AutoRepairShopSystem;
-  }
-
-  public void setAutoRepairShopSystem(ca.mcgill.ecse321.autoRepair.model.AutoRepairShopSystem autoRepairShopSystem) {
-    AutoRepairShopSystem = autoRepairShopSystem;
-  }
-
   private List<OperatingHour> businessHours;
   private List<TimeSlot> holidays;
-  private AutoRepairShopSystem AutoRepairShopSystem;
 
   public String toString()
   {
@@ -85,7 +75,6 @@ public class Business{
             "name" + ":" + getName()+ "," +
             "address" + ":" + getAddress()+ "," +
             "phoneNumber" + ":" + getPhoneNumber()+ "," +
-            "email" + ":" + getEmail()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "AutoRepairShopSystem = "+(getAutoRepairShopSystem()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShopSystem())):"null");
+            "email" + ":" + getEmail()+ "]" + System.getProperties().getProperty("line.separator");
   }
 }

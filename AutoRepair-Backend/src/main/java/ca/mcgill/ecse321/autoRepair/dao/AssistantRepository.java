@@ -9,6 +9,4 @@ public interface AssistantRepository extends CrudRepository<Assistant, String>{
 	
 	Assistant findAssistantByUsername(String username);
 
-	@Override
-	void deleteAll();
 }

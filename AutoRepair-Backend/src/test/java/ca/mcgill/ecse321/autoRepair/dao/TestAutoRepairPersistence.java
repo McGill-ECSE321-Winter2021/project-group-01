@@ -45,8 +45,6 @@ public class TestAutoRepairPersistence {
 	@Autowired
 	private CarRepository carRepository;
 	@Autowired
-	private ComboItemRepository comboItemRepository;
-	@Autowired
 	private OperatingHourRepository operatingHourRepository;
 	@Autowired
 	private ReviewRepository reviewRepository;
@@ -72,7 +70,6 @@ public class TestAutoRepairPersistence {
 		bookableServiceRepository.deleteAll();
 		businessRepository.deleteAll();
 		carRepository.deleteAll();
-		comboItemRepository.deleteAll();
 		customerRepository.deleteAll();
 		operatingHourRepository.deleteAll();
 		reviewRepository.deleteAll();

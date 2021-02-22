@@ -12,11 +12,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AppointmentRepository extends CrudRepository<Appointment, Long>{
-	
-//	Appointment findAppointmentById(String id);
+
 	Appointment findAppointmentByTimeSlot(TimeSlot slot);
-//	Appointment findAppointmentByCustomerAndBookableService(Customer customer, BookableService service);
-//	List<Appointment> findByCustomer(Customer customer);
-	List<Appointment> findAppointmentByCustomer(Customer customer);
-	boolean existsByCustomerAndBookableService(Customer customer, BookableService service);
+	List<Appointment> findAppointmentsByCustomer(Customer customer);
 }

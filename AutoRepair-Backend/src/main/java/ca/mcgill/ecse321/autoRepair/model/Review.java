@@ -12,6 +12,17 @@ public class Review
   private Customer customer;
   private BookableService bookableService;
 
+  @OneToOne
+  public Appointment getAppointment() {
+    return appointment;
+  }
+
+  public void setAppointment(Appointment appointment) {
+    this.appointment = appointment;
+  }
+
+  private Appointment appointment;
+
 
 //  public Review(String aDescription, int aServiceRating, AutoRepairShopSystem aAutoRepairShopSystem, Customer aCustomer, BookableService aBookableService)
 //  {

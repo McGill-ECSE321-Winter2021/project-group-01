@@ -10,6 +10,7 @@ public class ComboItem
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "ComboItemIdentification")
 	public long getId() {
 		return id;
 	}

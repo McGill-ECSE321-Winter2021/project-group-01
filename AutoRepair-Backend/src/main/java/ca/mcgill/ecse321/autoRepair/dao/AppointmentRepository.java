@@ -10,9 +10,9 @@ import ca.mcgill.ecse321.autoRepair.model.Customer;
 import ca.mcgill.ecse321.autoRepair.model.TimeSlot;
 
 
-public interface AppointmentRepository extends CrudRepository<Appointment, String>{
+public interface AppointmentRepository extends CrudRepository<Appointment, Long>{
 	
-	Appointment findAppointmentById(String id);
+	Appointment findAppointmentById(long id);
 	Appointment findAppointmentByTimeSlot(TimeSlot slot);
 	Appointment findAppointmentByCustomerAndBookableService(Customer customer, BookableService service);
 	List<Appointment> findByCustomer(Customer customer);

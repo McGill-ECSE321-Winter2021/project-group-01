@@ -10,15 +10,15 @@ public class Appointment {
 	public Appointment(){
 
 	}
-	private Long id;
+	private long id;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Long getId(){
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	public long getId(){
 		return this.id;
 	}
 
-	public void setId(Long aId){
+	public void setId(long aId){
 		this.id=aId;
 	}
 
@@ -42,15 +42,15 @@ public class Appointment {
 		this.bookableService=bookableService;
 	}
 
-	private List<ComboItem> chosenItems;
+	private List<ComboItem> comboItems;
 
-	@ManyToMany
-	public List<ComboItem> getChosenItems(){
-		return this.chosenItems;
+	@OneToMany(cascade = CascadeType.ALL)
+	public List<ComboItem> getComboItems(){
+		return this.comboItems;
 	}
 
-	public void setChosenItems(List<ComboItem> list){
-		this.chosenItems=list;
+	public void setComboItems(List<ComboItem> list){
+		this.comboItems=list;
 	}
 
 	private TimeSlot timeSlot;

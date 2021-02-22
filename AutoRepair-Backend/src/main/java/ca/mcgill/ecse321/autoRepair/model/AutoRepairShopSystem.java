@@ -13,15 +13,15 @@ public class AutoRepairShopSystem{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
-	private Long id;
+	private long id;
 
 	@OneToOne(mappedBy = "autoRepairShopSystem")
 	public Business getBusiness() {

@@ -25,7 +25,6 @@ public abstract class BookableService{
 
 	}
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	public String getName() {
 		return name;
 	}

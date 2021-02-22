@@ -189,6 +189,7 @@ public class TestAutoRepairPersistence {
 		business.setEmail(email);
 		business.setAutoRepairShopSystem(autoRepair);
 
+		autoRepairRepository.save(autoRepair);
 		businessRepository.save(business);
 
 		business = null;

@@ -29,6 +29,10 @@ public class ServiceCombo extends BookableService
     services = new ArrayList<ComboItem>();
   }
 
+  
+  public ServiceCombo() {
+	  super();
+  }
   //------------------------
   // INTERFACE
   //------------------------

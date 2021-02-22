@@ -51,6 +51,10 @@ public class ComboItem
       throw new RuntimeException("Unable to create service due to serviceCombo. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
   }
+  
+  public ComboItem() {
+	  
+  }
 
   //------------------------
   // INTERFACE

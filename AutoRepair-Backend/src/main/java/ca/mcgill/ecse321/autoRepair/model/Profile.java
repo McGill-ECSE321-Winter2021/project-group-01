@@ -51,6 +51,10 @@ public class Profile
       throw new RuntimeException("Cannot create due to duplicate id. See http://manual.umple.org?RE003ViolationofUniqueness.html");
     }
   }
+  
+  public Profile() {
+	  
+  }
 
   public Profile(String aId, String aFirstName, String aLastName, String aAddress, String aZipCode, String aPhoneNumber, String aEmail, String aUsernameForCustomer, String aPasswordForCustomer, int aNoShowForCustomer, int aShowForCustomer, AutoRepairShopSystem aAutoRepairShopSystemForCustomer)
   {

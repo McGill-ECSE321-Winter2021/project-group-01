@@ -51,6 +51,10 @@ public abstract class BookableService
     }
     appointments = new ArrayList<Appointment>();
   }
+  
+  public BookableService() {
+	  
+  }
 
   //------------------------
   // INTERFACE

@@ -71,6 +71,9 @@ public class Customer extends User
     appointments = new ArrayList<Appointment>();
   }
 
+  public Customer() {
+	  super();
+  }
   //------------------------
   // INTERFACE
   //------------------------

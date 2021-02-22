@@ -60,6 +60,10 @@ public class Reminder
     }
     bookableServices = new ArrayList<BookableService>();
   }
+  
+  public Reminder() {
+	  
+  }
 
   //------------------------
   // INTERFACE

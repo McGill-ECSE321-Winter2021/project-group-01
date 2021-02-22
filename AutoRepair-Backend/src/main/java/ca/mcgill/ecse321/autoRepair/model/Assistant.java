@@ -84,7 +84,7 @@ public class Assistant extends User
   }
   /* Code from template association_GetOne */
 //  @OneToOne(fetch = FetchType.LAZY)
-  @OneToOne(mappedBy="assistant",cascade=CascadeType.ALL)
+  @OneToOne(cascade=CascadeType.ALL)
   public AutoRepairShopSystem getAutoRepairShopSystem()
   {
     return AutoRepairShopSystem;
@@ -188,7 +188,7 @@ public class Assistant extends User
     {
       existingAutoRepairShopSystem.setAssistant(null);
     }
-    super.delete();
+    //super.delete();
   }
 
 }

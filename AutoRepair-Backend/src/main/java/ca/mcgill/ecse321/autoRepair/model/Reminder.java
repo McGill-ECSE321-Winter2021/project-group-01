@@ -25,7 +25,7 @@ public class Reminder
   //------------------------
 
   //Reminder Attributes
-  private String id;
+  private Long id;
   private String description;
   private Date date;
   private Time time;
@@ -39,54 +39,63 @@ public class Reminder
   // CONSTRUCTOR
   //------------------------
 
-  public Reminder(String aId, String aDescription, Date aDate, Time aTime, AutoRepairShopSystem aAutoRepairShopSystem, Customer aCustomer)
-  {
-    description = aDescription;
-    date = aDate;
-    time = aTime;
-    if (!setId(aId))
-    {
-      throw new RuntimeException("Cannot create due to duplicate id. See http://manual.umple.org?RE003ViolationofUniqueness.html");
-    }
-    boolean didAddAutoRepairShopSystem = setAutoRepairShopSystem(aAutoRepairShopSystem);
-    if (!didAddAutoRepairShopSystem)
-    {
-      throw new RuntimeException("Unable to create reminder due to AutoRepairShopSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    boolean didAddCustomer = setCustomer(aCustomer);
-    if (!didAddCustomer)
-    {
-      throw new RuntimeException("Unable to create reminder due to customer. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    bookableServices = new ArrayList<BookableService>();
-  }
-  
-  public Reminder() {
-	  
-  }
+//  public Reminder(Long aId, String aDescription, Date aDate, Time aTime, AutoRepairShopSystem aAutoRepairShopSystem, Customer aCustomer)
+//  {
+//    description = aDescription;
+//    date = aDate;
+//    time = aTime;
+//    id=aId;
+////    if (!setId(aId))
+////    {
+////      throw new RuntimeException("Cannot create due to duplicate id. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+////    }
+//    boolean didAddAutoRepairShopSystem = setAutoRepairShopSystem(aAutoRepairShopSystem);
+//    if (!didAddAutoRepairShopSystem)
+//    {
+//      throw new RuntimeException("Unable to create reminder due to AutoRepairShopSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+//    }
+//    boolean didAddCustomer = setCustomer(aCustomer);
+//    if (!didAddCustomer)
+//    {
+//      throw new RuntimeException("Unable to create reminder due to customer. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+//    }
+//    bookableServices = new ArrayList<BookableService>();
+//  }
+//
+//  public Reminder() {
+//
+//  }
 
   //------------------------
   // INTERFACE
   //------------------------
-
-  public boolean setId(String aId)
-  {
-    boolean wasSet = false;
-    String anOldId = getId();
-    if (anOldId != null && anOldId.equals(aId)) {
-      return true;
-    }
-    if (hasWithId(aId)) {
-      return wasSet;
-    }
-    id = aId;
-    wasSet = true;
-    if (anOldId != null) {
-      remindersById.remove(anOldId);
-    }
-    remindersById.put(aId, this);
-    return wasSet;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  public long getId() {
+    return this.id;
   }
+
+  public void setId(long id) {
+    this.id = id;
+  }
+//  public boolean setId(String aId)
+//  {
+//    boolean wasSet = false;
+//    String anOldId = getId();
+//    if (anOldId != null && anOldId.equals(aId)) {
+//      return true;
+//    }
+//    if (hasWithId(aId)) {
+//      return wasSet;
+//    }
+//    id = aId;
+//    wasSet = true;
+//    if (anOldId != null) {
+//      remindersById.remove(anOldId);
+//    }
+//    remindersById.put(aId, this);
+//    return wasSet;
+//  }
 
   public boolean setDescription(String aDescription)
   {
@@ -112,12 +121,12 @@ public class Reminder
     return wasSet;
   }
 
-  @Id
-  @GeneratedValue(strategy=GenerationType.SEQUENCE)
-  public String getId()
-  {
-    return id;
-  }
+//  @Id
+//  @GeneratedValue(strategy=GenerationType.SEQUENCE)
+//  public String getId()
+//  {
+//    return id;
+//  }
   /* Code from template attribute_GetUnique */
   public static Reminder getWithId(String aId)
   {

@@ -837,10 +837,10 @@ public class AutoRepairShopSystem
 		return 0;
 	}
 	/* Code from template association_AddManyToOne */
-	public Reminder addReminder(String aId, String aDescription, Date aDate, Time aTime, Customer aCustomer)
-	{
-		return new Reminder(aId, aDescription, aDate, aTime, this, aCustomer);
-	}
+//	public Reminder addReminder(Long aId, String aDescription, Date aDate, Time aTime, Customer aCustomer)
+//	{
+//		return new Reminder(aId, aDescription, aDate, aTime, this, aCustomer);
+//	}
 
 	public boolean addReminder(Reminder aReminder)
 	{

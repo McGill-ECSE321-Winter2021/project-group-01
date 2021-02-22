@@ -361,10 +361,10 @@ public class Customer extends User
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Reminder addReminder(String aId, String aDescription, Date aDate, Time aTime, AutoRepairShopSystem aAutoRepairShopSystem)
-  {
-    return new Reminder(aId, aDescription, aDate, aTime, aAutoRepairShopSystem, this);
-  }
+//  public Reminder addReminder(Long aId, String aDescription, Date aDate, Time aTime, AutoRepairShopSystem aAutoRepairShopSystem)
+//  {
+//    return new Reminder(aId, aDescription, aDate, aTime, aAutoRepairShopSystem, this);
+//  }
 
   public boolean addReminder(Reminder aReminder)
   {
@@ -627,7 +627,7 @@ public class Customer extends User
       Appointment aAppointment = appointments.get(i - 1);
       aAppointment.delete();
     }
-    super.delete();
+   // super.delete();
   }
 
 

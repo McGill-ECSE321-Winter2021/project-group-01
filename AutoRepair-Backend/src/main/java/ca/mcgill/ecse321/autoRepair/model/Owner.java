@@ -81,7 +81,7 @@ public class Owner extends User
     {
       existingAutoRepairShopSystem.setOwner(null);
     }
-    super.delete();
+   // super.delete();
   }
 
 }

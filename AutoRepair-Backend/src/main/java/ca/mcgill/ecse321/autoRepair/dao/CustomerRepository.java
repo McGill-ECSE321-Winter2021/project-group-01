@@ -5,6 +5,6 @@ import ca.mcgill.ecse321.autoRepair.model.Customer;
 
 public interface CustomerRepository extends CrudRepository<Customer, String>{
 
-    Customer findCustomerByUsername(String name);
+    Customer findCustomerByUsername(String username);
 
 }

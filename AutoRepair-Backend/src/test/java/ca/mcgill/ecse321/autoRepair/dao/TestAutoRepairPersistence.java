@@ -89,7 +89,7 @@ public class TestAutoRepairPersistence {
 		assistantRepository.save(assistant);
 
 
-//		assistant = null;
+		assistant = null;
 
 		assistant = assistantRepository.findAssistantByUsername(username);
 		assertNotNull(assistant);

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface CarRepository extends CrudRepository<Car, String>{
 
     List<Car> findByCustomer(Customer customer);
-    boolean ExistsByCustomer(Customer customer);
     Car findCarByPlateNumber(String plateNumber);
 
 }

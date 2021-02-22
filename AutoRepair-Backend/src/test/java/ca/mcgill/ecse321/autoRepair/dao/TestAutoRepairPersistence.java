@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ca.mcgill.ecse321.autoRepair.model.*;
+import ca.mcgill.ecse321.autoRepair.model.Car.CarTransmission;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -130,7 +132,21 @@ public class TestAutoRepairPersistence {
 		assertEquals(description, review.getDescription());
 		assertEquals(serviceRating, review.getServiceRating());
 	}
-
+	@Test
+	public void testPersistAndLoadCar() {
+		String model = "Lambo";
+		String plateNumber = "Number 1";
+		Car car = new Car();
+		CarTransmission carTransmition = CarTransmission.Automatic;
+		car.setModel(model);
+		car.setPlateNumber(plateNumber);
+		car.setTransmission(carTransmition);
+		carRepository.save(car);
+		assertEquals(model, car.getModel());
+		assertEquals(plateNumber, car.getPlateNumber());
+		assertEquals(carTransmition, car.getTransmission());
+	}
+	
 	@Test
 	public void testPersistAndLoadBusiness() {
 		String name = "AutoRepair";

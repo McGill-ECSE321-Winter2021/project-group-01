@@ -1,66 +1,61 @@
-/*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.30.1.5099.60569f335 modeling language!*/
+
 
 package ca.mcgill.ecse321.autoRepair.model;
 import javax.persistence.*;
 import java.util.*;
 import java.sql.Time;
 
-// line 79 "../../../../../AutoRepair.ump"
-// line 194 "../../../../../AutoRepair.ump"
 @Entity
+@Table(name = "opSlots")
 public class OperatingHour
 {
 
-  //------------------------
-  // ENUMERATIONS
-  //------------------------
 
-  public enum DayOfWeek { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
+	public enum DayOfWeek { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
 
-  //------------------------
-  // STATIC VARIABLES
-  //------------------------
+	private long id;
 
-  private static Map<String, OperatingHour> operatinghoursById = new HashMap<String, OperatingHour>();
 
-  public static Map<String, OperatingHour> getOperatinghoursById() {
-		return operatinghoursById;
+
+	private DayOfWeek dayOfWeek;
+	private Time startTime;
+	private Time endTime;
+
+	private AutoRepairShopSystem autoRepairShopSystem;
+
+
+
+	public OperatingHour(DayOfWeek aDayOfWeek, Time aStartTime, Time aEndTime, AutoRepairShopSystem aAutoRepairShopSystem)
+	{
+		dayOfWeek = aDayOfWeek;
+		startTime = aStartTime;
+		endTime = aEndTime;
+		this.autoRepairShopSystem=aAutoRepairShopSystem;
 	}
 
-	public static void setOperatinghoursById(Map<String, OperatingHour> operatinghoursById) {
-		OperatingHour.operatinghoursById = operatinghoursById;
+	public OperatingHour() {
+
 	}
-  
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
 
-  //OperatingHour Attributes
-  private String id;
-@Id
-@GeneratedValue(strategy=GenerationType.SEQUENCE)
-public String getId() {
-	return id;
-}
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	public long getId() {
+		return id;
+	}
 
-public void setId(String id) {
-	this.id = id;
-}
+	public void setId(long id) {
+		this.id = id;
+	}
 
-  private DayOfWeek dayOfWeek;
+	public DayOfWeek getDayOfWeek() {
+		return dayOfWeek;
+	}
 
-public DayOfWeek getDayOfWeek() {
-	return dayOfWeek;
-}
+	public void setDayOfWeek(DayOfWeek dayOfWeek) {
+		this.dayOfWeek = dayOfWeek;
+	}
 
-public void setDayOfWeek(DayOfWeek dayOfWeek) {
-	this.dayOfWeek = dayOfWeek;
-}
-
-
-  private Time startTime;
-  public Time getStartTime() {
+	public Time getStartTime() {
 		return startTime;
 	}
 
@@ -68,29 +63,34 @@ public void setDayOfWeek(DayOfWeek dayOfWeek) {
 		this.startTime = startTime;
 	}
 
-  private Time endTime;
+	public Time getEndTime() {
+		return endTime;
+	}
 
-public Time getEndTime() {
-	return endTime;
-}
-
-public void setEndTime(Time endTime) {
-	this.endTime = endTime;
-}
-
-  //OperatingHour Associations
-  private AutoRepairShopSystem AutoRepairShopSystem;
-
-public AutoRepairShopSystem getAutoRepairShopSystem() {
-	return AutoRepairShopSystem;
-}
-
-public void setAutoRepairShopSystem(AutoRepairShopSystem autoRepairShopSystem) {
-	AutoRepairShopSystem = autoRepairShopSystem;
-}
-
-  public OperatingHour() {
-  }
+	public void setEndTime(Time endTime) {
+		this.endTime = endTime;
+	}
 
 
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	public AutoRepairShopSystem getAutoRepairShopSystem()
+	{
+		return autoRepairShopSystem;
+	}
+
+
+	public void setAutoRepairShopSystem(AutoRepairShopSystem autoRepairShopSystem) {
+		this.autoRepairShopSystem = autoRepairShopSystem;
+	}
+
+	public String toString()
+	{
+		return super.toString() + "["+
+				"id" + ":" + getId()+ "]" + System.getProperties().getProperty("line.separator") +
+				"  " + "dayOfWeek" + "=" + (getDayOfWeek() != null ? !getDayOfWeek().equals(this)  ? getDayOfWeek().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+				"  " + "startTime" + "=" + (getStartTime() != null ? !getStartTime().equals(this)  ? getStartTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+				"  " + "endTime" + "=" + (getEndTime() != null ? !getEndTime().equals(this)  ? getEndTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+				"  " + "AutoRepairShopSystem = "+(getAutoRepairShopSystem()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShopSystem())):"null");
+	}
 }

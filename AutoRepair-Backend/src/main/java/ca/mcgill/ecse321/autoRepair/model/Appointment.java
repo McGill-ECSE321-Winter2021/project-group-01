@@ -9,15 +9,15 @@ public class Appointment {
     public Appointment(){
 
     }
-    private Long id;
+    private long id;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long getId(){
+    public long getId(){
         return this.id;
     }
 
-    public void setId(Long aId){
+    public void setId(long aId){
         this.id=aId;
     }
 
@@ -44,11 +44,11 @@ public class Appointment {
     private List<ComboItem> chosenItems;
 
     @ManyToMany
-    public List<ComboItem> getChosenItems(){
+    public List<ComboItem> getComboItems(){
         return this.chosenItems;
     }
 
-    public void setChosenItems(List<ComboItem> list){
+    public void setComboItems(List<ComboItem> list){
         this.chosenItems=list;
     }
 

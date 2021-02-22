@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.autoRepair.dao;
 
 import java.util.List;
 
+import ca.mcgill.ecse321.autoRepair.model.Appointment;
 import org.springframework.data.repository.CrudRepository;
 
 import ca.mcgill.ecse321.autoRepair.model.BookableService;
@@ -9,11 +10,11 @@ import ca.mcgill.ecse321.autoRepair.model.Customer;
 import ca.mcgill.ecse321.autoRepair.model.TimeSlot;
 
 
-public interface AppointmentRepository extends CrudRepository<Appointment1, String>{
+public interface AppointmentRepository extends CrudRepository<Appointment, Long>{
 	
-	Appointment1 findAppointmentById(String id);
-	Appointment1 findAppointmentByTimeSlot(TimeSlot slot);
-	Appointment1 findAppointmentByCustomerAndBookableService(Customer customer, BookableService service);
-	List<Appointment1> findByCustomer(Customer customer);
+	Appointment findAppointmentById(String id);
+	Appointment findAppointmentByTimeSlot(TimeSlot slot);
+	Appointment findAppointmentByCustomerAndBookableService(Customer customer, BookableService service);
+	List<Appointment> findByCustomer(Customer customer);
 	boolean existsByCustomerAndBookableService(Customer customer, BookableService service);
 }

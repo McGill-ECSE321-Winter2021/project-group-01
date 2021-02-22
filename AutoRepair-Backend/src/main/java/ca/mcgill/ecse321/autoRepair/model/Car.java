@@ -30,7 +30,6 @@ public class Car{
   }
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
   public String getPlateNumber() {
     return plateNumber;
   }

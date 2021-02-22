@@ -10,22 +10,12 @@ public class Business{
   public Business(){
 
   }
-  private Long id;
   private String name;
   private String address;
   private String phoneNumber;
   private String email;
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
   public String getName() {
     return name;
   }
@@ -92,7 +82,6 @@ public class Business{
   public String toString()
   {
     return super.toString() + "["+
-            "id" + ":" + getId()+ "," +
             "name" + ":" + getName()+ "," +
             "address" + ":" + getAddress()+ "," +
             "phoneNumber" + ":" + getPhoneNumber()+ "," +

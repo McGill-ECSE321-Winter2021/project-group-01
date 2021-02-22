@@ -19,48 +19,53 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import javax.persistence.EntityManager;
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class TestAutoRepairPersistence {
-	
+
 	@Autowired
-	private AppointmentRepository appointmentRepository;
+	EntityManager entityManager;
+	
+//	@Autowired
+//	private AppointmentRepository appointmentRepository;
 	@Autowired
 	private AssistantRepository assistantRepository;
-	@Autowired
-	private AutoRepairRepository autoRepairRepository;
-	@Autowired
-	private OwnerRepository ownerRepository;
-	@Autowired
-	private ProfileRepository profileRepository;
 //	@Autowired
-//	private ReminderRepository reminderRepository;
-	@Autowired
-	private CustomerRepository customerRepository;
+//	private AutoRepairRepository autoRepairRepository;
+//	@Autowired
+//	private OwnerRepository ownerRepository;
+//	@Autowired
+//	private ProfileRepository profileRepository;
+////	@Autowired
+////	private ReminderRepository reminderRepository;
+//	@Autowired
+//	private CustomerRepository customerRepository;
 	
 	
 	
 	@AfterEach
 	public void clearDatabase() {
 
-		autoRepairRepository.deleteAll();
+//		autoRepairRepository.deleteAll();
 		assistantRepository.deleteAll();
-		appointmentRepository.deleteAll();
-		profileRepository.deleteAll();
-		ownerRepository.deleteAll();
+//		appointmentRepository.deleteAll();
+//		profileRepository.deleteAll();
+//		ownerRepository.deleteAll();
 //		reminderRepository.deleteAll();
 
 	}
 	
 	@Test
 	public void testPersistAndLoadAssitant() {
-		//AutoRepairShopSystem autoRepair = new AutoRepairShopSystem();
+		AutoRepairShopSystem autoRepair = new AutoRepairShopSystem();
 		String username = "testAssistant";
 		String password = "testPassword";
 		Assistant assistant = new Assistant();
 		assistant.setUsername(username);
 		assistant.setPassword(password);
-		assistant.setAutoRepairShopSystem(null);
+		assistant.setAutoRepairShopSystem(autoRepair);
 //		Assistant assistant = new Assistant(username, password, autoRepair);
 		assistantRepository.save(assistant);
 

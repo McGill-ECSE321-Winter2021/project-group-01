@@ -5,7 +5,7 @@ import ca.mcgill.ecse321.autoRepair.model.Assistant;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AssistantRepository extends CrudRepository<Assistant, Long>{
+public interface AssistantRepository extends CrudRepository<Assistant, String>{
 	
 	Assistant findAssistantByUsername(String username);
 

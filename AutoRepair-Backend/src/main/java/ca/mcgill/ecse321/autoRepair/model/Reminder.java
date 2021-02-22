@@ -10,6 +10,7 @@ import java.sql.Time;
 // line 134 "../../../../../AutoRepair.ump"
 // line 229 "../../../../../AutoRepair.ump"
 @Entity
+@Table(name="reminders")
 public class Reminder
 {
 
@@ -108,6 +109,7 @@ public class Reminder
   }
 
   @Id
+  @GeneratedValue(strategy=GenerationType.SEQUENCE)
   public String getId()
   {
     return id;
@@ -138,14 +140,14 @@ public class Reminder
     return time;
   }
   /* Code from template association_GetOne */
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   public AutoRepairShopSystem getAutoRepairShopSystem()
   {
     return AutoRepairShopSystem;
   }
 
   /* Code from template association_GetOne */
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   public Customer getCustomer()
   {
     return customer;
@@ -158,7 +160,7 @@ public class Reminder
     return aBookableService;
   }
 
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.LAZY, mappedBy = "reminders")
   public List<BookableService> getBookableServices()
   {
     List<BookableService> newBookableServices = Collections.unmodifiableList(bookableServices);

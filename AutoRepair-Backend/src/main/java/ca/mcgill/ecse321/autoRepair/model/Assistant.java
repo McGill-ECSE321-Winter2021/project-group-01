@@ -10,7 +10,6 @@ import java.util.*;
 // line 60 "../../../../../AutoRepair.ump"
 // line 184 "../../../../../AutoRepair.ump"
 @Entity
-@Table(name="Assistant")
 public class Assistant extends User
 {
 
@@ -76,7 +75,7 @@ public class Assistant extends User
     return index;
   }
   /* Code from template association_GetOne */
-  @OneToOne
+  @OneToOne(fetch = FetchType.LAZY)
   public AutoRepairShopSystem getAutoRepairShopSystem()
   {
     return AutoRepairShopSystem;

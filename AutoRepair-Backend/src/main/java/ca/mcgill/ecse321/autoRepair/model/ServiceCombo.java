@@ -33,7 +33,7 @@ public class ServiceCombo extends BookableService
   // INTERFACE
   //------------------------
   /* Code from template association_GetOne */
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   public ComboItem getMainService()
   {
     return mainService;
@@ -51,7 +51,7 @@ public class ServiceCombo extends BookableService
     return aService;
   }
 
-  @OneToMany
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "serviceCombo")
   public List<ComboItem> getServices()
   {
     List<ComboItem> newServices = Collections.unmodifiableList(services);

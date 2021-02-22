@@ -9,6 +9,7 @@ import java.sql.Time;
 // line 79 "../../../../../AutoRepair.ump"
 // line 194 "../../../../../AutoRepair.ump"
 @Entity
+@Table(name = "opSlots")
 public class OperatingHour
 {
 
@@ -105,6 +106,7 @@ public class OperatingHour
   }
 
   @Id
+  @GeneratedValue(strategy=GenerationType.SEQUENCE)
   public String getId()
   {
     return id;
@@ -135,7 +137,7 @@ public class OperatingHour
     return endTime;
   }
   /* Code from template association_GetOne */
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   public AutoRepairShopSystem getAutoRepairShopSystem()
   {
     return AutoRepairShopSystem;

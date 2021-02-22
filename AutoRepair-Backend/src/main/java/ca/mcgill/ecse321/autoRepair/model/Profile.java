@@ -8,6 +8,7 @@ import java.util.*;
 // line 41 "../../../../../AutoRepair.ump"
 // line 174 "../../../../../AutoRepair.ump"
 @Entity
+@Table(name = "profiles")
 public class Profile
 {
 
@@ -138,6 +139,7 @@ public class Profile
   }
 
   @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   public String getId()
   {
     return id;
@@ -183,7 +185,7 @@ public class Profile
     return email;
   }
   /* Code from template association_GetOne */
-  @OneToOne
+  @OneToOne(fetch = FetchType.LAZY)
   public Customer getCustomer()
   {
     return customer;

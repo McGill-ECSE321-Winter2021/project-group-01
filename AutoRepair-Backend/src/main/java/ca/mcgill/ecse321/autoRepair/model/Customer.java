@@ -107,7 +107,7 @@ public class Customer extends User
     return aCar;
   }
 
-  @OneToMany(cascade = { CascadeType.ALL })
+  @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "customer")
   public List<Car> getCars()
   {
     List<Car> newCars = Collections.unmodifiableList(cars);
@@ -145,7 +145,7 @@ public class Customer extends User
     return aReminder;
   }
 
-  @OneToMany(cascade = { CascadeType.ALL })
+  @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "customer")
   public List<Reminder> getReminders()
   {
     List<Reminder> newReminders = Collections.unmodifiableList(reminders);
@@ -180,7 +180,7 @@ public class Customer extends User
     return aReview;
   }
 
-  @OneToMany
+  @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "customer")
   public List<Review> getReviews()
   {
     List<Review> newReviews = Collections.unmodifiableList(reviews);
@@ -209,7 +209,7 @@ public class Customer extends User
     return index;
   }
   /* Code from template association_GetOne */
-  @OneToOne
+  @OneToOne(fetch = FetchType.LAZY, mappedBy = "customer")
   public Profile getProfile()
   {
     return profile;
@@ -219,20 +219,19 @@ public class Customer extends User
 	  this.profile=profile;
   }
   /* Code from template association_GetOne */
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   public AutoRepairShopSystem getAutoRepairShopSystem()
   {
     return AutoRepairShopSystem;
   }
   /* Code from template association_GetMany */
-  @OneToMany
   public Appointment getAppointment(int index)
   {
     Appointment aAppointment = appointments.get(index);
     return aAppointment;
   }
 
-  @OneToMany
+  @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "customer")
   public List<Appointment> getAppointments()
   {
     List<Appointment> newAppointments = Collections.unmodifiableList(appointments);

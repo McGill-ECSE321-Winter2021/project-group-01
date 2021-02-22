@@ -10,6 +10,7 @@ import java.sql.Time;
 // line 88 "../../../../../AutoRepair.ump"
 // line 199 "../../../../../AutoRepair.ump"
 @Entity
+@Table(name = "slots")
 public class TimeSlot
 {
 
@@ -110,6 +111,7 @@ public class TimeSlot
   }
 
   @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   public String getId()
   {
     return id;
@@ -145,7 +147,7 @@ public class TimeSlot
     return endTime;
   }
   /* Code from template association_GetOne */
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   public AutoRepairShopSystem getAutoRepairShopSystem()
   {
     return AutoRepairShopSystem;

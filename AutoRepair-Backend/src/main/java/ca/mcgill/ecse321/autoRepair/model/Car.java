@@ -8,6 +8,7 @@ import java.util.*;
 // line 52 "../../../../../AutoRepair.ump"
 // line 179 "../../../../../AutoRepair.ump"
 @Entity
+@Table(name="cars")
 public class Car
 {
 
@@ -104,6 +105,7 @@ public class Car
   }
 
   @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   public String getPlateNumber()
   {
     return plateNumber;
@@ -119,13 +121,12 @@ public class Car
     return getWithPlateNumber(aPlateNumber) != null;
   }
   /* Code from template association_GetOne */
-  @ManyToOne(optional = false)
+  @ManyToOne(fetch = FetchType.LAZY)
   public Customer getCustomer()
   {
     return customer;
   }
   /* Code from template association_SetOneToMandatoryMany */
-  @Transient
   public boolean setCustomer(Customer aCustomer)
   {
     boolean wasSet = false;

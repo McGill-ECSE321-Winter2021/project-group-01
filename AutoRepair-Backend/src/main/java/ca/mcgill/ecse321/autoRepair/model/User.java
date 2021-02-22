@@ -71,6 +71,7 @@ public abstract class User
   }
 
   @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   public String getUsername()
   {
     return username;

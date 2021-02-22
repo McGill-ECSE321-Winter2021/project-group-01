@@ -9,6 +9,7 @@ import java.util.*;
 // line 97 "../../../../../AutoRepair.ump"
 // line 204 "../../../../../AutoRepair.ump"
 @Entity
+@Table(name = "services")
 public abstract class BookableService
 {
 
@@ -75,6 +76,7 @@ public abstract class BookableService
   }
 
   @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   public String getName()
   {
     return name;
@@ -96,7 +98,7 @@ public abstract class BookableService
     return aReminder;
   }
 
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.LAZY)
   public List<Reminder> getReminders()
   {
     List<Reminder> newReminders = Collections.unmodifiableList(reminders);
@@ -131,7 +133,7 @@ public abstract class BookableService
     return aReview;
   }
 
-  @OneToMany
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "bookableService")
   public List<Review> getReviews()
   {
     List<Review> newReviews = Collections.unmodifiableList(reviews);
@@ -160,7 +162,7 @@ public abstract class BookableService
     return index;
   }
   /* Code from template association_GetOne */
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   public AutoRepairShopSystem getAutoRepairShopSystem()
   {
     return AutoRepairShopSystem;
@@ -174,7 +176,7 @@ public abstract class BookableService
     return aAppointment;
   }
 
-  @OneToMany
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "bookableService")
   public List<Appointment> getAppointments()
   {
     List<Appointment> newAppointments = Collections.unmodifiableList(appointments);

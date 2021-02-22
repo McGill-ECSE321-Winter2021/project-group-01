@@ -9,6 +9,7 @@ import java.util.*;
 // line 67 "../../../../../AutoRepair.ump"
 // line 189 "../../../../../AutoRepair.ump"
 @Entity
+@Table(name = "business")
 public class Business
 {
 
@@ -113,6 +114,7 @@ public class Business
   }
 
   @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   public String getId()
   {
     return id;
@@ -218,7 +220,7 @@ public class Business
     return index;
   }
   /* Code from template association_GetOne */
-  @OneToOne
+  @OneToOne(fetch = FetchType.LAZY)
   public AutoRepairShopSystem getAutoRepairShopSystem()
   {
     return AutoRepairShopSystem;

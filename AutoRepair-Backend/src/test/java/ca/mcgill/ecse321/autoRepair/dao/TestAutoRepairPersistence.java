@@ -2,12 +2,15 @@ package ca.mcgill.ecse321.autoRepair.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
 
 import ca.mcgill.ecse321.autoRepair.model.*;
 import org.junit.jupiter.api.AfterEach;
@@ -67,7 +70,7 @@ public class TestAutoRepairPersistence {
 	    profileRepository.deleteAll();
 		ownerRepository.deleteAll();
 		reminderRepository.deleteAll();
-		bookableServiceRepository.deleteAll();
+	//	bookableServiceRepository.deleteAll();
 		businessRepository.deleteAll();
 		carRepository.deleteAll();
 		customerRepository.deleteAll();
@@ -95,70 +98,196 @@ public class TestAutoRepairPersistence {
 		assertNotNull(assistant);
 		assertEquals(username, assistant.getUsername());
 	}
-	
-//	//@Test
-//	public void testPersistAndLoadAutoRepair() {
-//		String id = "1";
-//		AutoRepairShopSystem autoRepair = new AutoRepairShopSystem(id);
-//		autoRepairRepository.save(autoRepair);
+//	@Test
+//	public void testPersistAndLoadService() {
+//		String name = "service1";
+//		int duration = 30;
+//		Service testService = new Service();
+//		testService.setName(name);
+//		testService.setDuration(duration);
 //
-//		autoRepair = null;
+//		serviceRepository.save(testService);
 //
-//		autoRepair = autoRepairRepository.findAutoRepairShopSystemById(id);
-//		assertNotNull(autoRepair);
-//		assertEquals(id, autoRepair.getId());
+//		testService = null;
+//
+//		testService=serviceRepository.findServiceByName("name");
+//
+//		assertNull(testService);
+//		assertEquals(name, testService.getName());
+//		assertEquals(duration, testService.getDuration());
 //	}
-//	
-//	//@Test
-//	public void testPersistAndLoadAppointment() {
-//		AutoRepairShopSystem autoRepair = new AutoRepairShopSystem("1");
-//		String username = "testCustomer";
-//		String password = "testPassword";
-//		Profile profile = new Profile("1", "Test", "Customer", "TestAddress", "55555", "+1514123456", "test@mail.ca");
-//		Customer testCustomer = new Customer(username, password, 0, 0, profile, autoRepair);
-//		TimeSlot testSlot = new TimeSlot("1", Date.valueOf(LocalDate.now()),Time.valueOf(LocalTime.now()), Date.valueOf(LocalDate.now()),Time.valueOf(LocalTime.now()), autoRepair);
-//		Service testService = new Service("testName", autoRepair, 0);
-//		String id = "11";
-//		Appointment testAppointment = new Appointment(id,testCustomer, testService, testSlot, autoRepair);
-//		appointmentRepository.save(testAppointment);
-//
-//		testAppointment = null;
-//
-//		testAppointment = appointmentRepository.findAppointmentById(id);
-//		assertNotNull(testAppointment);
-//		assertEquals(id, testAppointment.getId());
-//		
-//		testAppointment = null;
-//
-//		testAppointment = appointmentRepository.findAppointmentByCustomerAndBookableService(testCustomer, testService);
-//		assertNotNull(testAppointment);
-//		assertEquals(testCustomer, testAppointment.getCustomer());
-//		assertEquals(testService, testAppointment.getBookableService());
-//		
-//		testAppointment = null;
-//
-//		testAppointment = appointmentRepository.findAppointmentByTimeSlot(testSlot);
-//		assertNotNull(testAppointment);
-//		assertEquals(testSlot, testAppointment.getTimeSlot());
-//	}
-//
-//	//@Test
-//	public void testPersistAndLoadOwner() {
-//		AutoRepairShopSystem repairShopSystem = new AutoRepairShopSystem("1");
-//		String name = "TestOwner";
-//		// First example for object save/load
-//		Owner owner = new Owner(name,"12345", repairShopSystem);
-//		// First example for attribute save/load
-//		ownerRepository.save(owner);
-//
-//		owner= null;
-//
-//		owner = ownerRepository.findOwnerByUsername(name);
-//		assertNotNull(owner);
-//		assertEquals(name, owner.getUsername());
-//	}
-//
-//	//@Test
+
+	@Test
+	public void testPersistAndLoadBusiness() {
+		String name = "AutoRepair";
+		String address = "Address";
+		String phoneNumber = "514-000-9999";
+		String email = "autorepair@mcgill.ca";
+		Business business = new Business();
+		business.setName(name);
+		business.setAddress(address);
+		business.setPhoneNumber(phoneNumber);
+		business.setEmail(email);
+
+		businessRepository.save(business);
+
+
+		business = null;
+
+		business = businessRepository.findBusinessByName(name);
+
+		assertNotNull(business);
+		assertEquals(name, business.getName());
+		assertEquals(address, business.getAddress());
+		assertEquals(phoneNumber, business.getPhoneNumber());
+		assertEquals(email, business.getEmail());
+	}
+
+	@Test
+	public void testPersistAndLoadAppointment() {
+		Car testCar = new Car();
+		List<Car> carList = new ArrayList<>();
+		testCar.setModel("testModel");
+		testCar.setPlateNumber("123456");
+		testCar.setTransmission(Car.CarTransmission.Automatic);
+
+		Profile testProfile = new Profile();
+		testProfile.setFirstName("TestName");
+		testProfile.setAddress("Test Address");
+		testProfile.setEmail("testemail@test.com");
+		testProfile.setLastName("TestLastName");
+		testProfile.setPhoneNumber("(123)456-7890");
+		testProfile.setZipCode("H1V 3T2");
+
+		String username = "testCustomer";
+		String password = "testPassword";
+		Customer testCustomer = new Customer();
+		testProfile.setCustomer(testCustomer);
+		testCar.setCustomer(testCustomer);
+		carList.add(testCar);
+		testCustomer.setUsername(username);
+		testCustomer.setPassword(password);
+		testCustomer.setCars(carList);
+		testCustomer.setNoShow(0);
+		testCustomer.setShow(0);
+		testCustomer.setProfile(testProfile);
+
+		TimeSlot testSlot = new TimeSlot();
+		Date startDate = Date.valueOf("2021-02-22");
+		Date endDate = startDate;
+		Time startTime = Time.valueOf("12:00:00");
+		Time endTime = Time.valueOf("14:00:00");
+		testSlot.setEndDate(endDate);
+		testSlot.setEndTime(endTime);
+		testSlot.setStartTime(startTime);
+		testSlot.setStartDate(startDate);
+
+		String name = "service1";
+		int duration = 30;
+		Service testService = new Service();
+		testService.setName(name);
+		testService.setDuration(duration);
+
+		Appointment testAppointment = new Appointment();
+		testAppointment.setCustomer(testCustomer);
+		testAppointment.setBookableService(testService);
+		testAppointment.setTimeSlot(testSlot);
+		testAppointment.setComboItems(null);
+		profileRepository.save(testProfile);
+		carRepository.save(testCar);
+		customerRepository.save(testCustomer);
+		serviceRepository.save(testService);
+		timeSlotRepository.save(testSlot);
+		appointmentRepository.save(testAppointment);
+
+		testAppointment = null;
+
+		testAppointment = appointmentRepository.findAppointmentByTimeSlot(testSlot);
+		assertNotNull(testAppointment);
+		assertEquals(testCustomer.getUsername(), testAppointment.getCustomer().getUsername());
+		assertEquals(testCustomer.getPassword(), testAppointment.getCustomer().getPassword());
+		assertEquals(testCustomer.getNoShow(), testAppointment.getCustomer().getNoShow());
+		assertEquals(testCustomer.getShow(), testAppointment.getCustomer().getShow());
+		assertEquals(testService.getName(),testAppointment.getBookableService().getName());
+		Service testService1 = (Service) testAppointment.getBookableService();
+		assertEquals(testService.getDuration(),testService1.getDuration());
+		assertEquals(testSlot.getEndDate(), testAppointment.getTimeSlot().getEndDate());
+		assertEquals(testSlot.getEndTime(),testAppointment.getTimeSlot().getEndTime());
+		assertEquals(testSlot.getStartTime(),testAppointment.getTimeSlot().getStartTime());
+		assertEquals(testSlot.getStartDate(),testAppointment.getTimeSlot().getStartDate());
+
+	}
+
+	@Test
+	public void testPersistAndLoadOwner() {
+		String name = "TestOwner";
+		String password = "TestPassword";
+		Owner testOwner= new Owner();
+		testOwner.setPassword(password);
+		testOwner.setUsername(name);
+		ownerRepository.save(testOwner);
+
+		testOwner= null;
+
+		testOwner = ownerRepository.findOwnerByUsername(name);
+		assertNotNull(testOwner);
+		assertEquals(name, testOwner.getUsername());
+		assertEquals(password,testOwner.getPassword());
+	}
+
+	@Test
+	public void testPersistAndLoadCustomer(){
+		Car testCar = new Car();
+		List<Car> carList = new ArrayList<>();
+		testCar.setModel("testModel");
+		testCar.setPlateNumber("123456");
+		testCar.setTransmission(Car.CarTransmission.Automatic);
+
+		Profile testProfile = new Profile();
+		testProfile.setFirstName("TestName");
+		testProfile.setAddress("Test Address");
+		testProfile.setEmail("testemail@test.com");
+		testProfile.setLastName("TestLastName");
+		testProfile.setPhoneNumber("(123)456-7890");
+		testProfile.setZipCode("H1V 3T2");
+
+		String username = "testCustomer";
+		String password = "testPassword";
+		Customer testCustomer = new Customer();
+		testProfile.setCustomer(testCustomer);
+		testCar.setCustomer(testCustomer);
+		carList.add(testCar);
+		testCustomer.setUsername(username);
+		testCustomer.setPassword(password);
+		testCustomer.setCars(carList);
+		testCustomer.setNoShow(0);
+		testCustomer.setShow(0);
+		testCustomer.setProfile(testProfile);
+
+		profileRepository.save(testProfile);
+		carRepository.save(testCar);
+		customerRepository.save(testCustomer);
+
+		testCustomer=null;
+
+		testCustomer= customerRepository.findCustomerByUsername(username);
+
+		assertNotNull(testCustomer);
+		assertEquals(username, testCustomer.getUsername());
+		assertEquals(password,testCustomer.getPassword());
+		assertEquals(password,testCustomer.getPassword());
+		assertEquals(testProfile.getAddress(),testCustomer.getProfile().getAddress());
+		assertEquals(testProfile.getEmail(),testCustomer.getProfile().getEmail());
+		assertEquals(testProfile.getFirstName(),testCustomer.getProfile().getFirstName());
+		assertEquals(testProfile.getLastName(),testCustomer.getProfile().getLastName());
+		assertEquals(testProfile.getPhoneNumber(),testCustomer.getProfile().getPhoneNumber());
+		assertEquals(testProfile.getZipCode(),testCustomer.getProfile().getZipCode());
+		assertEquals(carList,testCustomer.getCars());
+		assertEquals(0,testCustomer.getNoShow());
+		assertEquals(0,testCustomer.getShow());
+	}
+
+//	@Test
 //	public void testPersistAndLoadReminder() {
 //		AutoRepairShopSystem repairShopSystem = new AutoRepairShopSystem("1");
 //		Customer customer = new Customer("TestCustomer", "12345",0,0, null, repairShopSystem);
@@ -179,13 +308,34 @@ public class TestAutoRepairPersistence {
 //		assertEquals(customer.getUsername(), reminder.getCustomer().getUsername());
 //
 //	}
-//
-//	//@Test
+
+//	@Test
 //	public void testPersistAndLoadProfile() {
-//		AutoRepairShopSystem repairShopSystem = new AutoRepairShopSystem("1");
-//		Customer customer = new Customer("TestCustomer", "12345",0,0, null, repairShopSystem);
-//		Profile testProfile = new Profile("profileId", "Test", "Profile", "Test Address", "Test zip", "4388661234",
-//				"Test email");
+//		Car testCar = new Car();
+//		List<Car> carList = new ArrayList<>();
+//		testCar.setModel("testModel");
+//		testCar.setPlateNumber("123456");
+//		testCar.setTransmission(Car.CarTransmission.Automatic);
+//		carList.add(testCar);
+//
+//		Profile testProfile = new Profile();
+//		testProfile.setFirstName("TestName");
+//		testProfile.setAddress("Test Address");
+//		testProfile.setEmail("testemail@test.com");
+//		testProfile.setLastName("TestLastName");
+//		testProfile.setPhoneNumber("(123)456-7890");
+//		testProfile.setZipCode("H1V 3T2");
+//
+//		String username = "testCustomer";
+//		String password = "testPassword";
+//		Customer testCustomer = new Customer();
+//		testCustomer.setUsername(username);
+//		testCustomer.setPassword(password);
+//		testCustomer.setCars(carList);
+//		testCustomer.setNoShow(0);
+//		testCustomer.setShow(0);
+//		testCustomer.setProfile(testProfile);
+//
 //		customerRepository.save(customer);
 //		profileRepository.save(testProfile);
 //		String profileId = "profileId";

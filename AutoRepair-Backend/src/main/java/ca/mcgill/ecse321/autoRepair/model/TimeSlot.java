@@ -10,21 +10,20 @@ public class TimeSlot
 {
 
 
-  private long id;
+  private Long id;
   private Date startDate;
   private Time startTime;
   private Date endDate;
   private Time endTime;
-  private AutoRepairShopSystem AutoRepairShopSystem;
 
-  public TimeSlot(Date aStartDate, Time aStartTime, Date aEndDate, Time aEndTime, AutoRepairShopSystem aAutoRepairShopSystem)
-  {
-    startDate = aStartDate;
-    startTime = aStartTime;
-    endDate = aEndDate;
-    endTime = aEndTime;
-    this.AutoRepairShopSystem=aAutoRepairShopSystem;
-  }
+//  public TimeSlot(Date aStartDate, Time aStartTime, Date aEndDate, Time aEndTime, AutoRepairShopSystem aAutoRepairShopSystem)
+//  {
+//    startDate = aStartDate;
+//    startTime = aStartTime;
+//    endDate = aEndDate;
+//    endTime = aEndTime;
+//    this.AutoRepairShopSystem=aAutoRepairShopSystem;
+//  }
 
   public TimeSlot() {
 
@@ -33,11 +32,11 @@ public class TimeSlot
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
-  public long getId() {
+  public Long getId() {
     return this.id;
   }
 
-  public void setId(long id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
@@ -73,16 +72,6 @@ public class TimeSlot
   public void setEndTime(Time endTime) {
     this.endTime = endTime;
   }
-
-  @ManyToOne(fetch = FetchType.LAZY)
-  public AutoRepairShopSystem getAutoRepairShopSystem() {
-    return AutoRepairShopSystem;
-  }
-
-  public void setAutoRepairShopSystem(AutoRepairShopSystem autoRepairShopSystem) {
-    AutoRepairShopSystem = autoRepairShopSystem;
-  }
-
 
 
 

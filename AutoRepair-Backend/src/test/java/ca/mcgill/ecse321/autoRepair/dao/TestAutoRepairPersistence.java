@@ -28,45 +28,67 @@ public class TestAutoRepairPersistence {
 	@Autowired
 	EntityManager entityManager;
 	
-//	@Autowired
-//	private AppointmentRepository appointmentRepository;
+	@Autowired
+	private AppointmentRepository appointmentRepository;
 	@Autowired
 	private AssistantRepository assistantRepository;
-//	@Autowired
-//	private AutoRepairRepository autoRepairRepository;
-//	@Autowired
-//	private OwnerRepository ownerRepository;
-//	@Autowired
-//	private ProfileRepository profileRepository;
-////	@Autowired
-////	private ReminderRepository reminderRepository;
-//	@Autowired
-//	private CustomerRepository customerRepository;
-	
-	
+	@Autowired
+	private OwnerRepository ownerRepository;
+	@Autowired
+	private ProfileRepository profileRepository;
+	@Autowired
+	private ReminderRepository reminderRepository;
+	@Autowired
+	private CustomerRepository customerRepository;
+	@Autowired
+	private BookableServiceRepository bookableServiceRepository;
+	@Autowired
+	private CarRepository carRepository;
+	@Autowired
+	private ComboItemRepository comboItemRepository;
+	@Autowired
+	private OperatingHourRepository operatingHourRepository;
+	@Autowired
+	private ReviewRepository reviewRepository;
+	@Autowired
+	private ServiceComboRepository serviceComboRepository;
+	@Autowired
+	private ServiceRepository serviceRepository;
+	@Autowired
+	private TimeSlotRepository timeSlotRepository;
+	@Autowired
+	private UserRepository userRepository;
+	@Autowired
+	private BusinessRepository businessRepository;
 	
 	@AfterEach
 	public void clearDatabase() {
 
-//		autoRepairRepository.deleteAll();
 		assistantRepository.deleteAll();
-//		appointmentRepository.deleteAll();
-//		profileRepository.deleteAll();
-//		ownerRepository.deleteAll();
-//		reminderRepository.deleteAll();
+		appointmentRepository.deleteAll();
+	    profileRepository.deleteAll();
+		ownerRepository.deleteAll();
+		reminderRepository.deleteAll();
+		bookableServiceRepository.deleteAll();
+		businessRepository.deleteAll();
+		carRepository.deleteAll();
+		comboItemRepository.deleteAll();
+		customerRepository.deleteAll();
+		operatingHourRepository.deleteAll();
+		reviewRepository.deleteAll();
+		serviceComboRepository.deleteAll();
+		timeSlotRepository.deleteAll();
+		userRepository.deleteAll();
 
 	}
 	
 	@Test
 	public void testPersistAndLoadAssitant() {
-		AutoRepairShopSystem autoRepair = new AutoRepairShopSystem();
 		String username = "testAssistant";
 		String password = "testPassword";
 		Assistant assistant = new Assistant();
 		assistant.setUsername(username);
 		assistant.setPassword(password);
-		assistant.setAutoRepairShopSystem(autoRepair);
-//		Assistant assistant = new Assistant(username, password, autoRepair);
 		assistantRepository.save(assistant);
 
 

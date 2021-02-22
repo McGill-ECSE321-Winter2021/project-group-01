@@ -29,14 +29,14 @@ public class OperatingHour
 //    OperatingHour.operatinghoursById = operatinghoursById;
 //  }
 
-  private String id;
+  private Long id;
   @Id
   @GeneratedValue(strategy=GenerationType.SEQUENCE)
-  public String getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(Long id) {
     this.id = id;
   }
 

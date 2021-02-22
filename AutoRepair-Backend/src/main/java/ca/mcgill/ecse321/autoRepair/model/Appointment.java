@@ -9,15 +9,16 @@ public class Appointment {
     public Appointment(){
 
     }
-    private long id;
+    private Long id;
 
     @Id
+
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public long getId(){
+    public Long getId(){
         return this.id;
     }
 
-    public void setId(long aId){
+    public void setId(Long aId){
         this.id=aId;
     }
 

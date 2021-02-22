@@ -6,10 +6,9 @@ import javax.persistence.*;
 public class Review
 {
 
-  private long id;
+  private Long id;
   private String description;
   private int serviceRating;
-  private AutoRepairShopSystem AutoRepairShopSystem;
   private Customer customer;
   private BookableService bookableService;
 
@@ -29,11 +28,11 @@ public class Review
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
-  public long getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
@@ -79,25 +78,12 @@ public class Review
   }
 
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  public AutoRepairShopSystem getAutoRepairShopSystem()
-  {
-    return AutoRepairShopSystem;
-  }
-
-  public void setAutoRepairShopSystem(AutoRepairShopSystem aAutoRepairShopSystem)
-  {
-    this.AutoRepairShopSystem=aAutoRepairShopSystem;
-  }
-
-
   public String toString()
   {
     return super.toString() + "["+
             "id" + ":" + getId()+ "," +
             "description" + ":" + getDescription()+ "," +
-            "serviceRating" + ":" + getServiceRating()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "AutoRepairShopSystem = "+(getAutoRepairShopSystem()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShopSystem())):"null") + System.getProperties().getProperty("line.separator") +
+            "serviceRating" + ":" + getServiceRating()+ "]" + System.getProperties().getProperty("line.separator") + System.getProperties().getProperty("line.separator") +
             "  " + "customer = "+(getCustomer()!=null?Integer.toHexString(System.identityHashCode(getCustomer())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "bookableService = "+(getBookableService()!=null?Integer.toHexString(System.identityHashCode(getBookableService())):"null");
   }

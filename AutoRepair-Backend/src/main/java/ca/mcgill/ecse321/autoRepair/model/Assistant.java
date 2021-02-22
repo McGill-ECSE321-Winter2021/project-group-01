@@ -29,7 +29,7 @@ public class Assistant extends User
   {
     super(aUsername, aPassword);
     reminders = new ArrayList<Reminder>();
-    boolean didAddAutoRepairShopSystem = setAutoRepairShopSystem(aAutoRepairShopSystem);
+    boolean didAddAutoRepairShopSystem = isSetAutoRepairShopSystem(aAutoRepairShopSystem);
     if (!didAddAutoRepairShopSystem)
     {
       throw new RuntimeException("Unable to create assistant due to AutoRepairShopSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
@@ -147,7 +147,8 @@ public class Assistant extends User
     return wasAdded;
   }
   /* Code from template association_SetOneToOptionalOne */
-  public boolean setAutoRepairShopSystem(AutoRepairShopSystem aNewAutoRepairShopSystem)
+  @Transient
+  public boolean isSetAutoRepairShopSystem(AutoRepairShopSystem aNewAutoRepairShopSystem)
   {
     boolean wasSet = false;
     if (aNewAutoRepairShopSystem == null)
@@ -172,6 +173,10 @@ public class Assistant extends User
       wasSet = true;
     }
     return wasSet;
+  }
+  
+  public void setAutoRepairShopSystem(AutoRepairShopSystem autoRepair) {
+	  this.AutoRepairShopSystem=autoRepair;
   }
 
   public void delete()

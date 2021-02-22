@@ -51,14 +51,16 @@ public class TestAutoRepairPersistence {
 	
 	@Test
 	public void testPersistAndLoadAssitant() {
-		AutoRepairShopSystem autoRepair = new AutoRepairShopSystem("1");
+		AutoRepairShopSystem autoRepair = new AutoRepairShopSystem();
 		String username = "testAssistant";
 		String password = "testPassword";
-		Assistant assistant = new Assistant();
-		assistant.setUsername(username);
-		assistant.setPassword(password);
-		assistant.setAutoRepairShopSystem(autoRepair);
+//		Assistant assistant = new Assistant();
+//		assistant.setUsername(username);
+//		assistant.setPassword(password);
+//		assistant.setAutoRepairShopSystem(autoRepair);
+		Assistant assistant = new Assistant(username, password, autoRepair);
 		assistantRepository.save(assistant);
+
 
 		assistant = null;
 

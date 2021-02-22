@@ -24,7 +24,6 @@ public class Business
   //------------------------
 
   //Business Attributes
-  private String id;
   private String name;
   private String address;
   private String phoneNumber;
@@ -39,16 +38,12 @@ public class Business
   // CONSTRUCTOR
   //------------------------
 
-  public Business(String aId, String aName, String aAddress, String aPhoneNumber, String aEmail, AutoRepairShopSystem aAutoRepairShopSystem)
+  public Business(String aName, String aAddress, String aPhoneNumber, String aEmail, AutoRepairShopSystem aAutoRepairShopSystem)
   {
     name = aName;
     address = aAddress;
     phoneNumber = aPhoneNumber;
     email = aEmail;
-    if (!setId(aId))
-    {
-      throw new RuntimeException("Cannot create due to duplicate id. See http://manual.umple.org?RE003ViolationofUniqueness.html");
-    }
     businessHours = new ArrayList<OperatingHour>();
     holidays = new ArrayList<TimeSlot>();
     boolean didAddAutoRepairShopSystem = setAutoRepairShopSystem(aAutoRepairShopSystem);
@@ -66,24 +61,24 @@ public class Business
   // INTERFACE
   //------------------------
 
-  public boolean setId(String aId)
-  {
-    boolean wasSet = false;
-    String anOldId = getId();
-    if (anOldId != null && anOldId.equals(aId)) {
-      return true;
-    }
-    if (hasWithId(aId)) {
-      return wasSet;
-    }
-    id = aId;
-    wasSet = true;
-    if (anOldId != null) {
-      businesssById.remove(anOldId);
-    }
-    businesssById.put(aId, this);
-    return wasSet;
-  }
+//  public boolean setId(Long aId)
+//  {
+//    boolean wasSet = false;
+//    Long anOldId = getId();
+//    if (anOldId != null && anOldId.equals(aId)) {
+//      return true;
+//    }
+//    if (hasWithId(aId)) {
+//      return wasSet;
+//    }
+//    id = aId;
+//    wasSet = true;
+//    if (anOldId != null) {
+//      businesssById.remove(anOldId);
+//    }
+//    businesssById.put(aId, this);
+//    return wasSet;
+//  }
 
   public boolean setName(String aName)
   {
@@ -117,23 +112,24 @@ public class Business
     return wasSet;
   }
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
-  public String getId()
-  {
-    return id;
-  }
-  /* Code from template attribute_GetUnique */
-  public static Business getWithId(String aId)
-  {
-    return businesssById.get(aId);
-  }
-  /* Code from template attribute_HasUnique */
-  public static boolean hasWithId(String aId)
-  {
-    return getWithId(aId) != null;
-  }
+//  @Id
+//  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+//  public Long getId()
+//  {
+//    return id;
+//  }
+//  /* Code from template attribute_GetUnique */
+//  public static Business getWithId(Long aId)
+//  {
+//    return businesssById.get(aId);
+//  }
+//  /* Code from template attribute_HasUnique */
+//  public static boolean hasWithId(Long aId)
+//  {
+//    return getWithId(aId) != null;
+//  }
 
+  @Id
   public String getName()
   {
     return name;
@@ -374,7 +370,6 @@ public class Business
 
   public void delete()
   {
-    businesssById.remove(getId());
     businessHours.clear();
     holidays.clear();
     AutoRepairShopSystem existingAutoRepairShopSystem = AutoRepairShopSystem;
@@ -388,8 +383,7 @@ public class Business
 
   public String toString()
   {
-    return super.toString() + "["+
-            "id" + ":" + getId()+ "," +
+    return super.toString() + "[" +
             "name" + ":" + getName()+ "," +
             "address" + ":" + getAddress()+ "," +
             "phoneNumber" + ":" + getPhoneNumber()+ "," +

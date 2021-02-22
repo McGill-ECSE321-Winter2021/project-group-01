@@ -37,6 +37,8 @@ public class TestAutoRepairPersistence {
 //	private ReminderRepository reminderRepository;
 	@Autowired
 	private CustomerRepository customerRepository;
+	@Autowired
+	private BusinessRepository businessRepository;
 	
 	
 	
@@ -52,25 +54,25 @@ public class TestAutoRepairPersistence {
 
 	}
 	
-	@Test
-	public void testPersistAndLoadAssitant() {
-		//AutoRepairShopSystem autoRepair = new AutoRepairShopSystem();
-		String username = "testAssistant";
-		String password = "testPassword";
-		Assistant assistant = new Assistant();
-		assistant.setUsername(username);
-		assistant.setPassword(password);
-		assistant.setAutoRepairShopSystem(null);
-//		Assistant assistant = new Assistant(username, password, autoRepair);
-		assistantRepository.save(assistant);
-
-
+//	@Test
+//	public void testPersistAndLoadAssitant() {
+//		AutoRepairShopSystem autoRepair = new AutoRepairShopSystem();
+//		String username = "testAssistant";
+//		String password = "testPassword";
+////		Assistant assistant = new Assistant();
+////		assistant.setUsername(username);
+////		assistant.setPassword(password);
+////		assistant.setAutoRepairShopSystem(null);
+//     	Assistant assistant = new Assistant(username, password, autoRepair);
+//		assistantRepository.save(assistant);
+//
+//
 //		assistant = null;
-
-		assistant = assistantRepository.findAssistantByUsername(username);
-		assertNotNull(assistant);
-		assertEquals(username, assistant.getUsername());
-	}
+//
+//		assistant = assistantRepository.findAssistantByUsername(username);
+//		assertNotNull(assistant);
+//		assertEquals(username, assistant.getUsername());
+//	}
 	
 //	//@Test
 //	public void testPersistAndLoadAutoRepair() {
@@ -173,4 +175,26 @@ public class TestAutoRepairPersistence {
 //		assertEquals(customer.getUsername(), testProfile.getCustomer().getUsername());
 //	}
 
+	@Test
+	public void testPersistAndLoadBusiness() {
+		AutoRepairShopSystem autoRepair = new AutoRepairShopSystem();
+		String name = "AutoRepair";
+		String address = "Address";
+		String phoneNumber = "514-000-9999";
+		String email = "autorepair@mcgill.ca";
+		Business business = new Business(name, address, phoneNumber, email,
+				autoRepair);
+		
+		businessRepository.save(business);
+		business = null;
+
+		business = businessRepository.findBusinessByName(name);
+
+		assertNotNull(business);
+		assertEquals(name, business.getName());
+		assertEquals(address, business.getAddress());
+		assertEquals(phoneNumber, business.getPhoneNumber());
+		assertEquals(email, business.getEmail());
+	}
+	
 }

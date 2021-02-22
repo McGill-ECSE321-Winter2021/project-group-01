@@ -1,76 +1,26 @@
-
-  
-/*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.30.1.5099.60569f335 modeling language!*/
-
 package ca.mcgill.ecse321.autoRepair.model;
-import javax.persistence.*;
-import java.util.*;
 
-// line 60 "../../../../../AutoRepair.ump"
-// line 184 "../../../../../AutoRepair.ump"
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import java.util.List;
+
 @Entity
-public class Assistant extends User
-{
-
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
-
-  //Assistant Associations
-  private List<Reminder> reminders;
-  private AutoRepairShopSystem AutoRepairShopSystem;
-
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
-
-  public Assistant(String aUsername, String aPassword, AutoRepairShopSystem aAutoRepairShopSystem)
-  {
-    super(aUsername, aPassword);
-    reminders = new ArrayList<Reminder>();
-    boolean didAddAutoRepairShopSystem = isSetAutoRepairShopSystem(aAutoRepairShopSystem);
-    if (!didAddAutoRepairShopSystem)
-    {
-      throw new RuntimeException("Unable to create assistant due to AutoRepairShopSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-  }
-  
-  public Assistant() {
-	  super();
+public class Assistant extends User {
+  public Assistant(){
+    super();
   }
 
-  //------------------------
-  // INTERFACE
-  //------------------------
-  /* Code from template association_GetMany */
-  public Reminder getReminder(int index)
-  {
-    Reminder aReminder = reminders.get(index);
-    return aReminder;
-  }
-
-  @OneToMany(cascade = { CascadeType.ALL })
-  public List<Reminder> getReminders()
-  {
-	if (reminders==null) {
-		return null;
-	}
-    List<Reminder> newReminders = Collections.unmodifiableList(reminders);
-    return newReminders;
-	  //return this.reminders;
+  @OneToMany
+  public List<Reminder> getReminders() {
+    return reminders;
   }
 
   public void setReminders(List<Reminder> reminders) {
-	  this.reminders=reminders;
-  }
-  
-  public int numberOfReminders()
-  {
-    int number = reminders.size();
-    return number;
+    this.reminders = reminders;
   }
 
+<<<<<<< Updated upstream
   public boolean hasReminders()
   {
     boolean has = reminders.size() > 0;
@@ -103,49 +53,19 @@ public class Assistant extends User
     wasAdded = true;
     return wasAdded;
   }
+=======
+  private List<Reminder> reminders;
+>>>>>>> Stashed changes
 
-  public boolean removeReminder(Reminder aReminder)
-  {
-    boolean wasRemoved = false;
-    if (reminders.contains(aReminder))
-    {
-      reminders.remove(aReminder);
-      wasRemoved = true;
-    }
-    return wasRemoved;
-  }
-  /* Code from template association_AddIndexControlFunctions */
-  public boolean addReminderAt(Reminder aReminder, int index)
-  {  
-    boolean wasAdded = false;
-    if(addReminder(aReminder))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfReminders()) { index = numberOfReminders() - 1; }
-      reminders.remove(aReminder);
-      reminders.add(index, aReminder);
-      wasAdded = true;
-    }
-    return wasAdded;
+  @OneToOne
+  public AutoRepairShopSystem getAutoRepairShopSystem() {
+    return autoRepairShopSystem;
   }
 
-  public boolean addOrMoveReminderAt(Reminder aReminder, int index)
-  {
-    boolean wasAdded = false;
-    if(reminders.contains(aReminder))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfReminders()) { index = numberOfReminders() - 1; }
-      reminders.remove(aReminder);
-      reminders.add(index, aReminder);
-      wasAdded = true;
-    } 
-    else 
-    {
-      wasAdded = addReminderAt(aReminder, index);
-    }
-    return wasAdded;
+  public void setAutoRepairShopSystem(AutoRepairShopSystem autoRepairShopSystem) {
+    this.autoRepairShopSystem = autoRepairShopSystem;
   }
+<<<<<<< Updated upstream
   /* Code from template association_SetOneToOptionalOne */
   @Transient
   public boolean isSetAutoRepairShopSystem(AutoRepairShopSystem aNewAutoRepairShopSystem)
@@ -190,5 +110,10 @@ public class Assistant extends User
     }
     //super.delete();
   }
+=======
+
+  private AutoRepairShopSystem autoRepairShopSystem;
+
+>>>>>>> Stashed changes
 
 }

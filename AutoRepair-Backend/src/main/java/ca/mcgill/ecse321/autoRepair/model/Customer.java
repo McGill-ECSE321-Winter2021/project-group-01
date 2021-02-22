@@ -27,7 +27,7 @@ public class Customer extends User
   private List<Review> reviews;
   private Profile profile;
   private AutoRepairShopSystem AutoRepairShopSystem;
-  private List<Appointment> appointments;
+  private List<Appointment1> appointments;
 
   //------------------------
   // CONSTRUCTOR
@@ -51,7 +51,7 @@ public class Customer extends User
     {
       throw new RuntimeException("Unable to create customer due to AutoRepairShopSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
-    appointments = new ArrayList<Appointment>();
+    appointments = new ArrayList<Appointment1>();
   }
 
   public Customer(String aUsername, String aPassword, int aNoShow, int aShow, String aIdForProfile, String aFirstNameForProfile, String aLastNameForProfile, String aAddressForProfile, String aZipCodeForProfile, String aPhoneNumberForProfile, String aEmailForProfile, AutoRepairShopSystem aAutoRepairShopSystem)
@@ -68,7 +68,7 @@ public class Customer extends User
     {
       throw new RuntimeException("Unable to create customer due to AutoRepairShopSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
-    appointments = new ArrayList<Appointment>();
+    appointments = new ArrayList<Appointment1>();
   }
 
   public Customer() {
@@ -228,20 +228,20 @@ public class Customer extends User
     return AutoRepairShopSystem;
   }
   /* Code from template association_GetMany */
-  public Appointment getAppointment(int index)
+  public Appointment1 getAppointment(int index)
   {
-    Appointment aAppointment = appointments.get(index);
+    Appointment1 aAppointment = appointments.get(index);
     return aAppointment;
   }
 
   @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "customer")
-  public List<Appointment> getAppointments()
+  public List<Appointment1> getAppointments()
   {
-    List<Appointment> newAppointments = Collections.unmodifiableList(appointments);
+    List<Appointment1> newAppointments = Collections.unmodifiableList(appointments);
     return newAppointments;
   }
   
-  public void setAppointments(List<Appointment> appointments) {
+  public void setAppointments(List<Appointment1> appointments) {
 	  this.appointments=appointments;
   }
 
@@ -257,7 +257,7 @@ public class Customer extends User
     return has;
   }
 
-  public int indexOfAppointment(Appointment aAppointment)
+  public int indexOfAppointment(Appointment1 aAppointment)
   {
     int index = appointments.indexOf(aAppointment);
     return index;
@@ -524,12 +524,12 @@ public class Customer extends User
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Appointment addAppointment(String aId, BookableService aBookableService, TimeSlot aTimeSlot, AutoRepairShopSystem aAutoRepairShopSystem)
+  public Appointment1 addAppointment(String aId, BookableService aBookableService, TimeSlot aTimeSlot, AutoRepairShopSystem aAutoRepairShopSystem)
   {
-    return new Appointment(aId, this, aBookableService, aTimeSlot, aAutoRepairShopSystem);
+    return new Appointment1(aId, this, aBookableService, aTimeSlot, aAutoRepairShopSystem);
   }
 
-  public boolean addAppointment(Appointment aAppointment)
+  public boolean addAppointment(Appointment1 aAppointment)
   {
     boolean wasAdded = false;
     if (appointments.contains(aAppointment)) { return false; }
@@ -547,7 +547,7 @@ public class Customer extends User
     return wasAdded;
   }
 
-  public boolean removeAppointment(Appointment aAppointment)
+  public boolean removeAppointment(Appointment1 aAppointment)
   {
     boolean wasRemoved = false;
     //Unable to remove aAppointment, as it must always have a customer
@@ -559,7 +559,7 @@ public class Customer extends User
     return wasRemoved;
   }
   /* Code from template association_AddIndexControlFunctions */
-  public boolean addAppointmentAt(Appointment aAppointment, int index)
+  public boolean addAppointmentAt(Appointment1 aAppointment, int index)
   {  
     boolean wasAdded = false;
     if(addAppointment(aAppointment))
@@ -573,7 +573,7 @@ public class Customer extends User
     return wasAdded;
   }
 
-  public boolean addOrMoveAppointmentAt(Appointment aAppointment, int index)
+  public boolean addOrMoveAppointmentAt(Appointment1 aAppointment, int index)
   {
     boolean wasAdded = false;
     if(appointments.contains(aAppointment))
@@ -624,7 +624,7 @@ public class Customer extends User
     }
     for(int i=appointments.size(); i > 0; i--)
     {
-      Appointment aAppointment = appointments.get(i - 1);
+      Appointment1 aAppointment = appointments.get(i - 1);
       aAppointment.delete();
     }
    // super.delete();

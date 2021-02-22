@@ -66,7 +66,7 @@ public class TestAutoRepairPersistence {
 	
 	@AfterEach
 	public void clearDatabase() {
-
+		reviewRepository.deleteAll();
 		assistantRepository.deleteAll();
 		appointmentRepository.deleteAll();
 	    profileRepository.deleteAll();
@@ -77,11 +77,9 @@ public class TestAutoRepairPersistence {
 		carRepository.deleteAll();
 		customerRepository.deleteAll();
 		operatingHourRepository.deleteAll();
-		reviewRepository.deleteAll();
 		serviceComboRepository.deleteAll();
 		timeSlotRepository.deleteAll();
 		userRepository.deleteAll();
-
 	}
 	
 	@Test
@@ -120,15 +118,73 @@ public class TestAutoRepairPersistence {
 	}
 	@Test
 	public void testPersistAndLoadReview() {
-		Long id = 123L;
+		Car testCar = new Car();
+		List<Car> carList = new ArrayList<>();
+		testCar.setModel("testModel");
+		testCar.setPlateNumber("123456");
+		testCar.setTransmission(Car.CarTransmission.Automatic);
+
+		Profile testProfile = new Profile();
+		testProfile.setFirstName("TestName");
+		testProfile.setAddress("Test Address");
+		testProfile.setEmail("testemail@test.com");
+		testProfile.setLastName("TestLastName");
+		testProfile.setPhoneNumber("(123)456-7890");
+		testProfile.setZipCode("H1V 3T2");
+
+		String username = "testCustomer";
+		String password = "testPassword";
+		Customer testCustomer = new Customer();
+		testProfile.setCustomer(testCustomer);
+		testCar.setCustomer(testCustomer);
+		carList.add(testCar);
+		testCustomer.setUsername(username);
+		testCustomer.setPassword(password);
+		testCustomer.setCars(carList);
+		testCustomer.setNoShow(0);
+		testCustomer.setShow(0);
+		testCustomer.setProfile(testProfile);
+
+		TimeSlot testSlot = new TimeSlot();
+		Date startDate = Date.valueOf("2021-02-22");
+		Date endDate = startDate;
+		Time startTime = Time.valueOf("12:00:00");
+		Time endTime = Time.valueOf("14:00:00");
+		testSlot.setEndDate(endDate);
+		testSlot.setEndTime(endTime);
+		testSlot.setStartTime(startTime);
+		testSlot.setStartDate(startDate);
+
+		String name = "service1";
+		int duration = 30;
+		Service testService = new Service();
+		testService.setName(name);
+		testService.setDuration(duration);
+
+		Appointment testAppointment = new Appointment();
+		testAppointment.setCustomer(testCustomer);
+		testAppointment.setBookableService(testService);
+		testAppointment.setTimeSlot(testSlot);
+		testAppointment.setComboItems(null);
+		profileRepository.save(testProfile);
+		carRepository.save(testCar);
+		customerRepository.save(testCustomer);
+		serviceRepository.save(testService);
+		timeSlotRepository.save(testSlot);
+		appointmentRepository.save(testAppointment);
+
+		
 		String description = "The service was great!";
 		int serviceRating = 5;
 		Review review = new Review();
 		review.setDescription(description);
-		review.setId(id);
 		review.setServiceRating(serviceRating);
+		review.setAppointment(testAppointment);
+		review.setCustomer(testCustomer);
+		review.setBookableService(testService);
 		reviewRepository.save(review);
-		assertEquals(id, review.getId());
+		review = null;
+		review = reviewRepository.findReviewByCustomerAndAppointment(testCustomer, testAppointment);
 		assertEquals(description, review.getDescription());
 		assertEquals(serviceRating, review.getServiceRating());
 	}
@@ -142,6 +198,8 @@ public class TestAutoRepairPersistence {
 		car.setPlateNumber(plateNumber);
 		car.setTransmission(carTransmition);
 		carRepository.save(car);
+		car = null;
+		car = carRepository.findCarByPlateNumber(plateNumber);
 		assertEquals(model, car.getModel());
 		assertEquals(plateNumber, car.getPlateNumber());
 		assertEquals(carTransmition, car.getTransmission());
@@ -312,10 +370,108 @@ public class TestAutoRepairPersistence {
 		assertEquals(testProfile.getLastName(),testCustomer.getProfile().getLastName());
 		assertEquals(testProfile.getPhoneNumber(),testCustomer.getProfile().getPhoneNumber());
 		assertEquals(testProfile.getZipCode(),testCustomer.getProfile().getZipCode());
-		assertEquals(carList,testCustomer.getCars());
+		assertEquals(carList.get(0).getTransmission(),testCustomer.getCars().get(0).getTransmission());
 		assertEquals(0,testCustomer.getNoShow());
 		assertEquals(0,testCustomer.getShow());
 	}
+	
+	@Test
+	public void testPersistAndLoadProfile() {
+		Car testCar = new Car();
+		List<Car> carList = new ArrayList<>();
+		testCar.setModel("testModel");
+		testCar.setPlateNumber("123456");
+		testCar.setTransmission(Car.CarTransmission.Automatic);
+
+		Profile testProfile = new Profile();
+		testProfile.setFirstName("TestName");
+		testProfile.setAddress("Test Address");
+		testProfile.setEmail("testemail@test.com");
+		testProfile.setLastName("TestLastName");
+		testProfile.setPhoneNumber("(123)456-7890");
+		testProfile.setZipCode("H1V 3T2");
+
+		String username = "testCustomer";
+		String password = "testPassword";
+		Customer testCustomer = new Customer();
+		testProfile.setCustomer(testCustomer);
+		testCar.setCustomer(testCustomer);
+		carList.add(testCar);
+		testCustomer.setUsername(username);
+		testCustomer.setPassword(password);
+		testCustomer.setCars(carList);
+		testCustomer.setNoShow(0);
+		testCustomer.setShow(0);
+		testCustomer.setProfile(testProfile);
+
+		profileRepository.save(testProfile);
+		carRepository.save(testCar);
+		customerRepository.save(testCustomer);
+
+		testProfile = null;
+
+		testProfile = profileRepository.findByCustomer(testCustomer);
+		assertNotNull(testProfile);
+		assertEquals("TestName", testProfile.getFirstName());
+		assertEquals("TestLastName", testProfile.getLastName());
+		assertEquals("Test Address", testProfile.getAddress());
+		assertEquals("testemail@test.com",testProfile.getEmail());
+		assertEquals("(123)456-7890",testProfile.getPhoneNumber());
+		assertEquals("H1V 3T2",testProfile.getZipCode());
+		assertEquals(username, testProfile.getCustomer().getUsername());
+	}
+	
+	@Test
+	public void testPersistAndLoadOperatingHour() {
+		OperatingHour testOpHour = new OperatingHour();
+			
+		testOpHour.setDayOfWeek(OperatingHour.DayOfWeek.Monday);
+		
+		Time startTime = Time.valueOf("08:30:00");	
+		testOpHour.setStartTime(startTime);
+		
+		Time endTime = Time.valueOf("04:30:00");
+		testOpHour.setEndTime(endTime);
+		operatingHourRepository.save(testOpHour);
+		
+		testOpHour=null;
+		
+		testOpHour=operatingHourRepository.findByDayOfWeek(OperatingHour.DayOfWeek.Monday);
+		
+		assertNotNull(testOpHour);
+		assertEquals(OperatingHour.DayOfWeek.Monday, testOpHour.getDayOfWeek());
+		assertEquals(startTime, testOpHour.getStartTime());
+		assertEquals(endTime,testOpHour.getEndTime());
+		
+	}
+	@Test
+	public void testPersistAndLoadTimeSlot() {
+
+			Date sD = Date.valueOf("2021-02-24");
+			Date eD = Date.valueOf("2021-02-27");
+			Time sT = Time.valueOf("10:10:00");
+			Time eT = Time.valueOf("11:11:00");
+			TimeSlot ts = new TimeSlot();
+			
+			ts.setStartDate(sD);
+			ts.setEndDate(eD);
+			ts.setStartTime(sT);
+			ts.setEndTime(eT);
+
+			timeSlotRepository.save(ts);
+
+			ts = null;
+
+			ts = timeSlotRepository.findTimeSlotByStartDateAndStartTime(sD, sT);
+
+			assertNotNull(ts);
+			assertEquals(sD, ts.getStartDate());
+			assertEquals(eD, ts.getEndDate());
+			assertEquals(sT, ts.getStartTime());
+			assertEquals(eT, ts.getEndTime());
+			
+	}
+	
 
 //	@Test
 //	public void testPersistAndLoadReminder() {

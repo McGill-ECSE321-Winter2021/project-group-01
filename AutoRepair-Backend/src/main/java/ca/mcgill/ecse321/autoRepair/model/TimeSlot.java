@@ -1,185 +1,78 @@
-/*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.30.1.5099.60569f335 modeling language!*/
-
 package ca.mcgill.ecse321.autoRepair.model;
 import javax.persistence.*;
-import java.util.*;
 import java.sql.Date;
 import java.sql.Time;
 
-// line 88 "../../../../../AutoRepair.ump"
-// line 199 "../../../../../AutoRepair.ump"
+
 @Entity
+@Table(name = "slots")
 public class TimeSlot
 {
 
-  //------------------------
-  // STATIC VARIABLES
-  //------------------------
 
-  private static Map<String, TimeSlot> timeslotsById = new HashMap<String, TimeSlot>();
-
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
-
-  //TimeSlot Attributes
-  private String id;
+  private Long id;
   private Date startDate;
   private Time startTime;
   private Date endDate;
   private Time endTime;
 
-  //TimeSlot Associations
-  private AutoRepairShopSytem autoRepairShopSytem;
+//  public TimeSlot(Date aStartDate, Time aStartTime, Date aEndDate, Time aEndTime, AutoRepairShopSystem aAutoRepairShopSystem)
+//  {
+//    startDate = aStartDate;
+//    startTime = aStartTime;
+//    endDate = aEndDate;
+//    endTime = aEndTime;
+//    this.AutoRepairShopSystem=aAutoRepairShopSystem;
+//  }
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
+  public TimeSlot() {
 
-  public TimeSlot(String aId, Date aStartDate, Time aStartTime, Date aEndDate, Time aEndTime, AutoRepairShopSytem aAutoRepairShopSytem)
-  {
-    startDate = aStartDate;
-    startTime = aStartTime;
-    endDate = aEndDate;
-    endTime = aEndTime;
-    if (!setId(aId))
-    {
-      throw new RuntimeException("Cannot create due to duplicate id. See http://manual.umple.org?RE003ViolationofUniqueness.html");
-    }
-    boolean didAddAutoRepairShopSytem = setAutoRepairShopSytem(aAutoRepairShopSytem);
-    if (!didAddAutoRepairShopSytem)
-    {
-      throw new RuntimeException("Unable to create timeSlot due to autoRepairShopSytem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
   }
 
-  //------------------------
-  // INTERFACE
-  //------------------------
-
-  public boolean setId(String aId)
-  {
-    boolean wasSet = false;
-    String anOldId = getId();
-    if (anOldId != null && anOldId.equals(aId)) {
-      return true;
-    }
-    if (hasWithId(aId)) {
-      return wasSet;
-    }
-    id = aId;
-    wasSet = true;
-    if (anOldId != null) {
-      timeslotsById.remove(anOldId);
-    }
-    timeslotsById.put(aId, this);
-    return wasSet;
-  }
-
-  public boolean setStartDate(Date aStartDate)
-  {
-    boolean wasSet = false;
-    startDate = aStartDate;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public boolean setStartTime(Time aStartTime)
-  {
-    boolean wasSet = false;
-    startTime = aStartTime;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public boolean setEndDate(Date aEndDate)
-  {
-    boolean wasSet = false;
-    endDate = aEndDate;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public boolean setEndTime(Time aEndTime)
-  {
-    boolean wasSet = false;
-    endTime = aEndTime;
-    wasSet = true;
-    return wasSet;
-  }
 
   @Id
-  public String getId()
-  {
-    return id;
-  }
-  /* Code from template attribute_GetUnique */
-  public static TimeSlot getWithId(String aId)
-  {
-    return timeslotsById.get(aId);
-  }
-  /* Code from template attribute_HasUnique */
-  public static boolean hasWithId(String aId)
-  {
-    return getWithId(aId) != null;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  public Long getId() {
+    return this.id;
   }
 
-  public Date getStartDate()
-  {
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+
+  public Date getStartDate() {
     return startDate;
   }
 
-  public Time getStartTime()
-  {
+  public void setStartDate(Date startDate) {
+    this.startDate = startDate;
+  }
+
+  public Time getStartTime() {
     return startTime;
   }
 
-  public Date getEndDate()
-  {
+  public void setStartTime(Time startTime) {
+    this.startTime = startTime;
+  }
+
+  public Date getEndDate() {
     return endDate;
   }
 
-  public Time getEndTime()
-  {
+  public void setEndDate(Date endDate) {
+    this.endDate = endDate;
+  }
+
+  public Time getEndTime() {
     return endTime;
   }
-  /* Code from template association_GetOne */
-  @ManyToOne
-  public AutoRepairShopSytem getAutoRepairShopSytem()
-  {
-    return autoRepairShopSytem;
-  }
-  /* Code from template association_SetOneToMany */
-  public boolean setAutoRepairShopSytem(AutoRepairShopSytem aAutoRepairShopSytem)
-  {
-    boolean wasSet = false;
-    if (aAutoRepairShopSytem == null)
-    {
-      return wasSet;
-    }
 
-    AutoRepairShopSytem existingAutoRepairShopSytem = autoRepairShopSytem;
-    autoRepairShopSytem = aAutoRepairShopSytem;
-    if (existingAutoRepairShopSytem != null && !existingAutoRepairShopSytem.equals(aAutoRepairShopSytem))
-    {
-      existingAutoRepairShopSytem.removeTimeSlot(this);
-    }
-    autoRepairShopSytem.addTimeSlot(this);
-    wasSet = true;
-    return wasSet;
+  public void setEndTime(Time endTime) {
+    this.endTime = endTime;
   }
 
-  public void delete()
-  {
-    timeslotsById.remove(getId());
-    AutoRepairShopSytem placeholderAutoRepairShopSytem = autoRepairShopSytem;
-    this.autoRepairShopSytem = null;
-    if(placeholderAutoRepairShopSytem != null)
-    {
-      placeholderAutoRepairShopSytem.removeTimeSlot(this);
-    }
-  }
 
 
   public String toString()
@@ -189,7 +82,6 @@ public class TimeSlot
             "  " + "startDate" + "=" + (getStartDate() != null ? !getStartDate().equals(this)  ? getStartDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "startTime" + "=" + (getStartTime() != null ? !getStartTime().equals(this)  ? getStartTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "endDate" + "=" + (getEndDate() != null ? !getEndDate().equals(this)  ? getEndDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "endTime" + "=" + (getEndTime() != null ? !getEndTime().equals(this)  ? getEndTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "autoRepairShopSytem = "+(getAutoRepairShopSytem()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShopSytem())):"null");
+            "  " + "endTime" + "=" + (getEndTime() != null ? !getEndTime().equals(this)  ? getEndTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator");
   }
 }

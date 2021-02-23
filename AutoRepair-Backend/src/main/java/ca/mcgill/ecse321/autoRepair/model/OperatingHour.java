@@ -1,6 +1,5 @@
 package ca.mcgill.ecse321.autoRepair.model;
 import javax.persistence.*;
-import java.util.*;
 import java.sql.Time;
 
 // line 79 "../../../../../AutoRepair.ump"
@@ -18,16 +17,6 @@ public class OperatingHour
   //------------------------
   // STATIC VARIABLES
   //------------------------
-
-  //private static Map<String, OperatingHour> operatinghoursById = new HashMap<String, OperatingHour>();
-
-//  public static Map<String, OperatingHour> getOperatinghoursById() {
-//    return operatinghoursById;
-//  }
-//
-//  public static void setOperatinghoursById(Map<String, OperatingHour> operatinghoursById) {
-//    OperatingHour.operatinghoursById = operatinghoursById;
-//  }
 
   private Long id;
   @Id

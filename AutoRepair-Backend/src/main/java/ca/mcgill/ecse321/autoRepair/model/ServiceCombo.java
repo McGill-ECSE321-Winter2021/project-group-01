@@ -11,14 +11,6 @@ public class ServiceCombo extends BookableService
   private ComboItem mainService;
   private List<ComboItem> services;
 
-
-//  public ServiceCombo(String aName, AutoRepairShopSystem aAutoRepairShopSystem)
-//  {
-//    super(aName, aAutoRepairShopSystem);
-//    services = new ArrayList<ComboItem>();
-//  }
-
-
   public ServiceCombo() {
     super();
   }

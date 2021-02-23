@@ -7,14 +7,6 @@ public class Service extends BookableService
 
   private int duration;
 
-
-
-//  public Service(String aName, AutoRepairShopSystem aAutoRepairShopSystem, int aDuration)
-//  {
-//    super(aName, aAutoRepairShopSystem);
-//    setDuration(aDuration);
-//  }
-
   public Service() {
     super();
   }

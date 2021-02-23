@@ -2,13 +2,9 @@ package ca.mcgill.ecse321.autoRepair.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +12,6 @@ import ca.mcgill.ecse321.autoRepair.model.*;
 import ca.mcgill.ecse321.autoRepair.model.Car.CarTransmission;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +40,6 @@ public class TestAutoRepairPersistence {
 	@Autowired
 	private CustomerRepository customerRepository;
 	@Autowired
-	private BookableServiceRepository bookableServiceRepository;
-	@Autowired
 	private CarRepository carRepository;
 	@Autowired
 	private OperatingHourRepository operatingHourRepository;
@@ -59,8 +51,6 @@ public class TestAutoRepairPersistence {
 	private ServiceRepository serviceRepository;
 	@Autowired
 	private TimeSlotRepository timeSlotRepository;
-	@Autowired
-	private UserRepository userRepository;
 	@Autowired
 	private BusinessRepository businessRepository;
 	@Autowired
@@ -74,7 +64,6 @@ public class TestAutoRepairPersistence {
 	    profileRepository.deleteAll();
 		ownerRepository.deleteAll();
 		reminderRepository.deleteAll();
-	//	bookableServiceRepository.deleteAll();
 		businessRepository.deleteAll();
 		carRepository.deleteAll();
 		customerRepository.deleteAll();
@@ -83,7 +72,6 @@ public class TestAutoRepairPersistence {
 		comboItemRepository.deleteAll();
 		serviceRepository.deleteAll();
 		timeSlotRepository.deleteAll();
-		userRepository.deleteAll();
 	}
 	
 	@Test
@@ -527,10 +515,6 @@ public class TestAutoRepairPersistence {
 		serviceRepository.save(testService2);
 		serviceRepository.save(testService3);
 
-//		comboItemRepository.save(mainItem);
-//		comboItemRepository.save(mandatoryItem);
-//		comboItemRepository.save(optionalItem);
-		
 		serviceComboRepository.save(testCombo);
 		
 		testCombo=null;
@@ -546,69 +530,104 @@ public class TestAutoRepairPersistence {
 		}
 		assertEquals(mainItem.getService().getName(), testCombo.getMainService().getService().getName());
 
+	}
+
+	@Test
+	public void testPersistAndLoadReminder() {
+
+		//Service
+		String name = "service1";
+		int duration = 30;
+		Service testService = new Service();
+		testService.setName(name);
+		testService.setDuration(duration);
+		
+		//Car
+		Car testCar = new Car();
+		List<Car> carList = new ArrayList<>();
+		testCar.setModel("testModel");
+		testCar.setPlateNumber("123456");
+		testCar.setTransmission(Car.CarTransmission.Automatic);
+		
+		//Profile
+		Profile testProfile = new Profile();
+		testProfile.setFirstName("TestName");
+		testProfile.setAddress("Test Address");
+		testProfile.setEmail("testemail@test.com");
+		testProfile.setLastName("TestLastName");
+		testProfile.setPhoneNumber("(123)456-7890");
+		testProfile.setZipCode("H1V 3T2");
+
+		//Customer
+		String username = "testCustomer";
+		String password = "testPassword";
+		Customer testCustomer = new Customer();
+		testProfile.setCustomer(testCustomer);
+		testCar.setCustomer(testCustomer);
+		carList.add(testCar);
+		testCustomer.setUsername(username);
+		testCustomer.setPassword(password);
+		testCustomer.setCars(carList);
+		testCustomer.setNoShow(0);
+		testCustomer.setShow(0);
+		testCustomer.setProfile(testProfile);
 
 		
+		String testDescription = "testDescription";
+		Date testDate = Date.valueOf("2021-02-22");
+		Time testTime = Time.valueOf("12:00:00");
+		Reminder reminder = new Reminder();
+		reminder.setDate(testDate);
+		reminder.setDescription(testDescription);
+		reminder.setTime(testTime);
+		reminder.setBookableService(testService);
+		reminder.setCustomer(testCustomer);
+		
+		serviceRepository.save(testService);
+		profileRepository.save(testProfile);
+		carRepository.save(testCar);
+		customerRepository.save(testCustomer);
+		reminderRepository.save(reminder);
+		
+
+		reminder = null;
+
+		reminder = reminderRepository.findByCustomerAndBookableService(testCustomer, testService);
+		
+		assertNotNull(reminder);
+		assertEquals(testCustomer.getUsername(), reminder.getCustomer().getUsername());
+		assertEquals(testCustomer.getPassword(), reminder.getCustomer().getPassword());
+		assertEquals(testCustomer.getNoShow(), reminder.getCustomer().getNoShow());
+		assertEquals(testCustomer.getShow(), reminder.getCustomer().getShow());
+		assertEquals(testDate, reminder.getDate());
+		assertEquals(testDescription, reminder.getDescription());
+		assertEquals(testTime, reminder.getTime());
+		assertEquals(testService.getName(), reminder.getBookableService().getName());
+		
 	}
-	
+	@Test
+	public void testPersistAndLoadComboItem() {
 
-//	@Test
-//	public void testPersistAndLoadReminder() {
-//		AutoRepairShopSystem repairShopSystem = new AutoRepairShopSystem("1");
-//		Customer customer = new Customer("TestCustomer", "12345",0,0, null, repairShopSystem);
-//		BookableService service = new Service("TestService", repairShopSystem,10);
-//
-//		customerRepository.save(customer);
-//		//Add to bookable service repository
-//		Date date = java.sql.Date.valueOf(LocalDate.of(2020, Month.JANUARY, 31));
-//		Time time = java.sql.Time.valueOf(LocalTime.of(11, 35));
-//		Reminder reminder = new Reminder("id1","TestReminder",date, time, repairShopSystem,customer);
-//		reminderRepository.save(reminder);
-//		String reminderId= "id1";
-//		reminder =null;
-//
-//		reminder = reminderRepository.findByCustomerAndBookableService(customer,service);
-//		assertNotNull(reminder);
-//		assertEquals(reminderId, reminder.getId());
-//		assertEquals(customer.getUsername(), reminder.getCustomer().getUsername());
-//
-//	}
-
-//	@Test
-//	public void testPersistAndLoadProfile() {
-//		Car testCar = new Car();
-//		List<Car> carList = new ArrayList<>();
-//		testCar.setModel("testModel");
-//		testCar.setPlateNumber("123456");
-//		testCar.setTransmission(Car.CarTransmission.Automatic);
-//		carList.add(testCar);
-//
-//		Profile testProfile = new Profile();
-//		testProfile.setFirstName("TestName");
-//		testProfile.setAddress("Test Address");
-//		testProfile.setEmail("testemail@test.com");
-//		testProfile.setLastName("TestLastName");
-//		testProfile.setPhoneNumber("(123)456-7890");
-//		testProfile.setZipCode("H1V 3T2");
-//
-//		String username = "testCustomer";
-//		String password = "testPassword";
-//		Customer testCustomer = new Customer();
-//		testCustomer.setUsername(username);
-//		testCustomer.setPassword(password);
-//		testCustomer.setCars(carList);
-//		testCustomer.setNoShow(0);
-//		testCustomer.setShow(0);
-//		testCustomer.setProfile(testProfile);
-//
-//		customerRepository.save(customer);
-//		profileRepository.save(testProfile);
-//		String profileId = "profileId";
-//		testProfile = null;
-//
-//		testProfile = profileRepository.findByCustomer(customer);
-//		assertNotNull(testProfile);
-//		assertEquals(profileId, testProfile.getId());
-//		assertEquals(customer.getUsername(), testProfile.getCustomer().getUsername());
-//	}
-
+		String name = "service1";
+		int duration = 30;
+		Service testService = new Service();
+		testService.setName(name);
+		testService.setDuration(duration);
+		
+		ComboItem item = new ComboItem();
+		item.setService(testService);
+		
+		serviceRepository.save(testService);
+		comboItemRepository.save(item);
+		
+		item = null;
+		
+		List<ComboItem> items = new ArrayList<ComboItem>();
+		items = comboItemRepository.findByService(testService);
+		item = items.get(0);
+		
+		assertNotNull(item);
+		assertEquals(item.getService().getName(), name);
+		assertEquals(item.getService().getDuration(), duration);
+	}
 }

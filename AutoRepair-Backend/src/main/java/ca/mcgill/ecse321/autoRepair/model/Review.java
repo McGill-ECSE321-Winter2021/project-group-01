@@ -23,16 +23,6 @@ public class Review
 
   private Appointment appointment;
 
-
-//  public Review(String aDescription, int aServiceRating, AutoRepairShopSystem aAutoRepairShopSystem, Customer aCustomer, BookableService aBookableService)
-//  {
-//    description = aDescription;
-//    serviceRating = aServiceRating;
-//    this.AutoRepairShopSystem=aAutoRepairShopSystem;
-//    this.customer=aCustomer;
-//    this.bookableService=aBookableService;
-//  }
-
   public Review() {
 
   }

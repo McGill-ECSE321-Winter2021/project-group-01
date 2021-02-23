@@ -34,10 +34,12 @@ public class Customer extends User
 
   private List<Car> cars;
 
-  @OneToMany(cascade = { CascadeType.ALL },mappedBy = "customer")
+  
+  @OneToMany(fetch = FetchType.EAGER,cascade = { CascadeType.ALL },mappedBy = "customer")
   public List<Car> getCars() {
     return cars;
   }
+
 
   public void setCars(List<Car> cars) {
     this.cars = cars;

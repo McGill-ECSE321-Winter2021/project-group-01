@@ -23,7 +23,7 @@ public class ServiceCombo extends BookableService
     super();
   }
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   public ComboItem getMainService()
   {
     return mainService;
@@ -37,7 +37,7 @@ public class ServiceCombo extends BookableService
 
 
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "serviceCombo")
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "serviceCombo")
   public List<ComboItem> getServices()
   {
     return this.services;

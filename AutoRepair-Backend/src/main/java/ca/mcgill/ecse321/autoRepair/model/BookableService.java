@@ -22,7 +22,7 @@ public abstract class BookableService{
     this.name = name;
   }
 
-
+  
   @OneToMany(mappedBy = "bookableService")
   public List<Review> getReviews() {
     return reviews;

@@ -1,8 +1,6 @@
 package ca.mcgill.ecse321.autoRepair.model;
 import javax.persistence.*;
 import java.util.*;
-import java.sql.Date;
-import java.sql.Time;
 
 @Entity
 public class Customer extends User

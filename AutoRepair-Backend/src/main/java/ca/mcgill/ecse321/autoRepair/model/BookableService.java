@@ -8,7 +8,6 @@ import java.util.List;
 public abstract class BookableService{
 
   private String name;
-  private List<Reminder> reminders;
   private List<Review> reviews;
 
   public BookableService(){
@@ -23,14 +22,6 @@ public abstract class BookableService{
     this.name = name;
   }
 
-  @ManyToMany
-  public List<Reminder> getReminders() {
-    return reminders;
-  }
-
-  public void setReminders(List<Reminder> reminders) {
-    this.reminders = reminders;
-  }
 
   @OneToMany(mappedBy = "bookableService")
   public List<Review> getReviews() {

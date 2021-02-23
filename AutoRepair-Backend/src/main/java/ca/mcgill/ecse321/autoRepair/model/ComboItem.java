@@ -7,6 +7,7 @@ import java.util.*;
 public class ComboItem
 {
   private Long id;
+ 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   public Long getId() {

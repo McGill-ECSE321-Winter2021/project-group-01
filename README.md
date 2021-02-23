@@ -26,6 +26,7 @@ This project consists on building a system for an Auto-repair car shop. Customer
 
 
 ## Sprint 1 
+To access the wiki>>[Sprint 1](https://github.com/McGill-ECSE321-Winter2021/project-group-01/wiki#sprint-1)
 ### Roles and Tasks
 | Name                    | Roles/Tasks                                                                                    | 
 | ------------------------| -----------------------------------------------------------------------------------------------|

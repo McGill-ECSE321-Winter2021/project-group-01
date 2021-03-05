@@ -1,8 +1,6 @@
 package ca.mcgill.ecse321.autoRepair.model;
 import javax.persistence.*;
 import java.util.*;
-import java.sql.Date;
-import java.sql.Time;
 
 @Entity
 public class Customer extends User
@@ -34,7 +32,7 @@ public class Customer extends User
 
   private List<Car> cars;
 
-  @OneToMany(cascade = { CascadeType.ALL },mappedBy = "customer")
+  @OneToMany(fetch = FetchType.EAGER,cascade = { CascadeType.ALL },mappedBy = "customer")
   public List<Car> getCars() {
     return cars;
   }

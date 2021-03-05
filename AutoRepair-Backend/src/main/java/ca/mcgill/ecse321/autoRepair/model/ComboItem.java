@@ -1,12 +1,12 @@
 package ca.mcgill.ecse321.autoRepair.model;
 import javax.persistence.*;
-import java.util.*;
 
 @Entity
 @Table(name = "ComboItems")
 public class ComboItem
 {
   private Long id;
+ 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   public Long getId() {

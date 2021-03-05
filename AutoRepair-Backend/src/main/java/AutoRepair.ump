@@ -1,4 +1,4 @@
-namespace ca.mcgill.ecse321.autoRepair.model;
+gnamespace ca.mcgill.ecse321.autoRepair.model;
 
 class AutoRepairShopSytem{
   depend javax.persistence.*;

@@ -297,12 +297,13 @@ public class TestAutoRepairPersistence {
 
 		reminder = null;
 
-		reminder = reminderRepository.findByCustomerAndDate(testCustomer, testDate);
+		reminder = reminderRepository.findByCustomerAndBookableService(testCustomer, testService);
 		assertNotNull(reminder);
 		assertEquals(testCustomer, reminder.getCustomer());
 		assertEquals(testDate, reminder.getDate());
 		assertEquals(testDescription, reminder.getDescription());
 		assertEquals(testTime, reminder.getTime());
+		assertEquals(testService.getName(), reminder.getBookableService().getName());
 		
 	}
 	

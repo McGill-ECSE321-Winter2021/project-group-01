@@ -3,13 +3,15 @@ package ca.mcgill.ecse321.autoRepair.service;
 import ca.mcgill.ecse321.autoRepair.dao.AppointmentRepository;
 import ca.mcgill.ecse321.autoRepair.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AutoRepairService {
+@Service
+public class AppointmentService {
     @Autowired
     AppointmentRepository appointmentRepository;
 
@@ -17,10 +19,10 @@ public class AutoRepairService {
     public Appointment makeAppointment(Customer customer, BookableService bookableService, List<ComboItem> comboItemList,
                                        TimeSlot timeSlot) {
         Appointment app = new Appointment();
+        app.setId(Long.valueOf(customer.getUsername().hashCode()*timeSlot.getStartDate().hashCode()*timeSlot.getStartTime().hashCode()));
         app.setCustomer(customer);
         app.setBookableService(bookableService);
         app.setComboItems(comboItemList);
-        app.setTimeSlot(timeSlot);
         appointmentRepository.save(app);
         return app;
     }

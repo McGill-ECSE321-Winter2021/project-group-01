@@ -2,7 +2,6 @@ package ca.mcgill.ecse321.autoRepair.model;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import java.util.List;
 
 @Entity

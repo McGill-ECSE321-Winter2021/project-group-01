@@ -1,6 +1,5 @@
 package ca.mcgill.ecse321.autoRepair.model;
 import javax.persistence.*;
-import java.util.*;
 import java.sql.Date;
 import java.sql.Time;
 
@@ -10,29 +9,14 @@ public class Reminder
 {
 
   private Long id;
-
-
-
   private String description;
   private Date date;
   private Time time;
   private Customer customer;
   private BookableService bookableService;
 
-
-//  public Reminder(long aId, String aDescription, Date aDate, Time aTime, AutoRepairShopSystem aAutoRepairShopSystem, Customer aCustomer)
-//  {
-//    description = aDescription;
-//    date = aDate;
-//    time = aTime;
-//    this.AutoRepairShopSystem=aAutoRepairShopSystem;
-//    this.customer=aCustomer;
-//    this.bookableServices=new ArrayList<BookableService>();
-//  }
-
   public Reminder() {
   }
-
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -68,7 +52,7 @@ public class Reminder
     this.time = time;
   }
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   public Customer getCustomer()
   {
     return customer;
@@ -88,8 +72,6 @@ public class Reminder
   public void setBookableService(BookableService bookableService) {
     this.bookableService=bookableService;
   }
-
-
 
   public String toString()
   {

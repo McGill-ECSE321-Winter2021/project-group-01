@@ -11,19 +11,11 @@ public class ServiceCombo extends BookableService
   private ComboItem mainService;
   private List<ComboItem> services;
 
-
-//  public ServiceCombo(String aName, AutoRepairShopSystem aAutoRepairShopSystem)
-//  {
-//    super(aName, aAutoRepairShopSystem);
-//    services = new ArrayList<ComboItem>();
-//  }
-
-
   public ServiceCombo() {
     super();
   }
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   public ComboItem getMainService()
   {
     return mainService;
@@ -37,7 +29,7 @@ public class ServiceCombo extends BookableService
 
 
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "serviceCombo")
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "serviceCombo")
   public List<ComboItem> getServices()
   {
     return this.services;

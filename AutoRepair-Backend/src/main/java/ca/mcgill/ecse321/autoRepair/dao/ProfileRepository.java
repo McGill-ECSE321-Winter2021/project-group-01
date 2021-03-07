@@ -11,6 +11,6 @@ public interface ProfileRepository extends CrudRepository<Profile, Long>{
 
     Profile findByCustomer(Customer customer);
 
-    boolean existsByCustomer(Customer person);
+    boolean existsByCustomer(Customer customer);
 
 }

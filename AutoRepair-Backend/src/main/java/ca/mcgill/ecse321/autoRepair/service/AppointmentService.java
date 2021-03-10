@@ -16,13 +16,11 @@ public class AppointmentService {
     AppointmentRepository appointmentRepository;
 
     @Transactional
-    public Appointment makeAppointment(Customer customer, BookableService bookableService, List<ComboItem> comboItemList,
-                                       TimeSlot timeSlot) {
+    public Appointment makeAppointment(Customer customer, ChosenService bookableService,TimeSlot timeSlot) {
         Appointment app = new Appointment();
         app.setId(Long.valueOf(customer.getUsername().hashCode()*timeSlot.getStartDate().hashCode()*timeSlot.getStartTime().hashCode()));
         app.setCustomer(customer);
-        app.setBookableService(bookableService);
-        app.setComboItems(comboItemList);
+        app.setService(bookableService);
         appointmentRepository.save(app);
         return app;
     }
@@ -34,13 +32,13 @@ public class AppointmentService {
     }
 
     @Transactional
-    public Appointment updateAppointment(TimeSlot timeSlot, TimeSlot newTimeSlot, BookableService newBookableService){
+    public Appointment updateAppointment(TimeSlot timeSlot, TimeSlot newTimeSlot, ChosenService newBookableService){
         Appointment appointment = getAppointment(timeSlot);
         if(!(timeSlot.equals(newTimeSlot))){
             appointment.setTimeSlot(newTimeSlot);
         }
-        if(!(appointment.getBookableService().equals(newBookableService))){
-            appointment.setBookableService(newBookableService);
+        if(!(appointment.getService().equals(newBookableService))){
+            appointment.setService(newBookableService);
         }
         return appointment;
     }

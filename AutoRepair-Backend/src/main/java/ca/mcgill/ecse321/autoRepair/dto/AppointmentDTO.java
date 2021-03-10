@@ -1,17 +1,11 @@
 package ca.mcgill.ecse321.autoRepair.dto;
 
-import ca.mcgill.ecse321.autoRepair.model.BookableService;
-import ca.mcgill.ecse321.autoRepair.model.ComboItem;
-import ca.mcgill.ecse321.autoRepair.model.Customer;
-import ca.mcgill.ecse321.autoRepair.model.TimeSlot;
-
 import java.util.List;
 
 public class AppointmentDTO {
     private CustomerDTO customer;
     private TimeSlotDTO timeSlot;
-    private BookableServiceDTO service;
-    private List<ComboItemDTO> comboItemList;
+    private ChosenServiceDTO service;
 
     public void setCustomer(CustomerDTO customer) {
         this.customer = customer;
@@ -21,22 +15,16 @@ public class AppointmentDTO {
         this.timeSlot = timeSlot;
     }
 
-    public void setService(BookableServiceDTO service) {
+    public void setService(ChosenServiceDTO service) {
         this.service = service;
-    }
-
-    public void setComboItemList(List<ComboItemDTO> comboItemList) {
-        this.comboItemList = comboItemList;
     }
 
     public AppointmentDTO(){}
 
-    public AppointmentDTO(CustomerDTO customer, TimeSlotDTO timeSlot, BookableServiceDTO bookableService,
-                          List<ComboItemDTO> comboItemList){
+    public AppointmentDTO(CustomerDTO username, TimeSlotDTO timeSlot, ChosenServiceDTO bookableService){
         this.customer=customer;
         this.timeSlot=timeSlot;
         this.service=bookableService;
-        this.comboItemList=comboItemList;
     }
 
     public CustomerDTO getCustomer(){
@@ -47,12 +35,8 @@ public class AppointmentDTO {
         return this.timeSlot;
     }
 
-    public BookableServiceDTO getBookableService(){
+    public ChosenServiceDTO getService(){
         return this.service;
-    }
-
-    public List<ComboItemDTO> getComboItemList() {
-        return comboItemList;
     }
 
 }

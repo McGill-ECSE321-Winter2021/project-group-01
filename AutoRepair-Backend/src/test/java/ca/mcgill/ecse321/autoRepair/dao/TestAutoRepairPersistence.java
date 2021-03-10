@@ -46,15 +46,11 @@ public class TestAutoRepairPersistence {
 	@Autowired
 	private ReviewRepository reviewRepository;
 	@Autowired
-	private ServiceComboRepository serviceComboRepository;
-	@Autowired
-	private ServiceRepository serviceRepository;
+	private ChosenServiceRepository chosenServiceRepository;
 	@Autowired
 	private TimeSlotRepository timeSlotRepository;
 	@Autowired
 	private BusinessRepository businessRepository;
-	@Autowired
-	private ComboItemRepository comboItemRepository;
 	
 	@AfterEach
 	public void clearDatabase() {
@@ -68,9 +64,7 @@ public class TestAutoRepairPersistence {
 		carRepository.deleteAll();
 		customerRepository.deleteAll();
 		operatingHourRepository.deleteAll();
-		serviceComboRepository.deleteAll();
-		comboItemRepository.deleteAll();
-		serviceRepository.deleteAll();
+		chosenServiceRepository.deleteAll();
 		timeSlotRepository.deleteAll();
 	}
 	
@@ -94,15 +88,15 @@ public class TestAutoRepairPersistence {
 	public void testPersistAndLoadService() {
 		String name = "service1";
 		int duration = 30;
-		Service testService = new Service();
+		ChosenService testService = new ChosenService();
 		testService.setName(name);
 		testService.setDuration(duration);
 
-		serviceRepository.save(testService);
+		chosenServiceRepository.save(testService);
 
 		testService = null;
 
-		testService=serviceRepository.findServiceByName(name);
+		testService= chosenServiceRepository.findChosenServiceByName(name);
 
 		assertNotNull(testService);
 		assertEquals(name, testService.getName());
@@ -149,19 +143,18 @@ public class TestAutoRepairPersistence {
 
 		String name = "service1";
 		int duration = 30;
-		Service testService = new Service();
+		ChosenService testService = new ChosenService();
 		testService.setName(name);
 		testService.setDuration(duration);
 
 		Appointment testAppointment = new Appointment();
 		testAppointment.setCustomer(testCustomer);
-		testAppointment.setBookableService(testService);
+		testAppointment.setService(testService);
 		testAppointment.setTimeSlot(testSlot);
-		testAppointment.setComboItems(null);
 		profileRepository.save(testProfile);
 		carRepository.save(testCar);
 		customerRepository.save(testCustomer);
-		serviceRepository.save(testService);
+		chosenServiceRepository.save(testService);
 		timeSlotRepository.save(testSlot);
 		appointmentRepository.save(testAppointment);
 
@@ -173,7 +166,7 @@ public class TestAutoRepairPersistence {
 		review.setServiceRating(serviceRating);
 		review.setAppointment(testAppointment);
 		review.setCustomer(testCustomer);
-		review.setBookableService(testService);
+		review.setService(testService);
 		reviewRepository.save(review);
 		review = null;
 		review = reviewRepository.findReviewByCustomerAndAppointment(testCustomer, testAppointment);
@@ -264,19 +257,18 @@ public class TestAutoRepairPersistence {
 
 		String name = "service1";
 		int duration = 30;
-		Service testService = new Service();
+		ChosenService testService = new ChosenService();
 		testService.setName(name);
 		testService.setDuration(duration);
 
 		Appointment testAppointment = new Appointment();
 		testAppointment.setCustomer(testCustomer);
-		testAppointment.setBookableService(testService);
+		testAppointment.setService(testService);
 		testAppointment.setTimeSlot(testSlot);
-		testAppointment.setComboItems(null);
 		profileRepository.save(testProfile);
 		carRepository.save(testCar);
 		customerRepository.save(testCustomer);
-		serviceRepository.save(testService);
+		chosenServiceRepository.save(testService);
 		timeSlotRepository.save(testSlot);
 		appointmentRepository.save(testAppointment);
 
@@ -288,8 +280,8 @@ public class TestAutoRepairPersistence {
 		assertEquals(testCustomer.getPassword(), testAppointment.getCustomer().getPassword());
 		assertEquals(testCustomer.getNoShow(), testAppointment.getCustomer().getNoShow());
 		assertEquals(testCustomer.getShow(), testAppointment.getCustomer().getShow());
-		assertEquals(testService.getName(),testAppointment.getBookableService().getName());
-		Service testService1 = (Service) testAppointment.getBookableService();
+		assertEquals(testService.getName(),testAppointment.getService().getName());
+		ChosenService testService1 = testAppointment.getService();
 		assertEquals(testService.getDuration(),testService1.getDuration());
 		assertEquals(testSlot.getEndDate(), testAppointment.getTimeSlot().getEndDate());
 		assertEquals(testSlot.getEndTime(),testAppointment.getTimeSlot().getEndTime());
@@ -464,73 +456,72 @@ public class TestAutoRepairPersistence {
 			
 	}
 	
-	@Test
-	public void testPersistAndLoadServiceCombo() {
-		
-		String name = "service";
-		int duration = 30;
-		Service testService1 = new Service();
-		testService1.setName(name);
-		testService1.setDuration(duration);
-		
-		String name2 = "service2";
-		int duration2 = 30;
-		Service testService2 = new Service();
-		testService2.setName(name2);
-		testService2.setDuration(duration2);
-		
-		
-		String name3 = "service3";
-		int duration3 = 30;
-		Service testService3 = new Service();
-		testService3.setName(name3);
-		testService3.setDuration(duration3);
-		
-		String comboName = "testCombo";
-		ServiceCombo testCombo = new ServiceCombo();
-		
-		ComboItem mainItem = new ComboItem();
-		mainItem.setService(testService1);
-		
-		ComboItem mandatoryItem = new ComboItem();
-		mandatoryItem.setService(testService2);
-		
-		ComboItem optionalItem = new ComboItem();
-		optionalItem.setService(testService3);
-		
-		List<ComboItem> items = new ArrayList<ComboItem>();
-		items.add(mainItem);
-		items.add(mandatoryItem);
-		items.add(optionalItem);
-
-		mainItem.setServiceCombo(testCombo);
-		mandatoryItem.setServiceCombo(testCombo);
-		optionalItem.setServiceCombo(testCombo);
-
-		testCombo.setMainService(mainItem);
-		testCombo.setServices(items);
-		testCombo.setName(comboName);
-		
-		serviceRepository.save(testService1);
-		serviceRepository.save(testService2);
-		serviceRepository.save(testService3);
-
-		serviceComboRepository.save(testCombo);
-		
-		testCombo=null;
-		
-		testCombo = serviceComboRepository.findServiceComboByName(comboName);
-		
-		assertNotNull(testCombo);
-		assertEquals(comboName, testCombo.getName());
-		
-		for(int i=0; i<3; i++) {
-			assertEquals(items.get(i).getService().getName(), testCombo.getServices().get(i).getService().getName());
-			assertEquals(items.get(i).getService().getDuration(), testCombo.getServices().get(i).getService().getDuration());
-		}
-		assertEquals(mainItem.getService().getName(), testCombo.getMainService().getService().getName());
-
-	}
+//	@Test
+//	public void testPersistAndLoadServiceCombo() {
+//
+//		String name = "service";
+//		int duration = 30;
+//		Service testService1 = new Service();
+//		testService1.setName(name);
+//		testService1.setDuration(duration);
+//
+//		String name2 = "service2";
+//		int duration2 = 30;
+//		Service testService2 = new Service();
+//		testService2.setName(name2);
+//		testService2.setDuration(duration2);
+//
+//
+//		String name3 = "service3";
+//		int duration3 = 30;
+//		Service testService3 = new Service();
+//		testService3.setName(name3);
+//		testService3.setDuration(duration3);
+//
+//		String comboName = "testCombo";
+//
+//		ComboItem mainItem = new ComboItem();
+//		mainItem.setService(testService1);
+//
+//		ComboItem mandatoryItem = new ComboItem();
+//		mandatoryItem.setService(testService2);
+//
+//		ComboItem optionalItem = new ComboItem();
+//		optionalItem.setService(testService3);
+//
+//		List<ComboItem> items = new ArrayList<ComboItem>();
+//		items.add(mainItem);
+//		items.add(mandatoryItem);
+//		items.add(optionalItem);
+//
+//		mainItem.setServiceCombo(testCombo);
+//		mandatoryItem.setServiceCombo(testCombo);
+//		optionalItem.setServiceCombo(testCombo);
+//
+//		testCombo.setMainService(mainItem);
+//		testCombo.setServices(items);
+//		testCombo.setName(comboName);
+//
+//		serviceRepository.save(testService1);
+//		serviceRepository.save(testService2);
+//		serviceRepository.save(testService3);
+//
+//		serviceComboRepository.save(testCombo);
+//
+//		testCombo=null;
+//
+//		testCombo = serviceComboRepository.findServiceComboByName(comboName);
+//
+//		assertNotNull(testCombo);
+//		assertEquals(comboName, testCombo.getName());
+//
+//		for(int i=0; i<3; i++) {
+//			assertEquals(items.get(i).getService().getName(), testCombo.getServices().get(i).getService().getName());
+//			assertEquals(items.get(i).getService().getDuration(), testCombo.getServices().get(i).getService().getDuration());
+//		}
+//		assertEquals(mainItem.getService().getName(), testCombo.getMainService().getService().getName());
+//
+//	}
 
 	@Test
 	public void testPersistAndLoadReminder() {
@@ -538,7 +529,7 @@ public class TestAutoRepairPersistence {
 		//Service
 		String name = "service1";
 		int duration = 30;
-		Service testService = new Service();
+		ChosenService testService = new ChosenService();
 		testService.setName(name);
 		testService.setDuration(duration);
 		
@@ -580,10 +571,10 @@ public class TestAutoRepairPersistence {
 		reminder.setDate(testDate);
 		reminder.setDescription(testDescription);
 		reminder.setTime(testTime);
-		reminder.setBookableService(testService);
+		reminder.setService(testService);
 		reminder.setCustomer(testCustomer);
 		
-		serviceRepository.save(testService);
+		chosenServiceRepository.save(testService);
 		profileRepository.save(testProfile);
 		carRepository.save(testCar);
 		customerRepository.save(testCustomer);
@@ -592,7 +583,7 @@ public class TestAutoRepairPersistence {
 
 		reminder = null;
 
-		reminder = reminderRepository.findByCustomerAndBookableService(testCustomer, testService);
+		reminder = reminderRepository.findByCustomerAndService(testCustomer, testService);
 		
 		assertNotNull(reminder);
 		assertEquals(testCustomer.getUsername(), reminder.getCustomer().getUsername());
@@ -602,32 +593,32 @@ public class TestAutoRepairPersistence {
 		assertEquals(testDate, reminder.getDate());
 		assertEquals(testDescription, reminder.getDescription());
 		assertEquals(testTime, reminder.getTime());
-		assertEquals(testService.getName(), reminder.getBookableService().getName());
+		assertEquals(testService.getName(), reminder.getService().getName());
 		
 	}
-	@Test
-	public void testPersistAndLoadComboItem() {
-
-		String name = "service1";
-		int duration = 30;
-		Service testService = new Service();
-		testService.setName(name);
-		testService.setDuration(duration);
-		
-		ComboItem item = new ComboItem();
-		item.setService(testService);
-		
-		serviceRepository.save(testService);
-		comboItemRepository.save(item);
-		
-		item = null;
-		
-		List<ComboItem> items = new ArrayList<ComboItem>();
-		items = comboItemRepository.findByService(testService);
-		item = items.get(0);
-		
-		assertNotNull(item);
-		assertEquals(item.getService().getName(), name);
-		assertEquals(item.getService().getDuration(), duration);
-	}
+//	@Test
+//	public void testPersistAndLoadComboItem() {
+//
+//		String name = "service1";
+//		int duration = 30;
+//		ChosenService testService = new Service();
+//		testService.setName(name);
+//		testService.setDuration(duration);
+//
+//		ComboItem item = new ComboItem();
+//		item.setService(testService);
+//
+//		serviceRepository.save(testService);
+//		comboItemRepository.save(item);
+//
+//		item = null;
+//
+//		List<ComboItem> items = new ArrayList<ComboItem>();
+//		items = comboItemRepository.findByService(testService);
+//		item = items.get(0);
+//
+//		assertNotNull(item);
+//		assertEquals(item.getService().getName(), name);
+//		assertEquals(item.getService().getDuration(), duration);
+//	}
 }

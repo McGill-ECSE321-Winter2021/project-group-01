@@ -30,26 +30,15 @@ public class Appointment {
         this.customer=aCustomer;
     }
 
-    private BookableService bookableService;
+    private ChosenService service;
 
     @ManyToOne
-    public BookableService getBookableService(){
-        return this.bookableService;
+    public ChosenService getService(){
+        return this.service;
     }
 
-    public void setBookableService(BookableService bookableService){
-        this.bookableService=bookableService;
-    }
-
-    private List<ComboItem> chosenItems;
-
-    @ManyToMany
-    public List<ComboItem> getComboItems(){
-        return this.chosenItems;
-    }
-
-    public void setComboItems(List<ComboItem> list){
-        this.chosenItems=list;
+    public void setService(ChosenService service){
+        this.service=service;
     }
 
     private TimeSlot timeSlot;
@@ -68,7 +57,7 @@ public class Appointment {
         return super.toString() + "["+
                 "id" + ":" + getId()+ "]" + System.getProperties().getProperty("line.separator") +
                 "  " + "customer = "+(getCustomer()!=null?Integer.toHexString(System.identityHashCode(getCustomer())):"null") + System.getProperties().getProperty("line.separator") +
-                "  " + "bookableService = "+(getBookableService()!=null?Integer.toHexString(System.identityHashCode(getBookableService())):"null") + System.getProperties().getProperty("line.separator") +
+                "  " + "bookableService = "+(getService()!=null?Integer.toHexString(System.identityHashCode(getService())):"null") + System.getProperties().getProperty("line.separator") +
                 "  " + "timeSlot = "+(getTimeSlot()!=null?Integer.toHexString(System.identityHashCode(getTimeSlot())):"null") + System.getProperties().getProperty("line.separator");
     }
 

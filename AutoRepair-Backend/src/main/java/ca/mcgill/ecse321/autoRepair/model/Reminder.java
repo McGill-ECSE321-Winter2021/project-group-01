@@ -13,7 +13,7 @@ public class Reminder
   private Date date;
   private Time time;
   private Customer customer;
-  private BookableService bookableService;
+  private ChosenService service;
 
   public Reminder() {
   }
@@ -64,13 +64,13 @@ public class Reminder
 
 
   @ManyToOne(fetch = FetchType.LAZY)
-  public BookableService getBookableService()
+  public ChosenService getService()
   {
-    return this.bookableService;
+    return this.service;
   }
 
-  public void setBookableService(BookableService bookableService) {
-    this.bookableService=bookableService;
+  public void setService(ChosenService service) {
+    this.service=service;
   }
 
   public String toString()

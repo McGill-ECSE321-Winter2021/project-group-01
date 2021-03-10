@@ -1,7 +1,7 @@
 package ca.mcgill.ecse321.autoRepair.dao;
 
 import ca.mcgill.ecse321.autoRepair.model.Appointment;
-import ca.mcgill.ecse321.autoRepair.model.BookableService;
+import ca.mcgill.ecse321.autoRepair.model.ChosenService;
 import ca.mcgill.ecse321.autoRepair.model.Customer;
 import org.springframework.data.repository.CrudRepository;
 
@@ -14,5 +14,5 @@ import java.util.List;
 public interface ReviewRepository extends CrudRepository<Review, Long>{
 	
 	Review findReviewByCustomerAndAppointment(Customer customer, Appointment app);
-	List<Review> findReviewByBookableService(BookableService bookableService);
+	List<Review> findReviewByChosenService(ChosenService service);
 }

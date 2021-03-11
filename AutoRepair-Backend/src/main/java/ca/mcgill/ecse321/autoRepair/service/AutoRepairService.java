@@ -57,7 +57,7 @@ public class AutoRepairService {
 	@Transactional
 	public Car createCar(String plateNumber, String model, Car.CarTransmission transmission, Customer customer) {
 		Car car = new Car();
-		car.setCustomer(customer);
+		//car.setCustomer(customer);
 		car.setModel(model);
 		car.setPlateNumber(plateNumber);
 		car.setTransmission(transmission);
@@ -71,9 +71,9 @@ public class AutoRepairService {
 		return carRepository.findCarByPlateNumber(plateNumber);
 	}
 	
-	public List<Car> getCustomerCars(Customer customer) {
-		return carRepository.findByCustomer(customer);
-	}
+//	public List<Car> getCustomerCars(Customer customer) {
+//		return carRepository.findByCustomer(customer);
+//	}
 	
 	@Transactional
 	public List<Car> getAllCars(){
@@ -89,21 +89,21 @@ public class AutoRepairService {
 		profile.setEmail(email);
 		profile.setPhoneNumber(phoneNumber);
 		profile.setZipCode(zipCode);
-		profile.setCustomer(customer);
+		//profile.setCustomer(customer);
 		customer.setProfile(profile);
 		profileRepository.save(profile);
 		return profile;
 	}
 
 	@Transactional
-	public Profile getProfile(Customer customer) {
-		return profileRepository.findByCustomer(customer);
+	public Profile getProfile(String firstName, String lastName) {
+		return profileRepository.findByFirstNameAndLastName(firstName, lastName);
 	}
 	
-	@Transactional
-	public boolean profileExists(Customer customer) {
-		return profileRepository.existsByCustomer(customer);
-	}
+//	@Transactional
+//	public boolean profileExists(Customer customer) {
+//		return profileRepository.existsByCustomer(customer);
+//	}
 	
 	@Transactional
 	public List<Profile> getAllProfiles(){

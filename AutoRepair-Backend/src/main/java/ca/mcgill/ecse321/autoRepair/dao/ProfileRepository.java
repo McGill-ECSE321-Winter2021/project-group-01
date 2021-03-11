@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProfileRepository extends CrudRepository<Profile, Long>{
 
-    Profile findByCustomer(Customer customer);
+    //Profile findByCustomer(Customer customer);
 
-    boolean existsByCustomer(Customer customer);
-
+    //boolean existsByCustomer(Customer customer);
+	Profile findByFirstNameAndLastName(String firstName, String lastName);
 }

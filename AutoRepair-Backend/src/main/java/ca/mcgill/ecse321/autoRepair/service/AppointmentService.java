@@ -20,7 +20,7 @@ public class AppointmentService {
         Appointment app = new Appointment();
         app.setId(Long.valueOf(customer.getUsername().hashCode()*timeSlot.getStartDate().hashCode()*timeSlot.getStartTime().hashCode()));
         app.setCustomer(customer);
-        app.setService(bookableService);
+        app.setChosenService(bookableService);
         appointmentRepository.save(app);
         return app;
     }
@@ -37,8 +37,8 @@ public class AppointmentService {
         if(!(timeSlot.equals(newTimeSlot))){
             appointment.setTimeSlot(newTimeSlot);
         }
-        if(!(appointment.getService().equals(newBookableService))){
-            appointment.setService(newBookableService);
+        if(!(appointment.getChosenService().equals(newBookableService))){
+            appointment.setChosenService(newBookableService);
         }
         return appointment;
     }

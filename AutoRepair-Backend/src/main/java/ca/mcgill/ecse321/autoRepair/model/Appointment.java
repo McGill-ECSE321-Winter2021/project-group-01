@@ -30,15 +30,15 @@ public class Appointment {
         this.customer=aCustomer;
     }
 
-    private ChosenService service;
+    private ChosenService chosenService;
 
     @ManyToOne
-    public ChosenService getService(){
-        return this.service;
+    public ChosenService getChosenService(){
+        return this.chosenService;
     }
 
-    public void setService(ChosenService service){
-        this.service=service;
+    public void setChosenService(ChosenService service){
+        this.chosenService=service;
     }
 
     private TimeSlot timeSlot;
@@ -57,7 +57,7 @@ public class Appointment {
         return super.toString() + "["+
                 "id" + ":" + getId()+ "]" + System.getProperties().getProperty("line.separator") +
                 "  " + "customer = "+(getCustomer()!=null?Integer.toHexString(System.identityHashCode(getCustomer())):"null") + System.getProperties().getProperty("line.separator") +
-                "  " + "bookableService = "+(getService()!=null?Integer.toHexString(System.identityHashCode(getService())):"null") + System.getProperties().getProperty("line.separator") +
+                "  " + "bookableService = "+(getChosenService()!=null?Integer.toHexString(System.identityHashCode(getChosenService())):"null") + System.getProperties().getProperty("line.separator") +
                 "  " + "timeSlot = "+(getTimeSlot()!=null?Integer.toHexString(System.identityHashCode(getTimeSlot())):"null") + System.getProperties().getProperty("line.separator");
     }
 

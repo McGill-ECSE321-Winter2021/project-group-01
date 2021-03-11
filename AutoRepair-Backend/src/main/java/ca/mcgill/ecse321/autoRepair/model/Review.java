@@ -10,7 +10,7 @@ public class Review
   private String description;
   private int serviceRating;
   private Customer customer;
-  private ChosenService service;
+  private ChosenService chosenService;
 
   @OneToOne
   public Appointment getAppointment() {
@@ -68,14 +68,14 @@ public class Review
   }
 
   @ManyToOne
-  public ChosenService getService()
+  public ChosenService getChosenService()
   {
-    return service;
+    return chosenService;
   }
 
-  public void setService(ChosenService aService)
+  public void setChosenService(ChosenService aService)
   {
-    this.service=aService;
+    this.chosenService=aService;
   }
 
 
@@ -86,6 +86,6 @@ public class Review
             "description" + ":" + getDescription()+ "," +
             "serviceRating" + ":" + getServiceRating()+ "]" + System.getProperties().getProperty("line.separator") + System.getProperties().getProperty("line.separator") +
             "  " + "customer = "+(getCustomer()!=null?Integer.toHexString(System.identityHashCode(getCustomer())):"null") + System.getProperties().getProperty("line.separator") +
-            "  " + "bookableService = "+(getService()!=null?Integer.toHexString(System.identityHashCode(getService())):"null");
+            "  " + "bookableService = "+(getChosenService()!=null?Integer.toHexString(System.identityHashCode(getChosenService())):"null");
   }
 }

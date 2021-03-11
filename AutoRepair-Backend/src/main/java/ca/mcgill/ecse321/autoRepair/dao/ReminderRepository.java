@@ -11,6 +11,6 @@ import java.util.List;
 
 @Repository
 public interface ReminderRepository extends CrudRepository<Reminder, Long>{
-    Reminder findByCustomerAndService(Customer customer, ChosenService bookableService);
+    Reminder findByCustomerAndChosenService(Customer customer, ChosenService service);
     List<Reminder> findByCustomer(Customer customer);
 }

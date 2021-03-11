@@ -32,7 +32,7 @@ public class Customer extends User
 
   private List<Car> cars;
 
-  @OneToMany(fetch = FetchType.EAGER,cascade = { CascadeType.ALL },mappedBy = "customer")
+  @OneToMany(fetch = FetchType.EAGER)
   public List<Car> getCars() {
     return cars;
   }
@@ -63,7 +63,7 @@ public class Customer extends User
 
   private Profile profile;
 
-  @OneToOne(cascade = { CascadeType.ALL },mappedBy = "customer")
+  @OneToOne
   public Profile getProfile() {
     return profile;
   }

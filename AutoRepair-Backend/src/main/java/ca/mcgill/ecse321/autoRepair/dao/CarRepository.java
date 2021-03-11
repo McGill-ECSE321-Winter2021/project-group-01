@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CarRepository extends CrudRepository<Car, String>{
 
-    List<Car> findByCustomer(Customer customer);
+    //List<Car> findByCustomer(Customer customer);
     Car findCarByPlateNumber(String plateNumber);
 
 }

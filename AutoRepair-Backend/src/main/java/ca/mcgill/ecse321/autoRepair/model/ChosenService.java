@@ -30,7 +30,7 @@ public class ChosenService
         this.name=name;
     }
 
-    @OneToMany(mappedBy = "service",cascade = { CascadeType.ALL })
+    @OneToMany(mappedBy = "chosenService",cascade = { CascadeType.ALL })
     public List<Review> getReviews() {
         return reviews;
     }

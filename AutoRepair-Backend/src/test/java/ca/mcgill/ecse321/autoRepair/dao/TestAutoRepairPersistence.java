@@ -54,6 +54,7 @@ public class TestAutoRepairPersistence {
 	
 	@AfterEach
 	public void clearDatabase() {
+		customerRepository.deleteAll();
 		reviewRepository.deleteAll();
 		assistantRepository.deleteAll();
 		appointmentRepository.deleteAll();
@@ -62,7 +63,6 @@ public class TestAutoRepairPersistence {
 		reminderRepository.deleteAll();
 		businessRepository.deleteAll();
 		carRepository.deleteAll();
-		customerRepository.deleteAll();
 		operatingHourRepository.deleteAll();
 		chosenServiceRepository.deleteAll();
 		timeSlotRepository.deleteAll();
@@ -121,8 +121,6 @@ public class TestAutoRepairPersistence {
 		String username = "testCustomer";
 		String password = "testPassword";
 		Customer testCustomer = new Customer();
-		testProfile.setCustomer(testCustomer);
-		testCar.setCustomer(testCustomer);
 		carList.add(testCar);
 		testCustomer.setUsername(username);
 		testCustomer.setPassword(password);
@@ -149,7 +147,7 @@ public class TestAutoRepairPersistence {
 
 		Appointment testAppointment = new Appointment();
 		testAppointment.setCustomer(testCustomer);
-		testAppointment.setService(testService);
+		testAppointment.setChosenService(testService);
 		testAppointment.setTimeSlot(testSlot);
 		profileRepository.save(testProfile);
 		carRepository.save(testCar);
@@ -166,7 +164,7 @@ public class TestAutoRepairPersistence {
 		review.setServiceRating(serviceRating);
 		review.setAppointment(testAppointment);
 		review.setCustomer(testCustomer);
-		review.setService(testService);
+		review.setChosenService(testService);
 		reviewRepository.save(review);
 		review = null;
 		review = reviewRepository.findReviewByCustomerAndAppointment(testCustomer, testAppointment);
@@ -235,8 +233,7 @@ public class TestAutoRepairPersistence {
 		String username = "testCustomer";
 		String password = "testPassword";
 		Customer testCustomer = new Customer();
-		testProfile.setCustomer(testCustomer);
-		testCar.setCustomer(testCustomer);
+
 		carList.add(testCar);
 		testCustomer.setUsername(username);
 		testCustomer.setPassword(password);
@@ -263,7 +260,7 @@ public class TestAutoRepairPersistence {
 
 		Appointment testAppointment = new Appointment();
 		testAppointment.setCustomer(testCustomer);
-		testAppointment.setService(testService);
+		testAppointment.setChosenService(testService);
 		testAppointment.setTimeSlot(testSlot);
 		profileRepository.save(testProfile);
 		carRepository.save(testCar);
@@ -280,8 +277,8 @@ public class TestAutoRepairPersistence {
 		assertEquals(testCustomer.getPassword(), testAppointment.getCustomer().getPassword());
 		assertEquals(testCustomer.getNoShow(), testAppointment.getCustomer().getNoShow());
 		assertEquals(testCustomer.getShow(), testAppointment.getCustomer().getShow());
-		assertEquals(testService.getName(),testAppointment.getService().getName());
-		ChosenService testService1 = testAppointment.getService();
+		assertEquals(testService.getName(),testAppointment.getChosenService().getName());
+		ChosenService testService1 = testAppointment.getChosenService();
 		assertEquals(testService.getDuration(),testService1.getDuration());
 		assertEquals(testSlot.getEndDate(), testAppointment.getTimeSlot().getEndDate());
 		assertEquals(testSlot.getEndTime(),testAppointment.getTimeSlot().getEndTime());
@@ -326,8 +323,7 @@ public class TestAutoRepairPersistence {
 		String username = "testCustomer";
 		String password = "testPassword";
 		Customer testCustomer = new Customer();
-		testProfile.setCustomer(testCustomer);
-		testCar.setCustomer(testCustomer);
+
 		carList.add(testCar);
 		testCustomer.setUsername(username);
 		testCustomer.setPassword(password);
@@ -361,12 +357,7 @@ public class TestAutoRepairPersistence {
 	
 	@Test
 	public void testPersistAndLoadProfile() {
-		Car testCar = new Car();
-		List<Car> carList = new ArrayList<>();
-		testCar.setModel("testModel");
-		testCar.setPlateNumber("123456");
-		testCar.setTransmission(Car.CarTransmission.Automatic);
-
+		
 		Profile testProfile = new Profile();
 		testProfile.setFirstName("TestName");
 		testProfile.setAddress("Test Address");
@@ -375,26 +366,11 @@ public class TestAutoRepairPersistence {
 		testProfile.setPhoneNumber("(123)456-7890");
 		testProfile.setZipCode("H1V 3T2");
 
-		String username = "testCustomer";
-		String password = "testPassword";
-		Customer testCustomer = new Customer();
-		testProfile.setCustomer(testCustomer);
-		testCar.setCustomer(testCustomer);
-		carList.add(testCar);
-		testCustomer.setUsername(username);
-		testCustomer.setPassword(password);
-		testCustomer.setCars(carList);
-		testCustomer.setNoShow(0);
-		testCustomer.setShow(0);
-		testCustomer.setProfile(testProfile);
-
 		profileRepository.save(testProfile);
-		carRepository.save(testCar);
-		customerRepository.save(testCustomer);
-
+		
 		testProfile = null;
 
-		testProfile = profileRepository.findByCustomer(testCustomer);
+		testProfile = profileRepository.findByFirstNameAndLastName("TestName", "TestLastName");
 		assertNotNull(testProfile);
 		assertEquals("TestName", testProfile.getFirstName());
 		assertEquals("TestLastName", testProfile.getLastName());
@@ -402,7 +378,6 @@ public class TestAutoRepairPersistence {
 		assertEquals("testemail@test.com",testProfile.getEmail());
 		assertEquals("(123)456-7890",testProfile.getPhoneNumber());
 		assertEquals("H1V 3T2",testProfile.getZipCode());
-		assertEquals(username, testProfile.getCustomer().getUsername());
 	}
 	
 	@Test
@@ -455,73 +430,7 @@ public class TestAutoRepairPersistence {
 			assertEquals(eT, ts.getEndTime());
 			
 	}
-	
-//	@Test
-//	public void testPersistAndLoadServiceCombo() {
-//
-//		String name = "service";
-//		int duration = 30;
-//		Service testService1 = new Service();
-//		testService1.setName(name);
-//		testService1.setDuration(duration);
-//
-//		String name2 = "service2";
-//		int duration2 = 30;
-//		Service testService2 = new Service();
-//		testService2.setName(name2);
-//		testService2.setDuration(duration2);
-//
-//
-//		String name3 = "service3";
-//		int duration3 = 30;
-//		Service testService3 = new Service();
-//		testService3.setName(name3);
-//		testService3.setDuration(duration3);
-//
-//		String comboName = "testCombo";
-//
-//		ComboItem mainItem = new ComboItem();
-//		mainItem.setService(testService1);
-//
-//		ComboItem mandatoryItem = new ComboItem();
-//		mandatoryItem.setService(testService2);
-//
-//		ComboItem optionalItem = new ComboItem();
-//		optionalItem.setService(testService3);
-//
-//		List<ComboItem> items = new ArrayList<ComboItem>();
-//		items.add(mainItem);
-//		items.add(mandatoryItem);
-//		items.add(optionalItem);
-//
-//		mainItem.setServiceCombo(testCombo);
-//		mandatoryItem.setServiceCombo(testCombo);
-//		optionalItem.setServiceCombo(testCombo);
-//
-//		testCombo.setMainService(mainItem);
-//		testCombo.setServices(items);
-//		testCombo.setName(comboName);
-//
-//		serviceRepository.save(testService1);
-//		serviceRepository.save(testService2);
-//		serviceRepository.save(testService3);
-//
-//		serviceComboRepository.save(testCombo);
-//
-//		testCombo=null;
-//
-//		testCombo = serviceComboRepository.findServiceComboByName(comboName);
-//
-//		assertNotNull(testCombo);
-//		assertEquals(comboName, testCombo.getName());
-//
-//		for(int i=0; i<3; i++) {
-//			assertEquals(items.get(i).getService().getName(), testCombo.getServices().get(i).getService().getName());
-//			assertEquals(items.get(i).getService().getDuration(), testCombo.getServices().get(i).getService().getDuration());
-//		}
-//		assertEquals(mainItem.getService().getName(), testCombo.getMainService().getService().getName());
-//
-//	}
+
 
 	@Test
 	public void testPersistAndLoadReminder() {
@@ -553,8 +462,6 @@ public class TestAutoRepairPersistence {
 		String username = "testCustomer";
 		String password = "testPassword";
 		Customer testCustomer = new Customer();
-		testProfile.setCustomer(testCustomer);
-		testCar.setCustomer(testCustomer);
 		carList.add(testCar);
 		testCustomer.setUsername(username);
 		testCustomer.setPassword(password);
@@ -571,7 +478,7 @@ public class TestAutoRepairPersistence {
 		reminder.setDate(testDate);
 		reminder.setDescription(testDescription);
 		reminder.setTime(testTime);
-		reminder.setService(testService);
+		reminder.setChosenService(testService);
 		reminder.setCustomer(testCustomer);
 		
 		chosenServiceRepository.save(testService);
@@ -583,7 +490,7 @@ public class TestAutoRepairPersistence {
 
 		reminder = null;
 
-		reminder = reminderRepository.findByCustomerAndService(testCustomer, testService);
+		reminder = reminderRepository.findByCustomerAndChosenService(testCustomer, testService);
 		
 		assertNotNull(reminder);
 		assertEquals(testCustomer.getUsername(), reminder.getCustomer().getUsername());
@@ -593,32 +500,8 @@ public class TestAutoRepairPersistence {
 		assertEquals(testDate, reminder.getDate());
 		assertEquals(testDescription, reminder.getDescription());
 		assertEquals(testTime, reminder.getTime());
-		assertEquals(testService.getName(), reminder.getService().getName());
+		assertEquals(testService.getName(), reminder.getChosenService().getName());
 		
 	}
-//	@Test
-//	public void testPersistAndLoadComboItem() {
-//
-//		String name = "service1";
-//		int duration = 30;
-//		ChosenService testService = new Service();
-//		testService.setName(name);
-//		testService.setDuration(duration);
-//
-//		ComboItem item = new ComboItem();
-//		item.setService(testService);
-//
-//		serviceRepository.save(testService);
-//		comboItemRepository.save(item);
-//
-//		item = null;
-//
-//		List<ComboItem> items = new ArrayList<ComboItem>();
-//		items = comboItemRepository.findByService(testService);
-//		item = items.get(0);
-//
-//		assertNotNull(item);
-//		assertEquals(item.getService().getName(), name);
-//		assertEquals(item.getService().getDuration(), duration);
-//	}
+
 }

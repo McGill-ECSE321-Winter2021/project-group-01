@@ -36,17 +36,6 @@ public class Profile
     return id;
   }
 
-  private Customer customer;
-  @OneToOne(cascade = { CascadeType.ALL })
-  public Customer getCustomer()
-  {
-    return customer;
-  }
-
-  public void setCustomer(Customer customer) {
-    this.customer=customer;
-  }
-
   public void setId(Long id) {
     this.id = id;
   }

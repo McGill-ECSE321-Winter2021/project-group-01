@@ -32,7 +32,7 @@ public class Customer extends User
 
   private List<Car> cars;
 
-  @OneToMany(fetch = FetchType.EAGER,cascade = { CascadeType.ALL },mappedBy = "customer")
+  @OneToMany(fetch = FetchType.EAGER)
   public List<Car> getCars() {
     return cars;
   }
@@ -41,46 +41,16 @@ public class Customer extends User
     this.cars = cars;
   }
 
-  private List<Reminder> reminders;
-  @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "customer")
-  public List<Reminder> getReminders() {
-    return reminders;
-  }
-
-  public void setReminders(List<Reminder> reminders) {
-    this.reminders = reminders;
-  }
-
-  private List<Review> reviews;
-  @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "customer")
-  public List<Review> getReviews() {
-    return reviews;
-  }
-
-  public void setReviews(List<Review> reviews) {
-    this.reviews = reviews;
-  }
 
   private Profile profile;
 
-  @OneToOne(cascade = { CascadeType.ALL },mappedBy = "customer")
+  @OneToOne
   public Profile getProfile() {
     return profile;
   }
 
   public void setProfile(Profile profile) {
     this.profile = profile;
-  }
-
-  private List<Appointment> appointments;
-
-  @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "customer")
-  public List<Appointment> getAppointments() {
-    return appointments;
-  }
-
-  public void setAppointments(List<Appointment> appointments) {
-    this.appointments = appointments;
   }
 
   public String toString()

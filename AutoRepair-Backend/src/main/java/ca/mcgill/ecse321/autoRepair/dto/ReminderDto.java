@@ -1,5 +1,5 @@
 package ca.mcgill.ecse321.autoRepair.dto;
 
-public class ReminderDto {
+public class ReminderDTO {
 
 }

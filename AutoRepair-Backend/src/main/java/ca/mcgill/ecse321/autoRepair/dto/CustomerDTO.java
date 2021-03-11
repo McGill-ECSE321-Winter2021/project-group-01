@@ -5,51 +5,51 @@ import java.util.List;
 
 public class CustomerDTO {
 
-	private String username;
-	private String password;
-	private int noShow;
-	private int show;
-	private List<CarDTO> cars;
-	private ProfileDTO profile;
+    private String username;
+    private String password;
+    private int noShow;
+    private int show;
+    private List<CarDTO> cars;
+    private ProfileDTO profile;
 
 
 
-	public CustomerDTO(String username, String password, int noShow, int show, List<CarDTO> cars, ProfileDTO profile) {
-		
-		this.noShow=noShow;
-		this.show = show;
-		this.cars=cars;
-		this.profile=profile;
-	
-	}
+    public CustomerDTO(String username, String password, int noShow, int show, List<CarDTO> cars, ProfileDTO profile) {
 
-	
-	
-	public String getUsername() {
-		return username;
-	}
+        this.noShow=noShow;
+        this.show = show;
+        this.cars=cars;
+        this.profile=profile;
+
+    }
 
 
 
-	public String getPassword() {
-		return password;
-	}
+    public String getUsername() {
+        return username;
+    }
 
 
-	public int getNoShow() {
-		return noShow;
-	}
 
-	public int getShow() {
-		return show;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public List<CarDTO> getCars() {
-		return cars;
-	}
-	
-	public ProfileDTO getProfile() {
-		return profile;
-	}
+
+    public int getNoShow() {
+        return noShow;
+    }
+
+    public int getShow() {
+        return show;
+    }
+
+    public List<CarDTO> getCars() {
+        return cars;
+    }
+
+    public ProfileDTO getProfile() {
+        return profile;
+    }
 
 }

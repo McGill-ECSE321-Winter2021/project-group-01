@@ -5,8 +5,10 @@ import ca.mcgill.ecse321.autoRepair.dao.ChosenServiceRepository;
 import ca.mcgill.ecse321.autoRepair.dao.TimeSlotRepository;
 import ca.mcgill.ecse321.autoRepair.dto.AppointmentDTO;
 import ca.mcgill.ecse321.autoRepair.dto.CustomerDTO;
+import ca.mcgill.ecse321.autoRepair.dto.TimeSlotDTO;
 import ca.mcgill.ecse321.autoRepair.model.*;
 import ca.mcgill.ecse321.autoRepair.service.AppointmentService;
+import ca.mcgill.ecse321.autoRepair.service.AutoRepairService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +32,8 @@ public class AutoRepairController {
     @Autowired
     ChosenServiceRepository chosenServiceRepository;
 
+    @Autowired
+    AutoRepairService autoRepairService;
 //    @Autowired
 //    CustomerService customerService;
 
@@ -58,16 +62,15 @@ public class AutoRepairController {
         return Time.valueOf(localEndTime);
     }
 
-//    private AppointmentDTO convertToDTO(Appointment appointment){
-//        if(appointment==null) throw new IllegalArgumentException("There is no such appointment");
-//        AppointmentDTO appointmentDTO = new AppointmentDTO();
-//        appointmentDTO.setCustomer(convertToDTO(appointment.getCustomer()));
-//        TimeSlotDTO timeSlotDTO = new TimeSlotDTO(appointment.getTimeSlot().getStartTime(), appointment.getTimeSlot().getEndTime()
-//                ,appointment.getTimeSlot().getStartDate(), appointment.getTimeSlot().getEndDate());
-//        appointmentDTO.setTimeSlot(timeSlotDTO);
-//        appointmentDTO.setService(convertToDTO(appointment.getService()));
-//        appointmentDTO.setComboItemList(null);
-//        return appointmentDTO;
-//    }
+    private AppointmentDTO convertToDTO(Appointment appointment){
+        if(appointment==null) throw new IllegalArgumentException("There is no such appointment");
+        AppointmentDTO appointmentDTO = new AppointmentDTO();
+        //appointmentDTO.setCustomer(convertToDTO(appointment.getCustomer()));
+        TimeSlotDTO timeSlotDTO = new TimeSlotDTO(appointment.getTimeSlot().getStartTime(), appointment.getTimeSlot().getEndTime()
+                ,appointment.getTimeSlot().getStartDate(), appointment.getTimeSlot().getEndDate());
+        appointmentDTO.setTimeSlot(timeSlotDTO);
+        //appointmentDTO.setService(convertToDTO(appointment.getChosenService()));
+        return appointmentDTO;
+    }
 
 }

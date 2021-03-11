@@ -2,7 +2,7 @@ package ca.mcgill.ecse321.autoRepair.model;
 import javax.persistence.*;
 
 @Entity
-public class Service extends BookableService
+public class ChosenService
 {
 
   private int duration;

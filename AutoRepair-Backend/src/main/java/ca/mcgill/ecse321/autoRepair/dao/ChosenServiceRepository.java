@@ -6,7 +6,7 @@ import ca.mcgill.ecse321.autoRepair.model.Service;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ServiceRepository extends CrudRepository<Service, String>{
+public interface ChosenServiceRepository extends CrudRepository<Service, String>{
 	
 	Service findServiceByName(String name);
 

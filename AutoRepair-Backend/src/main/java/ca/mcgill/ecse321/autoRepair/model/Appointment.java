@@ -1,7 +1,6 @@
 package ca.mcgill.ecse321.autoRepair.model;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "Appointments")
@@ -30,26 +29,15 @@ public class Appointment {
         this.customer=aCustomer;
     }
 
-    private BookableService bookableService;
+    private ChosenService chosenService;
 
     @ManyToOne
-    public BookableService getBookableService(){
-        return this.bookableService;
+    public ChosenService getChosenService(){
+        return this.chosenService;
     }
 
-    public void setBookableService(BookableService bookableService){
-        this.bookableService=bookableService;
-    }
-
-    private List<ComboItem> chosenItems;
-
-    @ManyToMany
-    public List<ComboItem> getComboItems(){
-        return this.chosenItems;
-    }
-
-    public void setComboItems(List<ComboItem> list){
-        this.chosenItems=list;
+    public void setChosenService(ChosenService service){
+        this.chosenService=service;
     }
 
     private TimeSlot timeSlot;
@@ -68,7 +56,7 @@ public class Appointment {
         return super.toString() + "["+
                 "id" + ":" + getId()+ "]" + System.getProperties().getProperty("line.separator") +
                 "  " + "customer = "+(getCustomer()!=null?Integer.toHexString(System.identityHashCode(getCustomer())):"null") + System.getProperties().getProperty("line.separator") +
-                "  " + "bookableService = "+(getBookableService()!=null?Integer.toHexString(System.identityHashCode(getBookableService())):"null") + System.getProperties().getProperty("line.separator") +
+                "  " + "bookableService = "+(getChosenService()!=null?Integer.toHexString(System.identityHashCode(getChosenService())):"null") + System.getProperties().getProperty("line.separator") +
                 "  " + "timeSlot = "+(getTimeSlot()!=null?Integer.toHexString(System.identityHashCode(getTimeSlot())):"null") + System.getProperties().getProperty("line.separator");
     }
 

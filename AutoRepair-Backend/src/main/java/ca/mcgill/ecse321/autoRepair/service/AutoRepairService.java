@@ -1,12 +1,12 @@
 package ca.mcgill.ecse321.autoRepair.service;
 
-import ca.mcgill.ecse321.autoRepair.dao.OwnerRepository;
-import ca.mcgill.ecse321.autoRepair.dao.AssistantRepository;
+import ca.mcgill.ecse321.autoRepair.dao.CarRepository;
+import ca.mcgill.ecse321.autoRepair.dao.CustomerRepository;
+import ca.mcgill.ecse321.autoRepair.dao.ProfileRepository;
+import ca.mcgill.ecse321.autoRepair.model.Car;
+import ca.mcgill.ecse321.autoRepair.model.Customer;
+import ca.mcgill.ecse321.autoRepair.model.Profile;
 
-
-import ca.mcgill.ecse321.autoRepair.model.Owner;
-import ca.mcgill.ecse321.autoRepair.model.Reminder;
-import ca.mcgill.ecse321.autoRepair.model.Assistant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,63 +17,90 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AutoRepairService {
-	
+
 	@Autowired
-	OwnerRepository ownerRepository;
+	CustomerRepository customerRepository;
 	@Autowired
-	AssistantRepository assistantRepository;
-	
-	
+	CarRepository carRepository;
+	@Autowired
+	ProfileRepository profileRepository;
+
 	@Transactional
-	public Owner createOwner(String username,String password) {
-		Owner owner = new Owner();
-		owner.setUsername(username);
-		owner.setPassword(password);
-		
-		ownerRepository.save(owner);
-		return owner;
-		
+	public Customer createCustomer(String username, String password) {
+		Customer customer = new Customer();
+		customer.setNoShow(0);
+		customer.setShow(0);
+		customer.setPassword(password);
+		customer.setUsername(username);
+		customer.setCars(new ArrayList<Car>());
+
+		customerRepository.save(customer);
+		return customer;
 	}
 
 	@Transactional
-	public Owner getOwner(String name) {
-		Owner owner = ownerRepository.findOwnerByUsername(name);
-		return owner;
+	public Customer getCustomer(String username) {
+		return customerRepository.findCustomerByUsername(username);
+
+	}
+
+	@Transactional
+	public List<Customer> getAllCustomers(){
+		return toList(customerRepository.findAll());
 	}
 	
 	@Transactional
-	public List<Owner> getAllOwners(){             //only one owner, no need for this.
-		return toList(ownerRepository.findAll());
-	}
-	
-		
-	@Transactional
-	public Assistant createAssistant(String username,String password) {
-		Assistant assistant = new Assistant();
-		assistant.setUsername(username);
-		assistant.setPassword(password);
-		assistant.setReminders(new ArrayList<Reminder>());
-			
-		assistantRepository.save(assistant);
-		return assistant;
+	public Car createCar(String plateNumber, String model, Car.CarTransmission transmission) {
+		Car car = new Car();
+		car.setModel(model);
+		car.setPlateNumber(plateNumber);
+		car.setTransmission(transmission);
+		carRepository.save(car);
+		return car;
 	}
 	
 	@Transactional
-	public Assistant getAssistant(String name) {
-		Assistant assistant = assistantRepository.findAssistantByUsername(name);
-		return assistant;
+	public Car getCar(String plateNumber) {
+		return carRepository.findCarByPlateNumber(plateNumber);
 	}
+
+	
 	@Transactional
-	public List<Assistant> getAllAssistants(){           
-		return toList(assistantRepository.findAll());
+	public List<Car> getAllCars(){
+		return toList(carRepository.findAll());
+	}
+	
+	@Transactional
+	public Profile createProfile(String firstName, String lastName, String address, String zipCode, String phoneNumber, String email) {
+		Profile profile = new Profile();
+		profile.setFirstName(firstName);
+		profile.setLastName(lastName);
+		profile.setAddress(address);
+		profile.setEmail(email);
+		profile.setPhoneNumber(phoneNumber);
+		profile.setZipCode(zipCode);
+		profileRepository.save(profile);
+		return profile;
+	}
+
+	@Transactional
+	public Profile getProfile(String firstName, String lastName) {
+		return profileRepository.findByFirstNameAndLastName(firstName, lastName);
 	}
 	
 
-	private <T> List<T> toList(Iterable<T> iterable){   //from tut notes
+	
+	@Transactional
+	public List<Profile> getAllProfiles(){
+		return toList(profileRepository.findAll());
+	}
+	
+	private <T> List<T> toList(Iterable<T> iterable){
 		List<T> resultList = new ArrayList<T>();
 		for (T t : iterable) {
 			resultList.add(t);
 		}
 		return resultList;
-}
+
+	}
 }

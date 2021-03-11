@@ -3,12 +3,10 @@ package ca.mcgill.ecse321.autoRepair.service;
 import ca.mcgill.ecse321.autoRepair.dao.CarRepository;
 import ca.mcgill.ecse321.autoRepair.dao.CustomerRepository;
 import ca.mcgill.ecse321.autoRepair.dao.ProfileRepository;
-import ca.mcgill.ecse321.autoRepair.model.Appointment;
 import ca.mcgill.ecse321.autoRepair.model.Car;
 import ca.mcgill.ecse321.autoRepair.model.Customer;
 import ca.mcgill.ecse321.autoRepair.model.Profile;
-import ca.mcgill.ecse321.autoRepair.model.Reminder;
-import ca.mcgill.ecse321.autoRepair.model.Review;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,10 +32,7 @@ public class AutoRepairService {
 		customer.setShow(0);
 		customer.setPassword(password);
 		customer.setUsername(username);
-		customer.setAppointments(new ArrayList<Appointment>());
 		customer.setCars(new ArrayList<Car>());
-		customer.setReminders(new ArrayList<Reminder>());
-		customer.setReviews(new ArrayList<Review>());
 
 		customerRepository.save(customer);
 		return customer;
@@ -55,13 +50,11 @@ public class AutoRepairService {
 	}
 	
 	@Transactional
-	public Car createCar(String plateNumber, String model, Car.CarTransmission transmission, Customer customer) {
+	public Car createCar(String plateNumber, String model, Car.CarTransmission transmission) {
 		Car car = new Car();
-		//car.setCustomer(customer);
 		car.setModel(model);
 		car.setPlateNumber(plateNumber);
 		car.setTransmission(transmission);
-		customer.getCars().add(car);
 		carRepository.save(car);
 		return car;
 	}
@@ -70,10 +63,7 @@ public class AutoRepairService {
 	public Car getCar(String plateNumber) {
 		return carRepository.findCarByPlateNumber(plateNumber);
 	}
-	
-//	public List<Car> getCustomerCars(Customer customer) {
-//		return carRepository.findByCustomer(customer);
-//	}
+
 	
 	@Transactional
 	public List<Car> getAllCars(){
@@ -81,7 +71,7 @@ public class AutoRepairService {
 	}
 	
 	@Transactional
-	public Profile createProfile(String firstName, String lastName, String address, String zipCode, String phoneNumber, String email, Customer customer) {
+	public Profile createProfile(String firstName, String lastName, String address, String zipCode, String phoneNumber, String email) {
 		Profile profile = new Profile();
 		profile.setFirstName(firstName);
 		profile.setLastName(lastName);
@@ -89,8 +79,6 @@ public class AutoRepairService {
 		profile.setEmail(email);
 		profile.setPhoneNumber(phoneNumber);
 		profile.setZipCode(zipCode);
-		//profile.setCustomer(customer);
-		customer.setProfile(profile);
 		profileRepository.save(profile);
 		return profile;
 	}
@@ -100,10 +88,7 @@ public class AutoRepairService {
 		return profileRepository.findByFirstNameAndLastName(firstName, lastName);
 	}
 	
-//	@Transactional
-//	public boolean profileExists(Customer customer) {
-//		return profileRepository.existsByCustomer(customer);
-//	}
+
 	
 	@Transactional
 	public List<Profile> getAllProfiles(){

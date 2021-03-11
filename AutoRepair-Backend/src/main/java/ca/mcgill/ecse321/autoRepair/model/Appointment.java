@@ -1,7 +1,6 @@
 package ca.mcgill.ecse321.autoRepair.model;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "Appointments")

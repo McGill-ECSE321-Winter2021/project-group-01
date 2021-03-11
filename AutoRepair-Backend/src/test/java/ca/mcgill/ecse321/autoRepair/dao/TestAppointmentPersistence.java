@@ -47,12 +47,13 @@ public class TestAppointmentPersistence {
 	
 	@AfterEach
 	public void clearDatabase() {
-		customerRepository.deleteAll();
 		appointmentRepository.deleteAll();
-	    profileRepository.deleteAll();
-		carRepository.deleteAll();
 		chosenServiceRepository.deleteAll();
 		timeSlotRepository.deleteAll();
+		customerRepository.deleteAll();
+	    profileRepository.deleteAll();
+		carRepository.deleteAll();
+		
 	}
 	
 	

@@ -13,6 +13,8 @@ import java.util.List;
 @Repository
 public interface ReviewRepository extends CrudRepository<Review, Long>{
 	
-	Review findReviewByCustomerAndAppointment(Customer customer, Appointment app);
+	Review findReviewByAppointment(Appointment app);
 	List<Review> findReviewByChosenService(ChosenService chosenService);
+	List<Review> findReviewByCustomer(Customer customer);
+
 }

@@ -48,9 +48,9 @@ public class TestReviewPersistence {
 
 	@AfterEach
 	public void clearDatabase() {
-		customerRepository.deleteAll();
 		reviewRepository.deleteAll();
 		appointmentRepository.deleteAll();
+		customerRepository.deleteAll();
 	    profileRepository.deleteAll();
 		carRepository.deleteAll();
 		chosenServiceRepository.deleteAll();
@@ -123,7 +123,7 @@ public class TestReviewPersistence {
 		review.setChosenService(testService);
 		reviewRepository.save(review);
 		review = null;
-		review = reviewRepository.findReviewByCustomerAndAppointment(testCustomer, testAppointment);
+		review = reviewRepository.findReviewByAppointment(testAppointment);
 		assertEquals(description, review.getDescription());
 		assertEquals(serviceRating, review.getServiceRating());
 	}

@@ -47,9 +47,9 @@ public class TestReminderPersistence {
 	
 	@AfterEach
 	public void clearDatabase() {
+		reminderRepository.deleteAll();
 		customerRepository.deleteAll();
 	    profileRepository.deleteAll();
-		reminderRepository.deleteAll();
 		carRepository.deleteAll();
 		chosenServiceRepository.deleteAll();
 	}

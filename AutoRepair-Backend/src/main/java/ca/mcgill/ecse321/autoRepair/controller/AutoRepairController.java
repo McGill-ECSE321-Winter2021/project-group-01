@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -84,11 +85,11 @@ public class AutoRepairController {
 	}
     private BusinessDTO convertToDTO(Business business) {
     	if(business==null) throw new IllegalArgumentException("Business not found.");
-    	List<OperatingHourDTO> operatingHours = new List<OperatingHourDTO>();
+    	List<OperatingHourDTO> operatingHours = new ArrayList<OperatingHourDTO>();
     	for(int i=0; i<business.getBusinessHours().size(); i++) {
     		operatingHours.add(convertToDTO(business.getBusinessHours().get(i)));
     	}
-    	List<TimeSlotDTO> holidays = new List<TimeSlotDTO>();
+    	List<TimeSlotDTO> holidays = new ArrayList<TimeSlotDTO>();
     	for(int i=0; i<business.getHolidays().size(); i++) {
     		holidays.add(convertToDTO(business.getHolidays().get(i)));
     	}

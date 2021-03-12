@@ -14,6 +14,8 @@ public class Business{
   private String address;
   private String phoneNumber;
   private String email;
+  private List<OperatingHour> businessHours;
+  private List<TimeSlot> holidays;
 
   @Id
   public String getName() {
@@ -66,8 +68,7 @@ public class Business{
     this.holidays = holidays;
   }
 
-  private List<OperatingHour> businessHours;
-  private List<TimeSlot> holidays;
+
 
   public String toString()
   {

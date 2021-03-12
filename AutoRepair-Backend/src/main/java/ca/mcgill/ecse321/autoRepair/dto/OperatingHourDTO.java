@@ -2,14 +2,11 @@ package ca.mcgill.ecse321.autoRepair.dto;
 
 import java.sql.Time;
 
+import ca.mcgill.ecse321.autoRepair.model.OperatingHour.DayOfWeek;
+
 public class OperatingHourDTO
 {
 
-  //------------------------
-  // ENUMERATIONS
-  //------------------------
-
-  public enum DayOfWeek { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
 
   //------------------------
   // STATIC VARIABLES

@@ -1,3 +1,4 @@
+ 
 package ca.mcgill.ecse321.autoRepair.dto;
 
 import java.util.List;
@@ -40,3 +41,4 @@ public class AppointmentDTO {
     }
 
 }
+

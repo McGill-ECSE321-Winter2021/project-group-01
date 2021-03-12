@@ -1,15 +1,15 @@
 package ca.mcgill.ecse321.autoRepair.dto;
 
-public class OwnerDto {
+public class OwnerDTO {
 
 	private String username;
 	private String password;
 
-	public OwnerDto() {
+	public OwnerDTO() {
 	}
 	
 	
-	public OwnerDto(String username,String password) {
+	public OwnerDTO(String username,String password) {
 		this.username = username;
 		this.password = password;
 	}

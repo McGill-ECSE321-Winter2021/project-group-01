@@ -19,7 +19,7 @@ import java.time.LocalTime;
 
 @CrossOrigin(origins = "*")
 @RestController
-public class AutoRepairController {
+public class AppointmentController {
     @Autowired
     AppointmentService appointmentService;
 
@@ -50,11 +50,11 @@ public class AutoRepairController {
         ChosenService service = chosenServiceRepository.findChosenServiceByName(serviceName.getName());
         timeSlot.setEndTime(findEndTimeOfApp(service,startTime));
         if(customer==null) throw new IllegalArgumentException("The customer does not exist");
-        if(timeSlot!=null) throw new IllegalArgumentException("The chosen time slot is unavailable");
+        //if(timeSlot!=null) throw new IllegalArgumentException("The chosen time slot is unavailable");
         if(service== null) throw new IllegalArgumentException("The chosen service does not exist");
         Appointment appointment = appointmentService.makeAppointment(customer,service,timeSlot);
         return null;
-       // return convertToDTO(appointment);
+        // return convertToDTO(appointment);
     }
 
     private Time findEndTimeOfApp(ChosenService service, LocalTime startTime){

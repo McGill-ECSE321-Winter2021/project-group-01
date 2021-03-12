@@ -1,10 +1,10 @@
 package ca.mcgill.ecse321.autoRepair.dto;
 
+import ca.mcgill.ecse321.autoRepair.model.Car.CarTransmission;
 
 public class CarDTO {
 
 
-	public enum CarTransmission { Manual, Automatic }
 	private String model;
 	private CarTransmission transmission;
 	private String plateNumber;

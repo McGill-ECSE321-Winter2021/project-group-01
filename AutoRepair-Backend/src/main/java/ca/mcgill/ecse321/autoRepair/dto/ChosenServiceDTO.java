@@ -1,5 +1,4 @@
 package ca.mcgill.ecse321.autoRepair.dto;
 
-public class CarDto {
-
+public class ChosenServiceDTO {
 }

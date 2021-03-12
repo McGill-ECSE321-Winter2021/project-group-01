@@ -1,6 +1,5 @@
 package ca.mcgill.ecse321.autoRepair.model;
 import javax.persistence.*;
-import java.util.*;
 
 @Entity
 @Table(name = "profiles")
@@ -35,17 +34,6 @@ public class Profile
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   public Long getId() {
     return id;
-  }
-
-  private Customer customer;
-  @OneToOne(cascade = { CascadeType.ALL })
-  public Customer getCustomer()
-  {
-    return customer;
-  }
-
-  public void setCustomer(Customer customer) {
-    this.customer=customer;
   }
 
   public void setId(Long id) {

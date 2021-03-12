@@ -16,15 +16,6 @@ public class TimeSlot
   private Date endDate;
   private Time endTime;
 
-//  public TimeSlot(Date aStartDate, Time aStartTime, Date aEndDate, Time aEndTime, AutoRepairShopSystem aAutoRepairShopSystem)
-//  {
-//    startDate = aStartDate;
-//    startTime = aStartTime;
-//    endDate = aEndDate;
-//    endTime = aEndTime;
-//    this.AutoRepairShopSystem=aAutoRepairShopSystem;
-//  }
-
   public TimeSlot() {
 
   }

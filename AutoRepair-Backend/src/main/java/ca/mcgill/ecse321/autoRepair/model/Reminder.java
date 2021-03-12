@@ -1,6 +1,5 @@
 package ca.mcgill.ecse321.autoRepair.model;
 import javax.persistence.*;
-import java.util.*;
 import java.sql.Date;
 import java.sql.Time;
 
@@ -10,29 +9,14 @@ public class Reminder
 {
 
   private Long id;
-
-
-
   private String description;
   private Date date;
   private Time time;
   private Customer customer;
-  private List<BookableService> bookableServices;
-
-
-//  public Reminder(long aId, String aDescription, Date aDate, Time aTime, AutoRepairShopSystem aAutoRepairShopSystem, Customer aCustomer)
-//  {
-//    description = aDescription;
-//    date = aDate;
-//    time = aTime;
-//    this.AutoRepairShopSystem=aAutoRepairShopSystem;
-//    this.customer=aCustomer;
-//    this.bookableServices=new ArrayList<BookableService>();
-//  }
+  private ChosenService chosenService;
 
   public Reminder() {
   }
-
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -68,7 +52,7 @@ public class Reminder
     this.time = time;
   }
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   public Customer getCustomer()
   {
     return customer;
@@ -79,17 +63,15 @@ public class Reminder
   }
 
 
-  @ManyToMany(fetch = FetchType.LAZY, mappedBy = "reminders")
-  public List<BookableService> getBookableServices()
+  @ManyToOne(fetch = FetchType.LAZY)
+  public ChosenService getChosenService()
   {
-    return this.bookableServices;
+    return this.chosenService;
   }
 
-  public void setBookableServices(List<BookableService> bookableServices) {
-    this.bookableServices=bookableServices;
+  public void setChosenService(ChosenService service) {
+    this.chosenService=service;
   }
-
-
 
   public String toString()
   {

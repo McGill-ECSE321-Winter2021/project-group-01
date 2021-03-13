@@ -8,6 +8,9 @@ public class OwnerDTO {
 	public OwnerDTO() {
 	}
 	
+	public OwnerDTO(String username) {
+		this.username = username;
+	}
 	
 	public OwnerDTO(String username,String password) {
 		this.username = username;

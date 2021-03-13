@@ -4,11 +4,15 @@ import ca.mcgill.ecse321.autoRepair.dao.CustomerRepository;
 import ca.mcgill.ecse321.autoRepair.dao.ChosenServiceRepository;
 import ca.mcgill.ecse321.autoRepair.dao.TimeSlotRepository;
 import ca.mcgill.ecse321.autoRepair.dto.AppointmentDTO;
+import ca.mcgill.ecse321.autoRepair.dto.AssistantDTO;
 import ca.mcgill.ecse321.autoRepair.dto.CarDTO;
 import ca.mcgill.ecse321.autoRepair.dto.CustomerDTO;
+import ca.mcgill.ecse321.autoRepair.dto.OwnerDTO;
 import ca.mcgill.ecse321.autoRepair.dto.ProfileDTO;
 import ca.mcgill.ecse321.autoRepair.model.*;
 import ca.mcgill.ecse321.autoRepair.service.AppointmentService;
+import ca.mcgill.ecse321.autoRepair.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +22,7 @@ import java.sql.Time;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -33,11 +38,12 @@ public class AutoRepairController {
 
 	@Autowired
 	ChosenServiceRepository chosenServiceRepository;
+	
 
 	//    @Autowired
 	//    CustomerService customerService;
 
-	@PostMapping(value = { "/make appointment/{username}/{serviceName}" })
+	@PostMapping(value = { "/make appointment/eusername}/{serviceName}" })
 	public AppointmentDTO makeAppointment(@PathVariable CustomerDTO customerDTO, @RequestParam Date date,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm")
 	LocalTime startTime,
@@ -73,8 +79,10 @@ public class AutoRepairController {
 	//        appointmentDTO.setComboItemList(null);
 	//        return appointmentDTO;
 	//    }
-
-
+	
+	
+	
+	
 	private CustomerDTO convertToDTO(Customer customer) {
 		if(customer==null) throw new IllegalArgumentException("Customer not found.");
 		List<CarDTO> cars = new ArrayList<CarDTO>();
@@ -85,7 +93,6 @@ public class AutoRepairController {
 
 		return new CustomerDTO(customer.getUsername(), customer.getPassword(), customer.getNoShow(), 
 				customer.getShow(), cars, convertToDTO(customer.getProfile()));
-
 	}
 
 	private CarDTO convertToDTO(Car car) {
@@ -98,4 +105,21 @@ public class AutoRepairController {
 		return new ProfileDTO(profile.getFirstName(), profile.getLastName(), profile.getAddress(), 
 				profile.getZipCode(), profile.getPhoneNumber(), profile.getEmail());
 	}
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

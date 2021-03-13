@@ -27,12 +27,16 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
+import ca.mcgill.ecse321.autoRepair.dao.AssistantRepository;
 import ca.mcgill.ecse321.autoRepair.dao.CarRepository;
 import ca.mcgill.ecse321.autoRepair.dao.CustomerRepository;
+import ca.mcgill.ecse321.autoRepair.dao.OwnerRepository;
 import ca.mcgill.ecse321.autoRepair.dao.ProfileRepository;
+import ca.mcgill.ecse321.autoRepair.model.Assistant;
 import ca.mcgill.ecse321.autoRepair.model.Car;
 import ca.mcgill.ecse321.autoRepair.model.Car.CarTransmission;
 import ca.mcgill.ecse321.autoRepair.model.Customer;
+import ca.mcgill.ecse321.autoRepair.model.Owner;
 import ca.mcgill.ecse321.autoRepair.model.Profile;
 
 @ExtendWith(MockitoExtension.class)
@@ -46,6 +50,13 @@ public class UserServiceTest {
 
 	@Mock
 	private CarRepository carRepo;
+	
+	@Mock 
+	private OwnerRepository ownerRepo;
+	
+	@Mock 
+	private AssistantRepository assisRepo;
+
 
 	@InjectMocks
 	private UserService service;
@@ -63,11 +74,43 @@ public class UserServiceTest {
 	private static final String CAR_MODEL ="BMW X6";
 	private static final String CAR_PLATE ="123 ABC";
 	private static final CarTransmission CAR_TRANSMISSION = CarTransmission.Automatic;
-
+	
+//----------------owner + assis-----------
+	
+	private static final String OWNER_USERNAME ="TestOwner";
+	private static final String OWNER_PASSWORD ="TestPassword1";
+	private static final String ASSISTANT_USERNAME ="TestAssistant";
+	private static final String ASSISTANT_PASSWORD ="TestPassword2";
 
 	@BeforeEach
 	public void setMockOutput() {
-
+			
+		lenient().when(ownerRepo.findOwnerByUsername(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+			if(invocation.getArgument(0).equals(OWNER_USERNAME)) {
+				Owner owner = new Owner();
+			    owner.setUsername(CUSTOMER_USERNAME);
+				owner.setPassword(CUSTOMER_PASSWORD);
+				return owner;
+			}
+		else {
+			return null;
+		}
+	});
+		
+		lenient().when(assisRepo.findAssistantByUsername(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+			if(invocation.getArgument(0).equals(ASSISTANT_USERNAME)) {
+				Assistant assistant = new Assistant();
+			    assistant.setUsername(CUSTOMER_USERNAME);
+				assistant.setPassword(CUSTOMER_PASSWORD);
+				return assistant;
+			}
+		else {
+			return null;
+		}
+	});
+		
+//----------------------------------------//
+		
 		lenient().when(cusRepo.findCustomerByUsername(anyString())).thenAnswer((InvocationOnMock invocation) -> {
 			if(invocation.getArgument(0).equals(CUSTOMER_USERNAME)) {
 
@@ -134,6 +177,9 @@ public class UserServiceTest {
 			return invocation.getArgument(0);
 		};
 		
+		lenient().when(ownerRepo.save(any(Owner.class))).thenAnswer(returnParameterAsAnswer);
+		lenient().when(assisRepo.save(any(Assistant.class))).thenAnswer(returnParameterAsAnswer);
+		
 		lenient().when(cusRepo.save(any(Customer.class))).thenAnswer(returnParameterAsAnswer);
 		lenient().when(profileRepo.save(any(Profile.class))).thenAnswer(returnParameterAsAnswer);
 		lenient().when(carRepo.save(any(Car.class))).thenAnswer(returnParameterAsAnswer);
@@ -187,6 +233,7 @@ public class UserServiceTest {
 		assertEquals(carTransmition, car.getTransmission());
 	}
 	
+	
 	@Test
 	public void testCreateCustomer() {
 		assertEquals(0, service.getAllCustomers().size());
@@ -233,9 +280,45 @@ public class UserServiceTest {
 		assertEquals(address, customer.getProfile().getAddress());
 		assertEquals(email, customer.getProfile().getEmail());
 		assertEquals(phoneNumber, customer.getProfile().getPhoneNumber());
-		assertEquals(zip, customer.getProfile().getZipCode());
-		
+		assertEquals(zip, customer.getProfile().getZipCode());	
 	}
+	
+//----------------------------------------//	
+	
+	@Test
+	public void testCreateOwner() {
+	assertEquals(0, service.getAllOwners().size());  
+	String username = "nameTest";
+	String password = "passwordTest1";
+	Owner owner = null;
+	try {
+     owner = service.createOwner(username, password);
+	}catch(IllegalArgumentException e) {
+		fail();
+	}
+	assertNotNull(owner);
+	assertEquals(username, owner.getUsername());
+	assertEquals(password, owner.getPassword());
+}
+
+	
+	@Test
+	public void testCreateAssistant() {
+	assertEquals(0, service.getAllAssistants().size());  
+	String username = "nameTest";
+	String password = "passwordTest1";
+	Assistant assistant = null;
+	try {
+     assistant = service.createAssistant(username, password);
+	}catch(IllegalArgumentException e) {
+		fail();
+	}
+	assertNotNull(assistant);
+	assertEquals(username, assistant.getUsername());
+	assertEquals(password, assistant.getPassword());
+}
+	
+	
 
 
 }

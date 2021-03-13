@@ -1,6 +1,5 @@
 package ca.mcgill.ecse321.autoRepair.controller;
 
-<<<<<<< HEAD
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,7 +35,26 @@ public class UserController {
 
 	private OwnerDTO convertToDTO(Owner owner) {
 		if(owner == null) throw new IllegalArgumentException("Owner not found.");
-		return new OwnerDTO(owner.getUsername());
+		return new OwnerDTO(owner.getUsername(),owner.getPassword());
+	}
+	
+	
+	@GetMapping(value = { "/assistants", "/assistants/" })
+	public List<AssistantDTO> getAllAssitants() {
+		return user.getAllAssistants().stream().map(assistant -> convertToDTO(assistant)).collect(Collectors.toList());
+	}
+	
+	@PostMapping(value = { "/assistant/{name}", "/assistant/{name}/" })
+	public AssistantDTO createAssitant(@PathVariable("name") String name,@PathVariable("password") String password)
+			throws IllegalArgumentException {
+		Assistant assistant = user.createAssistant(name,password);
+		return convertToDTO(assistant);
+	}
+	
+
+	private AssistantDTO convertToDTO(Assistant assistant) {
+		if(assistant == null) throw new IllegalArgumentException("Assistant not found.");
+		return new AssistantDTO(assistant.getUsername(),assistant.getPassword());
 	}
 	
 //	private Owner convertToDomainObject(OwnerDTO ownerDto) {    not used!
@@ -48,29 +66,6 @@ public class UserController {
 //	}
 //	return null;
 //}
-	
-	@GetMapping(value = { "/assistants", "/assistants/" })
-	public List<AssistantDTO> getAllAssitants() {
-		return user.getAllAssistants().stream().map(assistant -> convertToDTO(assistant)).collect(Collectors.toList());
-	}
-	
-	@PostMapping(value = { "/assistant/{name}", "/assistant/{name}/" })
-	public AssistantDTO createAsssitant(@PathVariable("name") String name,@PathVariable("password") String password)
-			throws IllegalArgumentException {
-		Assistant assistant = user.createAssistant(name,password);
-		return convertToDTO(assistant);
-	}
-	
-
-	private AssistantDTO convertToDTO(Assistant assistant) {
-		if(assistant == null) throw new IllegalArgumentException("Assistant not found.");
-		return new AssistantDTO(assistant.getUsername());
-	}
-	
-	
-	
-=======
-public class UserController {
-
->>>>>>> Eric
 }
+	
+	

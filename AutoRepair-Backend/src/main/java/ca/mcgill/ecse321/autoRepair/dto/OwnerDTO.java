@@ -1,8 +1,14 @@
 package ca.mcgill.ecse321.autoRepair.dto;
 
-public class OwnerDTO {
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
+public class OwnerDTO {
+	@NotBlank(message = "Username cannot be blank.")
+	@NotEmpty(message = "Username cannot be blank.")
 	private String username;
+	@NotBlank(message = "Password cannot be blank.")
+	@NotEmpty(message = "Password cannot be blank.")
 	private String password;
 
 	public OwnerDTO() {

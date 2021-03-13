@@ -17,17 +17,18 @@ import ca.mcgill.ecse321.autoRepair.dto.OwnerDTO;
 import ca.mcgill.ecse321.autoRepair.model.Assistant;
 
 import ca.mcgill.ecse321.autoRepair.model.Owner;
-import ca.mcgill.ecse321.autoRepair.service.AutoRepairService;
+//import ca.mcgill.ecse321.autoRepair.service.AutoRepairService;
 import ca.mcgill.ecse321.autoRepair.service.UserService;
 
 @CrossOrigin(origins = "*")
 @RestController
 public class AutoRepairRestController {
 
-	@Autowired
-	private AutoRepairService service;
-
-}
+//	@Autowired
+//	private AutoRepairService service;
+//
+//
+	}
 
 
 

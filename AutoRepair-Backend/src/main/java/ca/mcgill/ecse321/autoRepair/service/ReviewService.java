@@ -28,7 +28,6 @@ public class ReviewService {
 		review.setDescription(description);
 		review.setServiceRating(serviceRating);
 		reviewRepository.save(review);
-
 		return review;
 	}
 

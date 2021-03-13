@@ -2,6 +2,8 @@ package ca.mcgill.ecse321.autoRepair.service;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +28,26 @@ public class ReminderService {
 	@Transactional
 	public Reminder createReminder(ChosenService service, Customer customer, Date date,
 			String description, Time time) {
+		
+		if(service == null) {
+			throw new IllegalArgumentException("Service not found");
+		}
+		
+		if(customer == null) {
+			throw new IllegalArgumentException("Customer not found");
+		}
+		
+		LocalDate localDate = date.toLocalDate();
+		if(localDate.isBefore(LocalDate.now())) {
+			throw new IllegalArgumentException("Invalid date");
+		}
+		
+		if(localDate.isEqual(LocalDate.now())) {
+			LocalTime localTime = time.toLocalTime();
+			if(localTime.isBefore(LocalTime.now())) {
+				throw new IllegalArgumentException("Invalid time");
+			}
+		}
 		
 		Reminder reminder = new Reminder();
 		reminder.setChosenService(service);

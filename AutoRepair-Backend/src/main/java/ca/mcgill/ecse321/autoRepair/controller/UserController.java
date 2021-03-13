@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.autoRepair.controller;
 
+<<<<<<< HEAD
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -68,4 +69,8 @@ public class UserController {
 	
 	
 	
+=======
+public class UserController {
+
+>>>>>>> Eric
 }

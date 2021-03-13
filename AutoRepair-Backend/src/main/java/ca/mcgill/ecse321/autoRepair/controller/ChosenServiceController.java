@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.autoRepair.controller;
 
+<<<<<<< HEAD
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -133,3 +134,8 @@ private ChosenServiceDTO convertToDTO(ChosenService availableService) {
 
 	
 
+=======
+public class ChosenServiceController {
+
+}
+>>>>>>> Eric

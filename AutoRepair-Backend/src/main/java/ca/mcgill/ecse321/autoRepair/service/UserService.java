@@ -28,31 +28,29 @@ public class UserService {
 
 	@Transactional
 	public Customer createCustomer(String username, String password, Profile profile, List<Car> cars) {
+
 		if(username==null || username=="") throw new IllegalArgumentException("Username cannot be blank");
+
 		if(password==null || password=="") throw new IllegalArgumentException("Password cannot be blank");
 
-		Customer customer = new Customer();
-		customer.setNoShow(0);
-		customer.setShow(0);
-		if (usernameIsValid(username)) {
-			customer.setUsername(username);
-		}
-		else throw new IllegalArgumentException("Username already taken");
+		if (!usernameIsValid(username)) throw new IllegalArgumentException("Username already taken");
 
-		
-		if (passwordIsValid(password)) {
-			customer.setPassword(password);
-		}
-		else throw new IllegalArgumentException("Invalid Password. Password must have at least\r\n"
+		if (!passwordIsValid(password)) throw new IllegalArgumentException("Invalid Password. Password must have at least\r\n"
 				+ " one numeric character\r\n" + 
 				"one lowercase character\r\n" + 
 				"one uppercase character\r\n" + 
 				"And password length should be between 8 and 20");
-		
+
+		Customer customer = new Customer();
+		customer.setNoShow(0);
+		customer.setShow(0);
+		customer.setUsername(username);
+		customer.setPassword(password);
 		customer.setCars(cars);
 		customer.setProfile(profile);
-		
+
 		customerRepository.save(customer);
+
 		return customer;
 	}
 
@@ -62,13 +60,13 @@ public class UserService {
 		}
 		return true;
 	}
-	
+
 	private boolean passwordIsValid(String password){
 		String regex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(password);
-        return matcher.matches();
-    }
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(password);
+		return matcher.matches();
+	}
 
 	@Transactional
 	public Customer getCustomer(String username) {
@@ -83,6 +81,19 @@ public class UserService {
 
 	@Transactional
 	public Car createCar(String plateNumber, String model, Car.CarTransmission transmission) {
+		if(plateNumber==null || plateNumber=="") {
+			throw new IllegalArgumentException("Plate Number cannot be blank.");
+		}
+
+		if(model==null || model=="") {
+			throw new IllegalArgumentException("Car model cannot be blank.");
+		}
+
+		if(transmission==null) {
+			throw new IllegalArgumentException("Car transmission cannot be blank.");
+
+		}
+
 		Car car = new Car();
 		car.setModel(model);
 		car.setPlateNumber(plateNumber);
@@ -104,6 +115,34 @@ public class UserService {
 
 	@Transactional
 	public Profile createProfile(String firstName, String lastName, String address, String zipCode, String phoneNumber, String email) {
+		if(firstName ==null || firstName =="") {
+			throw new IllegalArgumentException("First name cannot be blank.");
+		}
+		if(lastName ==null || lastName =="") {
+			throw new IllegalArgumentException("Last name cannot be blank.");
+		}
+
+		if(address ==null || address =="") {
+			throw new IllegalArgumentException("Address cannot be blank.");
+		}
+
+		if(zipCode ==null || zipCode =="") {
+			throw new IllegalArgumentException("Zip code cannot be blank.");
+		}
+
+		if(phoneNumber ==null || phoneNumber =="") {
+			throw new IllegalArgumentException("Phone number cannot be blank.");
+		}
+
+		if(email ==null || email =="") {
+			throw new IllegalArgumentException("Email cannot be blank.");
+		}
+
+		if(!emailIsValid(email)) {
+			throw new IllegalArgumentException("Invalid email.");
+
+		}
+
 		Profile profile = new Profile();
 		profile.setFirstName(firstName);
 		profile.setLastName(lastName);
@@ -111,7 +150,9 @@ public class UserService {
 		profile.setEmail(email);
 		profile.setPhoneNumber(phoneNumber);
 		profile.setZipCode(zipCode);
+
 		profileRepository.save(profile);
+
 		return profile;
 	}
 
@@ -124,6 +165,18 @@ public class UserService {
 	public void updateProfile(String username, String firstName, String lastName, String address, String zipCode, String phoneNumber, String email) {
 		Customer customer = customerRepository.findCustomerByUsername(username);
 		Profile profile = customer.getProfile();
+
+		if(profile.getEmail()!=email && email!=null && email!="") {
+			if(!emailIsValid(email)) 
+				throw new IllegalArgumentException("Invalid email.");
+			
+		}
+
+		if(profile.getPhoneNumber()!=phoneNumber && phoneNumber!=null && phoneNumber!="") {
+			if(!isNumeric(phoneNumber))
+				throw new IllegalArgumentException("Invalid phone number.");
+		}
+
 		if(profile.getFirstName() != firstName && firstName!=null && firstName!="") {
 			profile.setFirstName(firstName);
 		}
@@ -132,15 +185,11 @@ public class UserService {
 		}
 
 		if(profile.getEmail()!=email && email!=null && email!="") {
-			if(emailIsValid(email)) {
-				profile.setEmail(email);
-			}
-			else throw new IllegalArgumentException("Invalid email.");
+			profile.setEmail(email);
 		}
 
 		if(profile.getPhoneNumber()!=phoneNumber && phoneNumber!=null && phoneNumber!="") {
-			if(isNumeric(phoneNumber))
-				profile.setPhoneNumber(phoneNumber);
+			profile.setPhoneNumber(phoneNumber);
 		}
 
 		if(profile.getZipCode()!=zipCode && zipCode!=null && zipCode!="") {

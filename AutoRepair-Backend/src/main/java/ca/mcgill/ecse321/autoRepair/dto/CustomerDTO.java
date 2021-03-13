@@ -2,10 +2,18 @@ package ca.mcgill.ecse321.autoRepair.dto;
 
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
 
 public class CustomerDTO {
 
+	@NotBlank(message = "Username cannot be blank.")
+	@NotEmpty(message = "Username cannot be blank.")
 	private String username;
+	
+	@NotBlank(message = "Password cannot be blank.")
+	@NotEmpty(message = "Password cannot be blank.")
 	private String password;
 	private int noShow;
 	private int show;
@@ -28,7 +36,6 @@ public class CustomerDTO {
 	public String getUsername() {
 		return username;
 	}
-
 
 
 	public String getPassword() {

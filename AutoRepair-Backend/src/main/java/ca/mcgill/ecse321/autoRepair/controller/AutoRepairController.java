@@ -43,25 +43,25 @@ public class AutoRepairController {
 	//    @Autowired
 	//    CustomerService customerService;
 
-	@PostMapping(value = { "/make appointment/eusername}/{serviceName}" })
-	public AppointmentDTO makeAppointment(@PathVariable CustomerDTO customerDTO, @RequestParam Date date,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm")
-	LocalTime startTime,
-	@PathVariable ChosenService serviceName) throws IllegalArgumentException {
-		Customer customer = customerRepository.findCustomerByUsername(customerDTO.getUsername());
-		TimeSlot timeSlot = new TimeSlot();
-		timeSlot.setStartTime(Time.valueOf(startTime));
-		timeSlot.setStartDate(date);
-		timeSlot.setEndDate(date);
-		ChosenService service = chosenServiceRepository.findChosenServiceByName(serviceName.getName());
-		timeSlot.setEndTime(findEndTimeOfApp(service,startTime));
-		if(customer==null) throw new IllegalArgumentException("The customer does not exist");
-		if(timeSlot!=null) throw new IllegalArgumentException("The chosen time slot is unavailable");
-		if(service== null) throw new IllegalArgumentException("The chosen service does not exist");
-		Appointment appointment = appointmentService.makeAppointment(customer,service,timeSlot);
-		return null;
-		// return convertToDTO(appointment);
-	}
+//	@PostMapping(value = { "/make appointment/eusername}/{serviceName}" })
+//	public AppointmentDTO makeAppointment(@PathVariable CustomerDTO customerDTO, @RequestParam Date date,
+//			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm")
+//	LocalTime startTime,
+//	@PathVariable ChosenService serviceName) throws IllegalArgumentException {
+//		Customer customer = customerRepository.findCustomerByUsername(customerDTO.getUsername());
+//		TimeSlot timeSlot = new TimeSlot();
+//		timeSlot.setStartTime(Time.valueOf(startTime));
+//		timeSlot.setStartDate(date);
+//		timeSlot.setEndDate(date);
+//		ChosenService service = chosenServiceRepository.findChosenServiceByName(serviceName.getName());
+//		timeSlot.setEndTime(findEndTimeOfApp(service,startTime));
+//		if(customer==null) throw new IllegalArgumentException("The customer does not exist");
+//		if(timeSlot!=null) throw new IllegalArgumentException("The chosen time slot is unavailable");
+//		if(service== null) throw new IllegalArgumentException("The chosen service does not exist");
+//		Appointment appointment = appointmentService.makeAppointment(customer,service,timeSlot);
+//		return null;
+//		// return convertToDTO(appointment);
+//	}
 
 	private Time findEndTimeOfApp(ChosenService service, LocalTime startTime){
 		LocalTime localEndTime = startTime.plusMinutes(service.getDuration());

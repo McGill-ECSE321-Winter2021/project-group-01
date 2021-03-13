@@ -25,7 +25,7 @@ public class ChosenServiceController {
 	
 	@PostMapping(value = { "/add service/{serviceName}/{serviceDuration}" })
 	public ChosenServiceDTO addService
-(@PathVariable ChosenService serviceName,@PathVariable int serviceDuration,
+(@PathVariable String serviceName,@PathVariable int serviceDuration,
 @PathVariable AssistantDTO assistantDTO, @PathVariable OwnerDTO ownerDTO) throws IllegalArgumentException {
 		
 ChosenService availableService = chosenServiceRepository.findChosenServiceByName(serviceName);
@@ -35,7 +35,7 @@ Owner owner =  ownerRepository.findOwnerByUsername(ownerDTO.getUsername());  //r
 
 if (assistant==null && owner==null)throw new IllegalArgumentException
 ("Restricted access: can't add service");
-if (serviceName==availableService)throw new IllegalArgumentException
+if (serviceName==availableService.getName())throw new IllegalArgumentException
 ("Service" + serviceName + "already exists");
 if (serviceName==null)throw new IllegalArgumentException
 ("Please specify service name");
@@ -43,7 +43,7 @@ if (serviceDuration<0)throw new IllegalArgumentException
 ("Please specify service appropriate duration");
 
  ChosenService serviceToAdd = new ChosenService();
- serviceToAdd.setName(serviceName.getName());
+ serviceToAdd.setName(serviceName);
  serviceToAdd.setDuration(serviceDuration);
  
 	chosenServiceRepository.save(availableService);
@@ -55,7 +55,7 @@ if (serviceDuration<0)throw new IllegalArgumentException
 
 @PostMapping(value = { "/update service/{serviceName}/{serviceDuration}" })
 public ChosenServiceDTO updateService
-(@PathVariable ChosenService serviceName,@PathVariable int serviceDuration,
+(@PathVariable String serviceName,@PathVariable int serviceDuration,
 @PathVariable AssistantDTO assistantDTO, @PathVariable OwnerDTO ownerDTO) throws IllegalArgumentException {
 	
 	ChosenService availableService = chosenServiceRepository.findChosenServiceByName(serviceName);
@@ -65,14 +65,14 @@ public ChosenServiceDTO updateService
 
 	if (assistant==null && owner==null)throw new IllegalArgumentException
 	("Restricted access: can't update service");
-	if (serviceName!=availableService)throw new IllegalArgumentException
+	if (serviceName!=availableService.getName())throw new IllegalArgumentException
 	("Service" + serviceName + "does not exist, kindly add service before updating it");
 	if (serviceName==null)throw new IllegalArgumentException
 	("Please specify service name to update");
 	if (serviceDuration<0)throw new IllegalArgumentException
 	("Please specify service appropriate duration to update");
 
-	availableService.setName(serviceName.getName());
+	availableService.setName(serviceName);
 	availableService.setDuration(serviceDuration);
 	
 	chosenServiceRepository.save(availableService);
@@ -83,7 +83,7 @@ public ChosenServiceDTO updateService
 
 @PostMapping(value = { "/delete service/{serviceName}/"})
 public void deleteService
-(@PathVariable ChosenService serviceName,@PathVariable AssistantDTO assistantDTO, @PathVariable OwnerDTO ownerDTO) 
+(@PathVariable String serviceName,@PathVariable AssistantDTO assistantDTO, @PathVariable OwnerDTO ownerDTO) 
 		throws IllegalArgumentException {
 	
 	
@@ -94,12 +94,12 @@ public void deleteService
 
 	if (assistant==null && owner==null)throw new IllegalArgumentException
 	("Restricted access: can't delete service");
-	if (serviceName!=availableService)throw new IllegalArgumentException
+	if (serviceName!=availableService.getName())throw new IllegalArgumentException
 	("Service" + serviceName + "does not exist, kindly add service before deleting it");
 	if (serviceName==null)throw new IllegalArgumentException
 	("Please specify service name to delete");
 	
-	chosenServiceRepository.delete(serviceName);
+	chosenServiceRepository.delete(availableService);
 	
 
 }

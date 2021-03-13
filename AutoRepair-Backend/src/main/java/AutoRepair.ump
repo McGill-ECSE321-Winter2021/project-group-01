@@ -1,3 +1,4 @@
+  
 gnamespace ca.mcgill.ecse321.autoRepair.model;
 
 class AutoRepairShopSytem{
@@ -236,3 +237,4 @@ class Review
 {
   position 650 130 109 45;
 }
+

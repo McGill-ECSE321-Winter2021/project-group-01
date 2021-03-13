@@ -34,6 +34,7 @@ public class AppointmentService {
             app.setTimeSlot(timeSlot);
         }else throw new IllegalArgumentException("Chosen time slot is unavailable.");
         appointmentRepository.save(app);
+        timeSlotRepository.save(timeSlot);
         return app;
     }
 
@@ -44,9 +45,9 @@ public class AppointmentService {
     }
 
     @Transactional
-    public Appointment updateAppointment(TimeSlot timeSlot, TimeSlot newTimeSlot, ChosenService newService){
-        Appointment appointment = getAppointment(timeSlot);
+    public Appointment updateAppointment(Appointment appointment, TimeSlot newTimeSlot, ChosenService newService){
         Appointment updatedApp = appointment;
+        TimeSlot timeSlot = appointment.getTimeSlot();
         appointmentRepository.delete(appointment);
 
         if(!(timeSlot.equals(newTimeSlot))){

@@ -111,9 +111,33 @@ public class BusinessServiceTest {
 		String email = "garyjimmy@mail.com";
 		String phoneNumber = "012344567";
 		String address = "222, 5th Ave";
+		OperatingHour operatingHour1 = new OperatingHour();
+		operatingHour1.setDayOfWeek(DayOfWeek.Monday);
+		operatingHour1.setStartTime(Time.valueOf("08:00:00"));
+		operatingHour1.setEndTime(Time.valueOf("15:00:00"));
+		OperatingHour operatingHour2 = new OperatingHour();
+		operatingHour2.setDayOfWeek(DayOfWeek.Tuesday);
+		operatingHour2.setStartTime(Time.valueOf("08:00:00"));
+		operatingHour2.setEndTime(Time.valueOf("15:00:00"));
+		List<OperatingHour> operatingHours = new ArrayList<OperatingHour>();
+		operatingHours.add(operatingHour1);
+		operatingHours.add(operatingHour2);
+		TimeSlot timeSlot1 = new TimeSlot();
+		timeSlot1.setStartTime(Time.valueOf("08:00:00"));
+		timeSlot1.setEndTime(Time.valueOf("15:00:00"));
+		timeSlot1.setStartDate(Date.valueOf("2021-01-21"));
+		timeSlot1.setEndDate(Date.valueOf("2021-01-21"));
+		TimeSlot timeSlot2 = new TimeSlot();
+		timeSlot2.setStartTime(Time.valueOf("09:00:00"));
+		timeSlot2.setEndTime(Time.valueOf("16:00:00"));
+		timeSlot2.setStartDate(Date.valueOf("2021-02-21"));
+		timeSlot2.setEndDate(Date.valueOf("2021-02-21"));
+		List<TimeSlot> timeSlots = new ArrayList<TimeSlot>();
+		timeSlots.add(timeSlot1);
+		timeSlots.add(timeSlot2);
 		Business business = null;
 		try {
-			business = service.createBusiness(name, email, address, phoneNumber, null, null);
+			business = service.createBusiness(name, email, address, phoneNumber, operatingHours, timeSlots);
 		}catch (IllegalArgumentException e) {
 			fail();
 		}
@@ -123,8 +147,8 @@ public class BusinessServiceTest {
 		assertEquals(address, business.getAddress());
 		assertEquals(email, business.getEmail());
 		assertEquals(phoneNumber, business.getPhoneNumber());
-		assertNull(business.getBusinessHours());
-		assertNull(business.getHolidays());
+		assertEquals(operatingHours, business.getBusinessHours());
+		assertEquals(timeSlots, business.getHolidays());
 		
 	}
 	
@@ -224,6 +248,126 @@ public class BusinessServiceTest {
 	}
 	
 	@Test
+	public void testEditBusinessSuccessfull() {
+		String name = "Gary";
+		String email = "garyjimmy@mail.com";
+		String phoneNumber = "012344567";
+		String address = "222, 5th Ave";
+		Business business = null;
+		String name1 = "John";
+		try {
+			business = service.createBusiness(name, email, address, phoneNumber, null, null);
+			business = service.editBusiness(name1, email, address, phoneNumber, null, null);
+		}catch (IllegalArgumentException e) {
+			fail();
+		}
+		
+		assertNotNull(business);
+		assertEquals(name1, business.getName());
+		assertEquals(address, business.getAddress());
+		assertEquals(email, business.getEmail());
+		assertEquals(phoneNumber, business.getPhoneNumber());
+		assertNull(business.getBusinessHours());
+		assertNull(business.getHolidays());
+	}
+	
+	@Test
+	public void testEditBusinessNullName() {
+
+		String name = "";
+		String email = "garyjimmy@mail.com";
+		String phoneNumber = "012344567";
+		String address = "222, 5th Ave";
+		String error = "";
+		Business business = null;
+		try {
+			business = service.editBusiness(name, email, address, phoneNumber, null, null);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Name cannot be blank");
+		
+	}
+	
+	@Test
+	public void testEditBusinessNullEmail() {
+
+		String name = "Gary";
+		String email = "";
+		String phoneNumber = "012344567";
+		String address = "222, 5th Ave";
+		String error = "";
+		Business business = null;
+		try {
+			business = service.editBusiness(name, email, address, phoneNumber, null, null);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Email cannot be blank");
+		
+	}
+	
+	@Test
+	public void testEditBusinessNullAddress() {
+
+		String name = "Gary";
+		String email = "garyjimmy@mail.com";
+		String phoneNumber = "012344567";
+		String address = "";
+		String error = "";
+		Business business = null;
+		try {
+			business = service.editBusiness(name, email, address, phoneNumber, null, null);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Address cannot be blank");
+		
+	}
+	
+	@Test
+	public void testEditBusinessNullPhoneNumber() {
+
+		String name = "Gary";
+		String email = "garyjimmy@mail.com";
+		String phoneNumber = "";
+		String address = "222, 5th Ave";
+		String error = "";
+		Business business = null;
+		try {
+			business = service.editBusiness(name, email, address, phoneNumber, null, null);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Phone number cannot be blank");
+		
+	}
+	
+	@Test
+	public void testEditBusinessInvalidEmail() {
+
+		String name = "Gary";
+		String email = "garyjimmymail.com";
+		String phoneNumber = "012344567";
+		String address = "222, 5th Ave";
+		String error = "";
+		Business business = null;
+		try {
+			business = service.editBusiness(name, email, address, phoneNumber, null, null);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Invalid email");
+		
+	}
+	
+	
+	@Test
 	public void testCreateOperatingHourSuccessfull() {
 
 		assertEquals(0, service.getAllOperatingHour().size());
@@ -239,6 +383,7 @@ public class BusinessServiceTest {
 			fail();
 		}
 		
+//		assertEquals(1, service.getAllOperatingHour().size());
 		assertNotNull(operatingHour);
 		assertEquals(dayOfWeek, operatingHour.getDayOfWeek());
 		assertEquals(startTime, operatingHour.getStartTime());
@@ -308,6 +453,176 @@ public class BusinessServiceTest {
 		assertEquals(error, "End time cannot be blank");
 		
 	}
+	
+	@Test
+	public void testCreateOperatingHourInvalidTime() {
+
+		assertEquals(0, service.getAllOperatingHour().size());
+		
+		DayOfWeek dayOfWeek = DayOfWeek.Monday;
+		Time startTime = Time.valueOf("12:00:00");
+		Time endTime = Time.valueOf("11:00:00");
+		String error = "";
+
+		OperatingHour operatingHour = null;
+		try {
+			operatingHour = service.createOperatingHour(dayOfWeek, startTime, endTime);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Start time cannot be before end time");
+		
+	}
+	
+	@Test
+	public void testEditOperatingHourSuccessfull() {
+
+		assertEquals(0, service.getAllOperatingHour().size());
+		
+		DayOfWeek dayOfWeek = DayOfWeek.Monday;
+		Time startTime = Time.valueOf("10:00:00");
+		Time endTime = Time.valueOf("18:00:00");
+		DayOfWeek dayOfWeek1 = DayOfWeek.Tuesday;
+		Time startTime1 = Time.valueOf("11:00:00");
+		Time endTime1 = Time.valueOf("19:00:00");
+		OperatingHour operatingHour = null;
+		try {
+			operatingHour = service.createOperatingHour(dayOfWeek, startTime, endTime);
+			operatingHour = service.editOperatingHour(dayOfWeek, startTime, endTime, dayOfWeek1, startTime1, endTime1);
+		}catch (IllegalArgumentException e) {
+			fail();
+		}
+		
+		assertNotNull(operatingHour);
+		assertEquals(dayOfWeek1, operatingHour.getDayOfWeek());
+		assertEquals(startTime1, operatingHour.getStartTime());
+		assertEquals(endTime1, operatingHour.getEndTime());
+		
+	}
+	
+	@Test
+	public void testEditOperatingHourNullDayOfWeek() {
+
+		assertEquals(0, service.getAllOperatingHour().size());
+		
+		DayOfWeek dayOfWeek = DayOfWeek.Monday;
+		Time startTime = Time.valueOf("10:00:00");
+		Time endTime = Time.valueOf("18:00:00");
+		DayOfWeek dayOfWeek1 = null;
+		Time startTime1 = Time.valueOf("11:00:00");
+		Time endTime1 = Time.valueOf("19:00:00");
+		String error = "";
+
+		OperatingHour operatingHour = null;
+		try {
+			operatingHour = service.editOperatingHour(dayOfWeek, startTime, endTime, dayOfWeek1, startTime1, endTime1);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Day of week cannot be blank");
+		
+	}
+	
+	@Test
+	public void testEditOperatingHourNullStartTime() {
+
+		assertEquals(0, service.getAllOperatingHour().size());
+		
+		DayOfWeek dayOfWeek = DayOfWeek.Monday;
+		Time startTime = Time.valueOf("10:00:00");
+		Time endTime = Time.valueOf("18:00:00");
+		DayOfWeek dayOfWeek1 = DayOfWeek.Tuesday;
+		Time startTime1 = null;
+		Time endTime1 = Time.valueOf("19:00:00");
+		String error = "";
+
+		OperatingHour operatingHour = null;
+		try {
+			operatingHour = service.editOperatingHour(dayOfWeek, startTime, endTime, dayOfWeek1, startTime1, endTime1);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Start time cannot be blank");
+		
+	}
+	
+	@Test
+	public void testEditOperatingHourNullEndTime() {
+
+		assertEquals(0, service.getAllOperatingHour().size());
+		
+		DayOfWeek dayOfWeek = DayOfWeek.Monday;
+		Time startTime = Time.valueOf("10:00:00");
+		Time endTime = Time.valueOf("18:00:00");
+		DayOfWeek dayOfWeek1 = DayOfWeek.Tuesday;
+		Time startTime1 = Time.valueOf("11:00:00");
+		Time endTime1 = null;
+		String error = "";
+
+		OperatingHour operatingHour = null;
+		try {
+			operatingHour = service.editOperatingHour(dayOfWeek, startTime, endTime, dayOfWeek1, startTime1, endTime1);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "End time cannot be blank");
+		
+	}
+	
+	@Test
+	public void testEditOperatingHourNotFound() {
+
+		assertEquals(0, service.getAllOperatingHour().size());
+		
+		DayOfWeek dayOfWeek = DayOfWeek.Monday;
+		Time startTime = Time.valueOf("10:00:00");
+		Time endTime = Time.valueOf("18:00:00");
+		DayOfWeek dayOfWeek1 = DayOfWeek.Tuesday;
+		Time startTime1 = Time.valueOf("11:00:00");
+		Time endTime1 = Time.valueOf("15:00:00");
+		String error = "";
+
+		OperatingHour operatingHour = null;
+		try {
+			operatingHour = service.editOperatingHour(dayOfWeek1, startTime, endTime, dayOfWeek1, startTime1, endTime1);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Operating hour cannot be found");
+		
+	}
+	
+	@Test
+	public void testDeleteOperatingHourSuccessfull() {
+
+		assertEquals(0, service.getAllOperatingHour().size());
+		
+		DayOfWeek dayOfWeek = DayOfWeek.Monday;
+		Time startTime = Time.valueOf("10:00:00");
+		Time endTime = Time.valueOf("18:00:00");
+
+		OperatingHour operatingHour = null;
+		try {
+			operatingHour = service.createOperatingHour(dayOfWeek, startTime, endTime);
+			assertNotNull(operatingHour);
+			operatingHour = service.deleteOperatingHour(dayOfWeek, startTime, endTime);
+		}catch (IllegalArgumentException e) {
+			fail();
+		}
+		
+		assertEquals(new ArrayList<OperatingHour>(), service.getAllOperatingHour());
+		assertNull(operatingHour);
+		
+	}
+	
+
+	
+	
 	
 		
 

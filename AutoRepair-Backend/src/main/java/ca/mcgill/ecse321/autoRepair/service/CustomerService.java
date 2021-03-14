@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.autoRepair.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +14,7 @@ import ca.mcgill.ecse321.autoRepair.model.Car;
 import ca.mcgill.ecse321.autoRepair.model.Customer;
 import ca.mcgill.ecse321.autoRepair.model.Profile;
 
-public class UserService {
+public class CustomerService {
 
 	@Autowired
 	CustomerRepository customerRepository;
@@ -47,7 +48,7 @@ public class UserService {
 
 		return customer;
 	}
-	
+
 	@Transactional
 	public void editCustomerPassword(String username, String password) {
 		Customer customer = customerRepository.findCustomerByUsername(username);
@@ -57,7 +58,7 @@ public class UserService {
 		}
 		customerRepository.save(customer);
 	}
-	
+
 	@Transactional
 	public void deleteCustomer(String username) {
 		Customer customer = customerRepository.findCustomerByUsername(username);
@@ -84,7 +85,7 @@ public class UserService {
 	@Transactional
 	public Car createCar(String plateNumber, String model, Car.CarTransmission transmission) {
 		if(plateNumber==null || plateNumber=="") {
-			throw new IllegalArgumentException("Plate Number cannot be blank.");
+			throw new IllegalArgumentException("Car plate number cannot be blank.");
 		}
 
 		if(model==null || model=="") {
@@ -103,7 +104,7 @@ public class UserService {
 		carRepository.save(car);
 		return car;
 	}
-	
+
 	@Transactional
 	public void addCar(String username, String plateNumber) {
 		Customer customer = customerRepository.findCustomerByUsername(username);
@@ -181,7 +182,7 @@ public class UserService {
 		if(profile.getEmail()!=email && email!=null && email!="") {
 			if(!emailIsValid(email)) 
 				throw new IllegalArgumentException("Invalid email.");
-			
+
 		}
 
 		if(profile.getPhoneNumber()!=phoneNumber && phoneNumber!=null && phoneNumber!="") {
@@ -207,18 +208,18 @@ public class UserService {
 		if(profile.getZipCode()!=zipCode && zipCode!=null && zipCode!="") {
 			profile.setZipCode(zipCode);
 		}
-		
+
 		profileRepository.save(profile);
 	}
 
 
-	
+
 
 	@Transactional
 	public List<Profile> getAllProfiles(){
 		return toList(profileRepository.findAll());
 	}
-	
+
 	//----------------------------------------------------------------------------------------
 	//---------------------------------------HELPER METHODS-----------------------------------
 	//----------------------------------------------------------------------------------------
@@ -237,11 +238,10 @@ public class UserService {
 		else throw new IllegalArgumentException("Username is already taken");
 	}
 
-	@SuppressWarnings("unused")
 	private boolean passwordIsValid(String password){
 		if (password.length()<8) throw new IllegalArgumentException("Password must have at least 8 characters");
-		if(password.length()>20) throw new IllegalArgumentException("Password must not have more than 10 characters");
-		
+		if(password.length()>20) throw new IllegalArgumentException("Password must not have more than 20 characters");
+
 		boolean upperCaseFlag = false;
 		boolean lowerCaseFlag = false;
 		boolean numberFlag = false;
@@ -251,20 +251,24 @@ public class UserService {
 			else if(Character.isLowerCase(password.charAt(i))) lowerCaseFlag = true;
 			else if(Character.isDigit(password.charAt(i))) numberFlag = true;
 		}
-		
-		if(upperCaseFlag = false) throw new IllegalArgumentException ("Password must contain at least one uppercase character");
-		if(lowerCaseFlag = false) throw new IllegalArgumentException ("Password must contain at least one lowercase character");
-		if(numberFlag = false) throw new IllegalArgumentException ("Password must contain at least one numeric character");
-		
+
+		if(upperCaseFlag == false) throw new IllegalArgumentException ("Password must contain at least one uppercase character");
+		if(lowerCaseFlag == false) throw new IllegalArgumentException ("Password must contain at least one lowercase character");
+		if(numberFlag == false) throw new IllegalArgumentException ("Password must contain at least one numeric character");
+
 		return true;
 	}
-	
+
 	private boolean emailIsValid(String email) {
-		if((email.indexOf('@') == -1) || (email.indexOf('.') == -1) || (email.indexOf('.') < email.indexOf('@')) 
-				|| (email.indexOf('@') == email.length()-1) || (email.indexOf('.') == email.length()-1)){
-			return false;
-		}
-		return true;
+		String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+ 
+				"[a-zA-Z0-9_+&*-]+)*@" + 
+				"(?:[a-zA-Z0-9-]+\\.)+[a-z" + 
+				"A-Z]{2,7}$"; 
+
+		Pattern pat = Pattern.compile(emailRegex); 
+		if (email == null) 
+			return false; 
+		return pat.matcher(email).matches(); 
 	}
 
 	private boolean isNumeric(String phoneNumber) {

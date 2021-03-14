@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.ObjectStreamException;
 import java.sql.Date;
 import java.sql.Time;
 import java.text.DateFormat;
@@ -129,14 +130,14 @@ public class AppointmentService {
                 updatedApp.setChosenService(newService);
                 appointmentRepository.save(updatedApp);
                 timeSlotRepository.save(newTimeSlot);
-            }
+            }else throw new IllegalArgumentException("The time slot is not available.");
         }else{
             timeSlotRepository.delete(timeSlot);
             if(isAvailable(newTimeSlot)){
                 updatedApp.setTimeSlot(newTimeSlot);
                 appointmentRepository.save(updatedApp);
                 timeSlotRepository.save(newTimeSlot);
-            }
+            }else throw new IllegalArgumentException("The time slot is not available.");
         }
         return updatedApp;
     }
@@ -148,10 +149,21 @@ public class AppointmentService {
 
     @Transactional
     public void cancelAppointment(String serviceName,Date startDate, Time startTime){
+        if(serviceName==null || serviceName.equals(" ") || startDate==null || startTime==null){
+            throw new IllegalArgumentException("To cancel an appointment, the following fields cannot be null or empty: " +
+                    "Service Name, Start Date, Start Time");
+        }
+        LocalTime localTime = LocalTime.parse("02:00:00");
+        if(startDate.toLocalDate().equals(SystemTime.getSysDate().toLocalDate())){
+            if((startTime.toLocalTime().minusHours(SystemTime.getSysTime().toLocalTime().getHour())).compareTo(localTime)<0){
+                throw new IllegalArgumentException("An appointment can be cancelled on the same day of the appointment with a 2 hours notice.");
+            }
+        }
         ChosenService chosenService =chosenServiceRepository.findChosenServiceByName(serviceName);
         Time endTime = findEndTimeOfApp(chosenService,startTime.toLocalTime());
         TimeSlot timeSlot = calcTimeSlot(startDate,startTime,startDate,endTime);
-        Appointment appointment = getAppointment(startDate, startTime, startDate, endTime);
+        Appointment appointment = appointmentRepository.findAppointmentByStartDateAndStartTime(startDate.toString(),startTime.toString());
+        if(appointment==null) throw new IllegalArgumentException("The appointment does not exist.");
         appointmentRepository.delete(appointment);
         timeSlotRepository.delete(timeSlot);
     }
@@ -225,27 +237,19 @@ public class AppointmentService {
         }
         for(int i=0; i<timeSlot1.size();i++){
             if(((startTimeOH.isBefore(startTime) || startTimeOH.equals(startTime))&&(endTimeOH.isAfter(endTime) || endTimeOH.equals(endTime)))) {
-                if (s2_isWithin_s1(timeSlot1.get(i), timeSlot)) isAvailable = false;
+                if (isOverlap(timeSlot1.get(i), timeSlot)) isAvailable = false;
             }else return false;
         }
         return isAvailable;
     }
 
-    private static boolean s2_isWithin_s1 (TimeSlot S1, TimeSlot S2) {
+    private static boolean isOverlap(TimeSlot TS1, TimeSlot TS2) {
+        LocalTime S1 = TS1.getStartTime().toLocalTime();
+        LocalTime S2 = TS2.getStartTime().toLocalTime();
+        LocalTime E1 = TS1.getEndTime().toLocalTime();
+        LocalTime E2 = TS2.getEndTime().toLocalTime();
 
-        boolean isWithin = false;
-
-        LocalTime startTime1 = S1.getStartTime().toLocalTime();
-        LocalTime startTime2 = S2.getStartTime().toLocalTime();
-        LocalTime endTime1 = S1.getEndTime().toLocalTime();
-        LocalTime endTime2 = S2.getEndTime().toLocalTime();
-
-        if(startTime1.compareTo(startTime2)<0 || startTime1.compareTo(startTime2)==0) {
-            if(endTime1.compareTo(endTime2)>0 || endTime1.compareTo(endTime2)==0){
-                isWithin = true;
-            }
-        }
-        return isWithin;
+        return S1.isBefore(E2) && S2.isBefore(E1);
     }
 
     private static OperatingHour.DayOfWeek getDayString(Date date, Locale locale) {

@@ -708,6 +708,32 @@ public class AppointmentServiceTest {
     }
 
     @Test
+    public void testUpdateAppointmentEmpty(){
+        SystemTime.setSysTime(Time.valueOf("08:00:00"));
+        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+
+        Date oldStartDate = null;
+        Time oldStartTime =  null;
+        String oldServiceName =  "";
+        Date newStartDate = null;
+        Time newStartTime =  null;
+        String newServiceName = "";
+        String error = null;
+
+        Appointment updatedApp = null;
+
+        try{
+            updatedApp=appointmentService.updateAppointment(oldStartDate, oldStartTime, oldServiceName, newStartDate, newStartTime, newServiceName);
+        }catch (IllegalArgumentException e){
+            error = e.getMessage();
+        }
+
+        assertNull(updatedApp);
+        assertEquals("To update a service the following fields cannot be null: Old Date, Old Time, Old Service, New Date, New Time, New Service.",error);
+
+    }
+
+    @Test
     public void testUpdateAppointmentAppDoesNotExist(){
         SystemTime.setSysTime(Time.valueOf("08:00:00"));
         SystemTime.setSysDate(Date.valueOf("2021-03-31"));
@@ -731,6 +757,295 @@ public class AppointmentServiceTest {
 
     }
 
+    @Test
+    public void testUpdateAppointmentServiceDoesNotExist(){
 
+        SystemTime.setSysTime(Time.valueOf("08:00:00"));
+        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+
+        Date oldStartDate = Date.valueOf("2021-04-30");
+        Time oldStartTime =  Time.valueOf("10:00:00");
+        String oldServiceName = "TestService";
+        String newServiceName = "Test S";
+        String error = null;
+
+        Appointment updatedApp = null;
+
+        try{
+            updatedApp=appointmentService.updateAppointment(oldStartDate, oldStartTime, oldServiceName, oldStartDate, oldStartTime, newServiceName);
+        }catch (IllegalArgumentException e){
+            error = e.getMessage();
+        }
+
+        assertNull(updatedApp);
+        assertEquals("The chosen service does not exist",error);
+
+    }
+
+    @Test
+    public void testUpdateAppointmentUnavailableTimeSlot(){
+        SystemTime.setSysTime(Time.valueOf("08:00:00"));
+        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+
+        Date oldStartDate = Date.valueOf("2021-03-31");
+        Time oldStartTime = Time.valueOf("10:00:00");
+        String oldServiceName = "Test Service 2";
+        Time newStartTime = Time.valueOf("11:55:00");
+        String error = null;
+
+        Appointment updatedApp = null;
+
+        try {
+            updatedApp = appointmentService.updateAppointment(oldStartDate, oldStartTime, oldServiceName, oldStartDate, newStartTime, oldServiceName);
+        } catch (IllegalArgumentException e) {
+            error = e.getMessage();
+        }
+
+        assertEquals("The time slot is not available.", error);
+        assertNull(updatedApp);
+    }
+
+    @Test
+    public void testUpdateAppointmentTimeSlotNotInOH(){
+        SystemTime.setSysTime(Time.valueOf("08:00:00"));
+        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+
+        Date oldStartDate = Date.valueOf("2021-03-31");
+        Time oldStartTime = Time.valueOf("10:00:00");
+        String oldServiceName = "Test Service 2";
+        Time newStartTime = Time.valueOf("23:00:00");
+        String error = null;
+
+        Appointment updatedApp = null;
+
+        try {
+            updatedApp = appointmentService.updateAppointment(oldStartDate, oldStartTime, oldServiceName, oldStartDate, newStartTime, oldServiceName);
+        } catch (IllegalArgumentException e) {
+            error = e.getMessage();
+        }
+
+        assertEquals("The time slot is not available.", error);
+        assertNull(updatedApp);
+    }
+
+    @Test
+    public void testUpdateAppointmentDatePassed(){
+        SystemTime.setSysTime(Time.valueOf("08:00:00"));
+        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+
+        Date oldStartDate = Date.valueOf("2021-03-31");
+        Time oldStartTime = Time.valueOf("10:00:00");
+        String oldServiceName = "Test Service 2";
+        Date newStartDate = Date.valueOf("2020-10-09");
+        String error = null;
+
+        Appointment updatedApp = null;
+
+        try {
+            updatedApp = appointmentService.updateAppointment(oldStartDate, oldStartTime, oldServiceName, newStartDate, oldStartTime, oldServiceName);
+        } catch (IllegalArgumentException e) {
+            error = e.getMessage();
+        }
+
+        assertEquals("The date has already passed.", error);
+        assertNull(updatedApp);
+    }
+
+    @Test
+    public void testUpdateAppointmentSameDayNot2Hours(){
+        SystemTime.setSysTime(Time.valueOf("08:00:00"));
+        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+
+        Date oldStartDate = Date.valueOf("2021-03-31");
+        Time oldStartTime = Time.valueOf("10:00:00");
+        String oldServiceName = "Test Service 2";
+        Date newStartDate = Date.valueOf("2021-03-31");
+        Time newStartTime = Time.valueOf("09:00:00");
+        String error = null;
+
+        Appointment updatedApp = null;
+
+        try {
+            updatedApp = appointmentService.updateAppointment(oldStartDate, oldStartTime, oldServiceName, newStartDate, newStartTime, oldServiceName);
+        } catch (IllegalArgumentException e) {
+            error = e.getMessage();
+        }
+
+        assertEquals("Updating an appointment on the same day has to be at least 2 hours before the appointment.", error);
+        assertNull(updatedApp);
+    }
+
+    @Test
+    public void testUpdateAppointmentSameDayTimePassed(){
+        SystemTime.setSysTime(Time.valueOf("08:00:00"));
+        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+
+        Date oldStartDate = Date.valueOf("2021-03-31");
+        Time oldStartTime = Time.valueOf("10:00:00");
+        String oldServiceName = "Test Service 2";
+        Date newStartDate = Date.valueOf("2021-03-31");
+        Time newStartTime = Time.valueOf("07:00:00");
+        String error = null;
+
+        Appointment updatedApp = null;
+
+        try {
+            updatedApp = appointmentService.updateAppointment(oldStartDate, oldStartTime, oldServiceName, newStartDate, newStartTime, oldServiceName);
+        } catch (IllegalArgumentException e) {
+            error = e.getMessage();
+        }
+
+        assertEquals("The time has already passed.", error);
+        assertNull(updatedApp);
+
+    }
+
+    @Test
+    private void testCancelAppointmentDifferentDay(){
+        SystemTime.setSysTime(Time.valueOf("09:00:00"));
+        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+
+        String serviceName = "Test Service 2";
+        Date startDate = Date.valueOf("2021-04-30");
+        Time startTime = Time.valueOf("10:00:00");
+        String error = null;
+
+        Appointment appointment = appointmentRepository.findAppointmentByStartDateAndStartTime(startDate.toString(),startTime.toString());
+
+        try{
+            appointmentService.cancelAppointment(serviceName, startDate,startTime);
+            appointment=null;
+        }catch(IllegalArgumentException e){
+           fail();
+        }
+        assertNull(appointment);
+    }
+
+    @Test
+    public void testCancelAppointmentSameDay(){
+        SystemTime.setSysTime(Time.valueOf("07:00:00"));
+        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+
+        String serviceName = "Test Service 2";
+        Date startDate = Date.valueOf("2021-03-31");
+        Time startTime = Time.valueOf("10:00:00");
+        String error = null;
+
+        Appointment appointment = appointmentRepository.findAppointmentByStartDateAndStartTime(startDate.toString(),startTime.toString());
+
+        try{
+            appointmentService.cancelAppointment(serviceName, startDate,startTime);
+            appointment=null;
+        }catch(IllegalArgumentException e){
+            fail();
+        }
+        assertNull(appointment);
+
+    }
+
+    @Test
+    public void testCancelAppointmentSameDayNot2Hours(){
+        SystemTime.setSysTime(Time.valueOf("09:00:00"));
+        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+
+        String serviceName = "Test Service 2";
+        Date startDate = Date.valueOf("2021-03-31");
+        Time startTime = Time.valueOf("10:00:00");
+        String error = null;
+
+
+        try{
+            appointmentService.cancelAppointment(serviceName, startDate,startTime);
+        }catch(IllegalArgumentException e){
+            error = e.getMessage();
+        }
+
+        assertEquals("An appointment can be cancelled on the same day of the appointment with a 2 hours notice.", error);
+    }
+
+    @Test
+    public void testCancelAppointmentAppDoesNotExist(){
+        SystemTime.setSysTime(Time.valueOf("09:00:00"));
+        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+
+        String serviceName = "Test Service 2";
+        Date startDate = Date.valueOf("2021-05-31");
+        Time startTime = Time.valueOf("10:00:00");
+        String error = null;
+
+
+        try{
+            appointmentService.cancelAppointment(serviceName, startDate,startTime);
+        }catch(IllegalArgumentException e){
+            error = e.getMessage();
+        }
+
+        assertEquals("The appointment does not exist.", error);
+    }
+
+    @Test
+    public void testCancelAppointmentNull(){
+        SystemTime.setSysTime(Time.valueOf("09:00:00"));
+        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+
+        String serviceName = null;
+        Date startDate = null;
+        Time startTime = null;
+        String error = null;
+
+
+        try{
+            appointmentService.cancelAppointment(serviceName, startDate,startTime);
+        }catch(IllegalArgumentException e){
+            error = e.getMessage();
+        }
+
+        assertEquals("To cancel an appointment, the following fields cannot be null or empty: " +
+                "Service Name, Start Date, Start Time", error);
+
+    }
+
+    @Test
+    public void testCancelAppointmentSpaces(){
+        SystemTime.setSysTime(Time.valueOf("09:00:00"));
+        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+
+        String serviceName = " ";
+        Date startDate = null;
+        Time startTime = null;
+        String error = null;
+
+
+        try{
+            appointmentService.cancelAppointment(serviceName, startDate,startTime);
+        }catch(IllegalArgumentException e){
+            error = e.getMessage();
+        }
+
+        assertEquals("To cancel an appointment, the following fields cannot be null or empty: " +
+                "Service Name, Start Date, Start Time", error);
+
+    }
+
+    @Test
+    public void testCancelAppointmentEmpty(){
+        SystemTime.setSysTime(Time.valueOf("09:00:00"));
+        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+
+        String serviceName = "";
+        Date startDate = null;
+        Time startTime = null;
+        String error = null;
+
+
+        try{
+            appointmentService.cancelAppointment(serviceName, startDate,startTime);
+        }catch(IllegalArgumentException e){
+            error = e.getMessage();
+        }
+
+        assertEquals("To cancel an appointment, the following fields cannot be null or empty: " +
+                "Service Name, Start Date, Start Time", error);
+    }
 
 }

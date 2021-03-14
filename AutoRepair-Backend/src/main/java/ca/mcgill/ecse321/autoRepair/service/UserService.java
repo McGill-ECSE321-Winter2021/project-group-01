@@ -2,8 +2,6 @@ package ca.mcgill.ecse321.autoRepair.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,13 +31,9 @@ public class UserService {
 
 		if(password==null || password=="") throw new IllegalArgumentException("Password cannot be blank");
 
-		if (!usernameIsValid(username)) throw new IllegalArgumentException("Username already taken");
+		usernameIsValid(username);
 
-		if (!passwordIsValid(password)) throw new IllegalArgumentException("Invalid Password. Password must have at least\r\n"
-				+ " one numeric character\r\n" + 
-				"one lowercase character\r\n" + 
-				"one uppercase character\r\n" + 
-				"And password length should be between 8 and 20");
+		passwordIsValid(password);
 
 		Customer customer = new Customer();
 		customer.setNoShow(0);
@@ -53,20 +47,28 @@ public class UserService {
 
 		return customer;
 	}
-
-	private boolean usernameIsValid(String username) {
-		for(Customer c: getAllCustomers()) {
-			if(c.getUsername()==username) return false;
+	
+	@Transactional
+	public void editCustomerPassword(String username, String password) {
+		Customer customer = customerRepository.findCustomerByUsername(username);
+		if(customer==null) throw new IllegalArgumentException("Customer not found.");
+		if(passwordIsValid(password)) {
+			customer.setPassword(password);
 		}
-		return true;
+		customerRepository.save(customer);
+	}
+	
+	@Transactional
+	public void deleteCustomer(String username) {
+		Customer customer = customerRepository.findCustomerByUsername(username);
+		if(customer==null) throw new IllegalArgumentException("Customer not found.");
+		profileRepository.delete(customer.getProfile());
+		for (Car c : customer.getCars()) {
+			carRepository.delete(c);
+		}
+		customerRepository.delete(customer);
 	}
 
-	private boolean passwordIsValid(String password){
-		String regex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$";
-		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(password);
-		return matcher.matches();
-	}
 
 	@Transactional
 	public Customer getCustomer(String username) {
@@ -100,6 +102,16 @@ public class UserService {
 		car.setTransmission(transmission);
 		carRepository.save(car);
 		return car;
+	}
+	
+	@Transactional
+	public void addCar(String username, String plateNumber) {
+		Customer customer = customerRepository.findCustomerByUsername(username);
+		Car car = carRepository.findCarByPlateNumber(plateNumber);
+		if(customer==null) throw new IllegalArgumentException("Customer not found.");
+		if(car==null) throw new IllegalArgumentException("Car not found.");
+		customer.getCars().add(car);
+		customerRepository.save(customer);
 	}
 
 	@Transactional
@@ -195,9 +207,58 @@ public class UserService {
 		if(profile.getZipCode()!=zipCode && zipCode!=null && zipCode!="") {
 			profile.setZipCode(zipCode);
 		}
+		
+		profileRepository.save(profile);
 	}
 
 
+	
+
+	@Transactional
+	public List<Profile> getAllProfiles(){
+		return toList(profileRepository.findAll());
+	}
+	
+	//----------------------------------------------------------------------------------------
+	//---------------------------------------HELPER METHODS-----------------------------------
+	//----------------------------------------------------------------------------------------
+
+	private <T> List<T> toList(Iterable<T> iterable){
+		List<T> resultList = new ArrayList<T>();
+		for (T t : iterable) {
+			resultList.add(t);
+		}
+		return resultList;
+
+	}
+
+	private boolean usernameIsValid(String username) {
+		if(customerRepository.findCustomerByUsername(username)==null) return true;
+		else throw new IllegalArgumentException("Username is already taken");
+	}
+
+	@SuppressWarnings("unused")
+	private boolean passwordIsValid(String password){
+		if (password.length()<8) throw new IllegalArgumentException("Password must have at least 8 characters");
+		if(password.length()>20) throw new IllegalArgumentException("Password must not have more than 10 characters");
+		
+		boolean upperCaseFlag = false;
+		boolean lowerCaseFlag = false;
+		boolean numberFlag = false;
+
+		for(int i=0; i<password.length(); i++) {
+			if(Character.isUpperCase(password.charAt(i))) upperCaseFlag = true;
+			else if(Character.isLowerCase(password.charAt(i))) lowerCaseFlag = true;
+			else if(Character.isDigit(password.charAt(i))) numberFlag = true;
+		}
+		
+		if(upperCaseFlag = false) throw new IllegalArgumentException ("Password must contain at least one uppercase character");
+		if(lowerCaseFlag = false) throw new IllegalArgumentException ("Password must contain at least one lowercase character");
+		if(numberFlag = false) throw new IllegalArgumentException ("Password must contain at least one numeric character");
+		
+		return true;
+	}
+	
 	private boolean emailIsValid(String email) {
 		if((email.indexOf('@') == -1) || (email.indexOf('.') == -1) || (email.indexOf('.') < email.indexOf('@')) 
 				|| (email.indexOf('@') == email.length()-1) || (email.indexOf('.') == email.length()-1)){
@@ -215,21 +276,6 @@ public class UserService {
 		}
 		return true;
 	}
-
-	@Transactional
-	public List<Profile> getAllProfiles(){
-		return toList(profileRepository.findAll());
-	}
-
-	private <T> List<T> toList(Iterable<T> iterable){
-		List<T> resultList = new ArrayList<T>();
-		for (T t : iterable) {
-			resultList.add(t);
-		}
-		return resultList;
-
-	}
-
 
 }
 

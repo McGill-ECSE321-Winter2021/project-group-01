@@ -236,6 +236,44 @@ public class UserServiceTest {
 		assertEquals(zip, customer.getProfile().getZipCode());
 		
 	}
+	
+	@Test
+	public void testCreateCustomerTakenUsername(){
+		
+		assertEquals(0, service.getAllCustomers().size());
+		
+		String model = "Lambo";
+		String plateNumber = "Number 1";
+		CarTransmission carTransmition = CarTransmission.Automatic;
+		Car car = null;
+		
+		String firstName = "Gary";
+		String lastName = "Jimmy";
+		String email = "garyjimmy@mail.com";
+		String phoneNumber = "012344567";
+		String address = "222, 5th Ave";
+		String zip = "G79 DE4";
+		Profile profile = null;
+		
+		String username = CUSTOMER_USERNAME;
+		String password = "Password123";
+		Customer customer = null;
+		String error = "";
+		try {
+			car = service.createCar(plateNumber, model, carTransmition);
+			List<Car> cars = new ArrayList<Car>();
+			cars.add(car);
+			profile = service.createProfile(firstName, lastName, address, zip, phoneNumber, email);
+			customer = service.createCustomer(username, password, profile, cars);
+		}catch(IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(customer);
+		assertEquals(error, "Username is already taken");
+		
+		
+	}
 
 
 }

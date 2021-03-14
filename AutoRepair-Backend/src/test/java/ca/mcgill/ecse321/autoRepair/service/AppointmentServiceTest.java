@@ -11,26 +11,16 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
-import static org.mockito.Mockito.when;
 import java.sql.Date;
 import java.sql.Time;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
 import ca.mcgill.ecse321.autoRepair.model.Car.CarTransmission;
@@ -46,12 +36,6 @@ public class AppointmentServiceTest {
     private CustomerRepository cusRepo;
 
     @Mock
-    private ProfileRepository profileRepo;
-
-    @Mock
-    private CarRepository carRepo;
-
-    @Mock
     private TimeSlotRepository timeSlotRepository;
 
     @Mock
@@ -59,12 +43,6 @@ public class AppointmentServiceTest {
 
     @Mock
     private OperatingHourRepository operatingHourRepository;
-
-//    @Mock
-//    private SystemTime systemTime;
-
-    @InjectMocks
-    private TimeSlotService timeSlotService;
 
     @InjectMocks
     private AppointmentService appointmentService;
@@ -108,11 +86,13 @@ public class AppointmentServiceTest {
     private static final String START_TIME = "10:00:00";
     private static final String END_TIME = "10:30:00";
 
-
-    private static final Locale locale = new Locale("en");
-
     @BeforeEach
     public void setMockOutput() {
+        Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
+            return invocation.getArgument(0);
+        };
+        lenient().when(appointmentRepository.save(any(Appointment.class))).thenAnswer(returnParameterAsAnswer);
+        lenient().when(timeSlotRepository.save(any(TimeSlot.class))).thenAnswer(returnParameterAsAnswer);
 
         lenient().when(cusRepo.findCustomerByUsername(anyString())).thenAnswer((InvocationOnMock invocation) -> {
             if (invocation.getArgument(0).equals(CUSTOMER_USERNAME)) {

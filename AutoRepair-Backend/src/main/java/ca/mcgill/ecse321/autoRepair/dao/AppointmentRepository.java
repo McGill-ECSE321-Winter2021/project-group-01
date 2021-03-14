@@ -6,7 +6,6 @@ import ca.mcgill.ecse321.autoRepair.model.Appointment;
 import org.springframework.data.repository.CrudRepository;
 
 import ca.mcgill.ecse321.autoRepair.model.Customer;
-import ca.mcgill.ecse321.autoRepair.model.TimeSlot;
 import org.springframework.stereotype.Repository;
 
 @Repository

@@ -2,12 +2,10 @@ package ca.mcgill.ecse321.autoRepair.service;
 
 import ca.mcgill.ecse321.autoRepair.dao.*;
 import ca.mcgill.ecse321.autoRepair.model.*;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.ObjectStreamException;
 import java.sql.Date;
 import java.sql.Time;
 import java.text.DateFormat;

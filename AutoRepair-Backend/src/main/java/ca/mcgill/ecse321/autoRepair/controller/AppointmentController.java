@@ -33,9 +33,6 @@ public class AppointmentController {
     CustomerRepository customerRepository;
 
     @Autowired
-    TimeSlotRepository timeSlotRepository;
-
-    @Autowired
     ChosenServiceRepository chosenServiceRepository;
 
     @Autowired

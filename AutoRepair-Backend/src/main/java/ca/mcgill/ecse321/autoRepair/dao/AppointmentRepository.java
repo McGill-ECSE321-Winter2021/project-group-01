@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AppointmentRepository extends CrudRepository<Appointment, Long>{
 
-	Appointment findAppointmentByTimeSlot(TimeSlot slot);
+	Appointment findAppointmentByStartDateAndStartTime(String startDate, String startTime);
 	List<Appointment> findAppointmentsByCustomer(Customer customer);
 }

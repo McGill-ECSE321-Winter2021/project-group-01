@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
-import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
@@ -27,25 +26,6 @@ public class TimeSlotService {
     OperatingHourRepository operatingHourRepository;
 
     @Transactional
-    public boolean isAvailable(TimeSlot timeSlot){
-        boolean isAvailable=true;
-        Date startDate = timeSlot.getStartDate();
-        List<TimeSlot> timeSlot1 = timeSlotRepository.findTimeSlotsByDate(startDate);
-        Locale locale = new Locale("en");
-        OperatingHour operatingHour = operatingHourRepository.findByDayOfWeek(getDayString(startDate,locale));
-        LocalTime startTime =timeSlot.getStartTime().toLocalTime();
-        LocalTime endTime = timeSlot.getEndTime().toLocalTime();
-        LocalTime startTimeOH = operatingHour.getStartTime().toLocalTime();
-        LocalTime endTimeOH = operatingHour.getEndTime().toLocalTime();
-        for(int i=0; i<timeSlot1.size();i++){
-            if(((startTimeOH.isBefore(startTime) || startTimeOH.equals(startTime))&&(endTimeOH.isAfter(endTime) || endTimeOH.equals(endTime)))) {
-                if (s2_isWithin_s1(timeSlot1.get(i), timeSlot)) isAvailable = false;
-            }else return false;
-        }
-        return isAvailable;
-    }
-
-    @Transactional
     public List<TimeSlot> getAvailableTimeSlots(Date startDate) {
         List<TimeSlot> availableTimeSlots = new ArrayList<>();
         Locale locale = new Locale("en");
@@ -57,7 +37,7 @@ public class TimeSlotService {
         ts.setEndDate(startDate);
         availableTimeSlots.add(ts);
 
-        List<TimeSlot> timeSlotsPerDay = timeSlotRepository.findTimeSlotsByDate(startDate);
+        List<TimeSlot> timeSlotsPerDay = timeSlotRepository.findTimeSlotsByDate(startDate.toString());
         for (int i = 0; i < timeSlotsPerDay.size(); i++) {
             TimeSlot aTS = timeSlotsPerDay.get(i);
             for (int j = 0; j < availableTimeSlots.size(); j++) {
@@ -111,7 +91,7 @@ public class TimeSlotService {
 
     @Transactional
     public List<TimeSlot> getUnavailableTimeSlots(Date date){
-        return timeSlotRepository.findTimeSlotsByDate(date);
+        return timeSlotRepository.findTimeSlotsByDate(date.toString());
     }
 
     private static boolean isOverlap(TimeSlot TS1, TimeSlot TS2) {
@@ -123,22 +103,6 @@ public class TimeSlotService {
         return S1.isBefore(E2) && S2.isBefore(E1);
     }
 
-    private static boolean s2_isWithin_s1 (TimeSlot S1, TimeSlot S2) {
-
-        boolean isWithin = false;
-
-        LocalTime startTime1 = S1.getStartTime().toLocalTime();
-        LocalTime startTime2 = S2.getStartTime().toLocalTime();
-        LocalTime endTime1 = S1.getEndTime().toLocalTime();
-        LocalTime endTime2 = S2.getEndTime().toLocalTime();
-
-        if(startTime1.compareTo(startTime2)<0 || startTime1.compareTo(startTime2)==0) {
-            if(endTime1.compareTo(endTime2)>0 || endTime1.compareTo(endTime2)==0){
-                isWithin = true;
-            }
-        }
-        return isWithin;
-    }
 
     private static OperatingHour.DayOfWeek getDayString(Date date, Locale locale) {
         DateFormat formatter = new SimpleDateFormat("EEEE", locale);

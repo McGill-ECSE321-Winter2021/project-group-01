@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ChosenServiceRepository extends CrudRepository<ChosenService, String>{
 
-	ChosenService findChosenServiceByName(ChosenService serviceName);
+	ChosenService findChosenServiceByName(String serviceName);
 
 }

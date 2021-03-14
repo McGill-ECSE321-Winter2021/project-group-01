@@ -28,7 +28,7 @@ public class ChosenServiceController {
 (@PathVariable ChosenService serviceName,@PathVariable int serviceDuration,
 @PathVariable AssistantDTO assistantDTO, @PathVariable OwnerDTO ownerDTO) throws IllegalArgumentException {
 		
-ChosenService availableService = chosenServiceRepository.findChosenServiceByName(serviceName);
+ChosenService availableService = chosenServiceRepository.findChosenServiceByName(serviceName.getName());
 Assistant assistant = assistantRepository.findAssistantByUsername(assistantDTO.getUsername()); //returns null if owner in
 Owner owner =  ownerRepository.findOwnerByUsername(ownerDTO.getUsername());  //returns null if assistant in
 
@@ -58,7 +58,7 @@ public ChosenServiceDTO updateService
 (@PathVariable ChosenService serviceName,@PathVariable int serviceDuration,
 @PathVariable AssistantDTO assistantDTO, @PathVariable OwnerDTO ownerDTO) throws IllegalArgumentException {
 	
-	ChosenService availableService = chosenServiceRepository.findChosenServiceByName(serviceName);
+	ChosenService availableService = chosenServiceRepository.findChosenServiceByName(serviceName.getName());
 	Assistant assistant = assistantRepository.findAssistantByUsername(assistantDTO.getUsername()); //returns null if owner in
 	Owner owner =  ownerRepository.findOwnerByUsername(ownerDTO.getUsername());  //returns null if assistant in
 
@@ -87,7 +87,7 @@ public void deleteService
 		throws IllegalArgumentException {
 	
 	
-	ChosenService availableService = chosenServiceRepository.findChosenServiceByName(serviceName);
+	ChosenService availableService = chosenServiceRepository.findChosenServiceByName(serviceName.getName());
 	Assistant assistant = assistantRepository.findAssistantByUsername(assistantDTO.getUsername()); //returns null if owner in
 	Owner owner =  ownerRepository.findOwnerByUsername(ownerDTO.getUsername());  //returns null if assistant in
 
@@ -123,10 +123,10 @@ public Review reviewService
 }
 
 
-private ChosenServiceDTO convertToDTO(ChosenService availableService) {
-	if(availableService == null) throw new IllegalArgumentException("service not found.");
-	return new ChosenServiceDTO(availableService.getName());
-}
+	private ChosenServiceDTO convertToDTO(ChosenService servicito) {
+		if(servicito==null) throw new IllegalArgumentException("Service not found.");
+		return new ChosenServiceDTO(servicito.getName(), servicito.getDuration());
+	}
 
 }
 

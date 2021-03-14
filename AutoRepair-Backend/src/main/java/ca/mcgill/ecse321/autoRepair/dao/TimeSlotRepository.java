@@ -14,5 +14,5 @@ public interface TimeSlotRepository extends CrudRepository<TimeSlot, Long>{
 	
 	TimeSlot findTimeSlotByStartDateAndTime(Date startDate, Time startTime, Time endTime);
 	TimeSlot findTimeSlotByStartDateAndStartTime(Date startDate, Time startTime);
-	List<TimeSlot> findTimeSlotsByDate(Date startDate);
+	List<TimeSlot> findTimeSlotsByDate(String startDateString);
 }

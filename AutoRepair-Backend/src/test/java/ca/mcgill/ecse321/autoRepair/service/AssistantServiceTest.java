@@ -261,7 +261,28 @@ public class AssistantServiceTest {
 		assertNull(assistant);
 		assertEquals("Password must contain at least one numeric character",error);
 	}	
-	
+	@Test
+	public void testDeleteAssistant() {
+		boolean assistant =false;
+		String error = "";
+		try {
+     assistant = assisService.deleteAssistant(ASSISTANT_USERNAME);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+	}
+		assertEquals(assistant,true);
+	}
+	@Test
+	public void testDeleteAssistantError() {
+		boolean assistant =false;
+		String error = "";
+		try {
+     assistant = assisService.deleteAssistant("error");
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+	}
+		assertEquals(assistant,false);
+	}
 }
 
 

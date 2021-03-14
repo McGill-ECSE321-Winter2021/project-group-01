@@ -52,11 +52,18 @@ public class AssistantService {
 	}
 	
 	@Transactional
-	public void deleteAssistant(String username) {
+	public boolean deleteAssistant(String username) {
+		boolean deleted = false;
 Assistant assistant = assistantRepository.findAssistantByUsername(username);
-if (assistant==null) throw new IllegalArgumentException
-("assistant with username" + username + "does not exist");
+if (assistant==null) {
+	deleted = false;
+	throw new IllegalArgumentException("assistant with username" + username + "does not exist");
+}	
+else {
 assistantRepository.delete(assistant);
+deleted = true;
+}
+return deleted;
 
 	}
 	

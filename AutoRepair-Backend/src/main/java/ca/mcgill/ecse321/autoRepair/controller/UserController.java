@@ -12,6 +12,8 @@ import ca.mcgill.ecse321.autoRepair.dto.AssistantDTO;
 import ca.mcgill.ecse321.autoRepair.dto.OwnerDTO;
 import ca.mcgill.ecse321.autoRepair.model.Assistant;
 import ca.mcgill.ecse321.autoRepair.model.Owner;
+import ca.mcgill.ecse321.autoRepair.service.AssistantService;
+import ca.mcgill.ecse321.autoRepair.service.OwnerService;
 import ca.mcgill.ecse321.autoRepair.service.UserService;
 
 
@@ -19,17 +21,20 @@ import ca.mcgill.ecse321.autoRepair.service.UserService;
 public class UserController {
 	
 	@Autowired
-	private UserService user;
+	private OwnerService owner1;
+	@Autowired
+	private AssistantService assistant1;
 
 	@GetMapping(value = { "/owner", "/owner/" })
 	public List<OwnerDTO> getAllOwners() {
-		return user.getAllOwners().stream().map(owner -> convertToDTO(owner)).collect(Collectors.toList());
+		return owner1.getAllOwners().stream().map(owner -> convertToDTO(owner)).collect(Collectors.toList());
 	}
 
 	@PostMapping(value = { "/owner/{name}", "/owner/{name}/" })
-	public OwnerDTO createOwner(@PathVariable("name") String name,@PathVariable("password") String password)
+	public OwnerDTO createOwner(@PathVariable("name") String name,@PathVariable("password") String password,
+	@PathVariable("authentification") String authentificationCode)
 			throws IllegalArgumentException {
-		Owner owner = user.createOwner(name,password);
+		Owner owner = owner1.createOwner(name,password,authentificationCode);
 		return convertToDTO(owner);
 	}
 
@@ -41,13 +46,14 @@ public class UserController {
 	
 	@GetMapping(value = { "/assistants", "/assistants/" })
 	public List<AssistantDTO> getAllAssitants() {
-		return user.getAllAssistants().stream().map(assistant -> convertToDTO(assistant)).collect(Collectors.toList());
+		return assistant1.getAllAssistants().stream().map(assistant -> convertToDTO(assistant)).collect(Collectors.toList());
 	}
 	
 	@PostMapping(value = { "/assistant/{name}", "/assistant/{name}/" })
-	public AssistantDTO createAssitant(@PathVariable("name") String name,@PathVariable("password") String password)
+	public AssistantDTO createAssitant(@PathVariable("name") String name,
+			@PathVariable("password") String password,@PathVariable ("authentification")String authentificationCode)
 			throws IllegalArgumentException {
-		Assistant assistant = user.createAssistant(name,password);
+		Assistant assistant = assistant1.createAssistant(name,password);
 		return convertToDTO(assistant);
 	}
 	

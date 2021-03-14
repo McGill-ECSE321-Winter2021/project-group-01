@@ -44,7 +44,7 @@ public class UserService {
 
 		if(password==null || password=="") throw new IllegalArgumentException("Password cannot be blank");
 
-		if (!usernameIsValid(username)) throw new IllegalArgumentException("Username already taken");
+		//if (!usernameIsValidAssistant(username)) throw new IllegalArgumentException("Username already taken");
 
 		if (!passwordIsValid(password)) throw new IllegalArgumentException("Invalid Password. Password must have at least\r\n"
 				+ " one numeric character\r\n" + 
@@ -65,19 +65,6 @@ public class UserService {
 		return customer;
 	}
 
-	private boolean usernameIsValid(String username) {
-		for(Customer c: getAllCustomers()) {
-			if(c.getUsername()==username) return false;
-		}
-		return true;
-	}
-
-	private boolean passwordIsValid(String password){
-		String regex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$";
-		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(password);
-		return matcher.matches();
-	}
 
 	@Transactional
 	public Customer getCustomer(String username) {
@@ -239,97 +226,135 @@ public class UserService {
 		return resultList;
 
 	}
-//--------------------------------OWNER-----------------------------
-	@Transactional
-	public Owner createOwner(String username,String password) {
-		
-		if(username==null || username=="") throw new IllegalArgumentException("Username cannot be blank");
-		if(password==null || password=="") throw new IllegalArgumentException("Password cannot be blank");
-		
-		Owner owner = new Owner();
-		owner.setUsername(username);        //only one owner
-		
-		if (passwordIsValid(password)) {
-			owner.setPassword(password);
-		}
-		else throw new IllegalArgumentException("Invalid Password. Password must have at least\r\n"
-				+ " one numeric character\r\n" + 
-				"one lowercase character\r\n" + 
-				"one uppercase character\r\n" + 
-				"And password length should be between 8 and 20");
-				
-		ownerRepository.save(owner);
-		return owner;
-	}
+////--------------------------------OWNER-----------------------------
+//	@Transactional
+//	public Owner createOwner(String username,String password,String authentificationCode) {
+//		
+//		if(username==null || username=="") throw new IllegalArgumentException("Username cannot be blank");
+//		if(password==null || password=="") throw new IllegalArgumentException("Password cannot be blank");
+//		if(!authentificationCode.equals("1234")) throw new IllegalArgumentException
+//		("wrong authentification code,please try again.");
+//
+//		
+//		Owner owner = new Owner();
+//		owner.setUsername(username);        //only one owner
+//		
+//		if (passwordIsValid(password)) {
+//			owner.setPassword(password);
+//		}
+//		else throw new IllegalArgumentException("Invalid Password. Password must have at least\r\n"
+//				+ " one numeric character\r\n" + 
+//				"one lowercase character\r\n" + 
+//				"one uppercase character\r\n" + 
+//				"And password length should be between 8 and 20");
+//				
+//		ownerRepository.save(owner);
+//		return owner;
+//	}
+//	
+//	
+//	@Transactional
+//	public void updateOwner(String oldUsername,String newUsername,String newPassword) {
+//		Owner oldOwner = ownerRepository.findOwnerByUsername(oldUsername);
+//		if(oldOwner.getUsername() != newUsername && newUsername!=null && newUsername!="") {
+//			oldOwner.setUsername(newUsername);
+//		}
+//		if(oldOwner.getPassword() != newPassword && newPassword!=null & newPassword!="") {
+//			oldOwner.setPassword(newPassword);;
+//		}
+//
+//	}
+//	
+//	@Transactional
+//	public Owner getOwner(String name) {
+//		Owner owner = ownerRepository.findOwnerByUsername(name);
+//		return owner;
+//	}
+//	
+//	@Transactional
+//	public List<Owner> getAllOwners(){             
+//		return toList(ownerRepository.findAll());
+//	}	
 	
+////--------------------------------ASSISTANT-------------------------	
+//	@Transactional
+//	public Assistant createAssistant(String username,String password) {
+//		
+//		if(username==null || username=="") throw new IllegalArgumentException("Username cannot be blank");
+//		if(password==null || password=="") throw new IllegalArgumentException("Password cannot be blank");
+//		
+//		Assistant assistant = new Assistant();
+//		if (usernameIsValidAssistant(username)) {
+//			assistant.setUsername(username);
+//		}
+//		if (passwordIsValid(password)) {
+//			assistant.setPassword(password);
+//		}
+//		
+//		assistantRepository.save(assistant);
+//		return assistant;
+//	}
+//	
+//	@Transactional
+//	public void updateAssistant(String oldUsername,String newUsername,String newPassword,String authentification) {
+//		Assistant oldAssistant = assistantRepository.findAssistantByUsername(oldUsername);
+//		if(oldAssistant.getUsername() != newUsername && usernameIsValidAssistant(newUsername)) {
+//			oldAssistant.setUsername(newUsername);
+//		}
+//		if(oldAssistant.getPassword() != newPassword && passwordIsValid(newPassword)) {
+//			oldAssistant.setPassword(newPassword);
+//		}
+//	
+//		
+//		assistantRepository.save(oldAssistant);
+//	}
+//	
+//	@Transactional
+//	public void deleteAssistant(String username) {
+//Assistant assistant = assistantRepository.findAssistantByUsername(username);
+//if (assistant==null) throw new IllegalArgumentException
+//("assistant with username" + username + "does not exist");
+//assistantRepository.delete(assistant);
+//
+//	}
+//	
+//	
+//	
+//	@Transactional
+//	public Assistant getAssistant(String name) {
+//		Assistant assistant = assistantRepository.findAssistantByUsername(name);
+//		return assistant;
+//	}
+//	
+//	@Transactional
+//	public List<Assistant> getAllAssistants(){           
+//		return toList(assistantRepository.findAll());
+//	}
+//	private boolean usernameIsValidAssistant(String username) {
+//		if(assistantRepository.findAssistantByUsername(username)==null) return true;
+//		else throw new IllegalArgumentException("Username is already taken.");
 	
-	@Transactional
-	public void updateOwner(String oldUsername,String newUsername,String newPassword) {
-		Owner oldOwner = ownerRepository.findOwnerByUsername(oldUsername);
-		if(oldOwner.getUsername() != newUsername && newUsername!=null && newUsername!="") {
-			oldOwner.setUsername(newUsername);
-		}
-		if(oldOwner.getPassword() != newPassword && newPassword!=null & newPassword!="") {
-			oldOwner.setPassword(newPassword);;
-		}
 
-	}
-	
-	@Transactional
-	public Owner getOwner(String name) {
-		Owner owner = ownerRepository.findOwnerByUsername(name);
-		return owner;
-	}
-	
-	@Transactional
-	public List<Owner> getAllOwners(){             
-		return toList(ownerRepository.findAll());
-	}	
-	
-//--------------------------------ASSISTANT-------------------------	
-	@Transactional
-	public Assistant createAssistant(String username,String password) {
+	@SuppressWarnings("unused")
+	private boolean passwordIsValid(String password){
+		if (password.length()<8) throw new IllegalArgumentException("Password must have at least 8 characters");
+		if(password.length()>20) throw new IllegalArgumentException("Password must not have more than 20 characters");
 		
-		Assistant assistant = new Assistant();
-		if (usernameIsValid(username)) {
-			assistant.setUsername(username);
-		}
-		else throw new IllegalArgumentException("Username already taken");
-		if (passwordIsValid(password)) {
-			assistant.setPassword(password);
+		boolean upperCaseFlag = false;
+		boolean lowerCaseFlag = false;
+		boolean numberFlag = false;
+
+		for(int i=0; i<password.length(); i++) {
+			if(Character.isUpperCase(password.charAt(i))) upperCaseFlag = true;
+			else if(Character.isLowerCase(password.charAt(i))) lowerCaseFlag = true;
+			else if(Character.isDigit(password.charAt(i))) numberFlag = true;
 		}
 		
+		if(upperCaseFlag = false) throw new IllegalArgumentException ("Password must contain at least one uppercase character");
+		if(lowerCaseFlag = false) throw new IllegalArgumentException ("Password must contain at least one lowercase character");
+		if(numberFlag = false) throw new IllegalArgumentException ("Password must contain at least one numeric character");
 		
-		assistantRepository.save(assistant);
-		return assistant;
-	}
-	
-	@Transactional
-	public void updateAssistant(String oldUsername,String newUsername,String newPassword) {
-		Assistant oldAssistant = assistantRepository.findAssistantByUsername(oldUsername);
-		if(oldAssistant.getUsername() != newUsername && newUsername!=null && newUsername!="") {
-			oldAssistant.setUsername(newUsername);
-		}
-		if(oldAssistant.getPassword() != newPassword && newPassword!=null & newPassword!="") {
-			oldAssistant.setPassword(newPassword);;
-		}
-		else throw new IllegalArgumentException("Invalid Password. Password must have at least\r\n"
-				+ " one numeric character\r\n" + 
-				"one lowercase character\r\n" + 
-				"one uppercase character\r\n" + 
-				"And password length should be between 8 and 20");
-	}
-	
-	
-	@Transactional
-	public Assistant getAssistant(String name) {
-		Assistant assistant = assistantRepository.findAssistantByUsername(name);
-		return assistant;
-	}
-	
-	@Transactional
-	public List<Assistant> getAllAssistants(){           
-		return toList(assistantRepository.findAll());
+		return true;
 	}
 	
 }

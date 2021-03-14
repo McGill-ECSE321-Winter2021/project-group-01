@@ -8,6 +8,7 @@ import ca.mcgill.ecse321.autoRepair.model.TimeSlot;
 import ca.mcgill.ecse321.autoRepair.model.OperatingHour.DayOfWeek;
 
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,13 @@ public class BusinessService {
 
 	@Transactional
 	public Business createBusiness(String name, String email, String address, String phoneNumber, List<OperatingHour> businessHours, List<TimeSlot> holidays) {
+		if(name==null || name=="") throw new IllegalArgumentException("Name cannot be blank");
+		if(email==null || email=="") throw new IllegalArgumentException("Email cannot be blank");
+		if(address==null || address=="") throw new IllegalArgumentException("Address cannot be blank");
+		if(phoneNumber==null || phoneNumber=="") throw new IllegalArgumentException("Phone number cannot be blank");
+		if ((email.indexOf('@') == -1) || (email.indexOf('.') == -1) || (email.indexOf('.') < email.indexOf('@')) || (email.indexOf('@') == email.length()-1) || (email.indexOf('.') == email.length()-1)){
+			throw new IllegalArgumentException("Invalid email");
+		}	
 		Business business = new Business();
 		business.setName(name);
 		business.setEmail(email);
@@ -41,9 +49,11 @@ public class BusinessService {
 	}
 
 	@Transactional
-	public OperatingHour createOperatingHour(Long id, DayOfWeek dayOfWeek, Time startTime, Time endTime) {
+	public OperatingHour createOperatingHour(DayOfWeek dayOfWeek, Time startTime, Time endTime) {
+		if(dayOfWeek==null || dayOfWeek.equals("")) throw new IllegalArgumentException("Day of week cannot be blank");
+		if(startTime==null || startTime.equals("")) throw new IllegalArgumentException("Start time cannot be blank");
+		if(endTime==null || endTime.equals("")) throw new IllegalArgumentException("End time cannot be blank");
 		OperatingHour operatingHour = new OperatingHour();
-		operatingHour.setId(id);
 		operatingHour.setDayOfWeek(dayOfWeek);
 		operatingHour.setStartTime(startTime);
 		operatingHour.setEndTime(endTime);
@@ -57,7 +67,16 @@ public class BusinessService {
 	}
 	
 	@Transactional
-	public Iterable<OperatingHour> getAllOperatingHour() {
-		return operatingHourRepository.findAll();
+	public List<OperatingHour> getAllOperatingHour() {
+		return toList(operatingHourRepository.findAll());
+	}
+	
+	private <T> List<T> toList(Iterable<T> iterable){
+		List<T> resultList = new ArrayList<T>();
+		for (T t : iterable) {
+			resultList.add(t);
+		}
+		return resultList;
+
 	}
 }

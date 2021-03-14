@@ -81,7 +81,7 @@ public class AutoRepairController {
     }
     private OperatingHourDTO convertToDTO(OperatingHour operatingHour) {
 		if(operatingHour==null) throw new IllegalArgumentException("Operating hour not found.");
-		return new OperatingHourDTO(operatingHour.getId(), operatingHour.getDayOfWeek(), operatingHour.getStartTime(), operatingHour.getEndTime());
+		return new OperatingHourDTO(operatingHour.getDayOfWeek(), operatingHour.getStartTime(), operatingHour.getEndTime());
 	}
     private BusinessDTO convertToDTO(Business business) {
     	if(business==null) throw new IllegalArgumentException("Business not found.");

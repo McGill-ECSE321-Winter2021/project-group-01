@@ -17,8 +17,7 @@ public class OperatingHourDTO
   private Time startTime;
   private Time endTime;
   
-  public OperatingHourDTO(Long id, DayOfWeek dayOfWeek, Time startTime, Time endTime) {
-	  this.id=id;
+  public OperatingHourDTO(DayOfWeek dayOfWeek, Time startTime, Time endTime) {
 	  this.dayOfWeek=dayOfWeek;
 	  this.startTime=startTime;
 	  this.endTime=endTime;

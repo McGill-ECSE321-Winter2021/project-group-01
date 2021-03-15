@@ -2,29 +2,26 @@ package ca.mcgill.ecse321.autoRepair.service;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
-import static org.mockito.Mockito.when;
-import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
 import ca.mcgill.ecse321.autoRepair.dao.CarRepository;
@@ -48,7 +45,13 @@ public class CustomerServiceTest {
 	private CarRepository carRepo;
 
 	@InjectMocks
-	private CustomerService service;
+	private CustomerService customerService;
+	
+	@InjectMocks
+	private CarService carService;
+	
+	@InjectMocks
+	private ProfileService profileService;
 
 	private static final String CUSTOMER_USERNAME ="TestCustomer";
 	private static final String CUSTOMER_PASSWORD ="TestPassword123";
@@ -82,7 +85,9 @@ public class CustomerServiceTest {
 				Car car = new Car();
 				car.setModel(CAR_MODEL);
 				car.setTransmission(CAR_TRANSMISSION);
+				car.setPlateNumber(CAR_PLATE);
 				List<Car> cars = new ArrayList<Car>();
+				cars.add(car);
 
 
 				Customer customer = new Customer();
@@ -97,9 +102,9 @@ public class CustomerServiceTest {
 				return null;
 			}
 		});
-
-		lenient().when(profileRepo.findByFirstNameAndLastName(anyString(), anyString())).thenAnswer((InvocationOnMock invocation) -> {
-			if(invocation.getArgument(0).equals(PROFILE_FIRSTNAME) && invocation.getArgument(1).equals(PROFILE_LASTNAME)) {
+		
+		lenient().when(profileRepo.findByEmail(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+			if(invocation.getArgument(0).equals(PROFILE_EMAIL)) {
 
 				Profile profile = new Profile();
 				profile.setFirstName(PROFILE_FIRSTNAME);
@@ -129,7 +134,7 @@ public class CustomerServiceTest {
 			}
 
 		});
-
+		
 		Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
 			return invocation.getArgument(0);
 		};
@@ -139,275 +144,13 @@ public class CustomerServiceTest {
 		lenient().when(carRepo.save(any(Car.class))).thenAnswer(returnParameterAsAnswer);
 	}
 
-	@Test
-	public void testCreateProfile() {
-		assertEquals(0, service.getAllProfiles().size());
-
-		String firstName = "Gary";
-		String lastName = "Jimmy";
-		String email = "garyjimmy@mail.com";
-		String phoneNumber = "012344567";
-		String address = "222, 5th Ave";
-		String zip = "G79 DE4";
-		Profile profile = null;
-		try {
-			profile = service.createProfile(firstName, lastName, address, zip, phoneNumber, email);
-		}catch (IllegalArgumentException e) {
-			fail();
-		}
-
-		assertNotNull(profile);
-		assertEquals(firstName, profile.getFirstName());
-		assertEquals(lastName, profile.getLastName());
-		assertEquals(address, profile.getAddress());
-		assertEquals(email, profile.getEmail());
-		assertEquals(phoneNumber, profile.getPhoneNumber());
-		assertEquals(zip, profile.getZipCode());
-
-	}
-
-	@Test
-	public void testInvalidEmailMissingAtSign() {
-		assertEquals(0, service.getAllProfiles().size());
-
-		String firstName = "Gary";
-		String lastName = "Jimmy";
-		String email = "garyjimmymail.com";
-		String phoneNumber = "012344567";
-		String address = "222, 5th Ave";
-		String zip = "G79 DE4";
-		Profile profile = null;
-		String error = "";
-		try {
-			profile = service.createProfile(firstName, lastName, address, zip, phoneNumber, email);
-		}catch (IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-
-		assertNull(profile);
-		assertEquals(error, "Invalid email.");
-
-	}
-
-
-	@Test
-	public void testInvalidEmailMissingDot() {
-		assertEquals(0, service.getAllProfiles().size());
-
-		String firstName = "Gary";
-		String lastName = "Jimmy";
-		String email = "garyjimmy@mailcom";
-		String phoneNumber = "012344567";
-		String address = "222, 5th Ave";
-		String zip = "G79 DE4";
-		Profile profile = null;
-		String error = "";
-		try {
-			profile = service.createProfile(firstName, lastName, address, zip, phoneNumber, email);
-		}catch (IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-
-		assertNull(profile);
-		assertEquals(error, "Invalid email.");
-
-	}
-
-	@Test
-	public void testInvalidEmailDotBeforeAtSign() {
-		assertEquals(0, service.getAllProfiles().size());
-
-		String firstName = "Gary";
-		String lastName = "Jimmy";
-		String email = "garyjimmy.mail@com";
-		String phoneNumber = "012344567";
-		String address = "222, 5th Ave";
-		String zip = "G79 DE4";
-		Profile profile = null;
-		String error = "";
-		try {
-			profile = service.createProfile(firstName, lastName, address, zip, phoneNumber, email);
-		}catch (IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-
-		assertNull(profile);
-		assertEquals(error, "Invalid email.");
-
-	}
-
-	@Test
-	public void testInvalidEmailNoCharBeforeAt() {
-		assertEquals(0, service.getAllProfiles().size());
-
-		String firstName = "Gary";
-		String lastName = "Jimmy";
-		String email = "@mail.com";
-		String phoneNumber = "012344567";
-		String address = "222, 5th Ave";
-		String zip = "G79 DE4";
-		Profile profile = null;
-		String error = "";
-		try {
-			profile = service.createProfile(firstName, lastName, address, zip, phoneNumber, email);
-		}catch (IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-
-		assertNull(profile);
-		assertEquals(error, "Invalid email.");
-
-	}
-
-
-	@Test
-	public void testInvalidEmailNoCharAfterDot() {
-		assertEquals(0, service.getAllProfiles().size());
-
-		String firstName = "Gary";
-		String lastName = "Jimmy";
-		String email = "garyjimmy@mail.";
-		String phoneNumber = "012344567";
-		String address = "222, 5th Ave";
-		String zip = "G79 DE4";
-		Profile profile = null;
-		String error = "";
-		try {
-			profile = service.createProfile(firstName, lastName, address, zip, phoneNumber, email);
-		}catch (IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-
-		assertNull(profile);
-		assertEquals(error, "Invalid email.");
-
-	}
-
-	@Test
-	public void testCreateCar() {
-		assertEquals(0, service.getAllCars().size());
-
-		String model = "Lambo";
-		String plateNumber = "Number 1";
-		CarTransmission carTransmition = CarTransmission.Automatic;
-		Car car = null;
-
-		try {
-			car = service.createCar(plateNumber, model, carTransmition);
-		}catch(IllegalArgumentException e) {
-			fail();
-		}
-
-		assertNotNull(car);
-		assertEquals(model, car.getModel());
-		assertEquals(plateNumber, car.getPlateNumber());
-		assertEquals(carTransmition, car.getTransmission());
-	}
-
-
-	@Test
-	public void testCreateCarNullModel() {
-		assertEquals(0, service.getAllCars().size());
-
-		String model = null;
-		String plateNumber = "Number 1";
-		CarTransmission carTransmition = CarTransmission.Automatic;
-		Car car = null;
-		String error = null;
-
-		try {
-			car = service.createCar(plateNumber, model, carTransmition);
-		}catch(IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-
-		assertNull(car);
-		assertEquals(error, "Car model cannot be blank.");
-	}
-
-	@Test
-	public void testCreateCarBlankModel() {
-		assertEquals(0, service.getAllCars().size());
-
-		String model = "";
-		String plateNumber = "Number 1";
-		CarTransmission carTransmition = CarTransmission.Automatic;
-		Car car = null;
-		String error = null;
-
-		try {
-			car = service.createCar(plateNumber, model, carTransmition);
-		}catch(IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-
-		assertNull(car);
-		assertEquals(error, "Car model cannot be blank.");
-	}
-
-	@Test
-	public void testCreateCarNullPlateNumber() {
-		assertEquals(0, service.getAllCars().size());
-
-		String model = "BMW X6";
-		String plateNumber = null;
-		CarTransmission carTransmition = CarTransmission.Automatic;
-		Car car = null;
-		String error = null;
-
-		try {
-			car = service.createCar(plateNumber, model, carTransmition);
-		}catch(IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-
-		assertNull(car);
-		assertEquals(error, "Car plate number cannot be blank.");
-	}
-
-	@Test
-	public void testCreateCarBlankPlateNumber() {
-		assertEquals(0, service.getAllCars().size());
-
-		String model = "BMW X6";
-		String plateNumber = "";
-		CarTransmission carTransmition = CarTransmission.Automatic;
-		Car car = null;
-		String error = null;
-
-		try {
-			car = service.createCar(plateNumber, model, carTransmition);
-		}catch(IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-
-		assertNull(car);
-		assertEquals(error, "Car plate number cannot be blank.");
-	}
-
-	@Test
-	public void  testCreateCarNullTransmission() {
-		assertEquals(0, service.getAllCars().size());
-
-		String model = "Lambo";
-		String plateNumber = "Number 1";
-		CarTransmission carTransmition = null;
-		Car car = null;
-		String error = null;
-		try {
-			car = service.createCar(plateNumber, model, carTransmition);
-		}catch(IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-
-		assertNull(car);
-		assertEquals(error, "Car transmission cannot be blank.");
-	}
+	
+	
 
 
 	@Test
 	public void testCreateCustomer() {
-		assertEquals(0, service.getAllCustomers().size());
+		assertEquals(0, customerService.getAllCustomers().size());
 
 		String model = "Lambo";
 		String plateNumber = "Number 1";
@@ -427,11 +170,11 @@ public class CustomerServiceTest {
 		Customer customer = null;
 
 		try {
-			car = service.createCar(plateNumber, model, carTransmition);
+			car = carService.createCar(plateNumber, model, carTransmition);
 			List<Car> cars = new ArrayList<Car>();
 			cars.add(car);
-			profile = service.createProfile(firstName, lastName, address, zip, phoneNumber, email);
-			customer = service.createCustomer(username, password, profile, cars);
+			profile = profileService.createProfile(firstName, lastName, address, zip, phoneNumber, email);
+			customer = customerService.createCustomer(username, password, profile, cars);
 		}catch(IllegalArgumentException e) {
 			fail();
 		}
@@ -456,27 +199,9 @@ public class CustomerServiceTest {
 	}
 	
 	@Test
-	public void editCustomerPassword() {
-		assertEquals(0, service.getAllCustomers().size());
-		Customer customer = null;
-		
-		try {
-			service.editCustomerPassword(CUSTOMER_USERNAME, "Newpassword123");
-			customer = service.getCustomer(CUSTOMER_USERNAME);
-		}catch(IllegalArgumentException e) {
-			fail();
-		}
-		
-		assertNotNull(customer);
-		assertEquals("Newpassword123", customer.getPassword());
-		assertEquals(CUSTOMER_USERNAME, customer.getUsername());
-		
-	}
-
-	@Test
 	public void testCreateCustomerTakenUsername(){
 
-		assertEquals(0, service.getAllCustomers().size());
+		assertEquals(0, customerService.getAllCustomers().size());
 
 		String model = "Lambo";
 		String plateNumber = "Number 1";
@@ -496,11 +221,11 @@ public class CustomerServiceTest {
 		Customer customer = null;
 		String error = "";
 		try {
-			car = service.createCar(plateNumber, model, carTransmition);
+			car = carService.createCar(plateNumber, model, carTransmition);
 			List<Car> cars = new ArrayList<Car>();
 			cars.add(car);
-			profile = service.createProfile(firstName, lastName, address, zip, phoneNumber, email);
-			customer = service.createCustomer(username, password, profile, cars);
+			profile = profileService.createProfile(firstName, lastName, address, zip, phoneNumber, email);
+			customer = customerService.createCustomer(username, password, profile, cars);
 		}catch(IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -509,11 +234,86 @@ public class CustomerServiceTest {
 		assertEquals(error, "Username is already taken");
 
 	}
+	
+	@Test
+	public void editCustomerPassword() {
+		assertEquals(0, customerService.getAllCustomers().size());
+		Customer customer = null;
+		
+		try {
+			customer = customerService.editCustomerPassword(CUSTOMER_USERNAME, "Newpassword123");
+		}catch(IllegalArgumentException e) {
+			fail();
+		}
+		
+		assertNotNull(customer);
+		assertEquals("Newpassword123", customer.getPassword());
+		assertEquals(CUSTOMER_USERNAME, customer.getUsername());
+		
+	}
+	
+	@Test
+	public void editCustomerPasswordInvalidUpperCase() {
+		assertEquals(0, customerService.getAllCustomers().size());
+		Customer customer = null;
+		String error = null;
+		
+		try {
+			customer = customerService.editCustomerPassword(CUSTOMER_USERNAME, "newpassword123");
+		}catch(IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(customer);
+		assertEquals(error, "Password must contain at least one uppercase character");
+		
+	}
+	
+	@Test
+	public void editCustomerPasswordNullPassword() {
+		assertEquals(0, customerService.getAllCustomers().size());
+		Customer customer = null;
+		String error = null;
+		
+		try {
+			customer = customerService.editCustomerPassword(CUSTOMER_USERNAME, null);
+		}catch(IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(customer);
+		assertEquals(error, "New password cannot be blank.");
+		
+	}
+	
+	@Test
+	public void deleteCustomerSuccess() {
+		boolean success = false;
+		try {
+			success = customerService.deleteCustomer(CUSTOMER_USERNAME);
+		}catch(IllegalArgumentException e) {
+			fail();
+		}
+		assertTrue(success);
+	}
+	
+	
+	@Test
+	public void deleteCustomerUserNotFound() {
+		String error = null;
+		try {
+			customerService.deleteCustomer("Fake username");
+		}catch(IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertEquals(error, "Customer not found.");
+	}
+	
 
 	@Test
 	public void invalidPasswordUpperCase(){
 
-		assertEquals(0, service.getAllCustomers().size());
+		assertEquals(0, customerService.getAllCustomers().size());
 
 		String model = "Lambo";
 		String plateNumber = "Number 1";
@@ -533,11 +333,11 @@ public class CustomerServiceTest {
 		Customer customer = null;
 		String error = "";
 		try {
-			car = service.createCar(plateNumber, model, carTransmition);
+			car = carService.createCar(plateNumber, model, carTransmition);
 			List<Car> cars = new ArrayList<Car>();
 			cars.add(car);
-			profile = service.createProfile(firstName, lastName, address, zip, phoneNumber, email);
-			customer = service.createCustomer(username, password, profile, cars);
+			profile = profileService.createProfile(firstName, lastName, address, zip, phoneNumber, email);
+			customer = customerService.createCustomer(username, password, profile, cars);
 		}catch(IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -551,7 +351,7 @@ public class CustomerServiceTest {
 	@Test
 	public void invalidPasswordLowerCase(){
 
-		assertEquals(0, service.getAllCustomers().size());
+		assertEquals(0, customerService.getAllCustomers().size());
 
 		String model = "Lambo";
 		String plateNumber = "Number 1";
@@ -571,11 +371,11 @@ public class CustomerServiceTest {
 		Customer customer = null;
 		String error = "";
 		try {
-			car = service.createCar(plateNumber, model, carTransmition);
+			car = carService.createCar(plateNumber, model, carTransmition);
 			List<Car> cars = new ArrayList<Car>();
 			cars.add(car);
-			profile = service.createProfile(firstName, lastName, address, zip, phoneNumber, email);
-			customer = service.createCustomer(username, password, profile, cars);
+			profile = profileService.createProfile(firstName, lastName, address, zip, phoneNumber, email);
+			customer = customerService.createCustomer(username, password, profile, cars);
 		}catch(IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -588,7 +388,7 @@ public class CustomerServiceTest {
 	@Test
 	public void invalidPasswordNumeric(){
 
-		assertEquals(0, service.getAllCustomers().size());
+		assertEquals(0, customerService.getAllCustomers().size());
 
 		String model = "Lambo";
 		String plateNumber = "Number 1";
@@ -608,11 +408,11 @@ public class CustomerServiceTest {
 		Customer customer = null;
 		String error = "";
 		try {
-			car = service.createCar(plateNumber, model, carTransmition);
+			car = carService.createCar(plateNumber, model, carTransmition);
 			List<Car> cars = new ArrayList<Car>();
 			cars.add(car);
-			profile = service.createProfile(firstName, lastName, address, zip, phoneNumber, email);
-			customer = service.createCustomer(username, password, profile, cars);
+			profile = profileService.createProfile(firstName, lastName, address, zip, phoneNumber, email);
+			customer = customerService.createCustomer(username, password, profile, cars);
 		}catch(IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -625,7 +425,7 @@ public class CustomerServiceTest {
 	@Test
 	public void invalidPasswordLengthUnder8(){
 
-		assertEquals(0, service.getAllCustomers().size());
+		assertEquals(0, customerService.getAllCustomers().size());
 
 		String model = "Lambo";
 		String plateNumber = "Number 1";
@@ -645,11 +445,11 @@ public class CustomerServiceTest {
 		Customer customer = null;
 		String error = "";
 		try {
-			car = service.createCar(plateNumber, model, carTransmition);
+			car = carService.createCar(plateNumber, model, carTransmition);
 			List<Car> cars = new ArrayList<Car>();
 			cars.add(car);
-			profile = service.createProfile(firstName, lastName, address, zip, phoneNumber, email);
-			customer = service.createCustomer(username, password, profile, cars);
+			profile = profileService.createProfile(firstName, lastName, address, zip, phoneNumber, email);
+			customer = customerService.createCustomer(username, password, profile, cars);
 		}catch(IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -663,7 +463,7 @@ public class CustomerServiceTest {
 	@Test
 	public void invalidPasswordLengthOver20(){
 
-		assertEquals(0, service.getAllCustomers().size());
+		assertEquals(0, customerService.getAllCustomers().size());
 
 		String model = "Lambo";
 		String plateNumber = "Number 1";
@@ -683,11 +483,11 @@ public class CustomerServiceTest {
 		Customer customer = null;
 		String error = "";
 		try {
-			car = service.createCar(plateNumber, model, carTransmition);
+			car = carService.createCar(plateNumber, model, carTransmition);
 			List<Car> cars = new ArrayList<Car>();
 			cars.add(car);
-			profile = service.createProfile(firstName, lastName, address, zip, phoneNumber, email);
-			customer = service.createCustomer(username, password, profile, cars);
+			profile = profileService.createProfile(firstName, lastName, address, zip, phoneNumber, email);
+			customer = customerService.createCustomer(username, password, profile, cars);
 		}catch(IllegalArgumentException e) {
 			error = e.getMessage();
 		}

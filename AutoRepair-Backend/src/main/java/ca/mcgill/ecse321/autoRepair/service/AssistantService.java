@@ -6,8 +6,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-
-
 import ca.mcgill.ecse321.autoRepair.model.Assistant;
 
 import ca.mcgill.ecse321.autoRepair.dao.AssistantRepository;
@@ -21,7 +19,7 @@ public class AssistantService {
 	@Transactional
 	public Assistant createAssistant(String username,String password) {
 		
-		if(username==null || username=="") throw new IllegalArgumentException("Username cannot be blank");
+	 	if(username==null || username=="") throw new IllegalArgumentException("Username cannot be blank");
 		if(password==null || password=="") throw new IllegalArgumentException("Password cannot be blank");
 		
 		Assistant assistant = new Assistant();
@@ -66,8 +64,6 @@ deleted = true;
 return deleted;
 
 	}
-	
-	
 	
 	@Transactional
 	public Assistant getAssistant(String name) {

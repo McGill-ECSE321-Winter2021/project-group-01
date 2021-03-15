@@ -58,7 +58,7 @@ public class OwnerServiceTest {
 			if(invocation.getArgument(0).equals(OWNER_USERNAME)) {
 				Owner owner = new Owner();
 			    owner.setUsername(OWNER_USERNAME);
-				owner.setPassword(OWNER_PASSWORD);
+		 		owner.setPassword(OWNER_PASSWORD);
 				return owner;
 			}
 		else {
@@ -68,7 +68,7 @@ public class OwnerServiceTest {
 		
 		Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
 			return invocation.getArgument(0);
-		};
+		}; 
 		lenient().when(ownerRepo.save(any(Owner.class))).thenAnswer(returnParameterAsAnswer);
 	}
 	
@@ -90,6 +90,72 @@ public class OwnerServiceTest {
 	assertEquals(username, owner.getUsername());
 	assertEquals(password, owner.getPassword());
 }	
+	
+	@Test
+	public void testFindOwner() {
+	assertEquals(0, ownerService.getAllOwners().size());  
+
+	Owner owner = null;
+	try {
+     owner = ownerService.getOwner(OWNER_USERNAME);
+	}catch(IllegalArgumentException e) {
+		fail();
+	}
+	assertNotNull(owner);
+	assertEquals(owner.getUsername(), OWNER_USERNAME);
+	assertEquals(owner.getPassword(), OWNER_PASSWORD);
+}	
+	
+	@Test
+	public void testCreateOwnerErrorWrongAuthentification() {
+	assertEquals(0, ownerService.getAllOwners().size());  
+	String username ="ownerTest2";
+	String password = "Password123";
+	String authentication="4567";
+	Owner owner = null;
+	String error = "";
+	try {
+ owner = ownerService.createOwner(username, password,authentication);
+	}catch (IllegalArgumentException e) {
+		error = e.getMessage();
+	}
+	assertNull(owner);
+	assertEquals("wrong authentification code,please try again.",error);
+	}
+	
+	
+	@Test
+	public void testCreateOwnerErrorBlankUsername() {
+	assertEquals(0, ownerService.getAllOwners().size());  
+	String username ="";
+	String password = "Password123";
+	String authentication="1234";
+	Owner owner = null;
+	String error = "";
+	try {
+ owner = ownerService.createOwner(username, password,authentication);
+	}catch (IllegalArgumentException e) {
+		error = e.getMessage();
+	}
+	assertNull(owner);
+	assertEquals("Username cannot be blank",error);
+	}
+	@Test
+	public void testCreateOwnerErrorBlankPassword() {
+	assertEquals(0, ownerService.getAllOwners().size());  
+	String username ="newUsername1";
+	String password = "";
+	String authentication="1234";
+	Owner owner = null;
+	String error = "";
+	try {
+		 owner = ownerService.createOwner(username, password,authentication);
+	}catch (IllegalArgumentException e) {
+		error = e.getMessage();
+	}
+	assertNull(owner);
+	assertEquals("Password cannot be blank",error);
+	}
 
 	@Test
 	public void testCreateOwnerWithInvalidPasswordLessThan8Chars() {
@@ -183,6 +249,34 @@ public class OwnerServiceTest {
 	assertEquals(OWNER_USERNAME,owner.getUsername());
 	assertEquals("newPassword123",owner.getPassword());
   }
+	
+	@Test
+	public void testUpdateSamePassword() {
+	Owner owner = null;
+
+	try {
+		owner = ownerService.updateOwner(OWNER_USERNAME,OWNER_USERNAME,OWNER_PASSWORD);
+ 	}catch(IllegalArgumentException e) {
+	 	fail();
+	}
+	assertNotNull(owner);
+	assertEquals(OWNER_USERNAME,owner.getUsername());
+	assertEquals(OWNER_PASSWORD,owner.getPassword());
+  }
+	
+	
+	@Test
+	public void testUpdateOwnerUsername() {
+	Owner owner = null;
+
+	try {
+		owner = ownerService.updateOwner(OWNER_USERNAME,"newUsername","newPassword123");
+ 	}catch (IllegalArgumentException e) {
+		fail();
+	}
+	assertEquals(OWNER_USERNAME,owner.getUsername()); 
+  }
+	
 	@Test
 	public void testUpdateOwnerWithInvalidPasswordLessThan8Chars() {
 		Owner owner =null;

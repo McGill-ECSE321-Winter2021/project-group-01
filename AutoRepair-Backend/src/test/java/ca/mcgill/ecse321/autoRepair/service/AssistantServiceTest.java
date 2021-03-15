@@ -87,6 +87,70 @@ public class AssistantServiceTest {
 	assertEquals(username, assistant.getUsername());
 	assertEquals(password, assistant.getPassword());
 }
+	@Test
+	public void testFindAssistant() {
+	assertEquals(0, assisService.getAllAssistants().size());
+
+	Assistant assis = null;
+	try {
+     assis = assisService.getAssistant(ASSISTANT_USERNAME);
+	}catch(IllegalArgumentException e) {
+		fail();
+	}
+	assertNotNull(assis);
+	assertEquals(assis.getUsername(), ASSISTANT_USERNAME);
+	assertEquals(assis.getPassword(), ASSISTANT_PASSWORD);
+}	
+	
+	
+	@Test
+	public void testCreateAssistantErrorTakenUsername() {
+	assertEquals(0, assisService.getAllAssistants().size());  
+	String username = ASSISTANT_USERNAME;
+	String password = "Password123";
+	Assistant assistant = null;
+	String error = "";
+	try {
+ assistant = assisService.createAssistant(username, password);
+	}catch (IllegalArgumentException e) {
+		error = e.getMessage();
+	}
+	assertNull(assistant);
+	assertEquals("Username is already taken.",error);
+	}
+	
+	
+	
+	@Test
+	public void testCreateAssistantErrorBlankUsername() {
+	assertEquals(0, assisService.getAllAssistants().size());  
+	String username ="";
+	String password = "Password123";
+ 	Assistant assistant = null;
+	String error = "";
+	try {
+ assistant = assisService.createAssistant(username, password);
+	}catch (IllegalArgumentException e) {
+		error = e.getMessage();
+	}
+	assertNull(assistant);
+	assertEquals("Username cannot be blank",error);
+	}
+	@Test
+	public void testCreateAssistantErrorBlankPassword() {
+	assertEquals(0, assisService.getAllAssistants().size());  
+	String username ="newUsername1";
+	String password = "";
+	Assistant assistant = null;
+	String error = "";
+	try {
+ assistant = assisService.createAssistant(username, password);
+	}catch (IllegalArgumentException e) {
+		error = e.getMessage();
+	}
+	assertNull(assistant);
+	assertEquals("Password cannot be blank",error);
+	}
 
 	
 	@Test
@@ -104,6 +168,9 @@ public class AssistantServiceTest {
 		assertNull(assistant);
 		assertEquals("Password must have at least 8 characters",error);
 	}
+	
+	
+	
 	@Test
 	public void testCreateAssistantWithInvalidPasswordMoreThan20Chars() {
 		String username ="nameTest";
@@ -191,6 +258,21 @@ public class AssistantServiceTest {
 	assertEquals(ASSISTANT_USERNAME,assistant.getUsername());
 	assertEquals("newPassword123",assistant.getPassword());
    }
+	
+	@Test
+	public void testUpdateSamePassword() {
+		Assistant assistant = null;
+
+	try {
+		assistant = assisService.updateAssistant(ASSISTANT_USERNAME,ASSISTANT_USERNAME,ASSISTANT_PASSWORD);
+	}catch(IllegalArgumentException e) {
+	 	fail();
+	}
+	assertNotNull(assistant);
+	assertEquals(ASSISTANT_USERNAME,assistant.getUsername());
+	assertEquals(ASSISTANT_PASSWORD,assistant.getPassword());
+  }
+	
 	@Test
 	public void testUpdateAssistantWithInvalidPasswordLessThan8Chars() {
 		Assistant assistant =null;

@@ -21,8 +21,8 @@ public class OwnerService {
 	@Transactional
 	public Owner createOwner(String username,String password,String authentificationCode) {
 		
-		if(username==null || username=="") throw new IllegalArgumentException("Username cannot be blank");
-		if(password==null || password=="") throw new IllegalArgumentException("Password cannot be blank");
+		if(username=="") throw new IllegalArgumentException("Username cannot be blank");
+		if(password=="") throw new IllegalArgumentException("Password cannot be blank");
 		if(!authentificationCode.equals("1234")) throw new IllegalArgumentException
 		("wrong authentification code,please try again.");
 
@@ -41,10 +41,10 @@ public class OwnerService {
 	@Transactional
 	public Owner updateOwner(String oldUsername,String newUsername,String newPassword) {
 		Owner oldOwner = ownerRepository.findOwnerByUsername(oldUsername);
-		if(oldOwner.getUsername() != newUsername && newUsername!=null && newUsername!="") {
+		if(oldOwner.getUsername() == newUsername && newUsername!="") {
 			oldOwner.setUsername(newUsername);
 		}
-		if(oldOwner.getPassword() != newPassword && newPassword!=null & newPassword!="") {
+		if(oldOwner.getPassword() != newPassword && newPassword!="") {
 			if (passwordIsValid(newPassword)) {
 				oldOwner.setPassword(newPassword);		
 				}

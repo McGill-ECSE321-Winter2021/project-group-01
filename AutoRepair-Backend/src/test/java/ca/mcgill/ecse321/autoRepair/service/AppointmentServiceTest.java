@@ -177,22 +177,10 @@ public class AppointmentServiceTest {
             }
         });
 
-        lenient().when(operatingHourRepository.findByDayOfWeek(DAY_OF_WEEK)).thenAnswer((InvocationOnMock invocation) -> {
+        lenient().when(operatingHourRepository.findByDayOfWeek(any(OperatingHour.DayOfWeek.class))).thenAnswer((InvocationOnMock invocation) -> {
             if (invocation.getArgument(0).equals(DAY_OF_WEEK)) {
                 OperatingHour operatingHour = new OperatingHour();
                 operatingHour.setDayOfWeek(DAY_OF_WEEK);
-                operatingHour.setStartTime(Time.valueOf(DAY_START_TIME_STRING));
-                operatingHour.setEndTime(Time.valueOf(DAY_END_TIME_STRING));
-                return operatingHour;
-            } else {
-                return null;
-            }
-        });
-
-        lenient().when(operatingHourRepository.findByDayOfWeek(DAY_OF_WEEK2)).thenAnswer((InvocationOnMock invocation) -> {
-            if (invocation.getArgument(0).equals(DAY_OF_WEEK2)) {
-                OperatingHour operatingHour = new OperatingHour();
-                operatingHour.setDayOfWeek(DAY_OF_WEEK2);
                 operatingHour.setStartTime(Time.valueOf(DAY_START_TIME_STRING));
                 operatingHour.setEndTime(Time.valueOf(DAY_END_TIME_STRING));
                 return operatingHour;

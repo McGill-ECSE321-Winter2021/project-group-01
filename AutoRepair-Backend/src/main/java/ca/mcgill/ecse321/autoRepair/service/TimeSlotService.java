@@ -38,10 +38,9 @@ public class TimeSlotService {
         availableTimeSlots.add(ts);
 
         List<TimeSlot> timeSlotsPerDay = timeSlotRepository.findTimeSlotsByDate(startDate.toString());
-        for (int i = 0; i < timeSlotsPerDay.size(); i++) {
-            TimeSlot aTS = timeSlotsPerDay.get(i);
+        for(TimeSlot aTS: timeSlotsPerDay){
             for (int j = 0; j < availableTimeSlots.size(); j++) {
-                TimeSlot TS = availableTimeSlots.get(j);
+               TimeSlot TS = availableTimeSlots.get(j);
                 if (isOverlap(aTS, TS)) {
 
                     LocalTime S1 = aTS.getStartTime().toLocalTime();
@@ -81,7 +80,6 @@ public class TimeSlotService {
                         availableTimeSlots.remove(TS);
                         availableTimeSlots.add(tmp1);
                         availableTimeSlots.add(tmp2);
-                        i++;
                     }
                 }
             }

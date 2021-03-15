@@ -44,7 +44,7 @@ public class TestProfilePersistence {
 		
 		testProfile = null;
 
-		testProfile = profileRepository.findByFirstNameAndLastName("TestName", "TestLastName");
+		testProfile = profileRepository.findByEmail("Email");
 		assertNotNull(testProfile);
 		assertEquals("TestName", testProfile.getFirstName());
 		assertEquals("TestLastName", testProfile.getLastName());

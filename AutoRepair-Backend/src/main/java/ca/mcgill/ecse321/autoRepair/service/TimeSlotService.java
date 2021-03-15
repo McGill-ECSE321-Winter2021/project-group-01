@@ -104,7 +104,7 @@ public class TimeSlotService {
     }
 
 
-    private static OperatingHour.DayOfWeek getDayString(Date date, Locale locale) {
+    public static OperatingHour.DayOfWeek getDayString(Date date, Locale locale) {
         DateFormat formatter = new SimpleDateFormat("EEEE", locale);
         String stringDate = formatter.format(date);
         if(OperatingHour.DayOfWeek.Friday.toString().equals(stringDate)){

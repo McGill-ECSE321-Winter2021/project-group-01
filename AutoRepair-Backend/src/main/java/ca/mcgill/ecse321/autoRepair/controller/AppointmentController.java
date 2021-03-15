@@ -157,7 +157,7 @@ public class AppointmentController {
         return unavailableTimeSlots;
     }
     private List<AppointmentDTO> createAppointmentDtosForCustomer(Customer customer) {
-        List<Appointment> appointmentsForCustomer = appointmentRepository.findAppointmentsByCustomer(customer);
+        List<Appointment> appointmentsForCustomer = appointmentRepository.findAppointmentsByCustomer(customer.getUsername());
         List<AppointmentDTO> appointments = new ArrayList<>();
         for (Appointment appointment : appointmentsForCustomer) {
             appointments.add(convertToDTO(appointment));

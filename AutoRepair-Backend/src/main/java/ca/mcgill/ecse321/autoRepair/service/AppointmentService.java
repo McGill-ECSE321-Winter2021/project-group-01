@@ -8,8 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,31 +30,32 @@ public class AppointmentService {
     @Autowired
     OperatingHourRepository operatingHourRepository;
 
+    @Autowired
+    TimeSlotService timeSlotService;
+
     @Transactional
     public Appointment makeAppointment(String customerName, String serviceName,Date startDate, Time startTime) {
+        if (customerName == null || !containsCharacter(customerName)) throw new IllegalArgumentException("The username cannot be empty or null");
+        if(serviceName == null || !containsCharacter(serviceName)) throw new IllegalArgumentException("The chosen service cannot be empty or null");
+        if(startTime == null) throw new IllegalArgumentException("The start time cannot be null") ;
+        if(startDate == null)  throw new IllegalArgumentException("The start date cannot be null");
+
         LocalTime toCompare = LocalTime.parse("02:00:00");
-        if(startDate!=null) {
-            if (startDate.toLocalDate().isBefore(SystemTime.getSysDate().toLocalDate())) {
-                throw new IllegalArgumentException("The date has already passed.");
-            } else if (startDate.toLocalDate().isEqual(SystemTime.getSysDate().toLocalDate())) {
-                if (startTime != null) {
-                    if (startTime.toLocalTime().isBefore(SystemTime.getSysTime().toLocalTime())) {
-                        throw new IllegalArgumentException("The time has already passed.");
-                    } else if ((startTime.toLocalTime().minusHours(SystemTime.getSysTime().toLocalTime().getHour()).compareTo(toCompare)) < 0) {
-                        throw new IllegalArgumentException("Booking an appointment on the same day has to be at least 2 hours before the appointment.");
-                    }
-                }
+        if (startDate.toLocalDate().isBefore(SystemTime.getSysDate().toLocalDate())) {
+            throw new IllegalArgumentException("The date has already passed.");
+        } else if (startDate.toLocalDate().isEqual(SystemTime.getSysDate().toLocalDate())) {
+            if (startTime.toLocalTime().isBefore(SystemTime.getSysTime().toLocalTime())) {
+                throw new IllegalArgumentException("The time has already passed.");
+            } else if ((startTime.toLocalTime().minusHours(SystemTime.getSysTime().toLocalTime().getHour()).compareTo(toCompare)) < 0) {
+                throw new IllegalArgumentException("Booking an appointment on the same day has to be at least 2 hours before the appointment.");
             }
+
         }
-            if (customerName == null || customerName.equals(" ") || serviceName == null || serviceName.equals(" ") ||
-                    startTime == null || startDate == null) {
-                throw new IllegalArgumentException("The following fields cannot not be null: Username, " +
-                        "Service Name, Start Date and Start Time.");
-            }
-            Customer customer = customerRepository.findCustomerByUsername(customerName);
+
+        Customer customer = customerRepository.findCustomerByUsername(customerName);
             if (customer == null)
                 throw new IllegalArgumentException("The following user does not exist: " + customerName);
-            ChosenService chosenService = chosenServiceRepository.findChosenServiceByName(serviceName);
+        ChosenService chosenService = chosenServiceRepository.findChosenServiceByName(serviceName);
             if (chosenService == null)
                 throw new IllegalArgumentException("The following service does not exist: " + serviceName);
         Time endTime = findEndTimeOfApp(chosenService,startTime.toLocalTime());
@@ -74,35 +73,33 @@ public class AppointmentService {
     }
 
     @Transactional
-    public Appointment getAppointment(Date startDate, Time startTime, Date endDate, Time endTime){
+    public Appointment getAppointment(Date startDate, Time startTime){
         Appointment appointment = appointmentRepository.findAppointmentByStartDateAndStartTime(startDate.toString(),startTime.toString());
         return appointment;
     }
 
     @Transactional
     public Appointment updateAppointment(Date oldStartDate, Time oldStartTime, String oldServiceName, Date newStartDate, Time newStartTime, String newServiceName){
-        if(oldStartDate==null || oldStartTime==null || oldServiceName==null || oldServiceName.equals(" ") || newServiceName.equals(" ") || newStartTime==null || newStartDate==null || newServiceName==null){
-            throw new IllegalArgumentException("To update a service the following fields cannot be null: Old Date, Old Time, Old Service, New Date, New Time, New Service.");
-        }
+        if(newServiceName == null || !containsCharacter(newServiceName)) throw new IllegalArgumentException("The chosen service cannot be empty or null");
+        if(oldServiceName == null || !containsCharacter(oldServiceName)) throw new IllegalArgumentException("The old service cannot be empty or null");
+        if(oldStartTime == null) throw new IllegalArgumentException("The old start time cannot be null") ;
+        if(oldStartDate == null)  throw new IllegalArgumentException("The old start date cannot be null");
+        if(newStartTime == null) throw new IllegalArgumentException("The new start time cannot be null") ;
+        if(newStartDate == null)  throw new IllegalArgumentException("The new start date cannot be null");
+
         LocalTime toCompare = LocalTime.parse("02:00:00");
-        if(oldStartDate!=null){
-            if(oldStartDate.toLocalDate().isEqual(SystemTime.getSysDate().toLocalDate())){
-                if((oldStartTime.toLocalTime().minusHours(SystemTime.getSysTime().toLocalTime().getHour()).compareTo(toCompare))<0){
-                    throw new IllegalArgumentException("Updating an appointment on the same day has to be at least 2 hours before the appointment.");
-                }
+        if(oldStartDate.toLocalDate().isEqual(SystemTime.getSysDate().toLocalDate())){
+            if((oldStartTime.toLocalTime().minusHours(SystemTime.getSysTime().toLocalTime().getHour()).compareTo(toCompare))<0){
+                throw new IllegalArgumentException("Updating an appointment on the same day has to be at least 2 hours before the appointment.");
             }
         }
-        if(newStartDate!=null) {
-            if (newStartDate.toLocalDate().isBefore(SystemTime.getSysDate().toLocalDate())) {
-                throw new IllegalArgumentException("The date has already passed.");
-            } else if (newStartDate.toLocalDate().isEqual(SystemTime.getSysDate().toLocalDate())) {
-                if (newStartTime != null) {
-                    if (newStartTime.toLocalTime().isBefore(SystemTime.getSysTime().toLocalTime())) {
-                        throw new IllegalArgumentException("The time has already passed.");
-                    } else if ((newStartTime.toLocalTime().minusHours(SystemTime.getSysTime().toLocalTime().getHour()).compareTo(toCompare)) < 0) {
-                        throw new IllegalArgumentException("Updating an appointment on the same day has to be at least 2 hours before the appointment.");
-                    }
-                }
+        if (newStartDate.toLocalDate().isBefore(SystemTime.getSysDate().toLocalDate())) {
+            throw new IllegalArgumentException("The date has already passed.");
+        } else if (newStartDate.toLocalDate().isEqual(SystemTime.getSysDate().toLocalDate())) {
+            if (newStartTime.toLocalTime().isBefore(SystemTime.getSysTime().toLocalTime())) {
+                throw new IllegalArgumentException("The time has already passed.");
+            } else if ((newStartTime.toLocalTime().minusHours(SystemTime.getSysTime().toLocalTime().getHour()).compareTo(toCompare)) < 0) {
+                throw new IllegalArgumentException("Updating an appointment on the same day has to be at least 2 hours before the appointment.");
             }
         }
 
@@ -147,10 +144,9 @@ public class AppointmentService {
 
     @Transactional
     public void cancelAppointment(String serviceName,Date startDate, Time startTime){
-        if(serviceName==null || serviceName.equals(" ") || startDate==null || startTime==null){
-            throw new IllegalArgumentException("To cancel an appointment, the following fields cannot be null or empty: " +
-                    "Service Name, Start Date, Start Time");
-        }
+        if(serviceName==null || !containsCharacter(serviceName)) throw new IllegalArgumentException("The service to cancel cannot be empty or null");
+        if(startDate==null) throw new IllegalArgumentException("The start date cannot be null");
+        if(startTime==null) throw new IllegalArgumentException("The start time cannot be null");
         LocalTime localTime = LocalTime.parse("02:00:00");
         if(startDate.toLocalDate().equals(SystemTime.getSysDate().toLocalDate())){
             if((startTime.toLocalTime().minusHours(SystemTime.getSysTime().toLocalTime().getHour())).compareTo(localTime)<0){
@@ -172,34 +168,34 @@ public class AppointmentService {
     }
 
     @Transactional
-    public List<Appointment> getAppointmentsOfCustomer(Customer customer){
-        return toList(appointmentRepository.findAppointmentsByCustomer(customer));
+    public List<Appointment> getAppointmentsOfCustomer(String username){
+        return toList(appointmentRepository.findAppointmentsByCustomer(username));
     }
 
-    @Transactional
-    public void addNoShow(TimeSlot timeSlot){
-        Appointment appointment = appointmentRepository.findAppointmentByStartDateAndStartTime(timeSlot.getStartDate().toString(), timeSlot.getStartTime().toString());
-        Customer customer = appointment.getCustomer();
-        int noShows = customer.getNoShow()+ 1;
-        customer.setNoShow(noShows);
-        appointmentRepository.delete(appointment);
-    }
+//    @Transactional
+//    public void addNoShow(TimeSlot timeSlot){
+//        Appointment appointment = appointmentRepository.findAppointmentByStartDateAndStartTime(timeSlot.getStartDate().toString(), timeSlot.getStartTime().toString());
+//        Customer customer = appointment.getCustomer();
+//        int noShows = customer.getNoShow()+ 1;
+//        customer.setNoShow(noShows);
+//        appointmentRepository.delete(appointment);
+//    }
 
-    @Transactional
-    public void addShow(TimeSlot timeSlot){
-        Appointment appointment = appointmentRepository.findAppointmentByStartDateAndStartTime(timeSlot.getStartDate().toString(), timeSlot.getStartTime().toString());
-        Customer customer = appointment.getCustomer();
-        int shows = customer.getShow()+ 1;
-        customer.setShow(shows);
-        appointmentRepository.delete(appointment);
-    }
-
-    @Transactional
-    public void startAppointment(TimeSlot timeSlot){
-        Appointment appointment = appointmentRepository.findAppointmentByStartDateAndStartTime(timeSlot.getStartDate().toString(), timeSlot.getStartTime().toString());
-        addShow(timeSlot);
-        appointmentRepository.delete(appointment);
-    }
+//    @Transactional
+//    public void addShow(TimeSlot timeSlot){
+//        Appointment appointment = appointmentRepository.findAppointmentByStartDateAndStartTime(timeSlot.getStartDate().toString(), timeSlot.getStartTime().toString());
+//        Customer customer = appointment.getCustomer();
+//        int shows = customer.getShow()+ 1;
+//        customer.setShow(shows);
+//        appointmentRepository.delete(appointment);
+//    }
+//
+//    @Transactional
+//    public void startAppointment(TimeSlot timeSlot){
+//        Appointment appointment = appointmentRepository.findAppointmentByStartDateAndStartTime(timeSlot.getStartDate().toString(), timeSlot.getStartTime().toString());
+//        addShow(timeSlot);
+//        appointmentRepository.delete(appointment);
+//    }
 
     private TimeSlot calcTimeSlot(Date startDate, Time startTime, Date endDate, Time endTime){
         TimeSlot timeSlot=new TimeSlot();
@@ -222,7 +218,7 @@ public class AppointmentService {
         boolean isAvailable=true;
         Date startDate = timeSlot.getStartDate();
         Locale locale = new Locale("en");
-        OperatingHour operatingHour = operatingHourRepository.findByDayOfWeek(getDayString(startDate,locale));
+        OperatingHour operatingHour = operatingHourRepository.findByDayOfWeek(timeSlotService.getDayString(startDate,locale));
         LocalTime startTime =timeSlot.getStartTime().toLocalTime();
         LocalTime endTime = timeSlot.getEndTime().toLocalTime();
         LocalTime startTimeOH = operatingHour.getStartTime().toLocalTime();
@@ -231,7 +227,7 @@ public class AppointmentService {
         if(timeSlot1==null){
             if((startTimeOH.isBefore(startTime) || startTimeOH.equals(startTime)) && (endTimeOH.isAfter(endTime) || endTimeOH.equals(endTime))) {
                 return true;
-            }
+            }else return false;
         }
         for(int i=0; i<timeSlot1.size();i++){
             if(((startTimeOH.isBefore(startTime) || startTimeOH.equals(startTime))&&(endTimeOH.isAfter(endTime) || endTimeOH.equals(endTime)))) {
@@ -250,30 +246,13 @@ public class AppointmentService {
         return S1.isBefore(E2) && S2.isBefore(E1);
     }
 
-    private static OperatingHour.DayOfWeek getDayString(Date date, Locale locale) {
-        DateFormat formatter = new SimpleDateFormat("EEEE", locale);
-        String stringDate = formatter.format(date);
-        if(OperatingHour.DayOfWeek.Friday.toString().equals(stringDate)){
-            return OperatingHour.DayOfWeek.Friday;
-        }
-        else if(OperatingHour.DayOfWeek.Thursday.toString().equals(stringDate)){
-            return OperatingHour.DayOfWeek.Thursday;
-        }
-        else if(OperatingHour.DayOfWeek.Saturday.toString().equals(stringDate)){
-            return OperatingHour.DayOfWeek.Saturday;
-        }
-        else if(OperatingHour.DayOfWeek.Sunday.toString().equals(stringDate)){
-            return OperatingHour.DayOfWeek.Sunday;
-        }
-        else if(OperatingHour.DayOfWeek.Wednesday.toString().equals(stringDate)){
-            return OperatingHour.DayOfWeek.Wednesday;
-        }
-        else if(OperatingHour.DayOfWeek.Tuesday.toString().equals(stringDate)){
-            return OperatingHour.DayOfWeek.Tuesday;
-        }
-        else if(OperatingHour.DayOfWeek.Monday.toString().equals(stringDate)){
-            return OperatingHour.DayOfWeek.Monday;
-        }
-        return null;
+    private static boolean containsCharacter(String input){
+            for(int i = 0; i < input.length(); i++){
+                if(!(Character.isWhitespace(input.charAt(i)))){
+                    return true;
+                }
+            }
+        return false;
     }
+
 }

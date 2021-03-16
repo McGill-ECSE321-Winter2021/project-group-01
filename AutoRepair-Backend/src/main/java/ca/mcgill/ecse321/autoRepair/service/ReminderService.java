@@ -73,7 +73,7 @@ public class ReminderService {
 	
 		if(localDate.isEqual(now2)) {
 			LocalTime localTime = time.toLocalTime();
-			if(localTime.isBefore(LocalTime.now())) {
+			if(localTime.isBefore(SystemTime.getSysTime().toLocalTime())) {
 				//error = error.concat("Time has passed.");
 				throw new IllegalArgumentException("Time has passed");
 			}
@@ -86,8 +86,8 @@ public class ReminderService {
         ChosenService chosenService = chosenServiceRepository.findChosenServiceByName(serviceName);
         if (chosenService == null)
             throw new IllegalArgumentException("The following service does not exist: " + serviceName);
-//        Reminder r = reminderRepository.findByCustomerAndChosenService(customer, chosenService);
-//		if(r!=null) throw new IllegalArgumentException("This reminder is already created");
+        Reminder r = reminderRepository.findByCustomerAndChosenService(customer, chosenService);
+		if(r!=null) throw new IllegalArgumentException("This reminder is already created");
         
 			Reminder reminder = new Reminder();
 			reminder.setChosenService(chosenService);
@@ -120,12 +120,6 @@ public class ReminderService {
 					throw new IllegalArgumentException("Customer Invalid");
 				}
 				
-//				if(newCustomerName == null || newCustomerName.equals("") || containsCharacter(newCustomerName)==false) {
-//					//error = error.concat("Customer not found. ");
-//					throw new IllegalArgumentException("New Customer Invalid");
-//				}
-				
-				
 				//Maybe do a constraint for description
 				if (description==null|| description.equals("") || containsCharacter(description)==false) {
 					throw new IllegalArgumentException("Description Invalid");
@@ -153,7 +147,7 @@ public class ReminderService {
 			
 				if(localDate.isEqual(now2)) {
 					LocalTime localTime = newTime.toLocalTime();
-					if(localTime.isBefore(LocalTime.now())) {
+					if(localTime.isBefore(SystemTime.getSysTime().toLocalTime())) {
 						//error = error.concat("Time has passed.");
 						throw new IllegalArgumentException("Time has passed");
 					}
@@ -163,11 +157,7 @@ public class ReminderService {
 				Customer oldCustomer = customerRepository.findCustomerByUsername(customerName);
 		        if (oldCustomer == null)
 		            throw new IllegalArgumentException("The following user does not exist: " + customerName);
-		        
-//		    	Customer newCustomer = customerRepository.findCustomerByUsername(newCustomerName);
-//		        if (newCustomer == null)
-//		            throw new IllegalArgumentException("The following user does not exist: " + newCustomerName);
-//		        
+
 		        ChosenService oldChosenService = chosenServiceRepository.findChosenServiceByName(oldServiceName);
 		        if (oldChosenService == null)
 		            throw new IllegalArgumentException("The following service does not exist: " + oldServiceName);
@@ -198,52 +188,41 @@ public class ReminderService {
 					reminder.setTime(newTime);
 					reminderRepository.save(reminder);
 					return reminder;
-//		Reminder r = getReminder(customer, service);
-//		if(r!=null) {
-//			if(service == null) {
-//				throw new IllegalArgumentException("Service not found");
-//			}
-//			
-//			if(customer == null) {
-//				throw new IllegalArgumentException("Customer not found");
-//			}
-//			
-//			LocalDate localDate = date.toLocalDate();
-//			if(localDate.isBefore(LocalDate.now())) {
-//				throw new IllegalArgumentException("Invalid date");
-//			}
-//			
-//			if(localDate.isEqual(LocalDate.now())) {
-//				LocalTime localTime = time.toLocalTime();
-//				if(localTime.isBefore(LocalTime.now())) {
-//					throw new IllegalArgumentException("Invalid time");
-//				}
-//			}
-//			
-//			r.setChosenService(service);
-//			r.setCustomer(customer);
-//			r.setDate(date);
-//			r.setDescription(description);
-//			r.setTime(time);
-//			reminderRepository.save(r);
-//			return r;
-//		}
-//		else throw new IllegalArgumentException("Reminder invalid");
-		
-		
 	}
 	
+
 	@Transactional
-	public Reminder deleteReminder(ChosenService service, Customer customer, Date date,
-			String description, Time time) {
-		
-		Reminder r = getReminder(customer, service);
-		if(r!=null) {
-			r = null;
-		reminderRepository.save(r); // ?
-		return null;
+	public Reminder deleteReminder(String serviceName, String customerName) {
+
+		String error = "";
+
+		if(serviceName == null || serviceName.equals("") || containsCharacter(serviceName)==false) {
+			//throw new IllegalArgumentException("Service Invalid");
+			error = error.concat("Service Invalid");
 		}
-		else throw new IllegalArgumentException("Reminder invalid");
+
+		if(customerName == null || customerName.equals("") || containsCharacter(customerName)==false) {
+			error = error.concat("Customer Invalid");
+			//throw new IllegalArgumentException("Customer Invalid");
+		}
+		
+		if (!(error.equals(""))) {
+			throw new IllegalArgumentException(error);
+		}
+		
+		Customer customer = customerRepository.findCustomerByUsername(customerName);
+		if (customer == null)
+			throw new IllegalArgumentException("The following user does not exist: " + customerName);
+		ChosenService chosenService = chosenServiceRepository.findChosenServiceByName(serviceName);
+		if (chosenService == null)
+			throw new IllegalArgumentException("The following service does not exist: " + serviceName);
+
+		Reminder r = getReminder(customer, chosenService);
+		if(r!=null) {
+			reminderRepository.delete(r);
+			return null;
+		}
+		else throw new IllegalArgumentException("Reminder does not exist");
 	}
 
 	@Transactional

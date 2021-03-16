@@ -330,13 +330,13 @@ public class ReminderServiceTests {
 	
 	@Test
 	public void testCreateReminder() {
-		assertEquals(0, reminderService.getAllReminders().size()); //Assuming nothing is saved in the system
+		assertEquals(0, reminderService.getAllReminders().size()); 
 		
 		SystemTime.setSysTime(Time.valueOf("08:00:00"));
 	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
-		String chosenServiceName = CSName;
+		String chosenServiceName = CSName2;
 		
 		Time time = Time.valueOf("11:00:00");
 		Date date = Date.valueOf("2021-12-22");
@@ -359,7 +359,7 @@ public class ReminderServiceTests {
 	
 	@Test
 	public void testNullDescriptionCreateReminder() {
-		assertEquals(0, reminderService.getAllReminders().size()); //Assuming nothing is saved in the system
+		assertEquals(0, reminderService.getAllReminders().size()); 
 		
 		SystemTime.setSysTime(Time.valueOf("08:00:00"));
 	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
@@ -385,7 +385,7 @@ public class ReminderServiceTests {
 	
 	@Test
 	public void testEmptyDescriptionCreateReminder() {
-	assertEquals(0, reminderService.getAllReminders().size()); //Assuming nothing is saved in the system
+	assertEquals(0, reminderService.getAllReminders().size()); 
 		
 		SystemTime.setSysTime(Time.valueOf("08:00:00"));
 	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
@@ -411,7 +411,7 @@ public class ReminderServiceTests {
 	
 	@Test
 	public void testSpacesDescriptionCreateReminder() {
-		assertEquals(0, reminderService.getAllReminders().size()); //Assuming nothing is saved in the system
+		assertEquals(0, reminderService.getAllReminders().size()); 
 		
 		SystemTime.setSysTime(Time.valueOf("08:00:00"));
 	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
@@ -437,7 +437,7 @@ public class ReminderServiceTests {
 	
 	@Test
 	public void testNullDateCreateReminder() {
-		assertEquals(0, reminderService.getAllReminders().size()); //Assuming nothing is saved in the system
+		assertEquals(0, reminderService.getAllReminders().size());
 		
 		SystemTime.setSysTime(Time.valueOf("08:00:00"));
 	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
@@ -463,7 +463,7 @@ public class ReminderServiceTests {
 	
 	@Test
 	public void testNullTimeCreateReminder() {
-		assertEquals(0, reminderService.getAllReminders().size()); //Assuming nothing is saved in the system
+		assertEquals(0, reminderService.getAllReminders().size());
 		
 		SystemTime.setSysTime(Time.valueOf("08:00:00"));
 	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
@@ -489,7 +489,7 @@ public class ReminderServiceTests {
 	
 	@Test
 	public void testDatePassedCreateReminder() {
-		assertEquals(0, reminderService.getAllReminders().size()); //Assuming nothing is saved in the system
+		assertEquals(0, reminderService.getAllReminders().size()); 
 		
 		SystemTime.setSysTime(Time.valueOf("08:00:00"));
 	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
@@ -516,7 +516,7 @@ public class ReminderServiceTests {
 	
 	@Test
 	public void testTimePassedSameDayCreateReminder() {
-		assertEquals(0, reminderService.getAllReminders().size()); //Assuming nothing is saved in the system
+		assertEquals(0, reminderService.getAllReminders().size()); 
 		
 		SystemTime.setSysTime(Time.valueOf("08:00:00"));
 	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
@@ -543,7 +543,7 @@ public class ReminderServiceTests {
 	
 	@Test
 	public void testNullCustomerCreateReminder() {
-		assertEquals(0, reminderService.getAllReminders().size()); //Assuming nothing is saved in the system
+		assertEquals(0, reminderService.getAllReminders().size()); 
 		
 		SystemTime.setSysTime(Time.valueOf("08:00:00"));
 	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
@@ -569,7 +569,7 @@ public class ReminderServiceTests {
 	
 	@Test
 	public void testEmptyCustomerCreateReminder() {
-		assertEquals(0, reminderService.getAllReminders().size()); //Assuming nothing is saved in the system
+		assertEquals(0, reminderService.getAllReminders().size()); 
 		
 		SystemTime.setSysTime(Time.valueOf("08:00:00"));
 	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
@@ -595,7 +595,7 @@ public class ReminderServiceTests {
 	
 	@Test
 	public void testSpacesCustomerCreateReminder() {
-		assertEquals(0, reminderService.getAllReminders().size()); //Assuming nothing is saved in the system
+		assertEquals(0, reminderService.getAllReminders().size()); 
 		
 		SystemTime.setSysTime(Time.valueOf("08:00:00"));
 	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
@@ -621,7 +621,7 @@ public class ReminderServiceTests {
 	
 	@Test
 	public void testNullChosenServiceCreateReminder() {
-		assertEquals(0, reminderService.getAllReminders().size()); //Assuming nothing is saved in the system
+		assertEquals(0, reminderService.getAllReminders().size()); 
 		
 		SystemTime.setSysTime(Time.valueOf("08:00:00"));
 	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
@@ -647,7 +647,7 @@ public class ReminderServiceTests {
 	
 	@Test
 	public void testEmptyChosenServiceCreateReminder() {
-		assertEquals(0, reminderService.getAllReminders().size()); //Assuming nothing is saved in the system
+		assertEquals(0, reminderService.getAllReminders().size()); 
 		
 		SystemTime.setSysTime(Time.valueOf("08:00:00"));
 	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
@@ -673,7 +673,7 @@ public class ReminderServiceTests {
 	
 	@Test
 	public void testSpacesChosenServiceCreateReminder() {
-		assertEquals(0, reminderService.getAllReminders().size()); //Assuming nothing is saved in the system
+		assertEquals(0, reminderService.getAllReminders().size()); 
 		
 		SystemTime.setSysTime(Time.valueOf("08:00:00"));
 	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
@@ -699,7 +699,7 @@ public class ReminderServiceTests {
 	
 	@Test
 	public void testNotExistingCustomerCreateReminder() {
-		assertEquals(0, reminderService.getAllReminders().size()); //Assuming nothing is saved in the system
+		assertEquals(0, reminderService.getAllReminders().size()); 
 		
 		SystemTime.setSysTime(Time.valueOf("08:00:00"));
 	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
@@ -725,7 +725,7 @@ public class ReminderServiceTests {
 	
 	@Test
 	public void testNotExistingChosenServiceCreateReminder() {
-		assertEquals(0, reminderService.getAllReminders().size()); //Assuming nothing is saved in the system
+		assertEquals(0, reminderService.getAllReminders().size()); 
 		
 		SystemTime.setSysTime(Time.valueOf("08:00:00"));
 	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
@@ -750,36 +750,36 @@ public class ReminderServiceTests {
 	}
 	
 	
-//	@Test
-//	public void testCreateSameReminder() {
-//		assertEquals(0, reminderService.getAllReminders().size()); //Assuming nothing is saved in the system
-//		
-//		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-//	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
-//		
-//		String customerName = CUSTOMER_USERNAME;
-//		String chosenServiceName = CSName;
-//		
-//		Time time = Time.valueOf("11:00:00");
-//		Date date = Date.valueOf("2021-12-22");
-//		Reminder r = null;
-//		String description = "Nice";
-//		String error = null;
-//		
-//		try {
-//			r = reminderService.createReminder(chosenServiceName, customerName, date, description, time);
-//		}catch (IllegalArgumentException e) {
-//			error = e.getMessage();
-//		}
-//		
-//		assertNull(r);
-//		assertEquals("This reminder is already created",error);
-//	}
+	@Test
+	public void testCreateSameReminder() {
+		assertEquals(0, reminderService.getAllReminders().size()); 
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+		String customerName = CUSTOMER_USERNAME;
+		String chosenServiceName = CSName;
+		
+		Time time = Time.valueOf("11:00:00");
+		Date date = Date.valueOf("2021-12-22");
+		Reminder r = null;
+		String description = "Nice";
+		String error = null;
+		
+		try {
+			r = reminderService.createReminder(chosenServiceName, customerName, date, description, time);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("This reminder is already created",error);
+	}
 		
 	
 	@Test
 	public void testEditReminder() {//STILL
-		assertEquals(0, reminderService.getAllReminders().size()); //Assuming nothing is saved in the system
+		assertEquals(0, reminderService.getAllReminders().size());
 		
 		SystemTime.setSysTime(Time.valueOf("08:00:00"));
 	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
@@ -792,10 +792,7 @@ public class ReminderServiceTests {
 		Time tBefore = Time.valueOf("08:00:00");
 	    
 		Reminder r = null;
-//		ChosenService cs = new ChosenService();
-		//Date d = Date.valueOf("2021-12-22");
-		//Time t = Time.valueOf("10:00:00");
-		//String description = "Nice";
+
 		try {
 			r = reminderService.editReminder(oldServiceName, chosenServiceName, customerName, dBefore, newDescription, tBefore);
 		}catch (IllegalArgumentException e) {
@@ -812,8 +809,8 @@ public class ReminderServiceTests {
 	}
 
 	@Test
-	public void testEditReminderLateDate() {//STILL
-		assertEquals(0, reminderService.getAllReminders().size()); //Assuming nothing is saved in the system
+	public void testEditReminderLateDate() {
+		assertEquals(0, reminderService.getAllReminders().size()); 
 		
 		SystemTime.setSysTime(Time.valueOf("08:00:00"));
 	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
@@ -827,10 +824,7 @@ public class ReminderServiceTests {
 	    
 		Reminder r = null;
 		String error = null;
-//		ChosenService cs = new ChosenService();
-		//Date d = Date.valueOf("2021-12-22");
-		//Time t = Time.valueOf("10:00:00");
-		//String description = "Nice";
+
 		try {
 			r = reminderService.editReminder(oldServiceName, chosenServiceName, customerName, dBefore, newDescription, tBefore);
 		}catch (IllegalArgumentException e) {
@@ -842,8 +836,62 @@ public class ReminderServiceTests {
 	}
 	
 	@Test
-	public void testEditReminderSameDateLateTime() {//STILL
-		assertEquals(0, reminderService.getAllReminders().size()); //Assuming nothing is saved in the system
+	public void testEditReminderEarlyDate() {
+		assertEquals(0, reminderService.getAllReminders().size());
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+		String customerName = CUSTOMER_USERNAME;
+		String oldServiceName = CSName;
+		String chosenServiceName = CSName2;
+	    String newDescription = "Hi";
+		Date dBefore = Date.valueOf("2021-04-14");
+		Time tBefore = Time.valueOf("07:00:00");
+	    
+		Reminder r = null;
+		String error = null;
+
+		try {
+			r = reminderService.editReminder(oldServiceName, chosenServiceName, customerName, dBefore, newDescription, tBefore);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("Date has passed",error);
+	}
+	
+	@Test
+	public void testEditReminderTodayEarlyTime() {
+		assertEquals(0, reminderService.getAllReminders().size()); 
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+		String customerName = CUSTOMER_USERNAME;
+		String oldServiceName = CSName;
+		String chosenServiceName = CSName2;
+	    String newDescription = "Hi";
+		Date dBefore = Date.valueOf("2021-05-31");
+		Time tBefore = Time.valueOf("07:00:00");
+	    
+		Reminder r = null;
+		String error = null;
+
+		try {
+			r = reminderService.editReminder(oldServiceName, chosenServiceName, customerName, dBefore, newDescription, tBefore);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("Time has passed",error);
+	}
+	
+	@Test
+	public void testEditReminderSameDateLateTime() {
+		assertEquals(0, reminderService.getAllReminders().size()); 
 		
 		SystemTime.setSysTime(Time.valueOf("08:00:00"));
 	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
@@ -857,10 +905,7 @@ public class ReminderServiceTests {
 	    
 		Reminder r = null;
 		String error = null;
-//		ChosenService cs = new ChosenService();
-		//Date d = Date.valueOf("2021-12-22");
-		//Time t = Time.valueOf("10:00:00");
-		//String description = "Nice";
+		
 		try {
 			r = reminderService.editReminder(oldServiceName, chosenServiceName, customerName, dBefore, newDescription, tBefore);
 		}catch (IllegalArgumentException e) {
@@ -873,7 +918,7 @@ public class ReminderServiceTests {
 	
 	@Test
 	public void testEditReminderNullCustomer() {
-		assertEquals(0, reminderService.getAllReminders().size()); //Assuming nothing is saved in the system
+		assertEquals(0, reminderService.getAllReminders().size());
 		
 		SystemTime.setSysTime(Time.valueOf("08:00:00"));
 	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
@@ -887,10 +932,7 @@ public class ReminderServiceTests {
 	    
 		Reminder r = null;
 		String error = null;
-//		ChosenService cs = new ChosenService();
-		//Date d = Date.valueOf("2021-12-22");
-		//Time t = Time.valueOf("10:00:00");
-		//String description = "Nice";
+
 		try {
 			r = reminderService.editReminder(oldServiceName, chosenServiceName, customerName, dBefore, newDescription, tBefore);
 		}catch (IllegalArgumentException e) {
@@ -901,79 +943,662 @@ public class ReminderServiceTests {
 		assertEquals("Customer Invalid",error);
 	}
 	
-//	@Test
-//	public void testEditReminder() {//STILL
-//		assertEquals(0, reminderService.getAllReminders().size()); //Assuming nothing is saved in the system
-//		
-//		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-//	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
-//		
-//		String customerName = CUSTOMER_USERNAME;
-//		String oldServiceName = CSName;
-//		String chosenServiceName = CSName2;
-//	    String newDescription = "Hi";
-//		
-//		Reminder r = null;
-////		ChosenService cs = new ChosenService();
-//		//Date d = Date.valueOf("2021-12-22");
-//		//Time t = Time.valueOf("10:00:00");
-//		//String description = "Nice";
-//		try {
-//			r = reminderService.editReminder(oldServiceName, chosenServiceName, customerName, d, newDescription, t);
-//		}catch (IllegalArgumentException e) {
-//			fail();
-//		}
-//		
-//		assertNotNull(r);
-//		assertEquals(chosenServiceName, r.getChosenService().getName());
-//		assertEquals(customerName,r.getCustomer().getUsername());
-//		assertEquals(d,r.getDate());
-//		assertEquals(newDescription,r.getDescription());
-//		assertEquals(t,r.getTime());
-//	
-//	}
-//	@Test
-//	public void testDeleteReminder() {//STILL
-//		//assertEquals(0, reminderService.getAllReminders().size()); //Assuming nothing is saved in the system
-//		
-//		Reminder r = null;
-//		ChosenService cs = new ChosenService();
-//		Customer c = new Customer();
-//		Date d = Date.valueOf("2021-12-22");
-//		SystemTime.setSysDate(d);
-//		String description = "Nice";
-//		Time t = Time.valueOf("10:00:00");
-//		SystemTime.setSysTime(t);
-//		try {
-//			r = reminderService.createReminder(cs, c, d, description, t);
-//			r = reminderService.deleteReminder(cs, c, d, description, t);
-//		}catch (IllegalArgumentException e) {
-//			fail();
-//		}
-//		
-//		assertNull(r);
-//	}
-//	
-//	@Test
-//	public void testCreateReminderNull() { //DONE
-//		assertEquals(0, reminderService.getAllReminders().size()); //Assuming nothing is saved in the system
-//		
-//		ChosenService cs = null;
-//		Customer c = null;
-//		Date d = null;
-//		Reminder r = null;
-//		String description = null;
-//		Time t = null;
-//		String error = null;
-//		try {
-//			r = reminderService.createReminder(cs, c, d, description, t);
-//		}catch (IllegalArgumentException e) {
-//			error = e.getMessage();
-//		}
-//		
-//		assertNull(r);
-//		assertEquals("Service not found. Customer not found. Invalid date. Invalid time.", error);
-//		
-//	}
+	@Test
+	public void testEditReminderEmptyCustomer() {
+		assertEquals(0, reminderService.getAllReminders().size()); 
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+		String customerName = "";
+		String oldServiceName = CSName;
+		String chosenServiceName = CSName2;
+	    String newDescription = "Hi";
+		Date dBefore = Date.valueOf("2021-12-14");
+		Time tBefore = Time.valueOf("08:00:00");
+	    
+		Reminder r = null;
+		String error = null;
+
+		try {
+			r = reminderService.editReminder(oldServiceName, chosenServiceName, customerName, dBefore, newDescription, tBefore);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("Customer Invalid",error);
+	}
+	
+	@Test
+	public void testEditReminderSpacesCustomer() {
+		assertEquals(0, reminderService.getAllReminders().size()); 
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+		String customerName = "       ";
+		String oldServiceName = CSName;
+		String chosenServiceName = CSName2;
+	    String newDescription = "Hi";
+		Date dBefore = Date.valueOf("2021-12-14");
+		Time tBefore = Time.valueOf("08:00:00");
+	    
+		Reminder r = null;
+		String error = null;
+
+		try {
+			r = reminderService.editReminder(oldServiceName, chosenServiceName, customerName, dBefore, newDescription, tBefore);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("Customer Invalid",error);
+	}
+	
+	@Test
+	public void testEditReminderNotExistCustomer() {
+		assertEquals(0, reminderService.getAllReminders().size()); 
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+		String customerName = "theCustomer";
+		String oldServiceName = CSName;
+		String chosenServiceName = CSName2;
+	    String newDescription = "Hi";
+		Date dBefore = Date.valueOf("2021-12-14");
+		Time tBefore = Time.valueOf("08:00:00");
+	    
+		Reminder r = null;
+		String error = null;
+
+		try {
+			r = reminderService.editReminder(oldServiceName, chosenServiceName, customerName, dBefore, newDescription, tBefore);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("The following user does not exist: " + customerName,error);
+	}
+	
+	
+	
+	
+	@Test
+	public void testEditReminderNullOldService() {
+		assertEquals(0, reminderService.getAllReminders().size()); 
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+		String customerName = CUSTOMER_USERNAME;
+		String oldServiceName = null;
+		String chosenServiceName = CSName2;
+	    String newDescription = "Hi";
+		Date dBefore = Date.valueOf("2021-12-14");
+		Time tBefore = Time.valueOf("08:00:00");
+	    
+		Reminder r = null;
+		String error = null;
+
+		try {
+			r = reminderService.editReminder(oldServiceName, chosenServiceName, customerName, dBefore, newDescription, tBefore);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("Old Service Invalid",error);
+	}
+	
+	@Test
+	public void testEditReminderEmptyOldService() {
+		assertEquals(0, reminderService.getAllReminders().size()); 
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+		String customerName = CUSTOMER_USERNAME;
+		String oldServiceName = "";
+		String chosenServiceName = CSName2;
+	    String newDescription = "Hi";
+		Date dBefore = Date.valueOf("2021-12-14");
+		Time tBefore = Time.valueOf("08:00:00");
+	    
+		Reminder r = null;
+		String error = null;
+
+		try {
+			r = reminderService.editReminder(oldServiceName, chosenServiceName, customerName, dBefore, newDescription, tBefore);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("Old Service Invalid",error);
+	}
+	
+	@Test
+	public void testEditReminderSpacesOldService() {
+		assertEquals(0, reminderService.getAllReminders().size()); 
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+		String customerName = CUSTOMER_USERNAME;
+		String oldServiceName = "    ";
+		String chosenServiceName = CSName2;
+	    String newDescription = "Hi";
+		Date dBefore = Date.valueOf("2021-12-14");
+		Time tBefore = Time.valueOf("08:00:00");
+	    
+		Reminder r = null;
+		String error = null;
+
+		try {
+			r = reminderService.editReminder(oldServiceName, chosenServiceName, customerName, dBefore, newDescription, tBefore);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("Old Service Invalid",error);
+	}
+	
+	
+	@Test
+	public void testEditReminderNotExistOldService() {
+		assertEquals(0, reminderService.getAllReminders().size()); 
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+		String customerName = CUSTOMER_USERNAME;
+		String oldServiceName = "maintenance";
+		String chosenServiceName = CSName2;
+	    String newDescription = "Hi";
+		Date dBefore = Date.valueOf("2021-12-14");
+		Time tBefore = Time.valueOf("08:00:00");
+	    
+		Reminder r = null;
+		String error = null;
+
+		try {
+			r = reminderService.editReminder(oldServiceName, chosenServiceName, customerName, dBefore, newDescription, tBefore);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("The following service does not exist: " + oldServiceName,error);
+	}
+	
+	@Test
+	public void testEditReminderEmptyNullNewService() {
+		assertEquals(0, reminderService.getAllReminders().size());
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+		String customerName = CUSTOMER_USERNAME;
+		String oldServiceName = CSName;
+		String chosenServiceName = null;
+	    String newDescription = "Hi";
+		Date dBefore = Date.valueOf("2021-12-14");
+		Time tBefore = Time.valueOf("08:00:00");
+	    
+		Reminder r = null;
+		String error = null;
+
+		try {
+			r = reminderService.editReminder(oldServiceName, chosenServiceName, customerName, dBefore, newDescription, tBefore);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("New Service Invalid",error);
+	}
+	
+	@Test
+	public void testEditReminderEmptyNewService() {
+		assertEquals(0, reminderService.getAllReminders().size()); 
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+		String customerName = CUSTOMER_USERNAME;
+		String oldServiceName = CSName;
+		String chosenServiceName = "";
+	    String newDescription = "Hi";
+		Date dBefore = Date.valueOf("2021-12-14");
+		Time tBefore = Time.valueOf("08:00:00");
+	    
+		Reminder r = null;
+		String error = null;
+
+		try {
+			r = reminderService.editReminder(oldServiceName, chosenServiceName, customerName, dBefore, newDescription, tBefore);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("New Service Invalid",error);
+	}
+	
+	
+	@Test
+	public void testEditReminderSpacesNewService() {
+		assertEquals(0, reminderService.getAllReminders().size()); 
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+		String customerName = CUSTOMER_USERNAME;
+		String oldServiceName = CSName;
+		String chosenServiceName = "     ";
+	    String newDescription = "Hi";
+		Date dBefore = Date.valueOf("2021-12-14");
+		Time tBefore = Time.valueOf("08:00:00");
+	    
+		Reminder r = null;
+		String error = null;
+
+		try {
+			r = reminderService.editReminder(oldServiceName, chosenServiceName, customerName, dBefore, newDescription, tBefore);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("New Service Invalid",error);
+	}
+	
+	@Test
+	public void testEditReminderNotExistNewService() {
+		assertEquals(0, reminderService.getAllReminders().size()); 
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+		String customerName = CUSTOMER_USERNAME;
+		String oldServiceName = CSName;
+		String chosenServiceName = "fix car";
+	    String newDescription = "Hi";
+		Date dBefore = Date.valueOf("2021-12-14");
+		Time tBefore = Time.valueOf("08:00:00");
+	    
+		Reminder r = null;
+		String error = null;
+
+		try {
+			r = reminderService.editReminder(oldServiceName, chosenServiceName, customerName, dBefore, newDescription, tBefore);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("The following service does not exist: " + chosenServiceName,error);
+	}
+	
+	
+	@Test
+	public void testEditReminderNullDate() {
+		assertEquals(0, reminderService.getAllReminders().size()); 
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+		String customerName = CUSTOMER_USERNAME;
+		String oldServiceName = CSName;
+		String chosenServiceName = CSName2;
+	    String newDescription = "Hi";
+		Date dBefore = null;//Date.valueOf("2021-12-14");
+		Time tBefore = Time.valueOf("08:00:00");
+	    
+		Reminder r = null;
+		String error = null;
+
+		try {
+			r = reminderService.editReminder(oldServiceName, chosenServiceName, customerName, dBefore, newDescription, tBefore);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("Date Invalid",error);
+	}
+	
+	@Test
+	public void testEditReminderNullTime() {
+		assertEquals(0, reminderService.getAllReminders().size()); 
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+		String customerName = CUSTOMER_USERNAME;
+		String oldServiceName = CSName;
+		String chosenServiceName = CSName2;
+	    String newDescription = "Hi";
+		Date dBefore = Date.valueOf("2021-12-14");
+		Time tBefore = null;
+	    
+		Reminder r = null;
+		String error = null;
+
+		try {
+			r = reminderService.editReminder(oldServiceName, chosenServiceName, customerName, dBefore, newDescription, tBefore);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("Time Invalid",error);
+	}
+	
+	@Test
+	public void testEditReminderNullDescription() {
+		assertEquals(0, reminderService.getAllReminders().size()); 
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+		String customerName = CUSTOMER_USERNAME;
+		String oldServiceName = CSName;
+		String chosenServiceName = CSName2;
+	    String newDescription = null;
+		Date dBefore = Date.valueOf("2021-12-14");
+		Time tBefore = Time.valueOf("08:00:00");
+	    
+		Reminder r = null;
+		String error = null;
+
+		try {
+			r = reminderService.editReminder(oldServiceName, chosenServiceName, customerName, dBefore, newDescription, tBefore);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("Description Invalid",error);
+	}
+	
+	@Test
+	public void testEditReminderEmptyDescription() {
+		assertEquals(0, reminderService.getAllReminders().size()); 
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+		String customerName = CUSTOMER_USERNAME;
+		String oldServiceName = CSName;
+		String chosenServiceName = CSName2;
+	    String newDescription = "";
+		Date dBefore = Date.valueOf("2021-12-14");
+		Time tBefore = Time.valueOf("08:00:00");
+	    
+		Reminder r = null;
+		String error = null;
+
+		try {
+			r = reminderService.editReminder(oldServiceName, chosenServiceName, customerName, dBefore, newDescription, tBefore);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("Description Invalid",error);
+	}
+	
+	@Test
+	public void testEditReminderSpacesDescription() {
+		assertEquals(0, reminderService.getAllReminders().size()); 
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+		String customerName = CUSTOMER_USERNAME;
+		String oldServiceName = CSName;
+		String chosenServiceName = CSName2;
+	    String newDescription = "      ";
+		Date dBefore = Date.valueOf("2021-12-14");
+		Time tBefore = Time.valueOf("08:00:00");
+	    
+		Reminder r = null;
+		String error = null;
+
+		try {
+			r = reminderService.editReminder(oldServiceName, chosenServiceName, customerName, dBefore, newDescription, tBefore);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("Description Invalid",error);
+	}
+	
+
+	@Test
+	public void testDeleteReminder() {//STILL
+		assertEquals(0, reminderService.getAllReminders().size()); 
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+	    String customerName = CUSTOMER_USERNAME;
+		String serviceName = CSName;
+		Reminder r = null;
+		
+		try {
+			r = reminderService.deleteReminder(serviceName, customerName);
+		}catch (IllegalArgumentException e) {
+			fail();
+		}
+		
+		assertNull(r);
+	}
+	
+	@Test
+	public void testDeleteReminderNullCustomerName() {//STILL
+		assertEquals(0, reminderService.getAllReminders().size());
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+	    String customerName = null;
+		String serviceName = CSName;
+		Reminder r = null;
+		String error = null;
+		
+		try {
+			r = reminderService.deleteReminder(serviceName, customerName);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("Customer Invalid",error);
+	}
+	
+	@Test
+	public void testDeleteReminderEmptyCustomerName() {
+		assertEquals(0, reminderService.getAllReminders().size()); 
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+	    String customerName = "";
+		String serviceName = CSName;
+		Reminder r = null;
+		String error = null;
+		
+		try {
+			r = reminderService.deleteReminder(serviceName, customerName);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("Customer Invalid",error);
+	}
+	
+	@Test
+	public void testDeleteReminderSpacesCustomerName() {
+		assertEquals(0, reminderService.getAllReminders().size());
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+	    String customerName = "          ";
+		String serviceName = CSName;
+		Reminder r = null;
+		String error = null;
+		
+		try {
+			r = reminderService.deleteReminder(serviceName, customerName);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("Customer Invalid",error);
+	}
+	
+	@Test
+	public void testDeleteReminderCustomerNotExist() {
+		assertEquals(0, reminderService.getAllReminders().size()); 
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+	    String customerName = "Messi";
+		String serviceName = CSName;
+		Reminder r = null;
+		String error = null;
+		
+		try {
+			r = reminderService.deleteReminder(serviceName, customerName);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("The following user does not exist: " + customerName,error);
+	}
+	
+	
+	@Test
+	public void testDeleteReminderNullServiceName() {
+		assertEquals(0, reminderService.getAllReminders().size());
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+	    String customerName = CUSTOMER_USERNAME;
+		String serviceName = null;
+		Reminder r = null;
+		String error = null;
+		
+		try {
+			r = reminderService.deleteReminder(serviceName, customerName);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("Service Invalid",error);
+	}	
+	
+	@Test
+	public void testDeleteReminderEmptyServiceName() {
+		assertEquals(0, reminderService.getAllReminders().size()); 
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+	    String customerName = CUSTOMER_USERNAME;
+		String serviceName = "";
+		Reminder r = null;
+		String error = null;
+		
+		try {
+			r = reminderService.deleteReminder(serviceName, customerName);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("Service Invalid",error);
+	}
+	
+	@Test
+	public void testDeleteReminderSpacesServiceName() {
+		assertEquals(0, reminderService.getAllReminders().size()); 
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+	    String customerName = CUSTOMER_USERNAME;
+		String serviceName = "      ";
+		Reminder r = null;
+		String error = null;
+		
+		try {
+			r = reminderService.deleteReminder(serviceName, customerName);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("Service Invalid",error);
+	}
+	
+	@Test
+	public void testDeleteReminderServiceNotExist() {
+		assertEquals(0, reminderService.getAllReminders().size()); 
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+	    String customerName = CUSTOMER_USERNAME;
+		String serviceName = "Change door";
+		Reminder r = null;
+		String error = null;
+		
+		try {
+			r = reminderService.deleteReminder(serviceName, customerName);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("The following service does not exist: " + serviceName,error);
+	}
+	
+	@Test
+	public void testDeleteReminderNotExist() {
+		assertEquals(0, reminderService.getAllReminders().size()); 
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+	    String customerName = CUSTOMER_USERNAME;
+		String serviceName = CSName2;
+		Reminder r = null;
+		String error = null;
+		
+		try {
+			r = reminderService.deleteReminder(serviceName, customerName);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("Reminder does not exist",error);
+	}
 	
 }

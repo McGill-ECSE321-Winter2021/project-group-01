@@ -9,6 +9,7 @@ public class ChosenService
 
     private int duration;
     private String name;
+    private Double paymentCost;
    
     public ChosenService() {  }
 

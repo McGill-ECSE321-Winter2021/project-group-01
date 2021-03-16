@@ -82,7 +82,7 @@ public class BusinessServiceTest {
 			}
 		});
 	
-		lenient().when(operatingHourRepository.findByDayOfWeek(OPERATINGHOUR_DAYOFWEEK)).thenAnswer((InvocationOnMock invocation) -> {
+		lenient().when(operatingHourRepository.findByDayOfWeek(any(DayOfWeek.class))).thenAnswer((InvocationOnMock invocation) -> {
 
 			if(invocation.getArgument(0).equals(OPERATINGHOUR_DAYOFWEEK)) {
 				OperatingHour operatingHour = new OperatingHour();
@@ -99,9 +99,9 @@ public class BusinessServiceTest {
 		Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
 			return invocation.getArgument(0);
 		};
-
 		lenient().when(businessRepository.save(any(Business.class))).thenAnswer(returnParameterAsAnswer);
 		lenient().when(operatingHourRepository.save(any(OperatingHour.class))).thenAnswer(returnParameterAsAnswer);
+
 	}
 	
 	@Test

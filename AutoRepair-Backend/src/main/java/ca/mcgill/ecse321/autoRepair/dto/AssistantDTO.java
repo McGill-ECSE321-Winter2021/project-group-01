@@ -1,10 +1,5 @@
 package ca.mcgill.ecse321.autoRepair.dto;
 
-import java.util.Collections;
-import java.util.List;
-
-import ca.mcgill.ecse321.autoRepair.model.Reminder;
-
 public class AssistantDTO {
 
 	private String username;

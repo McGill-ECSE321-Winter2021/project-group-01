@@ -1,28 +1,35 @@
 package ca.mcgill.ecse321.autoRepair.dto;
 
-public class ReviewDTO {
+import java.sql.Date;
+import java.sql.Time;
+
+public class ReminderDTO {
 	
 	private String description;
-	private int serviceRating;
+	private Date date;
+	private Time time;
 	private CustomerDTO customer;
 	private AppointmentDTO appointment;
-	private ChosenServiceDTO service;
 	
-	public ReviewDTO(String description, int serviceRating, CustomerDTO customer, 
-			AppointmentDTO appointment, ChosenServiceDTO service) {
+	public ReminderDTO(String description, Date date, Time time, CustomerDTO customer,
+			AppointmentDTO appointment) {
 		this.description = description;
-		this.serviceRating = serviceRating;
+		this.date = date;
+		this.time = time;
 		this.appointment = appointment;
 		this.customer = customer;
-		this.service = service;
 	}
 	
 	public String getDescription() {
 		return description;
 	}
 	
-	public int getServiceRating() {
-		return serviceRating;
+	public Date getDate() {
+		return date;
+	}
+	
+	public Time getTime() {
+		return time;
 	}
 
 	public CustomerDTO getCustomer() {
@@ -31,10 +38,6 @@ public class ReviewDTO {
 
 	public AppointmentDTO getAppointment() {
 		return appointment;
-	}
-
-	public ChosenServiceDTO getService() {
-		return service;
 	}
 
 }

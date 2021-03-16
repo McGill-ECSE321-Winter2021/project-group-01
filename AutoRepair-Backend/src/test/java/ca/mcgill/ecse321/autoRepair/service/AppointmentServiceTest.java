@@ -108,6 +108,7 @@ public class AppointmentServiceTest {
                 Car car = new Car();
                 car.setModel(CAR_MODEL);
                 car.setTransmission(CAR_TRANSMISSION);
+                car.setPlateNumber(CAR_PLATE);
                 List<Car> cars = new ArrayList<Car>();
 
 
@@ -176,6 +177,7 @@ public class AppointmentServiceTest {
                 return null;
             }
         });
+
         lenient().when(operatingHourRepository.findByDayOfWeek(any(OperatingHour.DayOfWeek.class))).thenAnswer((InvocationOnMock invocation) -> {
             if (invocation.getArgument(0).equals(DAY_OF_WEEK) || invocation.getArgument(0).equals(DAY_OF_WEEK2)) {
                 OperatingHour operatingHour = new OperatingHour();
@@ -192,7 +194,6 @@ public class AppointmentServiceTest {
                 return null;
             }
         });
-
 
 
         lenient().when(appointmentRepository.findAppointmentByStartDateAndStartTime(anyString(), anyString())).thenAnswer((InvocationOnMock invocation) -> {
@@ -262,7 +263,6 @@ public class AppointmentServiceTest {
         SystemTime.setSysTime(Time.valueOf("08:00:00"));
         SystemTime.setSysDate(Date.valueOf("2021-03-31"));
         Time startTime = Time.valueOf("10:00:00");
-        String error = null;
 
         Appointment appointment = null;
 
@@ -646,7 +646,6 @@ public class AppointmentServiceTest {
         Time oldStartTime = Time.valueOf("10:00:00");
         String oldServiceName = "Test Service 2";
         String newServiceName = "TestService";
-        String error = null;
 
         Appointment updatedApp = null;
 
@@ -671,7 +670,6 @@ public class AppointmentServiceTest {
         Time oldStartTime = Time.valueOf("10:00:00");
         String oldServiceName = "Test Service 2";
         String newServiceName = "TestService";
-        String error = null;
 
         Appointment updatedApp = null;
 
@@ -697,7 +695,6 @@ public class AppointmentServiceTest {
         String oldServiceName = "Test Service 2";
         Date newStartDate = Date.valueOf("2021-03-31");
         Time newStartTime = Time.valueOf("11:00:00");
-        String error = null;
 
         Appointment updatedApp = null;
 
@@ -724,7 +721,6 @@ public class AppointmentServiceTest {
         Date newStartDate = Date.valueOf("2021-04-02");
         Time newStartTime = Time.valueOf("11:00:00");
         String newServiceName = "TestService";
-        String error = null;
 
         Appointment updatedApp = null;
 
@@ -751,7 +747,6 @@ public class AppointmentServiceTest {
         Date newStartDate = Date.valueOf("2021-04-02");
         Time newStartTime = Time.valueOf("06:00:00");
         String newServiceName = "TestService";
-        String error = null;
 
         Appointment updatedApp = null;
 
@@ -823,7 +818,6 @@ public class AppointmentServiceTest {
         Date newStartDate = Date.valueOf("2021-04-30");
         Time newStartTime = Time.valueOf("06:00:00");
         String newServiceName = "TestService";
-        String error = null;
 
         Appointment updatedApp = null;
 
@@ -1309,7 +1303,6 @@ public class AppointmentServiceTest {
         String serviceName = "Test Service 2";
         Date startDate = Date.valueOf("2021-04-30");
         Time startTime = Time.valueOf("10:00:00");
-        String error = null;
 
         Appointment appointment = appointmentRepository.findAppointmentByStartDateAndStartTime(startDate.toString(),startTime.toString());
 
@@ -1330,7 +1323,6 @@ public class AppointmentServiceTest {
         String serviceName = "Test Service 2";
         Date startDate = Date.valueOf("2021-03-31");
         Time startTime = Time.valueOf("10:00:00");
-        String error = null;
 
         Appointment appointment = appointmentRepository.findAppointmentByStartDateAndStartTime(startDate.toString(),startTime.toString());
 

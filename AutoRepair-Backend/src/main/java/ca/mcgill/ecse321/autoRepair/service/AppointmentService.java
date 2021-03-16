@@ -8,8 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -195,7 +193,7 @@ public class AppointmentService {
         boolean isAvailable=true;
         Date startDate = timeSlot.getStartDate();
         Locale locale = new Locale("en");
-        OperatingHour operatingHour = operatingHourRepository.findByDayOfWeek(getDayString(startDate,locale));
+        OperatingHour operatingHour = operatingHourRepository.findByDayOfWeek(TimeSlotService.getDayString(startDate,locale));
         LocalTime startTime =timeSlot.getStartTime().toLocalTime();
         LocalTime endTime = timeSlot.getEndTime().toLocalTime();
         LocalTime startTimeOH = operatingHour.getStartTime().toLocalTime();
@@ -230,33 +228,6 @@ public class AppointmentService {
                 }
             }
         return false;
-    }
-
-    public static OperatingHour.DayOfWeek getDayString(Date date, Locale locale) {
-        DateFormat formatter = new SimpleDateFormat("EEEE", locale);
-        String stringDate = formatter.format(date);
-        if(OperatingHour.DayOfWeek.Friday.toString().equals(stringDate)){
-            return OperatingHour.DayOfWeek.Friday;
-        }
-        else if(OperatingHour.DayOfWeek.Thursday.toString().equals(stringDate)){
-            return OperatingHour.DayOfWeek.Thursday;
-        }
-        else if(OperatingHour.DayOfWeek.Saturday.toString().equals(stringDate)){
-            return OperatingHour.DayOfWeek.Saturday;
-        }
-        else if(OperatingHour.DayOfWeek.Sunday.toString().equals(stringDate)){
-            return OperatingHour.DayOfWeek.Sunday;
-        }
-        else if(OperatingHour.DayOfWeek.Wednesday.toString().equals(stringDate)){
-            return OperatingHour.DayOfWeek.Wednesday;
-        }
-        else if(OperatingHour.DayOfWeek.Tuesday.toString().equals(stringDate)){
-            return OperatingHour.DayOfWeek.Tuesday;
-        }
-        else if(OperatingHour.DayOfWeek.Monday.toString().equals(stringDate)){
-            return OperatingHour.DayOfWeek.Monday;
-        }
-        return null;
     }
 
 }

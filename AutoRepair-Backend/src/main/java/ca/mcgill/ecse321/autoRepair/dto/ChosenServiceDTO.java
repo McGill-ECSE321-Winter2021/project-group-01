@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.autoRepair.dto;
-public class ChosenServiceDTO {
 
+public class ChosenServiceDTO {
+	
 	private String name;
 	private int duration;
 
@@ -16,5 +17,5 @@ public class ChosenServiceDTO {
 	public int getDuration() {
 		return duration;
 	}
-
+	
 }

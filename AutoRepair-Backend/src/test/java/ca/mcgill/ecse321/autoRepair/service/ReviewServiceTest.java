@@ -1144,7 +1144,7 @@ public class ReviewServiceTest {
 		appointment.setTimeSlot(timeslot);
 		appointment.setId(APPOINTMENT_ID);
 
-		Review review = reviewRepo.findReviewByAppointment(appointment);
+		Review review = service.getReview(appointment);
 		String error = null;
 		boolean isDeleted = false;
 
@@ -1170,6 +1170,21 @@ public class ReviewServiceTest {
 			error = e.getMessage();
 		}
 		assertEquals(4.5, averageServiceRating);
+	}
+	
+	@Test
+	public void tesgetAverageServiceReviewNullService() {
+		assertEquals(0, service.getAllReviews().size());
+
+		String error = null;
+		double averageServiceRating = 0.0;
+
+		try {
+			averageServiceRating = service.getAverageServiceReview("Tire change");
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertEquals(error, "Service not found");
 	}
 	
 }

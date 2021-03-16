@@ -1157,56 +1157,20 @@ public class ReviewServiceTest {
 		assertEquals(error, "Review not deleted. Appointment not found");
 	}
 
-//	@Test
-//	public void tesgetAverageServiceReview() {
-//		assertEquals(0, service.getAllReviews().size());
-//
-//		TimeSlot timeslot = new TimeSlot();
-//		timeslot.setStartDate(START_DATE);
-//		timeslot.setEndDate(END_DATE);
-//		timeslot.setStartTime(START_TIME);
-//		timeslot.setEndTime(END_TIME);
-//		
-//		TimeSlot timeslot2 = new TimeSlot();
-//		timeslot2.setStartDate(START_DATE2);
-//		timeslot2.setEndDate(END_DATE2);
-//		timeslot2.setStartTime(START_TIME2);
-//		timeslot2.setEndTime(END_TIME2);
-//
-//		Appointment appointment = new Appointment();
-//		appointment.setChosenService(serviceRepo.findChosenServiceByName(CHOSENSERVICE_NAME));
-//		appointment.setCustomer(cusRepo.findCustomerByUsername(CUSTOMER_USERNAME));
-//		appointment.setTimeSlot(timeslot);
-//		appointment.setId(APPOINTMENT_ID);
-//		
-//		Appointment appointment2 = new Appointment();
-//		appointment.setChosenService(serviceRepo.findChosenServiceByName(CHOSENSERVICE_NAME2));
-//		appointment.setCustomer(cusRepo.findCustomerByUsername(CUSTOMER_USERNAME2));
-//		appointment.setTimeSlot(timeslot2);
-//		appointment.setId(APPOINTMENT_ID2);
-//
-//		String description = "Good";
-//		int serviceRating = 4;
-//		Review review = null;
-//		
-//		String description2 = "Excellent";
-//		int serviceRating2 = 5;
-//		Review review2 = null;
-//		String error = null;
-//		double averageServiceRating = 0.0;
-//
-//		try {
-//			review = service.createReview(appointment, chosenService, customer, description, serviceRating);
-//			review2 = service.createReview(appointment2, chosenService, customer2, description2, serviceRating2);
-//			averageServiceRating = service.getAverageServiceReview(chosenService);
-//		}catch (IllegalArgumentException e) {
-//			error = e.getMessage();
-//		}
-//
-//		assertNotNull(review);
-//		assertNotNull(review2);
-//		assertEquals(4.5, averageServiceRating);
-//	}
+	@Test
+	public void tesgetAverageServiceReview() {
+		assertEquals(0, service.getAllReviews().size());
+
+		String error = null;
+		double averageServiceRating = 0.0;
+
+		try {
+			averageServiceRating = service.getAverageServiceReview(CHOSENSERVICE_NAME);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertEquals(4.5, averageServiceRating);
+	}
 	
 }
 

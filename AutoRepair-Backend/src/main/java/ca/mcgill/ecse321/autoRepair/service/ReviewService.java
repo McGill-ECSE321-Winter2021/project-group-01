@@ -130,16 +130,21 @@ public class ReviewService {
 		return toList(reviewRepository.findReviewByCustomer(customer));
 	}
 
-	//	@Transactional
-	//	public double getAverageServiceReview(ChosenService service) {
-	//		List<Review> reviewsForAService = viewReviewsForService(service);
-	//		int totalServiceRating = 0;
-	//		for(Review review : reviewsForAService) {
-	//			totalServiceRating = totalServiceRating + review.getServiceRating();
-	//		}
-	//		double averageServiceRating = (double)totalServiceRating/(double)reviewsForAService.size();
-	//		return averageServiceRating;
-	//	}
+	@Transactional
+	public double getAverageServiceReview(String serviceName) {
+		ChosenService service = serviceRepository.findChosenServiceByName(serviceName);
+		
+		if(service == null) {
+			throw new IllegalArgumentException("Service not found");
+		}
+		List<Review> reviewsForAService = viewReviewsForService(service);
+		int totalServiceRating = 0;
+		for(Review review : reviewsForAService) {
+			totalServiceRating = totalServiceRating + review.getServiceRating();
+		}
+		double averageServiceRating = (double)totalServiceRating/(double)reviewsForAService.size();
+		return averageServiceRating;
+	}
 
 	@Transactional
 	public Review getReview(Appointment appointment) {

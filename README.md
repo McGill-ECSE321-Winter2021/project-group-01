@@ -36,3 +36,15 @@ To access the wiki>>[Sprint 1](https://github.com/McGill-ECSE321-Winter2021/proj
 | Mohammad Saeid Nafar    | Requirements, Use Case Diagrams, Domain Model, Gradle/Spring/Heroku setup , Persistence Testing|               
 | Marc Saber              | Requirements, Use Case Diagrams, Domain Model, Gradle/Spring/Heroku setup , Persistence Testing|               
 | Tamara Zard Aboujaoudeh | Requirements, Use Case Diagrams, Domain Model, Gradle/Spring/Heroku setup , Persistence Testing|               
+
+## Sprint 2
+To access the wiki>>
+### Roles and Tasks
+| Name                    | Roles/Tasks                                                                                                   | 
+| ------------------------| --------------------------------------------------------------------------------------------------------------|
+| Robert Aprahamian       | Backend Implementation, _Service_ & _Reminder_ classes Unit Testing, Integration Testing, Documentation       |              
+| Fadi Tawfik Beshay      | Backend Implementation, _OperatingHour_ & _Business_ classes Unit Testing, Integration Testing, Documentation |                
+| Eric Chehata            | Backend Implementation, _Cutomer, Profile_ & _Car_ classes Unit Testing, Integration Testing, Documentation   |             
+| Mohammad Saeid Nafar    | Backend Implementation, _Review_ class Unit Testing, Integration Testing, Documentation                       |         
+| Marc Saber              | Backend Implementation, _Owner_ & _Assistant_ classes Unit Testing, Integration Testing, Documentation        | 
+| Tamara Zard Aboujaoudeh | Backend Implementation, _Appointment_ & _TimeSlot_ classes Unit Testing, Integration Testing, Documentation   |

@@ -15,7 +15,7 @@ public class OwnerDTO {
 	}
 	
 	public OwnerDTO(String username) {
-		this.username = username;
+ 		this.username = username;
 	}
 	
 	public OwnerDTO(String username,String password) {

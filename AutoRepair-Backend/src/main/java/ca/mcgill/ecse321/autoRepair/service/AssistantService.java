@@ -20,7 +20,7 @@ public class AssistantService {
 	public Assistant createAssistant(String username,String password) {
 		
 	 	if(username==null || username=="") throw new IllegalArgumentException("Username cannot be blank");
-		if(password==null || password=="") throw new IllegalArgumentException("Password cannot be blank");
+	 	if(password==null || password=="") throw new IllegalArgumentException("Password cannot be blank");
 		
 		Assistant assistant = new Assistant();
 		if (usernameIsValidAssistant(username)) {

@@ -267,7 +267,7 @@ public class AssistantServiceTest {
 		assistant = assisService.updateAssistant(ASSISTANT_USERNAME,ASSISTANT_USERNAME,ASSISTANT_PASSWORD);
 	}catch(IllegalArgumentException e) {
 	 	fail();
-	}
+	}	
 	assertNotNull(assistant);
 	assertEquals(ASSISTANT_USERNAME,assistant.getUsername());
 	assertEquals(ASSISTANT_PASSWORD,assistant.getPassword());

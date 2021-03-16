@@ -55,7 +55,7 @@ public class OwnerServiceTest {
 	public void setMockOutput() {
 			
 		lenient().when(ownerRepo.findOwnerByUsername(anyString())).thenAnswer((InvocationOnMock invocation) -> {
-			if(invocation.getArgument(0).equals(OWNER_USERNAME)) {
+ 		 	if(invocation.getArgument(0).equals(OWNER_USERNAME)) {
 				Owner owner = new Owner();
 			    owner.setUsername(OWNER_USERNAME);
 		 		owner.setPassword(OWNER_PASSWORD);

@@ -33,7 +33,7 @@ public class OwnerService {
 		if (passwordIsValid(password)) {
 			owner.setPassword(password);
 		}
-		ownerRepository.save(owner);
+	 	ownerRepository.save(owner);
 		return owner;
 	}
 	

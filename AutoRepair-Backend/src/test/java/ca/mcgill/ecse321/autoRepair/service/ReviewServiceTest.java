@@ -31,7 +31,9 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
+import ca.mcgill.ecse321.autoRepair.dao.AppointmentRepository;
 import ca.mcgill.ecse321.autoRepair.dao.CarRepository;
+import ca.mcgill.ecse321.autoRepair.dao.ChosenServiceRepository;
 import ca.mcgill.ecse321.autoRepair.dao.CustomerRepository;
 import ca.mcgill.ecse321.autoRepair.dao.ProfileRepository;
 import ca.mcgill.ecse321.autoRepair.dao.ReviewRepository;
@@ -49,6 +51,9 @@ public class ReviewServiceTest {
 
 	@Mock
 	private ReviewRepository reviewRepo;
+	
+	@Mock
+	private ChosenServiceRepository serviceRepo;
 
 	@Mock
 	private CustomerRepository cusRepo;
@@ -58,9 +63,21 @@ public class ReviewServiceTest {
 
 	@Mock
 	private CarRepository carRepo;
+	
+	@Mock
+	private AppointmentRepository appRepo;
+	
+	@InjectMocks
+	private AppointmentService appointmentService;
 
 	@InjectMocks
 	private CustomerService customerService;
+	
+	@InjectMocks
+	private CarService carService;
+	
+	@InjectMocks
+	private ProfileService profileService;
 
 	@InjectMocks
 	private ReviewService service;
@@ -69,22 +86,30 @@ public class ReviewServiceTest {
 	private static final int REVIEW_RATING = 4;
 	private static final String REVIEW_DESCRIPTION2 = "Excellent";
 	private static final int REVIEW_RATING2 = 5;
+	
 	private static final Long APPOINTMENT_ID = 62784236L;
 	private static final Long APPOINTMENT_ID2 = 48724639L;
+	
 	private static final String CHOSENSERVICE_NAME = "Oil change";
+	private static final String CHOSENSERVICE_NAME2 = "Body repair";
+	
 	private static final int CHOSENSERVICE_DURATION = 30;
-	private static final Date START_DATE = Date.valueOf("2021-03-14");
-	private static final Date END_DATE = Date.valueOf("2021-03-14");
+	
+	private static final Date START_DATE = Date.valueOf("2021-07-14");
+	private static final Date END_DATE = Date.valueOf("2021-07-14");
 	private static final Time START_TIME = Time.valueOf("09:45:00");
 	private static final Time END_TIME = Time.valueOf("10:15:00");
+	private static final int DURATION = 30;
 
-	private static final Date START_DATE2 = Date.valueOf("2021-02-14");
-	private static final Date END_DATE2 = Date.valueOf("2021-02-14");
-	private static final Time START_TIME2 = Time.valueOf("08:45:00");
-	private static final Time END_TIME2 = Time.valueOf("09:15:00");
+	private static final Date START_DATE2 = Date.valueOf("2021-07-21");
+	private static final Date END_DATE2 = Date.valueOf("2021-07-21");
+	private static final Time START_TIME2 = Time.valueOf("10:00:00");
+	private static final Time END_TIME2 = Time.valueOf("10:30:00");
 
 	private static final String CUSTOMER_USERNAME ="TestCustomer";
+	private static final String CUSTOMER_USERNAME2 ="TestCustomer2";
 	private static final String CUSTOMER_PASSWORD ="TestPassword123";
+	private static final String NULLCUSTOMER_USERNAME = "hamood";
 
 	private static final String PROFILE_EMAIL ="TestCustomer@mail.com";
 	private static final String PROFILE_FIRSTNAME ="Bob";
@@ -144,9 +169,23 @@ public class ReviewServiceTest {
 				return null;
 			}
 		});
+		
+		lenient().when(serviceRepo.findChosenServiceByName(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+            if (invocation.getArgument(0).equals(CHOSENSERVICE_NAME)) {
+                ChosenService chosenService = new ChosenService();
+                
+                    chosenService.setName(CHOSENSERVICE_NAME);
+                    chosenService.setDuration(DURATION);
+                    // SET PRICE
+                
+                return chosenService;
+            } else {
+                return null;
+            }
+        });
 
-		lenient().when(profileRepo.findByFirstNameAndLastName(anyString(), anyString())).thenAnswer((InvocationOnMock invocation) -> {
-			if(invocation.getArgument(0).equals(PROFILE_FIRSTNAME) && invocation.getArgument(1).equals(PROFILE_LASTNAME)) {
+		lenient().when(profileRepo.findByEmail(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+			if(invocation.getArgument(0).equals(PROFILE_EMAIL)) {
 
 				Profile profile = new Profile();
 				profile.setFirstName(PROFILE_FIRSTNAME);
@@ -176,7 +215,15 @@ public class ReviewServiceTest {
 			}
 
 		});
-
+		
+//		lenient().when(appRepo.findAppointmentByTimeSlot(any(TimeSlot.class))).thenAnswer((InvocationOnMock invocation) -> {
+//			if(((Appointment)invocation.getArgument(0)).getTimeSlot().get.equals(CHOSENSERVICE_NAME)) {
+//				
+//				
+//				
+//			}
+			
+			
 		lenient().when(reviewRepo.findReviewByCustomer(any(Customer.class))).thenAnswer((InvocationOnMock invocation) -> {
 			if(((Customer)invocation.getArgument(0)).getUsername().equals(CUSTOMER_USERNAME)) {
 
@@ -310,6 +357,7 @@ public class ReviewServiceTest {
 				appointment.setChosenService(service);
 				appointment.setCustomer(customer);
 				appointment.setTimeSlot(timeSlot);
+				appointment.setId(APPOINTMENT_ID);
 
 				Review review = new Review();
 				review.setAppointment(appointment);
@@ -438,39 +486,25 @@ public class ReviewServiceTest {
 	public void testCreateReview() {
 		assertEquals(0, service.getAllReviews().size());
 
-		ChosenService chosenService = new ChosenService();
-		chosenService.setDuration(30);
-		chosenService.setName("Oil change");
-		Customer customer = null;
-
-		try {
-			Car car = customerService.createCar("555-A7A", "Corolla", CarTransmission.Automatic);
-			List<Car> cars = new ArrayList<Car>();
-			cars.add(car);
-			Profile profile = customerService.createProfile("Robert", "Nafar", "1234 Cairo St.", "5555A7A", "12345678", "abc@mcgill.ca");
-			customer = customerService.createCustomer("username", "Password1234", profile, cars);
-		}catch (IllegalArgumentException e) {
-			fail();
-		}
-
 		TimeSlot timeslot = new TimeSlot();
-		timeslot.setStartDate(Date.valueOf("2021-07-07"));
-		timeslot.setEndDate(Date.valueOf("2021-07-07"));
-		timeslot.setStartTime(Time.valueOf("10:05:00"));
-		timeslot.setEndTime(Time.valueOf("10:35:00"));
+		timeslot.setStartDate(START_DATE);
+		timeslot.setEndDate(END_DATE);
+		timeslot.setStartTime(START_TIME);
+		timeslot.setEndTime(END_TIME);
 
 		Appointment appointment = new Appointment();
-		appointment.setChosenService(chosenService);
-		appointment.setCustomer(customer);
+		appointment.setChosenService(serviceRepo.findChosenServiceByName(CHOSENSERVICE_NAME));
+		appointment.setCustomer(cusRepo.findCustomerByUsername(CUSTOMER_USERNAME));
 		appointment.setTimeSlot(timeslot);
-		appointment.setId(APPOINTMENT_ID);
+		appointment.setId(APPOINTMENT_ID2);
 
 		String description = "Great";
 		int serviceRating = 5;
 		Review review = null;
 
 		try {
-			review = service.createReview(appointment, chosenService, customer, description, serviceRating);
+			review = service.createReview(appointment, CHOSENSERVICE_NAME, CUSTOMER_USERNAME,
+					description, serviceRating);
 		}catch (IllegalArgumentException e) {
 			fail();
 		}
@@ -481,9 +515,8 @@ public class ReviewServiceTest {
 		assertEquals(appointment.getTimeSlot().getEndDate(), review.getAppointment().getTimeSlot().getEndDate());
 		assertEquals(appointment.getTimeSlot().getStartTime(), review.getAppointment().getTimeSlot().getStartTime());
 		assertEquals(appointment.getTimeSlot().getEndTime(), review.getAppointment().getTimeSlot().getEndTime());
-		assertEquals(chosenService.getName(), review.getChosenService().getName());
-		assertEquals(chosenService.getDuration(), review.getChosenService().getDuration());
-		assertEquals(customer.getUsername(), customer.getUsername());
+		assertEquals(CHOSENSERVICE_NAME, review.getChosenService().getName());
+		assertEquals(CUSTOMER_USERNAME, review.getCustomer().getUsername());
 		assertEquals(serviceRating, review.getServiceRating());
 
 	}
@@ -492,26 +525,11 @@ public class ReviewServiceTest {
 	public void testCreateReviewNullAppointment() {
 		assertEquals(0, service.getAllReviews().size());
 
-		ChosenService chosenService = new ChosenService();
-		chosenService.setDuration(30);
-		chosenService.setName("Oil change");
-		Customer customer = null;
-
-		try {
-			Car car = customerService.createCar("555-A7A", "Corolla", CarTransmission.Automatic);
-			List<Car> cars = new ArrayList<Car>();
-			cars.add(car);
-			Profile profile = customerService.createProfile("Robert", "Nafar", "1234 Cairo St.", "5555A7A", "12345678", "abc@mcgill.ca");
-			customer = customerService.createCustomer("username", "Password1234", profile, cars);
-		}catch (IllegalArgumentException e) {
-			fail();
-		}
-
 		TimeSlot timeslot = new TimeSlot();
-		timeslot.setStartDate(Date.valueOf("2021-07-07"));
-		timeslot.setEndDate(Date.valueOf("2021-07-07"));
-		timeslot.setStartTime(Time.valueOf("10:05:00"));
-		timeslot.setEndTime(Time.valueOf("10:35:00"));
+		timeslot.setStartDate(START_DATE);
+		timeslot.setEndDate(END_DATE);
+		timeslot.setStartTime(START_TIME);
+		timeslot.setEndTime(END_TIME);
 
 		Appointment appointment = null;
 
@@ -521,7 +539,7 @@ public class ReviewServiceTest {
 		String error = null;
 
 		try {
-			review = service.createReview(appointment, chosenService, customer, description, serviceRating);
+			review = service.createReview(appointment, CHOSENSERVICE_NAME, CUSTOMER_USERNAME, description, serviceRating);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -534,31 +552,17 @@ public class ReviewServiceTest {
 	public void tesCreateReviewNullChosenService() {
 		assertEquals(0, service.getAllReviews().size());
 
-		ChosenService chosenService = null;
-
-		Customer customer = null;
-
-		try {
-			Car car = customerService.createCar("555-A7A", "Corolla", CarTransmission.Automatic);
-			List<Car> cars = new ArrayList<Car>();
-			cars.add(car);
-			Profile profile = customerService.createProfile("Robert", "Nafar", "1234 Cairo St.", "5555A7A", "12345678", "abc@mcgill.ca");
-			customer = customerService.createCustomer("username", "Password1234", profile, cars);
-		}catch (IllegalArgumentException e) {
-			fail();
-		}
-
 		TimeSlot timeslot = new TimeSlot();
-		timeslot.setStartDate(Date.valueOf("2021-07-07"));
-		timeslot.setEndDate(Date.valueOf("2021-07-07"));
-		timeslot.setStartTime(Time.valueOf("10:05:00"));
-		timeslot.setEndTime(Time.valueOf("10:35:00"));
+		timeslot.setStartDate(START_DATE);
+		timeslot.setEndDate(END_DATE);
+		timeslot.setStartTime(START_TIME);
+		timeslot.setEndTime(END_TIME);
 
 		Appointment appointment = new Appointment();
-		appointment.setChosenService(chosenService);
-		appointment.setCustomer(customer);
+		appointment.setChosenService(serviceRepo.findChosenServiceByName(null));
+		appointment.setCustomer(cusRepo.findCustomerByUsername(CUSTOMER_USERNAME));
 		appointment.setTimeSlot(timeslot);
-		appointment.setId(APPOINTMENT_ID);
+		appointment.setId(APPOINTMENT_ID2);
 
 		String description = "Great";
 		int serviceRating = 5;
@@ -566,7 +570,38 @@ public class ReviewServiceTest {
 		String error = null;
 
 		try {
-			review = service.createReview(appointment, chosenService, customer, description, serviceRating);
+			review = service.createReview(appointment, null, CUSTOMER_USERNAME, description, serviceRating);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(review);
+		assertEquals(error, "Service not found");
+	}
+	
+	@Test
+	public void tesCreateReviewBlankChosenService() {
+		assertEquals(0, service.getAllReviews().size());
+
+		TimeSlot timeslot = new TimeSlot();
+		timeslot.setStartDate(START_DATE);
+		timeslot.setEndDate(END_DATE);
+		timeslot.setStartTime(START_TIME);
+		timeslot.setEndTime(END_TIME);;
+
+		Appointment appointment = new Appointment();
+		appointment.setChosenService(serviceRepo.findChosenServiceByName(""));
+		appointment.setCustomer(cusRepo.findCustomerByUsername(CUSTOMER_USERNAME));
+		appointment.setTimeSlot(timeslot);
+		appointment.setId(APPOINTMENT_ID2);
+
+		String description = "Great";
+		int serviceRating = 5;
+		Review review = null;
+		String error = null;
+
+		try {
+			review = service.createReview(appointment, "", CUSTOMER_USERNAME, description, serviceRating);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -576,34 +611,20 @@ public class ReviewServiceTest {
 	}
 
 	@Test
-	public void testCreateReviewNullCustomer() {
-		assertEquals(0, service.getAllReviews().size());
-
-		ChosenService chosenService = new ChosenService();
-		chosenService.setDuration(30);
-		chosenService.setName("Oil change");
-		Customer customer = null;
-
-		try {
-			Car car = customerService.createCar("555-A7A", "Corolla", CarTransmission.Automatic);
-			List<Car> cars = new ArrayList<Car>();
-			cars.add(car);
-			Profile profile = customerService.createProfile("Robert", "Nafar", "1234 Cairo St.", "5555A7A", "12345678", "abc@mcgill.ca");
-		}catch (IllegalArgumentException e) {
-			fail();
-		}
-
+	public void testCreateReviewNullCustomerName() {
+		assertEquals(0, service.getAllReviews().size());	
+		
 		TimeSlot timeslot = new TimeSlot();
-		timeslot.setStartDate(Date.valueOf("2021-07-07"));
-		timeslot.setEndDate(Date.valueOf("2021-07-07"));
-		timeslot.setStartTime(Time.valueOf("10:05:00"));
-		timeslot.setEndTime(Time.valueOf("10:35:00"));
+		timeslot.setStartDate(START_DATE);
+		timeslot.setEndDate(END_DATE);
+		timeslot.setStartTime(START_TIME);
+		timeslot.setEndTime(END_TIME);
 
 		Appointment appointment = new Appointment();
-		appointment.setChosenService(chosenService);
-		appointment.setCustomer(customer);
+		appointment.setChosenService(serviceRepo.findChosenServiceByName(CHOSENSERVICE_NAME));
+		appointment.setCustomer(cusRepo.findCustomerByUsername(null));
 		appointment.setTimeSlot(timeslot);
-		appointment.setId(APPOINTMENT_ID);
+		appointment.setId(APPOINTMENT_ID2);
 
 		String description = "Great";
 		int serviceRating = 5;
@@ -611,7 +632,7 @@ public class ReviewServiceTest {
 		String error = null;
 
 		try {
-			review = service.createReview(appointment, chosenService, customer, description, serviceRating);
+			review = service.createReview(appointment, CHOSENSERVICE_NAME, null, description, serviceRating);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -619,37 +640,53 @@ public class ReviewServiceTest {
 		assertNull(review);
 		assertEquals(error, "Customer not found");
 	}
+	
+	@Test
+	public void testCreateReviewBlankCustomerName() {
+		assertEquals(0, service.getAllReviews().size());	
+		
+		TimeSlot timeslot = new TimeSlot();
+		timeslot.setStartDate(START_DATE);
+		timeslot.setEndDate(END_DATE);
+		timeslot.setStartTime(START_TIME);
+		timeslot.setEndTime(END_TIME);
 
+		Appointment appointment = new Appointment();
+		appointment.setChosenService(serviceRepo.findChosenServiceByName(CHOSENSERVICE_NAME));
+		appointment.setCustomer(cusRepo.findCustomerByUsername(""));
+		appointment.setTimeSlot(timeslot);
+		appointment.setId(APPOINTMENT_ID2);
+
+		String description = "Great";
+		int serviceRating = 5;
+		Review review = null;
+		String error = null;
+
+		try {
+			review = service.createReview(appointment, CHOSENSERVICE_NAME, "", description, serviceRating);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(review);
+		assertEquals(error, "Customer not found");
+	}
+	
 	@Test
 	public void createReviewInvalidServiceRating() {
 		assertEquals(0, service.getAllReviews().size());
 
-		ChosenService chosenService = new ChosenService();
-		chosenService.setDuration(30);
-		chosenService.setName("Oil change");
-		Customer customer = null;
-
-		try {
-			Car car = customerService.createCar("555-A7A", "Corolla", CarTransmission.Automatic);
-			List<Car> cars = new ArrayList<Car>();
-			cars.add(car);
-			Profile profile = customerService.createProfile("Robert", "Nafar", "1234 Cairo St.", "5555A7A", "12345678", "abc@mcgill.ca");
-			customer = customerService.createCustomer("username", "Password1234", profile, cars);
-		}catch (IllegalArgumentException e) {
-			fail();
-		}
-
 		TimeSlot timeslot = new TimeSlot();
-		timeslot.setStartDate(Date.valueOf("2021-07-07"));
-		timeslot.setEndDate(Date.valueOf("2021-07-07"));
-		timeslot.setStartTime(Time.valueOf("10:05:00"));
-		timeslot.setEndTime(Time.valueOf("10:35:00"));
+		timeslot.setStartDate(START_DATE);
+		timeslot.setEndDate(END_DATE);
+		timeslot.setStartTime(START_TIME);
+		timeslot.setEndTime(END_TIME);
 
 		Appointment appointment = new Appointment();
-		appointment.setChosenService(chosenService);
-		appointment.setCustomer(customer);
+		appointment.setChosenService(serviceRepo.findChosenServiceByName(CHOSENSERVICE_NAME));
+		appointment.setCustomer(cusRepo.findCustomerByUsername(CUSTOMER_USERNAME));
 		appointment.setTimeSlot(timeslot);
-		appointment.setId(APPOINTMENT_ID);
+		appointment.setId(APPOINTMENT_ID2);
 
 		String description = "Great";
 		int serviceRating = 10;
@@ -657,7 +694,40 @@ public class ReviewServiceTest {
 		String error = null;
 
 		try {
-			review = service.createReview(appointment, chosenService, customer, description, serviceRating);
+			review = service.createReview(appointment, CHOSENSERVICE_NAME, 
+					CUSTOMER_USERNAME, description, serviceRating);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(review);
+		assertEquals(error, "Service rating must be between 0 and 5 (inclusive)");
+	}
+	
+	@Test
+	public void createReviewInvalidServiceRating2() {
+		assertEquals(0, service.getAllReviews().size());
+
+		TimeSlot timeslot = new TimeSlot();
+		timeslot.setStartDate(START_DATE);
+		timeslot.setEndDate(END_DATE);
+		timeslot.setStartTime(START_TIME);
+		timeslot.setEndTime(END_TIME);
+
+		Appointment appointment = new Appointment();
+		appointment.setChosenService(serviceRepo.findChosenServiceByName(CHOSENSERVICE_NAME));
+		appointment.setCustomer(cusRepo.findCustomerByUsername(CUSTOMER_USERNAME));
+		appointment.setTimeSlot(timeslot);
+		appointment.setId(APPOINTMENT_ID2);
+
+		String description = "Very bad";
+		int serviceRating = -26;
+		Review review = null;
+		String error = null;
+
+		try {
+			review = service.createReview(appointment, CHOSENSERVICE_NAME, 
+					CUSTOMER_USERNAME, description, serviceRating);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -670,32 +740,17 @@ public class ReviewServiceTest {
 	public void testCreateReviewNullDescription() {
 		assertEquals(0, service.getAllReviews().size());
 
-		ChosenService chosenService = new ChosenService();
-		chosenService.setDuration(30);
-		chosenService.setName("Oil change");
-		Customer customer = null;
-
-		try {
-			Car car = customerService.createCar("555-A7A", "Corolla", CarTransmission.Automatic);
-			List<Car> cars = new ArrayList<Car>();
-			cars.add(car);
-			Profile profile = customerService.createProfile("Robert", "Nafar", "1234 Cairo St.", "5555A7A", "12345678", "abc@mcgill.ca");
-			customer = customerService.createCustomer("username", "Password1234", profile, cars);
-		}catch (IllegalArgumentException e) {
-			fail();
-		}
-
 		TimeSlot timeslot = new TimeSlot();
-		timeslot.setStartDate(Date.valueOf("2021-07-07"));
-		timeslot.setEndDate(Date.valueOf("2021-07-07"));
-		timeslot.setStartTime(Time.valueOf("10:05:00"));
-		timeslot.setEndTime(Time.valueOf("10:35:00"));
+		timeslot.setStartDate(START_DATE);
+		timeslot.setEndDate(END_DATE);
+		timeslot.setStartTime(START_TIME);
+		timeslot.setEndTime(END_TIME);
 
 		Appointment appointment = new Appointment();
-		appointment.setChosenService(chosenService);
-		appointment.setCustomer(customer);
+		appointment.setChosenService(serviceRepo.findChosenServiceByName(CHOSENSERVICE_NAME));
+		appointment.setCustomer(cusRepo.findCustomerByUsername(CUSTOMER_USERNAME));
 		appointment.setTimeSlot(timeslot);
-		appointment.setId(APPOINTMENT_ID);
+		appointment.setId(APPOINTMENT_ID2);
 
 		String description = null;
 		int serviceRating = 4;
@@ -703,7 +758,8 @@ public class ReviewServiceTest {
 		String error = null;
 
 		try {
-			review = service.createReview(appointment, chosenService, customer, description, serviceRating);
+			review = service.createReview(appointment, CHOSENSERVICE_NAME,
+					CUSTOMER_USERNAME, description, serviceRating);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -716,32 +772,17 @@ public class ReviewServiceTest {
 	public void testCreatReviewBlankDescription(){
 		assertEquals(0, service.getAllReviews().size());
 
-		ChosenService chosenService = new ChosenService();
-		chosenService.setDuration(30);
-		chosenService.setName("Oil change");
-		Customer customer = null;
-
-		try {
-			Car car = customerService.createCar("555-A7A", "Corolla", CarTransmission.Automatic);
-			List<Car> cars = new ArrayList<Car>();
-			cars.add(car);
-			Profile profile = customerService.createProfile("Robert", "Nafar", "1234 Cairo St.", "5555A7A", "12345678", "abc@mcgill.ca");
-			customer = customerService.createCustomer("username", "Password1234", profile, cars);
-		}catch (IllegalArgumentException e) {
-			fail();
-		}
-
 		TimeSlot timeslot = new TimeSlot();
-		timeslot.setStartDate(Date.valueOf("2021-07-07"));
-		timeslot.setEndDate(Date.valueOf("2021-07-07"));
-		timeslot.setStartTime(Time.valueOf("10:05:00"));
-		timeslot.setEndTime(Time.valueOf("10:35:00"));
+		timeslot.setStartDate(START_DATE);
+		timeslot.setEndDate(END_DATE);
+		timeslot.setStartTime(START_TIME);
+		timeslot.setEndTime(END_TIME);
 
 		Appointment appointment = new Appointment();
-		appointment.setChosenService(chosenService);
-		appointment.setCustomer(customer);
+		appointment.setChosenService(serviceRepo.findChosenServiceByName(CHOSENSERVICE_NAME));
+		appointment.setCustomer(cusRepo.findCustomerByUsername(CUSTOMER_USERNAME));
 		appointment.setTimeSlot(timeslot);
-		appointment.setId(APPOINTMENT_ID);
+		appointment.setId(APPOINTMENT_ID2);
 
 		String description = "";
 		int serviceRating = 4;
@@ -749,7 +790,8 @@ public class ReviewServiceTest {
 		String error = null;
 
 		try {
-			review = service.createReview(appointment, chosenService, customer, description, serviceRating);
+			review = service.createReview(appointment, CHOSENSERVICE_NAME,
+					CUSTOMER_USERNAME, description, serviceRating);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -759,33 +801,82 @@ public class ReviewServiceTest {
 	}
 	
 	@Test
-	public void testEditReview() {
+	public void testCreatReviewNullCustomer(){
 		assertEquals(0, service.getAllReviews().size());
-
-		ChosenService chosenService = new ChosenService();
-		chosenService.setDuration(30);
-		chosenService.setName("Oil change");
-		Customer customer = null;
-
-		try {
-			Car car = customerService.createCar("555-A7A", "Corolla", CarTransmission.Automatic);
-			List<Car> cars = new ArrayList<Car>();
-			cars.add(car);
-			Profile profile = customerService.createProfile("Robert", "Nafar", "1234 Cairo St.", "5555A7A", "12345678", "abc@mcgill.ca");
-			customer = customerService.createCustomer("username", "Password1234", profile, cars);
-		}catch (IllegalArgumentException e) {
-			fail();
-		}
-
+		
 		TimeSlot timeslot = new TimeSlot();
-		timeslot.setStartDate(Date.valueOf("2021-07-07"));
-		timeslot.setEndDate(Date.valueOf("2021-07-07"));
-		timeslot.setStartTime(Time.valueOf("10:05:00"));
-		timeslot.setEndTime(Time.valueOf("10:35:00"));
+		timeslot.setStartDate(START_DATE);
+		timeslot.setEndDate(END_DATE);
+		timeslot.setStartTime(START_TIME);
+		timeslot.setEndTime(END_TIME);
 
 		Appointment appointment = new Appointment();
-		appointment.setChosenService(chosenService);
-		appointment.setCustomer(customer);
+		appointment.setChosenService(serviceRepo.findChosenServiceByName(CHOSENSERVICE_NAME));
+		appointment.setCustomer(cusRepo.findCustomerByUsername(NULLCUSTOMER_USERNAME));
+		appointment.setTimeSlot(timeslot);
+		appointment.setId(APPOINTMENT_ID2);
+
+		String description = "Good";
+		int serviceRating = 4;
+		Review review = null;
+		String error = null;
+
+		try {
+			review = service.createReview(appointment, CHOSENSERVICE_NAME,
+					NULLCUSTOMER_USERNAME, description, serviceRating);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(review);
+		assertEquals(error, "No customer found");
+	}
+	
+	@Test
+	public void testCreatReviewNullService(){
+		assertEquals(0, service.getAllReviews().size());
+		
+		TimeSlot timeslot = new TimeSlot();
+		timeslot.setStartDate(START_DATE);
+		timeslot.setEndDate(END_DATE);
+		timeslot.setStartTime(START_TIME);
+		timeslot.setEndTime(END_TIME);
+
+		Appointment appointment = new Appointment();
+		appointment.setChosenService(serviceRepo.findChosenServiceByName(CHOSENSERVICE_NAME2));
+		appointment.setCustomer(cusRepo.findCustomerByUsername(CUSTOMER_USERNAME));
+		appointment.setTimeSlot(timeslot);
+		appointment.setId(APPOINTMENT_ID2);
+
+		String description = "Good";
+		int serviceRating = 4;
+		Review review = null;
+		String error = null;
+
+		try {
+			review = service.createReview(appointment, CHOSENSERVICE_NAME2,
+					CUSTOMER_USERNAME, description, serviceRating);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(review);
+		assertEquals(error, "No service found");
+	}
+	
+	@Test
+	public void testCreatReviewNotNullReview(){
+		assertEquals(0, service.getAllReviews().size());
+		
+		TimeSlot timeslot = new TimeSlot();
+		timeslot.setStartDate(START_DATE);
+		timeslot.setEndDate(END_DATE);
+		timeslot.setStartTime(START_TIME);
+		timeslot.setEndTime(END_TIME);
+
+		Appointment appointment = new Appointment();
+		appointment.setChosenService(serviceRepo.findChosenServiceByName(CHOSENSERVICE_NAME));
+		appointment.setCustomer(cusRepo.findCustomerByUsername(CUSTOMER_USERNAME));
 		appointment.setTimeSlot(timeslot);
 		appointment.setId(APPOINTMENT_ID);
 
@@ -795,35 +886,55 @@ public class ReviewServiceTest {
 		String error = null;
 
 		try {
-			review = service.createReview(appointment, chosenService, customer, description, serviceRating);
-			review = service.editReview(appointment, "Excellent", 5);
+			review = service.createReview(appointment, CHOSENSERVICE_NAME,
+					CUSTOMER_USERNAME, description, serviceRating);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
+		assertNull(review);
+		assertEquals(error, "Review already exists");
+	}
+	
+	
+	
+	@Test
+	public void testEditReview() {
+		assertEquals(0, service.getAllReviews().size());
 
+		TimeSlot timeslot = new TimeSlot();
+		timeslot.setStartDate(START_DATE);
+		timeslot.setEndDate(END_DATE);
+		timeslot.setStartTime(START_TIME);
+		timeslot.setEndTime(END_TIME);
+
+		Appointment appointment = new Appointment();
+		appointment.setChosenService(serviceRepo.findChosenServiceByName(CHOSENSERVICE_NAME));
+		appointment.setCustomer(cusRepo.findCustomerByUsername(CUSTOMER_USERNAME));
+		appointment.setTimeSlot(timeslot);
+		appointment.setId(APPOINTMENT_ID);
+
+		Review review = reviewRepo.findReviewByAppointment(appointment);
+		String error = null;
+
+		try {
+			review = service.editReview(appointment, "Awful", 0);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
 		assertNotNull(review);
-		assertEquals("Excellent", review.getDescription());
-		assertEquals(5, review.getServiceRating());
+		assertEquals("Awful", review.getDescription());
+		assertEquals(0, review.getServiceRating());
+		assertEquals(appointment.getTimeSlot().getStartDate(), review.getAppointment().getTimeSlot().getStartDate());
+		assertEquals(appointment.getTimeSlot().getEndDate(), review.getAppointment().getTimeSlot().getEndDate());
+		assertEquals(appointment.getTimeSlot().getStartTime(), review.getAppointment().getTimeSlot().getStartTime());
+		assertEquals(appointment.getTimeSlot().getEndTime(), review.getAppointment().getTimeSlot().getEndTime());
+		assertEquals(CHOSENSERVICE_NAME, review.getChosenService().getName());
+		assertEquals(CUSTOMER_USERNAME, review.getCustomer().getUsername());
 	}
 	
 	@Test
 	public void testEditReviewNullAppointment() {
 		assertEquals(0, service.getAllReviews().size());
-
-		ChosenService chosenService = new ChosenService();
-		chosenService.setDuration(30);
-		chosenService.setName("Oil change");
-		Customer customer = null;
-
-		try {
-			Car car = customerService.createCar("555-A7A", "Corolla", CarTransmission.Automatic);
-			List<Car> cars = new ArrayList<Car>();
-			cars.add(car);
-			Profile profile = customerService.createProfile("Robert", "Nafar", "1234 Cairo St.", "5555A7A", "12345678", "abc@mcgill.ca");
-			customer = customerService.createCustomer("username", "Password1234", profile, cars);
-		}catch (IllegalArgumentException e) {
-			fail();
-		}
 
 		TimeSlot timeslot = new TimeSlot();
 		timeslot.setStartDate(Date.valueOf("2021-07-07"));
@@ -832,9 +943,7 @@ public class ReviewServiceTest {
 		timeslot.setEndTime(Time.valueOf("10:35:00"));
 
 		Appointment appointment = null;
-
-		String description = "Good";
-		int serviceRating = 4;
+		
 		Review review = null;
 		String error = null;
 
@@ -843,7 +952,6 @@ public class ReviewServiceTest {
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-
 		assertNull(review);
 		assertEquals(error, "Appointment not found");
 	}
@@ -852,181 +960,167 @@ public class ReviewServiceTest {
 	public void testEditReviewInvalidServiceRating() {
 		assertEquals(0, service.getAllReviews().size());
 
-		ChosenService chosenService = new ChosenService();
-		chosenService.setDuration(30);
-		chosenService.setName("Oil change");
-		Customer customer = null;
-
-		try {
-			Car car = customerService.createCar("555-A7A", "Corolla", CarTransmission.Automatic);
-			List<Car> cars = new ArrayList<Car>();
-			cars.add(car);
-			Profile profile = customerService.createProfile("Robert", "Nafar", "1234 Cairo St.", "5555A7A", "12345678", "abc@mcgill.ca");
-			customer = customerService.createCustomer("username", "Password1234", profile, cars);
-		}catch (IllegalArgumentException e) {
-			fail();
-		}
-
 		TimeSlot timeslot = new TimeSlot();
-		timeslot.setStartDate(Date.valueOf("2021-07-07"));
-		timeslot.setEndDate(Date.valueOf("2021-07-07"));
-		timeslot.setStartTime(Time.valueOf("10:05:00"));
-		timeslot.setEndTime(Time.valueOf("10:35:00"));
-
+		timeslot.setStartDate(START_DATE);
+		timeslot.setEndDate(END_DATE);
+		timeslot.setStartTime(START_TIME);
+		timeslot.setEndTime(END_TIME);
+		
 		Appointment appointment = new Appointment();
-		appointment.setChosenService(chosenService);
-		appointment.setCustomer(customer);
+		appointment.setChosenService(serviceRepo.findChosenServiceByName(CHOSENSERVICE_NAME));
+		appointment.setCustomer(cusRepo.findCustomerByUsername(CUSTOMER_USERNAME));
 		appointment.setTimeSlot(timeslot);
 		appointment.setId(APPOINTMENT_ID);
 
-		String description = "Good";
-		int serviceRating = 4;
-		Review review = null;
+		Review review = reviewRepo.findReviewByAppointment(appointment);
 		String error = null;
 
 		try {
-			review = service.createReview(appointment, chosenService, customer, description, serviceRating);
 			review = service.editReview(appointment, "Excellent", -1);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-
 		assertNotNull(review);
 		assertEquals(error, "Service rating must be between 0 and 5 (inclusive)");
+		assertEquals(REVIEW_RATING, review.getServiceRating());
+		assertEquals(REVIEW_DESCRIPTION, review.getDescription());
+		assertEquals(appointment.getTimeSlot().getStartDate(), review.getAppointment().getTimeSlot().getStartDate());
+		assertEquals(appointment.getTimeSlot().getEndDate(), review.getAppointment().getTimeSlot().getEndDate());
+		assertEquals(appointment.getTimeSlot().getStartTime(), review.getAppointment().getTimeSlot().getStartTime());
+		assertEquals(appointment.getTimeSlot().getEndTime(), review.getAppointment().getTimeSlot().getEndTime());
+		assertEquals(CHOSENSERVICE_NAME, review.getChosenService().getName());
+		assertEquals(CUSTOMER_USERNAME, review.getCustomer().getUsername());
+	}
+	
+	@Test
+	public void testEditReviewInvalidServiceRating2() {
+		assertEquals(0, service.getAllReviews().size());
+
+		TimeSlot timeslot = new TimeSlot();
+		timeslot.setStartDate(START_DATE);
+		timeslot.setEndDate(END_DATE);
+		timeslot.setStartTime(START_TIME);
+		timeslot.setEndTime(END_TIME);
+		
+		Appointment appointment = new Appointment();
+		appointment.setChosenService(serviceRepo.findChosenServiceByName(CHOSENSERVICE_NAME));
+		appointment.setCustomer(cusRepo.findCustomerByUsername(CUSTOMER_USERNAME));
+		appointment.setTimeSlot(timeslot);
+		appointment.setId(APPOINTMENT_ID);
+
+		Review review = reviewRepo.findReviewByAppointment(appointment);
+		String error = null;
+
+		try {
+			review = service.editReview(appointment, "Excellent", 25);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertNotNull(review);
+		assertEquals(error, "Service rating must be between 0 and 5 (inclusive)");
+		assertEquals(REVIEW_RATING, review.getServiceRating());
+		assertEquals(REVIEW_DESCRIPTION, review.getDescription());
+		assertEquals(appointment.getTimeSlot().getStartDate(), review.getAppointment().getTimeSlot().getStartDate());
+		assertEquals(appointment.getTimeSlot().getEndDate(), review.getAppointment().getTimeSlot().getEndDate());
+		assertEquals(appointment.getTimeSlot().getStartTime(), review.getAppointment().getTimeSlot().getStartTime());
+		assertEquals(appointment.getTimeSlot().getEndTime(), review.getAppointment().getTimeSlot().getEndTime());
+		assertEquals(CHOSENSERVICE_NAME, review.getChosenService().getName());
+		assertEquals(CUSTOMER_USERNAME, review.getCustomer().getUsername());
 	}
 	
 	@Test
 	public void testEditReviewNullNewDescription() {
 		assertEquals(0, service.getAllReviews().size());
 
-		ChosenService chosenService = new ChosenService();
-		chosenService.setDuration(30);
-		chosenService.setName("Oil change");
-		Customer customer = null;
-
-		try {
-			Car car = customerService.createCar("555-A7A", "Corolla", CarTransmission.Automatic);
-			List<Car> cars = new ArrayList<Car>();
-			cars.add(car);
-			Profile profile = customerService.createProfile("Robert", "Nafar", "1234 Cairo St.", "5555A7A", "12345678", "abc@mcgill.ca");
-			customer = customerService.createCustomer("username", "Password1234", profile, cars);
-		}catch (IllegalArgumentException e) {
-			fail();
-		}
-
 		TimeSlot timeslot = new TimeSlot();
-		timeslot.setStartDate(Date.valueOf("2021-07-07"));
-		timeslot.setEndDate(Date.valueOf("2021-07-07"));
-		timeslot.setStartTime(Time.valueOf("10:05:00"));
-		timeslot.setEndTime(Time.valueOf("10:35:00"));
-
+		timeslot.setStartDate(START_DATE);
+		timeslot.setEndDate(END_DATE);
+		timeslot.setStartTime(START_TIME);
+		timeslot.setEndTime(END_TIME);
+		
 		Appointment appointment = new Appointment();
-		appointment.setChosenService(chosenService);
-		appointment.setCustomer(customer);
+		appointment.setChosenService(serviceRepo.findChosenServiceByName(CHOSENSERVICE_NAME));
+		appointment.setCustomer(cusRepo.findCustomerByUsername(CUSTOMER_USERNAME));
 		appointment.setTimeSlot(timeslot);
 		appointment.setId(APPOINTMENT_ID);
 
-		String description = "Good";
-		int serviceRating = 4;
-		Review review = null;
+		Review review = reviewRepo.findReviewByAppointment(appointment);
 		String error = null;
 
 		try {
-			review = service.createReview(appointment, chosenService, customer, description, serviceRating);
 			review = service.editReview(appointment, null, 4);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-
 		assertNotNull(review);
 		assertEquals(error, "No new description");
+		assertEquals(REVIEW_DESCRIPTION, review.getDescription());
+		assertEquals(REVIEW_RATING, review.getServiceRating());
+		assertEquals(appointment.getTimeSlot().getStartDate(), review.getAppointment().getTimeSlot().getStartDate());
+		assertEquals(appointment.getTimeSlot().getEndDate(), review.getAppointment().getTimeSlot().getEndDate());
+		assertEquals(appointment.getTimeSlot().getStartTime(), review.getAppointment().getTimeSlot().getStartTime());
+		assertEquals(appointment.getTimeSlot().getEndTime(), review.getAppointment().getTimeSlot().getEndTime());
+		assertEquals(CHOSENSERVICE_NAME, review.getChosenService().getName());
+		assertEquals(CUSTOMER_USERNAME, review.getCustomer().getUsername());
 	}
 	
 	@Test
 	public void testEditReviewBlankNewDescription() {
 		assertEquals(0, service.getAllReviews().size());
 
-		ChosenService chosenService = new ChosenService();
-		chosenService.setDuration(30);
-		chosenService.setName("Oil change");
-		Customer customer = null;
-
-		try {
-			Car car = customerService.createCar("555-A7A", "Corolla", CarTransmission.Automatic);
-			List<Car> cars = new ArrayList<Car>();
-			cars.add(car);
-			Profile profile = customerService.createProfile("Robert", "Nafar", "1234 Cairo St.", "5555A7A", "12345678", "abc@mcgill.ca");
-			customer = customerService.createCustomer("username", "Password1234", profile, cars);
-		}catch (IllegalArgumentException e) {
-			fail();
-		}
-
 		TimeSlot timeslot = new TimeSlot();
-		timeslot.setStartDate(Date.valueOf("2021-07-07"));
-		timeslot.setEndDate(Date.valueOf("2021-07-07"));
-		timeslot.setStartTime(Time.valueOf("10:05:00"));
-		timeslot.setEndTime(Time.valueOf("10:35:00"));
-
+		timeslot.setStartDate(START_DATE);
+		timeslot.setEndDate(END_DATE);
+		timeslot.setStartTime(START_TIME);
+		timeslot.setEndTime(END_TIME);
+		
 		Appointment appointment = new Appointment();
-		appointment.setChosenService(chosenService);
-		appointment.setCustomer(customer);
+		appointment.setChosenService(serviceRepo.findChosenServiceByName(CHOSENSERVICE_NAME));
+		appointment.setCustomer(cusRepo.findCustomerByUsername(CUSTOMER_USERNAME));
 		appointment.setTimeSlot(timeslot);
 		appointment.setId(APPOINTMENT_ID);
 
-		String description = "Good";
-		int serviceRating = 4;
-		Review review = null;
+		Review review = reviewRepo.findReviewByAppointment(appointment);
 		String error = null;
 
 		try {
-			review = service.createReview(appointment, chosenService, customer, description, serviceRating);
 			review = service.editReview(appointment, "", 4);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-
 		assertNotNull(review);
 		assertEquals(error, "New description must contain at least 1 character");
+		assertEquals(REVIEW_DESCRIPTION, review.getDescription());
+		assertEquals(REVIEW_RATING, review.getServiceRating());
+		assertEquals(appointment.getTimeSlot().getStartDate(), review.getAppointment().getTimeSlot().getStartDate());
+		assertEquals(appointment.getTimeSlot().getEndDate(), review.getAppointment().getTimeSlot().getEndDate());
+		assertEquals(appointment.getTimeSlot().getStartTime(), review.getAppointment().getTimeSlot().getStartTime());
+		assertEquals(appointment.getTimeSlot().getEndTime(), review.getAppointment().getTimeSlot().getEndTime());
+		assertEquals(CHOSENSERVICE_NAME, review.getChosenService().getName());
+		assertEquals(CUSTOMER_USERNAME, review.getCustomer().getUsername());
 	}
 	
 	@Test
 	public void deleteReview() {
 		assertEquals(0, service.getAllReviews().size());
 
-		ChosenService chosenService = new ChosenService();
-		chosenService.setDuration(30);
-		chosenService.setName("Oil change");
-		Customer customer = null;
-
-		try {
-			Car car = customerService.createCar("555-A7A", "Corolla", CarTransmission.Automatic);
-			List<Car> cars = new ArrayList<Car>();
-			Profile profile = customerService.createProfile("Robert", "Nafar", "1234 Cairo St.", "5555A7A", "12345678", "abc@mcgill.ca");
-			customer = customerService.createCustomer("username", "Password1234", profile, cars);
-		}catch (IllegalArgumentException e) {
-			fail();
-		}
-
 		TimeSlot timeslot = new TimeSlot();
-		timeslot.setStartDate(Date.valueOf("2021-07-07"));
-		timeslot.setEndDate(Date.valueOf("2021-07-07"));
-		timeslot.setStartTime(Time.valueOf("10:05:00"));
-		timeslot.setEndTime(Time.valueOf("10:35:00"));
-
+		timeslot.setStartDate(START_DATE);
+		timeslot.setEndDate(END_DATE);
+		timeslot.setStartTime(START_TIME);
+		timeslot.setEndTime(END_TIME);
+		
 		Appointment appointment = new Appointment();
-		appointment.setChosenService(chosenService);
-		appointment.setCustomer(customer);
+		appointment.setChosenService(serviceRepo.findChosenServiceByName(CHOSENSERVICE_NAME));
+		appointment.setCustomer(cusRepo.findCustomerByUsername(CUSTOMER_USERNAME));
 		appointment.setTimeSlot(timeslot);
 		appointment.setId(APPOINTMENT_ID);
 
-		String description = "Good";
-		int serviceRating = 4;
-		Review review = null;
+		Review review = reviewRepo.findReviewByAppointment(appointment);
 		String error = null;
 		boolean isDeleted = false;
 
 		try {
-			review = service.createReview(appointment, chosenService, customer, description, serviceRating);
 			isDeleted = service.deleteReview(appointment);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
@@ -1038,115 +1132,81 @@ public class ReviewServiceTest {
 	public void testDeletReviewNullAppointment() {
 		assertEquals(0, service.getAllReviews().size());
 
-		ChosenService chosenService = new ChosenService();
-		chosenService.setDuration(30);
-		chosenService.setName("Oil change");
-		Customer customer = null;
-
-		try {
-			Car car = customerService.createCar("555-A7A", "Corolla", CarTransmission.Automatic);
-			List<Car> cars = new ArrayList<Car>();
-			Profile profile = customerService.createProfile("Robert", "Nafar", "1234 Cairo St.", "5555A7A", "12345678", "abc@mcgill.ca");
-			customer = customerService.createCustomer("username", "Password1234", profile, cars);
-		}catch (IllegalArgumentException e) {
-			fail();
-		}
-
 		TimeSlot timeslot = new TimeSlot();
-		timeslot.setStartDate(Date.valueOf("2021-07-07"));
-		timeslot.setEndDate(Date.valueOf("2021-07-07"));
-		timeslot.setStartTime(Time.valueOf("10:05:00"));
-		timeslot.setEndTime(Time.valueOf("10:35:00"));
+		timeslot.setStartDate(START_DATE);
+		timeslot.setEndDate(END_DATE);
+		timeslot.setStartTime(START_TIME);
+		timeslot.setEndTime(END_TIME);
+		
+		Appointment appointment = new Appointment();
+		appointment.setChosenService(serviceRepo.findChosenServiceByName(CHOSENSERVICE_NAME));
+		appointment.setCustomer(cusRepo.findCustomerByUsername(CUSTOMER_USERNAME));
+		appointment.setTimeSlot(timeslot);
+		appointment.setId(APPOINTMENT_ID);
 
-		Appointment appointment = null;
-
-		String description = "Good";
-		int serviceRating = 4;
-		Review review = null;
+		Review review = reviewRepo.findReviewByAppointment(appointment);
 		String error = null;
 		boolean isDeleted = false;
 
 		try {
-			review = service.createReview(appointment, chosenService, customer, description, serviceRating);
-			isDeleted = service.deleteReview(appointment);
+			isDeleted = service.deleteReview(null);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 		assertFalse(isDeleted);
-		assertEquals(error, "Appointment not found");
+		assertEquals(error, "Review not deleted. Appointment not found");
 	}
-	
-	@Test
-	public void tesgetAverageServiceReview() {
-		assertEquals(0, service.getAllReviews().size());
 
-		ChosenService chosenService = new ChosenService();
-		chosenService.setDuration(30);
-		chosenService.setName("Oil change");
-		Customer customer = null;
-		Customer customer2 = null;
-
-		try {
-			Car car = customerService.createCar("555-A7A", "Corolla", CarTransmission.Automatic);
-			Car car2 = customerService.createCar("A7A-KEDA", "Aventador", CarTransmission.Automatic);
-			List<Car> cars = new ArrayList<Car>();
-			cars.add(car);
-			List<Car> cars2 = new ArrayList<Car>();
-			cars2.add(car2);
-			Profile profile = customerService.createProfile("Robert", "Nafar", "1234 Cairo St.", "5555A7A", "12345678", "abc@mcgill.ca");
-			Profile profile2 = customerService.createProfile("Mohamed", "Chikabala", "Zamalek St.", "A7AKEDA", "91011121", "a7a@mcgill.ca");
-			customer = customerService.createCustomer("username", "Password1234", profile, cars);
-			customer2 = customerService.createCustomer("Chiko", "Password5678", profile2, cars2);
-		}catch (IllegalArgumentException e) {
-			fail();
-		}
-
-		TimeSlot timeslot = new TimeSlot();
-		timeslot.setStartDate(Date.valueOf("2021-07-07"));
-		timeslot.setEndDate(Date.valueOf("2021-07-07"));
-		timeslot.setStartTime(Time.valueOf("10:05:00"));
-		timeslot.setEndTime(Time.valueOf("10:35:00"));
-		
-		TimeSlot timeslot2 = new TimeSlot();
-		timeslot2.setStartDate(Date.valueOf("2021-07-08"));
-		timeslot2.setEndDate(Date.valueOf("2021-07-08"));
-		timeslot2.setStartTime(Time.valueOf("11:05:00"));
-		timeslot2.setEndTime(Time.valueOf("11:25:00"));
-
-		Appointment appointment = new Appointment();
-		appointment.setChosenService(chosenService);
-		appointment.setCustomer(customer);
-		appointment.setTimeSlot(timeslot);
-		appointment.setId(APPOINTMENT_ID);
-		
-		Appointment appointment2 = new Appointment();
-		appointment.setChosenService(chosenService);
-		appointment.setCustomer(customer2);
-		appointment.setTimeSlot(timeslot2);
-		appointment.setId(APPOINTMENT_ID2);
-
-		String description = "Good";
-		int serviceRating = 4;
-		Review review = null;
-		
-		String description2 = "Excellent";
-		int serviceRating2 = 5;
-		Review review2 = null;
-		String error = null;
-		double averageServiceRating = 0.0;
-
-		try {
-			review = service.createReview(appointment, chosenService, customer, description, serviceRating);
-			review2 = service.createReview(appointment2, chosenService, customer2, description2, serviceRating2);
-			averageServiceRating = service.getAverageServiceReview(chosenService);
-		}catch (IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-
-		assertNotNull(review);
-		assertNotNull(review2);
-		assertEquals(4.5, averageServiceRating);
-	}
+//	@Test
+//	public void tesgetAverageServiceReview() {
+//		assertEquals(0, service.getAllReviews().size());
+//
+//		TimeSlot timeslot = new TimeSlot();
+//		timeslot.setStartDate(START_DATE);
+//		timeslot.setEndDate(END_DATE);
+//		timeslot.setStartTime(START_TIME);
+//		timeslot.setEndTime(END_TIME);
+//		
+//		TimeSlot timeslot2 = new TimeSlot();
+//		timeslot2.setStartDate(START_DATE2);
+//		timeslot2.setEndDate(END_DATE2);
+//		timeslot2.setStartTime(START_TIME2);
+//		timeslot2.setEndTime(END_TIME2);
+//
+//		Appointment appointment = new Appointment();
+//		appointment.setChosenService(serviceRepo.findChosenServiceByName(CHOSENSERVICE_NAME));
+//		appointment.setCustomer(cusRepo.findCustomerByUsername(CUSTOMER_USERNAME));
+//		appointment.setTimeSlot(timeslot);
+//		appointment.setId(APPOINTMENT_ID);
+//		
+//		Appointment appointment2 = new Appointment();
+//		appointment.setChosenService(serviceRepo.findChosenServiceByName(CHOSENSERVICE_NAME2));
+//		appointment.setCustomer(cusRepo.findCustomerByUsername(CUSTOMER_USERNAME2));
+//		appointment.setTimeSlot(timeslot2);
+//		appointment.setId(APPOINTMENT_ID2);
+//
+//		String description = "Good";
+//		int serviceRating = 4;
+//		Review review = null;
+//		
+//		String description2 = "Excellent";
+//		int serviceRating2 = 5;
+//		Review review2 = null;
+//		String error = null;
+//		double averageServiceRating = 0.0;
+//
+//		try {
+//			review = service.createReview(appointment, chosenService, customer, description, serviceRating);
+//			review2 = service.createReview(appointment2, chosenService, customer2, description2, serviceRating2);
+//			averageServiceRating = service.getAverageServiceReview(chosenService);
+//		}catch (IllegalArgumentException e) {
+//			error = e.getMessage();
+//		}
+//
+//		assertNotNull(review);
+//		assertNotNull(review2);
+//		assertEquals(4.5, averageServiceRating);
+//	}
 	
 }
 

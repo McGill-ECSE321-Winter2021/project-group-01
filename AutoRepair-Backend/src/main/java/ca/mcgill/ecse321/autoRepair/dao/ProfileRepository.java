@@ -12,5 +12,5 @@ public interface ProfileRepository extends CrudRepository<Profile, Long>{
     //Profile findByCustomer(Customer customer);
 
     //boolean existsByCustomer(Customer customer);
-	Profile findByFirstNameAndLastName(String firstName, String lastName);
+	Profile findByEmail(String email);
 }

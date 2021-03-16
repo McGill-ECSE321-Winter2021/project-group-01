@@ -84,8 +84,8 @@ public class AutoRepairService {
 	}
 
 	@Transactional
-	public Profile getProfile(String firstName, String lastName) {
-		return profileRepository.findByFirstNameAndLastName(firstName, lastName);
+	public Profile getProfile(String email) {
+		return profileRepository.findByEmail(email);
 	}
 	
 

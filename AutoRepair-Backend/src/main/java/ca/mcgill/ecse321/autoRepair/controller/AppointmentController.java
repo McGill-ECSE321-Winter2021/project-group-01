@@ -9,7 +9,7 @@ import ca.mcgill.ecse321.autoRepair.model.*;
 import ca.mcgill.ecse321.autoRepair.service.AppointmentService;
 import ca.mcgill.ecse321.autoRepair.service.ChosenServiceService;
 import ca.mcgill.ecse321.autoRepair.service.TimeSlotService;
-import ca.mcgill.ecse321.autoRepair.service.UserService;
+import ca.mcgill.ecse321.autoRepair.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +42,7 @@ public class AppointmentController {
     ChosenServiceService chosenServiceService;
 
     @Autowired
-    UserService userService;
+    CustomerService userService;
 
     @PostMapping(value = { "/make appointment/{username}/{serviceName}" })
     public AppointmentDTO makeAppointment(@PathVariable("username") CustomerDTO customerDTO, @RequestParam Date date,

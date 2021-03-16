@@ -114,7 +114,7 @@ public class TestAppointmentPersistence {
 
 		testAppointment = null;
 
-		testAppointment = appointmentRepository.findAppointmentByTimeSlot(testSlot);
+		testAppointment = appointmentRepository.findAppointmentByStartDateAndStartTime(testSlot.getStartDate().toString(),testSlot.getStartTime().toString());
 		assertNotNull(testAppointment);
 		assertEquals(testCustomer.getUsername(), testAppointment.getCustomer().getUsername());
 		assertEquals(testCustomer.getPassword(), testAppointment.getCustomer().getPassword());

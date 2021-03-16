@@ -9,7 +9,6 @@ import ca.mcgill.ecse321.autoRepair.service.ChosenServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.util.List;
 import java.util.stream.Collectors;
 

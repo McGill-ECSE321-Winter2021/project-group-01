@@ -15,7 +15,7 @@ public abstract class User
   public User() {
   }
 
-  private String username;
+  private String username; 
 
   @Id
   public String getUsername()

@@ -18,7 +18,7 @@ import ca.mcgill.ecse321.autoRepair.model.Assistant;
 
 import ca.mcgill.ecse321.autoRepair.model.Owner;
 //import ca.mcgill.ecse321.autoRepair.service.AutoRepairService;
-import ca.mcgill.ecse321.autoRepair.service.UserService;
+//import ca.mcgill.ecse321.autoRepair.service.UserService;
 
 @CrossOrigin(origins = "*")
 @RestController

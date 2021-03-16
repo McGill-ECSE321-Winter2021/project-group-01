@@ -21,7 +21,7 @@ public class ChosenServiceService {
 		
 		
 		
-		if(name == null || name.equals("") || containsCharacter(name)==false) {
+     	if(name == null || name.equals("") || containsCharacter(name)==false) {
 			throw new IllegalArgumentException("Invalid name");
 		}
 		

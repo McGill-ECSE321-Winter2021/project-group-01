@@ -1,21 +1,12 @@
+  
 package ca.mcgill.ecse321.autoRepair.controller;
 
 import ca.mcgill.ecse321.autoRepair.dao.CustomerRepository;
 import ca.mcgill.ecse321.autoRepair.dao.ChosenServiceRepository;
 import ca.mcgill.ecse321.autoRepair.dao.TimeSlotRepository;
 import ca.mcgill.ecse321.autoRepair.dto.AppointmentDTO;
-<<<<<<< HEAD
-import ca.mcgill.ecse321.autoRepair.dto.AssistantDTO;
 import ca.mcgill.ecse321.autoRepair.dto.CarDTO;
 import ca.mcgill.ecse321.autoRepair.dto.CustomerDTO;
-import ca.mcgill.ecse321.autoRepair.dto.OwnerDTO;
-import ca.mcgill.ecse321.autoRepair.dto.CarDTO;
-import ca.mcgill.ecse321.autoRepair.dto.CustomerDTO;
-
-=======
-import ca.mcgill.ecse321.autoRepair.dto.CarDTO;
-import ca.mcgill.ecse321.autoRepair.dto.CustomerDTO;
->>>>>>> main
 import ca.mcgill.ecse321.autoRepair.dto.ProfileDTO;
 import ca.mcgill.ecse321.autoRepair.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,84 +18,22 @@ import java.sql.Time;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-<<<<<<< HEAD
-import java.util.stream.Collectors;
-=======
->>>>>>> main
 
 @CrossOrigin(origins = "*")
 @RestController
 public class AutoRepairController {
-<<<<<<< HEAD
-	@Autowired
-	AppointmentService appointmentService;
 
 
 	@Autowired
 	CustomerRepository customerRepository;
 
-=======
-
-
-	@Autowired
-	CustomerRepository customerRepository;
-
->>>>>>> main
 	@Autowired
 	TimeSlotRepository timeSlotRepository;
 
 	@Autowired
 	ChosenServiceRepository chosenServiceRepository;
-<<<<<<< HEAD
-	
-
-	//    @Autowired
-	//    CustomerService customerService;
-
-//	@PostMapping(value = { "/make appointment/eusername}/{serviceName}" })
-//	public AppointmentDTO makeAppointment(@PathVariable CustomerDTO customerDTO, @RequestParam Date date,
-//			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm")
-//	LocalTime startTime,
-//	@PathVariable ChosenService serviceName) throws IllegalArgumentException {
-//		Customer customer = customerRepository.findCustomerByUsername(customerDTO.getUsername());
-//		TimeSlot timeSlot = new TimeSlot();
-//		timeSlot.setStartTime(Time.valueOf(startTime));
-//		timeSlot.setStartDate(date);
-//		timeSlot.setEndDate(date);
-//		ChosenService service = chosenServiceRepository.findChosenServiceByName(serviceName.getName());
-//		timeSlot.setEndTime(findEndTimeOfApp(service,startTime));
-//		if(customer==null) throw new IllegalArgumentException("The customer does not exist");
-//		if(timeSlot!=null) throw new IllegalArgumentException("The chosen time slot is unavailable");
-//		if(service== null) throw new IllegalArgumentException("The chosen service does not exist");
-//		Appointment appointment = appointmentService.makeAppointment(customer,service,timeSlot);
-//		return null;
-//		// return convertToDTO(appointment);
-//	}
-
-	private Time findEndTimeOfApp(ChosenService service, LocalTime startTime){
-		LocalTime localEndTime = startTime.plusMinutes(service.getDuration());
-		return Time.valueOf(localEndTime);
-	}
-
-	//    private AppointmentDTO convertToDTO(Appointment appointment){
-	//        if(appointment==null) throw new IllegalArgumentException("There is no such appointment");
-	//        AppointmentDTO appointmentDTO = new AppointmentDTO();
-	//        appointmentDTO.setCustomer(convertToDTO(appointment.getCustomer()));
-	//        TimeSlotDTO timeSlotDTO = new TimeSlotDTO(appointment.getTimeSlot().getStartTime(), appointment.getTimeSlot().getEndTime()
-	//                ,appointment.getTimeSlot().getStartDate(), appointment.getTimeSlot().getEndDate());
-	//        appointmentDTO.setTimeSlot(timeSlotDTO);
-	//        appointmentDTO.setService(convertToDTO(appointment.getService()));
-	//        appointmentDTO.setComboItemList(null);
-	//        return appointmentDTO;
-	//    }
-	
-	
-	
-	
-=======
 
 
->>>>>>> main
 	private CustomerDTO convertToDTO(Customer customer) {
 		if(customer==null) throw new IllegalArgumentException("Customer not found.");
 		List<CarDTO> cars = new ArrayList<CarDTO>();
@@ -115,10 +44,7 @@ public class AutoRepairController {
 
 		return new CustomerDTO(customer.getUsername(), customer.getPassword(), customer.getNoShow(), 
 				customer.getShow(), cars, convertToDTO(customer.getProfile()));
-<<<<<<< HEAD
-=======
 
->>>>>>> main
 	}
 
 	private CarDTO convertToDTO(Car car) {
@@ -131,24 +57,5 @@ public class AutoRepairController {
 		return new ProfileDTO(profile.getFirstName(), profile.getLastName(), profile.getAddress(), 
 				profile.getZipCode(), profile.getPhoneNumber(), profile.getEmail());
 	}
-<<<<<<< HEAD
 }
-	
-	
-	
-	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-=======
-}
->>>>>>> main

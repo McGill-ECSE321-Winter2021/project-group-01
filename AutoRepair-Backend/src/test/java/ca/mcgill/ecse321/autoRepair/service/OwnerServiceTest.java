@@ -1,3 +1,4 @@
+  
 package ca.mcgill.ecse321.autoRepair.service;
 
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,37 +10,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
-<<<<<<< HEAD
-import static org.mockito.Mockito.when;
-import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.stubbing.Answer;
-
-import ca.mcgill.ecse321.autoRepair.dao.AssistantRepository;
-import ca.mcgill.ecse321.autoRepair.dao.CarRepository;
-import ca.mcgill.ecse321.autoRepair.dao.CustomerRepository;
-import ca.mcgill.ecse321.autoRepair.dao.OwnerRepository;
-import ca.mcgill.ecse321.autoRepair.dao.ProfileRepository;
-import ca.mcgill.ecse321.autoRepair.model.Assistant;
-import ca.mcgill.ecse321.autoRepair.model.Car;
-import ca.mcgill.ecse321.autoRepair.model.Car.CarTransmission;
-import ca.mcgill.ecse321.autoRepair.model.Customer;
-import ca.mcgill.ecse321.autoRepair.model.Owner;
-import ca.mcgill.ecse321.autoRepair.model.Profile;
-=======
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,7 +20,6 @@ import org.mockito.stubbing.Answer;
 
 import ca.mcgill.ecse321.autoRepair.dao.OwnerRepository;
 import ca.mcgill.ecse321.autoRepair.model.Owner;
->>>>>>> main
 
 
 @ExtendWith(MockitoExtension.class)
@@ -363,5 +332,3 @@ public class OwnerServiceTest {
 	
 
 }
-
-

@@ -36,12 +36,11 @@ public class OwnerService {
 	 	ownerRepository.save(owner);
 		return owner;
 	}
-	
-	
+		
 	@Transactional
 	public Owner updateOwner(String oldUsername,String newUsername,String newPassword) {
 		Owner oldOwner = ownerRepository.findOwnerByUsername(oldUsername);
-		if(oldOwner.getUsername() == newUsername && newUsername!="") {
+	 	if(oldOwner.getUsername() == newUsername && newUsername!="") {
 			oldOwner.setUsername(newUsername);
 		}
 		if(oldOwner.getPassword() != newPassword && newPassword!="") {

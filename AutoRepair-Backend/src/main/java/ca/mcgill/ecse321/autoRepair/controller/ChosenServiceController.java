@@ -1,31 +1,17 @@
+
 package ca.mcgill.ecse321.autoRepair.controller;
 
-<<<<<<< HEAD
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import ca.mcgill.ecse321.autoRepair.dto.AssistantDTO;
-import ca.mcgill.ecse321.autoRepair.dto.ChosenServiceDTO;
-import ca.mcgill.ecse321.autoRepair.dto.OwnerDTO;
-import ca.mcgill.ecse321.autoRepair.model.Assistant;
-import ca.mcgill.ecse321.autoRepair.model.ChosenService;
-import ca.mcgill.ecse321.autoRepair.model.Owner;
-import ca.mcgill.ecse321.autoRepair.model.Review;
-import ca.mcgill.ecse321.autoRepair.dao.AssistantRepository;
-=======
->>>>>>> main
 import ca.mcgill.ecse321.autoRepair.dao.ChosenServiceRepository;
 import ca.mcgill.ecse321.autoRepair.dto.ChosenServiceDTO;
 import ca.mcgill.ecse321.autoRepair.model.*;
+import ca.mcgill.ecse321.autoRepair.service.ChosenServiceService;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalTime;
-import java.util.ArrayList;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -33,130 +19,43 @@ public class ChosenServiceController {
 
 	@Autowired
 	ChosenServiceRepository chosenServiceRepository;
-<<<<<<< HEAD
 	@Autowired
-	AssistantRepository assistantRepository;
-	@Autowired
-    OwnerRepository ownerRepository;
+
+	private ChosenServiceService chosenService;
 	
-	@PostMapping(value = { "/add service/{serviceName}/{serviceDuration}" })
-	public ChosenServiceDTO addService
-(@PathVariable String serviceName,@PathVariable int serviceDuration,
-@PathVariable AssistantDTO assistantDTO, @PathVariable OwnerDTO ownerDTO) throws IllegalArgumentException {
-		
-ChosenService availableService = chosenServiceRepository.findChosenServiceByName(serviceName);
-Assistant assistant = assistantRepository.findAssistantByUsername(assistantDTO.getUsername()); //returns null if owner in
-Owner owner =  ownerRepository.findOwnerByUsername(ownerDTO.getUsername());  //returns null if assistant in
-
-
-if (assistant==null && owner==null)throw new IllegalArgumentException
-("Restricted access: can't add service");
-if (serviceName==availableService.getName())throw new IllegalArgumentException
-("Service" + serviceName + "already exists");
-if (serviceName==null)throw new IllegalArgumentException
-("Please specify service name");
-if (serviceDuration<0)throw new IllegalArgumentException
-("Please specify service appropriate duration");
-
- ChosenService serviceToAdd = new ChosenService();
- serviceToAdd.setName(serviceName);
- serviceToAdd.setDuration(serviceDuration);
- 
-	chosenServiceRepository.save(availableService);
-
-	return convertToDTO(serviceToAdd);
 	
+	@GetMapping(value = { "/service" })
+	public List<ChosenServiceDTO> getAllServices() {
+return chosenService.getAllChosenService().stream().map(service -> convertToDTO(service)).collect(Collectors.toList());
 	}
-
-
-@PostMapping(value = { "/update service/{serviceName}/{serviceDuration}" })
-public ChosenServiceDTO updateService
-(@PathVariable String serviceName,@PathVariable int serviceDuration,
-@PathVariable AssistantDTO assistantDTO, @PathVariable OwnerDTO ownerDTO) throws IllegalArgumentException {
-	
-	ChosenService availableService = chosenServiceRepository.findChosenServiceByName(serviceName);
-	Assistant assistant = assistantRepository.findAssistantByUsername(assistantDTO.getUsername()); //returns null if owner in
-	Owner owner =  ownerRepository.findOwnerByUsername(ownerDTO.getUsername());  //returns null if assistant in
-
-
-	if (assistant==null && owner==null)throw new IllegalArgumentException
-	("Restricted access: can't update service");
-	if (serviceName!=availableService.getName())throw new IllegalArgumentException
-	("Service" + serviceName + "does not exist, kindly add service before updating it");
-	if (serviceName==null)throw new IllegalArgumentException
-	("Please specify service name to update");
-	if (serviceDuration<0)throw new IllegalArgumentException
-	("Please specify service appropriate duration to update");
-
-	availableService.setName(serviceName);
-	availableService.setDuration(serviceDuration);
-	
-	chosenServiceRepository.save(availableService);
-	
-	return convertToDTO(availableService);
-	
-}
-
-@PostMapping(value = { "/delete service/{serviceName}/"})
-public void deleteService
-(@PathVariable String serviceName,@PathVariable AssistantDTO assistantDTO, @PathVariable OwnerDTO ownerDTO) 
-		throws IllegalArgumentException {
 	
 	
-	ChosenService availableService = chosenServiceRepository.findChosenServiceByName(serviceName);
-	Assistant assistant = assistantRepository.findAssistantByUsername(assistantDTO.getUsername()); //returns null if owner in
-	Owner owner =  ownerRepository.findOwnerByUsername(ownerDTO.getUsername());  //returns null if assistant in
-
-
-	if (assistant==null && owner==null)throw new IllegalArgumentException
-	("Restricted access: can't delete service");
-	if (serviceName!=availableService.getName())throw new IllegalArgumentException
-	("Service" + serviceName + "does not exist, kindly add service before deleting it");
-	if (serviceName==null)throw new IllegalArgumentException
-	("Please specify service name to delete");
+	@PostMapping(value = { "/create chosen service/{name}/{duration}/{price}" })
+	public ChosenServiceDTO createChosenService
+	(@PathVariable("name") String name,@PathVariable("duration") int duration,@PathVariable("price") Double price) {
+		ChosenService service = chosenService.createChosenService(name, duration, price);
+		return convertToDTO(service);
+	}
 	
-	chosenServiceRepository.delete(availableService);
+	@PostMapping(value = { "/update chosen service/{name}/{duration}/{price}" })
+	public ChosenServiceDTO updateChosenService
+	(@PathVariable("name") String name,@PathVariable("duration") int duration,@PathVariable("price") Double price) {
+		ChosenService service = chosenService.editChosenService(name, duration, price);
+		return convertToDTO(service);
+	}
 	
-
-}
-
-@PostMapping(value = { "/review service/{serviceName}/"})
-public Review reviewService
-(@PathVariable String serviceName,@PathVariable AssistantDTO assistantDTO, @PathVariable OwnerDTO ownerDTO) 
-		throws IllegalArgumentException {
+	@PostMapping(value = { "/delete chosen service/{name}" })
+	public ChosenServiceDTO deleteChosenService
+	(@PathVariable("name") String name) {
+		ChosenService service = chosenService.deleteChosenService(name);
+		return convertToDTO(service);
+	}
 	
-	//if No Show, throw new exception: can't review a service customer didn't show up to.
-    //if review provided, during or before service,throw new exception: can't review service that isn't done yet.
-	//if rating not between 1 and 5, throw new exception : please provide a rating between 1 and 5 stars.
 	
-	//do total service rating 
-	
-	// availableService.getServiceRating();
-	// servicePerformed.setServiceRating(providedReview);
-	 return null;
-			 //providedReview;
-	
-}
-
-
-private ChosenServiceDTO convertToDTO(ChosenService availableService) {
-	if(availableService == null) throw new IllegalArgumentException("service not found.");
-	return new ChosenServiceDTO(availableService.getName());
-}
-
-}
-
-
-	
-
-=======
-
-	private ChosenServiceDTO convertToDTO(ChosenService servicito) {
-		if(servicito==null) throw new IllegalArgumentException("Service not found.");
-		return new ChosenServiceDTO(servicito.getName(), servicito.getDuration());
+	private ChosenServiceDTO convertToDTO(ChosenService service) {
+		if(service==null) throw new IllegalArgumentException("Service not found.");
+	 	return new ChosenServiceDTO(service.getName(), service.getDuration());
 	}
  
 }
 
-
->>>>>>> main

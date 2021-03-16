@@ -172,31 +172,6 @@ public class AppointmentService {
         return toList(appointmentRepository.findAppointmentsByCustomer(username));
     }
 
-//    @Transactional
-//    public void addNoShow(TimeSlot timeSlot){
-//        Appointment appointment = appointmentRepository.findAppointmentByStartDateAndStartTime(timeSlot.getStartDate().toString(), timeSlot.getStartTime().toString());
-//        Customer customer = appointment.getCustomer();
-//        int noShows = customer.getNoShow()+ 1;
-//        customer.setNoShow(noShows);
-//        appointmentRepository.delete(appointment);
-//    }
-
-//    @Transactional
-//    public void addShow(TimeSlot timeSlot){
-//        Appointment appointment = appointmentRepository.findAppointmentByStartDateAndStartTime(timeSlot.getStartDate().toString(), timeSlot.getStartTime().toString());
-//        Customer customer = appointment.getCustomer();
-//        int shows = customer.getShow()+ 1;
-//        customer.setShow(shows);
-//        appointmentRepository.delete(appointment);
-//    }
-//
-//    @Transactional
-//    public void startAppointment(TimeSlot timeSlot){
-//        Appointment appointment = appointmentRepository.findAppointmentByStartDateAndStartTime(timeSlot.getStartDate().toString(), timeSlot.getStartTime().toString());
-//        addShow(timeSlot);
-//        appointmentRepository.delete(appointment);
-//    }
-
     private TimeSlot calcTimeSlot(Date startDate, Time startTime, Date endDate, Time endTime){
         TimeSlot timeSlot=new TimeSlot();
         timeSlot.setStartDate(startDate);

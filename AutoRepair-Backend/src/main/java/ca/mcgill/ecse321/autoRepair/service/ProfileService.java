@@ -68,7 +68,7 @@ public class ProfileService {
 	}
 
 	@Transactional
-	public Profile updateProfile(String username, String firstName, String lastName, String address, String zipCode, String phoneNumber, String email) {
+	public Customer updateProfile(String username, String firstName, String lastName, String address, String zipCode, String phoneNumber, String email) {
 		Customer customer = customerRepository.findCustomerByUsername(username);
 		
 		if(customer==null)
@@ -117,9 +117,11 @@ public class ProfileService {
 			profile.setAddress(address);
 		}
 
+		customer.setProfile(profile);
+		customerRepository.save(customer);
 		profileRepository.save(profile);
 
-		return profile;
+		return customer;
 	}
 
 

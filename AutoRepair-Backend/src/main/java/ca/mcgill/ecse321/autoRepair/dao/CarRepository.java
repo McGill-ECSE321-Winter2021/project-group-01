@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface CarRepository extends CrudRepository<Car, String>{
 
     Car findCarByPlateNumber(String plateNumber);
-
+   
 }

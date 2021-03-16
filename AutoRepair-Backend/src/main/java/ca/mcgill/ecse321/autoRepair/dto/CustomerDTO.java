@@ -31,8 +31,7 @@ public class CustomerDTO {
 	
 	}
 
-	
-	
+
 	public String getUsername() {
 		return username;
 	}

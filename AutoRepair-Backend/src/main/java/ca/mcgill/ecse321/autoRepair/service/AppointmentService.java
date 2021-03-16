@@ -193,7 +193,7 @@ public class AppointmentService {
         boolean isAvailable=true;
         Date startDate = timeSlot.getStartDate();
         Locale locale = new Locale("en");
-        OperatingHour operatingHour = operatingHourRepository.findByDayOfWeek(timeSlotService.getDayString(startDate,locale));
+        OperatingHour operatingHour = operatingHourRepository.findByDayOfWeek(TimeSlotService.getDayString(startDate,locale));
         LocalTime startTime =timeSlot.getStartTime().toLocalTime();
         LocalTime endTime = timeSlot.getEndTime().toLocalTime();
         LocalTime startTimeOH = operatingHour.getStartTime().toLocalTime();

@@ -2,11 +2,7 @@ package ca.mcgill.ecse321.autoRepair.service;
 
 import ca.mcgill.ecse321.autoRepair.dao.ChosenServiceRepository;
 import ca.mcgill.ecse321.autoRepair.model.ChosenService;
-import ca.mcgill.ecse321.autoRepair.model.Customer;
-import ca.mcgill.ecse321.autoRepair.model.Reminder;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 

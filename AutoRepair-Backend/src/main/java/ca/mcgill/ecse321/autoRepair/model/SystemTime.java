@@ -1,4 +1,4 @@
-package ca.mcgill.ecse321.autoRepair.service;
+package ca.mcgill.ecse321.autoRepair.model;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.sql.Date;

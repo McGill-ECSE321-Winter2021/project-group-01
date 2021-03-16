@@ -9,13 +9,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.mockito.Mockito.when;
 import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -26,14 +22,9 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import ca.mcgill.ecse321.autoRepair.dao.BusinessRepository;
-import ca.mcgill.ecse321.autoRepair.dao.CustomerRepository;
 import ca.mcgill.ecse321.autoRepair.dao.OperatingHourRepository;
-import ca.mcgill.ecse321.autoRepair.dao.ProfileRepository;
 import ca.mcgill.ecse321.autoRepair.model.Business;
-import ca.mcgill.ecse321.autoRepair.model.Car;
-import ca.mcgill.ecse321.autoRepair.model.Customer;
 import ca.mcgill.ecse321.autoRepair.model.OperatingHour;
-import ca.mcgill.ecse321.autoRepair.model.Profile;
 import ca.mcgill.ecse321.autoRepair.model.TimeSlot;
 import ca.mcgill.ecse321.autoRepair.model.OperatingHour.DayOfWeek;
 
@@ -166,7 +157,7 @@ public class BusinessServiceTest {
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		
+		assertNull(business);
 		assertEquals(error, "Name cannot be blank");
 		
 	}
@@ -185,7 +176,7 @@ public class BusinessServiceTest {
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		
+		assertNull(business);
 		assertEquals(error, "Email cannot be blank");
 		
 	}
@@ -204,7 +195,7 @@ public class BusinessServiceTest {
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		
+		assertNull(business);
 		assertEquals(error, "Address cannot be blank");
 		
 	}
@@ -223,7 +214,7 @@ public class BusinessServiceTest {
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		
+		assertNull(business);
 		assertEquals(error, "Phone number cannot be blank");
 		
 	}
@@ -243,6 +234,7 @@ public class BusinessServiceTest {
 			error = e.getMessage();
 		}
 		
+		assertNull(business);
 		assertEquals(error, "Invalid email");
 		
 	}
@@ -285,7 +277,7 @@ public class BusinessServiceTest {
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		
+		assertNull(business);
 		assertEquals(error, "Name cannot be blank");
 		
 	}
@@ -304,7 +296,7 @@ public class BusinessServiceTest {
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		
+		assertNull(business);
 		assertEquals(error, "Email cannot be blank");
 		
 	}
@@ -323,7 +315,7 @@ public class BusinessServiceTest {
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		
+		assertNull(business);
 		assertEquals(error, "Address cannot be blank");
 		
 	}
@@ -342,7 +334,7 @@ public class BusinessServiceTest {
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		
+		assertNull(business);
 		assertEquals(error, "Phone number cannot be blank");
 		
 	}
@@ -361,7 +353,7 @@ public class BusinessServiceTest {
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		
+		assertNull(business);
 		assertEquals(error, "Invalid email");
 		
 	}
@@ -407,7 +399,7 @@ public class BusinessServiceTest {
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		
+		assertNull(operatingHour);
 		assertEquals(error, "Day of week cannot be blank");
 		
 	}
@@ -428,7 +420,7 @@ public class BusinessServiceTest {
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		
+		assertNull(operatingHour);
 		assertEquals(error, "Start time cannot be blank");
 		
 	}
@@ -449,7 +441,7 @@ public class BusinessServiceTest {
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		
+		assertNull(operatingHour);
 		assertEquals(error, "End time cannot be blank");
 		
 	}
@@ -470,7 +462,7 @@ public class BusinessServiceTest {
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		
+		assertNull(operatingHour);
 		assertEquals(error, "Start time cannot be before end time");
 		
 	}
@@ -520,7 +512,7 @@ public class BusinessServiceTest {
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		
+		assertNull(operatingHour);
 		assertEquals(error, "Day of week cannot be blank");
 		
 	}
@@ -544,7 +536,7 @@ public class BusinessServiceTest {
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		
+		assertNull(operatingHour);
 		assertEquals(error, "Start time cannot be blank");
 		
 	}
@@ -568,7 +560,7 @@ public class BusinessServiceTest {
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		
+		assertNull(operatingHour);
 		assertEquals(error, "End time cannot be blank");
 		
 	}
@@ -578,7 +570,6 @@ public class BusinessServiceTest {
 
 		assertEquals(0, service.getAllOperatingHour().size());
 		
-		DayOfWeek dayOfWeek = DayOfWeek.Monday;
 		Time startTime = Time.valueOf("10:00:00");
 		Time endTime = Time.valueOf("18:00:00");
 		DayOfWeek dayOfWeek1 = DayOfWeek.Tuesday;
@@ -592,7 +583,7 @@ public class BusinessServiceTest {
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		
+		assertNull(operatingHour);
 		assertEquals(error, "Operating hour cannot be found");
 		
 	}

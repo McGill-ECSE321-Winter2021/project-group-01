@@ -32,6 +32,7 @@ import ca.mcgill.ecse321.autoRepair.model.ChosenService;
 import ca.mcgill.ecse321.autoRepair.model.Customer;
 import ca.mcgill.ecse321.autoRepair.model.Profile;
 import ca.mcgill.ecse321.autoRepair.model.Reminder;
+import ca.mcgill.ecse321.autoRepair.model.SystemTime;
 
 @ExtendWith(MockitoExtension.class)
 public class ReminderServiceTests {

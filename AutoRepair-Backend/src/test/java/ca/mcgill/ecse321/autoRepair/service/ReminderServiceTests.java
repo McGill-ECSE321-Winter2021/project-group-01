@@ -9,22 +9,16 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
-import static org.mockito.Mockito.when;
 import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
 import ca.mcgill.ecse321.autoRepair.dao.CarRepository;
@@ -102,9 +96,11 @@ public class ReminderServiceTests {
 	
 	private static final String CSName = "TestName";
 	private static final int duration = 8;
+	private static final Double thePrice = 321.1;
 	
 	private static final String CSName2 = "csName";
 	private static final int duration2 = 10;
+	private static final Double thePrice2 = 321.2;
 	
 	private static final String CUSTOMER2_USERNAME ="TestCustomer2";
 	private static final String CUSTOMER2_PASSWORD ="TestPassword123";
@@ -130,6 +126,7 @@ public class ReminderServiceTests {
 				ChosenService CS = new ChosenService();
 				CS.setName(CSName);
 				CS.setDuration(duration);
+				CS.setPayment(thePrice);
 				
 				Profile profile = new Profile();
 				profile.setFirstName(PROFILE_FIRSTNAME);
@@ -170,6 +167,7 @@ public class ReminderServiceTests {
 				ChosenService CS = new ChosenService();
 				CS.setName(CSName);
 				CS.setDuration(duration);
+				CS.setPayment(thePrice);
 				
 				Profile profile = new Profile();
 				profile.setFirstName(PROFILE_FIRSTNAME);
@@ -200,8 +198,9 @@ public class ReminderServiceTests {
 				///////////////////////////////////////////
 				
 				ChosenService CS2 = new ChosenService();
-				CS.setName(CSName2);
-				CS.setDuration(duration2);
+				CS2.setName(CSName2);
+				CS2.setDuration(duration2);
+				CS2.setPayment(thePrice2);
 				
 				Profile profile2 = new Profile();
 				profile2.setFirstName(PROFILE2_FIRSTNAME);
@@ -308,10 +307,12 @@ public class ReminderServiceTests {
 	                if (invocation.getArgument(0).equals(CSName)) {
 	                    chosenService.setName(CSName);
 	                    chosenService.setDuration(duration);
+	                    chosenService.setPayment(thePrice);
 	                }
 	                if (invocation.getArgument(0).equals(CSName2)) {
 	                    chosenService.setName(CSName2);
 	                    chosenService.setDuration(duration2);
+	                    chosenService.setPayment(thePrice2);
 	                }
 	                return chosenService;
 	            } else {
@@ -337,7 +338,7 @@ public class ReminderServiceTests {
 		
 		String customerName = CUSTOMER_USERNAME;
 		String chosenServiceName = CSName2;
-		
+	
 		Time time = Time.valueOf("11:00:00");
 		Date date = Date.valueOf("2021-12-22");
 		Reminder r = null;
@@ -433,6 +434,32 @@ public class ReminderServiceTests {
 		
 		assertNull(r);
 		assertEquals("Description Invalid",error);
+	}
+	
+	@Test
+	public void testLongDescriptionCreateReminder() {
+		assertEquals(0, reminderService.getAllReminders().size()); 
+	
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+		String customerName = CUSTOMER_USERNAME;
+		String chosenServiceName = CSName;
+		
+		Time time = Time.valueOf("11:00:00");
+		Date date = Date.valueOf("2021-12-22");
+		Reminder r = null;
+		String description = "heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
+		String error = null;
+		
+		try {
+			r = reminderService.createReminder(chosenServiceName, customerName, date, description, time);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("Description Invalid, must be less than 50 characters",error);
 	}
 	
 	@Test
@@ -1325,6 +1352,33 @@ public class ReminderServiceTests {
 		
 		assertNull(r);
 		assertEquals("Description Invalid",error);
+	}
+	
+	@Test
+	public void testEditReminderLongDescription() {
+		assertEquals(0, reminderService.getAllReminders().size()); 
+		
+		SystemTime.setSysTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		
+		String customerName = CUSTOMER_USERNAME;
+		String oldServiceName = CSName;
+		String chosenServiceName = CSName2;
+	    String newDescription = "hhheeeeelllloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo";
+		Date dBefore = Date.valueOf("2021-12-14");
+		Time tBefore = Time.valueOf("08:00:00");
+	    
+		Reminder r = null;
+		String error = null;
+
+		try {
+			r = reminderService.editReminder(oldServiceName, chosenServiceName, customerName, dBefore, newDescription, tBefore);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(r);
+		assertEquals("Description Invalid, must be less than 50 characters",error);
 	}
 	
 	@Test

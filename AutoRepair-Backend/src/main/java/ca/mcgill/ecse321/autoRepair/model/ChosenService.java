@@ -21,6 +21,14 @@ public class ChosenService
         this.duration = duration;
     }
 
+    public Double getPayment() {
+    	return paymentCost;
+    }
+    
+    public void setPayment(Double price) {
+    	this.paymentCost = price;
+    }
+    
     @Id
     public String getName(){ return this.name;}
 

@@ -52,6 +52,10 @@ public class ReminderService {
 			//error = error.concat("Invalid date. ");
 		}
 		
+		if(description.length()>50) {
+			throw new IllegalArgumentException("Description Invalid, must be less than 50 characters");
+		}
+		
 		if (time==null) {
 			throw new IllegalArgumentException("Time Invalid");
 		//error = error.concat("");
@@ -88,7 +92,7 @@ public class ReminderService {
             throw new IllegalArgumentException("The following service does not exist: " + serviceName);
         Reminder r = reminderRepository.findByCustomerAndChosenService(customer, chosenService);
 		if(r!=null) throw new IllegalArgumentException("This reminder is already created");
-        
+       
 			Reminder reminder = new Reminder();
 			reminder.setChosenService(chosenService);
 			reminder.setCustomer(customer);
@@ -124,6 +128,9 @@ public class ReminderService {
 				if (description==null|| description.equals("") || containsCharacter(description)==false) {
 					throw new IllegalArgumentException("Description Invalid");
 					//error = error.concat("Invalid date. ");
+				}
+				if(description.length()>50) {
+					throw new IllegalArgumentException("Description Invalid, must be less than 50 characters");
 				}
 				
 				if (newTime==null) {

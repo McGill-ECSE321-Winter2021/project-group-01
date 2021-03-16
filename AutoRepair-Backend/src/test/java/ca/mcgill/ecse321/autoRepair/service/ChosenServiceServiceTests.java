@@ -35,6 +35,8 @@ public class ChosenServiceServiceTests {
 	private ChosenServiceService csService;
 
 	private static final String CSName = "TestName";
+	private static final int theDuration = 5;
+	private static final Double thePrice = 321.1;
 
 	@BeforeEach
 	public void setMockOutput() {
@@ -43,7 +45,8 @@ public class ChosenServiceServiceTests {
 
 				ChosenService cs = new ChosenService();
 				cs.setName(CSName);
-				cs.setDuration(5);
+				cs.setDuration(theDuration);
+				cs.setPayment(thePrice);
 				return cs;
 
 			}else {
@@ -61,9 +64,11 @@ public class ChosenServiceServiceTests {
 		assertEquals(0, csService.getAllChosenService().size()); 
 		String namee = "Service1";
 		int dur = 5; 
+		Double price = thePrice;
 		ChosenService cs = null;
+		
 		try {
-			cs = csService.createChosenService(namee,dur);
+			cs = csService.createChosenService(namee,dur,price);
 		}catch (IllegalArgumentException e) {
 			fail();
 		}
@@ -71,6 +76,7 @@ public class ChosenServiceServiceTests {
 		assertNotNull(cs);
 		assertEquals(namee, cs.getName());
 		assertEquals(dur,cs.getDuration());
+		assertEquals(price,cs.getPayment());
 	}
 
 	@Test
@@ -78,10 +84,11 @@ public class ChosenServiceServiceTests {
 		assertEquals(0, csService.getAllChosenService().size()); 
 		String namee = null;
 		int dur = 5;
+		Double price = thePrice;
 		ChosenService cs = null;
 		String error = null;
 		try {
-			cs = csService.createChosenService(namee,dur);
+			cs = csService.createChosenService(namee,dur,price);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -94,11 +101,12 @@ public class ChosenServiceServiceTests {
 	public void testEmptyNameCreateChosenService() {
 		assertEquals(0, csService.getAllChosenService().size()); 
 		String namee = "";
+		Double price = thePrice;
 		int dur = 5;
 		ChosenService cs = null;
 		String error = null;
 		try {
-			cs = csService.createChosenService(namee,dur);
+			cs = csService.createChosenService(namee,dur,price);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -112,10 +120,11 @@ public class ChosenServiceServiceTests {
 		assertEquals(0, csService.getAllChosenService().size()); 
 		String namee = "       ";
 		int dur = 5;
+		Double price = thePrice;
 		ChosenService cs = null;
 		String error = null;
 		try {
-			cs = csService.createChosenService(namee,dur);
+			cs = csService.createChosenService(namee,dur,price);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -125,13 +134,32 @@ public class ChosenServiceServiceTests {
 	}
 
 	@Test
-	public void testCreateChosenServiceTakenName() { 
+	public void testCreateChosenServiceNullPrice() {
 		assertEquals(0, csService.getAllChosenService().size()); 
-		int dur = 7;
+		String namee = "Service2";
+		int dur = 5;
+		Double price = null;
 		ChosenService cs = null;
 		String error = null;
 		try {
-			cs = csService.createChosenService(CSName,dur);
+			cs = csService.createChosenService(namee,dur,price);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(cs);
+		assertEquals("Invalid Price", error);
+	}
+	
+	@Test
+	public void testCreateChosenServiceTakenName() { 
+		assertEquals(0, csService.getAllChosenService().size()); 
+		int dur = 7;
+		Double price = thePrice;
+		ChosenService cs = null;
+		String error = null;
+		try {
+			cs = csService.createChosenService(CSName,dur,price);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -147,10 +175,11 @@ public class ChosenServiceServiceTests {
 		assertEquals(0, csService.getAllChosenService().size()); 
 		String namee = "Servicito";
 		int dur = 0;
+		Double price = thePrice;
 		ChosenService cs = null;
 		String error = null;
 		try {
-			cs = csService.createChosenService(namee,dur);
+			cs = csService.createChosenService(namee,dur,price);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -158,14 +187,14 @@ public class ChosenServiceServiceTests {
 		assertNull(cs);
 		assertEquals("Invalid duration", error);
 	}
-
+	
 	@Test
 	public void testEditChosenService() {
 		assertEquals(0, csService.getAllChosenService().size());
-
+		Double price = 8.6;
 		ChosenService cs = null;
 		try {
-			cs = csService.editChosenService(CSName,6);
+			cs = csService.editChosenService(CSName,6,price);
 		}catch (IllegalArgumentException e) {
 			fail();
 		}
@@ -173,6 +202,95 @@ public class ChosenServiceServiceTests {
 		assertNotNull(cs);
 		assertEquals(CSName, cs.getName());
 		assertEquals(6,cs.getDuration());
+		assertEquals(8.6, cs.getPayment());
+	}
+	
+	@Test
+	public void testEditChosenServiceNullName() {
+		assertEquals(0, csService.getAllChosenService().size()); 
+
+		String namee = null;
+		int dur = 9;
+		Double price = 8.6;
+		ChosenService cs = null;
+		String error = null;
+		try {
+			cs = csService.editChosenService(namee,dur,price);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertNull(cs);
+		assertEquals("Invalid name",error);
+	}
+	@Test
+	public void testEditChosenServiceEmptyName() {
+		assertEquals(0, csService.getAllChosenService().size()); 
+
+		String namee = "";
+		int dur = 9;
+		Double price = 8.6;
+		ChosenService cs = null;
+		String error = null;
+		try {
+			cs = csService.editChosenService(namee,dur,price);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertNull(cs);
+		assertEquals("Invalid name",error);
+	}
+	@Test
+	public void testEditChosenServiceSpacesName() {
+		assertEquals(0, csService.getAllChosenService().size()); 
+
+		String namee = "";
+		int dur = 9;
+		Double price = 8.6;
+		ChosenService cs = null;
+		String error = null;
+		try {
+			cs = csService.editChosenService(namee,dur,price);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertNull(cs);
+		assertEquals("Invalid name",error);
+	}
+	
+	@Test
+	public void testEditChosenServiceZeroDuration() {
+		assertEquals(0, csService.getAllChosenService().size()); 
+
+		String namee = CSName;
+		int dur = 0;
+		Double price = 8.6;
+		ChosenService cs = null;
+		String error = null;
+		try {
+			cs = csService.editChosenService(namee,dur,price);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertNull(cs);
+		assertEquals("Invalid duration",error);
+	}
+	
+	@Test
+	public void testEditChosenServiceNullPrice() {
+		assertEquals(0, csService.getAllChosenService().size()); 
+
+		String namee = CSName;
+		int dur = 9;
+		Double price = null;
+		ChosenService cs = null;
+		String error = null;
+		try {
+			cs = csService.editChosenService(namee,dur,price);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertNull(cs);
+		assertEquals("Invalid Price",error);
 	}
 	
 	@Test
@@ -181,10 +299,11 @@ public class ChosenServiceServiceTests {
 
 		String namee = "hello";
 		int dur = 9;
+		Double price = 8.6;
 		ChosenService cs = null;
 		String error = null;
 		try {
-			cs = csService.editChosenService(namee,dur);
+			cs = csService.editChosenService(namee,dur,price);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -197,10 +316,9 @@ public class ChosenServiceServiceTests {
 		assertEquals(0, csService.getAllChosenService().size());
 
 		String namee = CSName;
-		int dur = 5;
 		ChosenService cs = null;
 		try {
-			cs = csService.deleteChosenService(namee,dur);
+			cs = csService.deleteChosenService(namee);
 		}catch (IllegalArgumentException e) {
 			fail();
 		}
@@ -212,16 +330,63 @@ public class ChosenServiceServiceTests {
 		assertEquals(0, csService.getAllChosenService().size()); 
 
 		String namee = "hi";
-		int dur = 8;
 		ChosenService cs = null;
 		String error = null;
 		try {
-			cs = csService.deleteChosenService(namee,dur);
+			cs = csService.deleteChosenService(namee);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 		assertNull(cs);
 		assertEquals("Chosen Service invalid",error);
+	}
+	
+	@Test
+	public void testDeleteChosenServiceNullName() {
+		assertEquals(0, csService.getAllChosenService().size()); 
+
+		String namee = null;
+		ChosenService cs = null;
+		String error = null;
+		try {
+			cs = csService.deleteChosenService(namee);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertNull(cs);
+		assertEquals("Invalid name",error);
+	}
+	
+	@Test
+	public void testDeleteChosenServiceEmptyName() {
+		assertEquals(0, csService.getAllChosenService().size()); 
+
+		String namee = "";
+		ChosenService cs = null;
+		String error = null;
+		try {
+			cs = csService.deleteChosenService(namee);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertNull(cs);
+		assertEquals("Invalid name",error);
+	}
+	
+	@Test
+	public void testDeleteChosenServiceSpacesName() {
+		assertEquals(0, csService.getAllChosenService().size()); 
+
+		String namee = "  ";
+		ChosenService cs = null;
+		String error = null;
+		try {
+			cs = csService.deleteChosenService(namee);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertNull(cs);
+		assertEquals("Invalid name",error);
 	}
 
 }

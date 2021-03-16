@@ -21,9 +21,9 @@ public class ChosenServiceService {
 	ChosenServiceRepository chosenServiceRepository;
 	
 	@Transactional
-	public ChosenService createChosenService(String name, int duration) { //Add service
+	public ChosenService createChosenService(String name, int duration, Double price) { //Add service
 		
-		usernameIsValid(name);
+		
 		
 		if(name == null || name.equals("") || containsCharacter(name)==false) {
 			throw new IllegalArgumentException("Invalid name");
@@ -33,38 +33,54 @@ public class ChosenServiceService {
 			throw new IllegalArgumentException("Invalid duration");
 		}
 		
+		if(price == null) {
+			throw new IllegalArgumentException("Invalid Price");
+		}
+		
+		usernameIsValid(name);
+		
 		ChosenService cService = new ChosenService();
 		cService.setName(name);
 		cService.setDuration(duration);
+		cService.setPayment(price);
 		chosenServiceRepository.save(cService);
 		return cService;
 	}
 	
 	@Transactional
-	public ChosenService editChosenService(String name, int duration) { 
+	public ChosenService editChosenService(String name, int duration,Double price) { 
 		
-		ChosenService cService = getChosenService(name);
-		if (cService!=null) {
-		if(name == null) {
+		if(name == null || name.equals("") || containsCharacter(name)==false) {
 			throw new IllegalArgumentException("Invalid name");
 		}
 		if(duration == 0) { // Maybe change to wrapper class
 			throw new IllegalArgumentException("Invalid duration");
 		}
+		if(price == null) {
+			throw new IllegalArgumentException("Invalid Price");
+		}
+		ChosenService cService = getChosenService(name);
+		if (cService==null) 
+			throw new IllegalArgumentException("Chosen Service invalid");
 		cService.setDuration(duration);
+		cService.setPayment(price);
 		chosenServiceRepository.save(cService);
 		return cService;
-		}
-		else throw new IllegalArgumentException("Chosen Service invalid");
+	
+		
 		
 	}
 	
 	@Transactional
-	public ChosenService deleteChosenService(String name, int duration) { // boolean return type?
+	public ChosenService deleteChosenService(String name) { // boolean return type?
+		
+		if(name == null || name.equals("") || containsCharacter(name)==false) {
+			throw new IllegalArgumentException("Invalid name");
+		}
 		ChosenService cs = getChosenService(name);
 		if(cs!=null) {
 		chosenServiceRepository.delete(cs);
-		chosenServiceRepository.save(cs); //?
+		//chosenServiceRepository.save(cs); //?
 		return null;
 		}
 		else throw new IllegalArgumentException("Chosen Service invalid");

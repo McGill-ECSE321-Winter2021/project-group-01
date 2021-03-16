@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.autoRepair.dto;
 
+<<<<<<< HEAD
 import java.util.Collections;
 import java.util.List;
 import javax.validation.constraints.NotBlank;
@@ -8,6 +9,8 @@ import javax.validation.constraints.NotEmpty;
 
 import ca.mcgill.ecse321.autoRepair.model.Reminder;
 
+=======
+>>>>>>> main
 public class AssistantDTO {
 
 	@NotBlank(message = "username cannot be blank.")

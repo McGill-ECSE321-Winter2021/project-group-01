@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface CustomerRepository extends CrudRepository<Customer, String>{
 
     Customer findCustomerByUsername(String username);
-
+    boolean existsCustomerByUsername(String username);
 }

@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
+<<<<<<< HEAD
 import static org.mockito.Mockito.when;
 import java.sql.Date;
 import java.sql.Time;
@@ -38,6 +39,18 @@ import ca.mcgill.ecse321.autoRepair.model.Car.CarTransmission;
 import ca.mcgill.ecse321.autoRepair.model.Customer;
 import ca.mcgill.ecse321.autoRepair.model.Owner;
 import ca.mcgill.ecse321.autoRepair.model.Profile;
+=======
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+
+import ca.mcgill.ecse321.autoRepair.dao.OwnerRepository;
+import ca.mcgill.ecse321.autoRepair.model.Owner;
+>>>>>>> main
 
 
 @ExtendWith(MockitoExtension.class)

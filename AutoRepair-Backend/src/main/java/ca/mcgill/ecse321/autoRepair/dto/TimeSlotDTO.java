@@ -1,7 +1,5 @@
 package ca.mcgill.ecse321.autoRepair.dto;
 
-import ca.mcgill.ecse321.autoRepair.model.TimeSlot;
-
 import java.sql.Date;
 import java.sql.Time;
 

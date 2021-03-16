@@ -1,8 +1,6 @@
  
 package ca.mcgill.ecse321.autoRepair.dto;
 
-import java.util.List;
-
 public class AppointmentDTO {
     private CustomerDTO customer;
     private TimeSlotDTO timeSlot;
@@ -23,7 +21,7 @@ public class AppointmentDTO {
     public AppointmentDTO(){}
 
     public AppointmentDTO(CustomerDTO username, TimeSlotDTO timeSlot, ChosenServiceDTO bookableService){
-        this.customer=customer;
+        this.customer=username;
         this.timeSlot=timeSlot;
         this.service=bookableService;
     }

@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
+<<<<<<< HEAD
 import static org.mockito.Mockito.when;
 import java.sql.Date;
 import java.sql.Time;
@@ -40,6 +41,22 @@ import ca.mcgill.ecse321.autoRepair.model.Owner;
 import ca.mcgill.ecse321.autoRepair.model.Profile;
 
 	
+=======
+
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+
+import ca.mcgill.ecse321.autoRepair.dao.AssistantRepository;
+import ca.mcgill.ecse321.autoRepair.model.Assistant;
+
+
+
+>>>>>>> main
 @ExtendWith(MockitoExtension.class)
 public class AssistantServiceTest {
 	@Mock 
@@ -49,6 +66,7 @@ public class AssistantServiceTest {
 
 	private static final String ASSISTANT_USERNAME ="TestAssistant";
 	private static final String ASSISTANT_PASSWORD ="TestPassword2";
+<<<<<<< HEAD
 	
 	
 	@BeforeEach
@@ -153,6 +171,112 @@ public class AssistantServiceTest {
 	}
 
 	
+=======
+
+
+	@BeforeEach
+	public void setMockOutput() {
+
+		lenient().when(assisRepo.findAssistantByUsername(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+			if(invocation.getArgument(0).equals(ASSISTANT_USERNAME)) {
+				Assistant assistant = new Assistant();
+				assistant.setUsername(ASSISTANT_USERNAME);
+				assistant.setPassword(ASSISTANT_PASSWORD);
+				return assistant;
+			}
+			else {
+				return null;
+			}
+
+		});
+		Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
+			return invocation.getArgument(0);
+		};
+		lenient().when(assisRepo.save(any(Assistant.class))).thenAnswer(returnParameterAsAnswer);
+	}
+
+	@Test
+	public void testCreateAssistant() {                        
+		assertEquals(0, assisService.getAllAssistants().size());  
+		String username = "nameTest";
+		String password = "passwordTest1";
+		Assistant assistant =null;
+		try {
+			assistant = assisService.createAssistant(username, password);
+		}catch(IllegalArgumentException e) {
+			fail();
+		}
+		assertNotNull(assistant);
+		assertEquals(username, assistant.getUsername());
+		assertEquals(password, assistant.getPassword());
+	}
+	@Test
+	public void testFindAssistant() {
+		assertEquals(0, assisService.getAllAssistants().size());
+
+		Assistant assis = null;
+		try {
+			assis = assisService.getAssistant(ASSISTANT_USERNAME);
+		}catch(IllegalArgumentException e) {
+			fail();
+		}
+		assertNotNull(assis);
+		assertEquals(assis.getUsername(), ASSISTANT_USERNAME);
+		assertEquals(assis.getPassword(), ASSISTANT_PASSWORD);
+	}	
+
+
+	@Test
+	public void testCreateAssistantErrorTakenUsername() {
+		assertEquals(0, assisService.getAllAssistants().size());  
+		String username = ASSISTANT_USERNAME;
+		String password = "Password123";
+		Assistant assistant = null;
+		String error = "";
+		try {
+			assistant = assisService.createAssistant(username, password);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertNull(assistant);
+		assertEquals("Username is already taken.",error);
+	}
+
+
+
+	@Test
+	public void testCreateAssistantErrorBlankUsername() {
+		assertEquals(0, assisService.getAllAssistants().size());  
+		String username ="";
+		String password = "Password123";
+		Assistant assistant = null;
+		String error = "";
+		try {
+			assistant = assisService.createAssistant(username, password);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertNull(assistant);
+		assertEquals("Username cannot be blank",error);
+	}
+	@Test
+	public void testCreateAssistantErrorBlankPassword() {
+		assertEquals(0, assisService.getAllAssistants().size());  
+		String username ="newUsername1";
+		String password = "";
+		Assistant assistant = null;
+		String error = "";
+		try {
+			assistant = assisService.createAssistant(username, password);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertNull(assistant);
+		assertEquals("Password cannot be blank",error);
+	}
+
+
+>>>>>>> main
 	@Test
 	public void testCreatAssistantWithInvalidPasswordLessThan8Chars() {
 		String username ="nameTest";
@@ -161,16 +285,26 @@ public class AssistantServiceTest {
 		String error = null;
 
 		try {
+<<<<<<< HEAD
 		assistant = assisService.createAssistant(username,invalidPassword);
+=======
+			assistant = assisService.createAssistant(username,invalidPassword);
+>>>>>>> main
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 		assertNull(assistant);
 		assertEquals("Password must have at least 8 characters",error);
 	}
+<<<<<<< HEAD
 	
 	
 	
+=======
+
+
+
+>>>>>>> main
 	@Test
 	public void testCreateAssistantWithInvalidPasswordMoreThan20Chars() {
 		String username ="nameTest";
@@ -192,7 +326,11 @@ public class AssistantServiceTest {
 		Assistant assistant = null;
 		String error = null;
 		try {
+<<<<<<< HEAD
 		 assistant = assisService.createAssistant(username,invalidPassword);
+=======
+			assistant = assisService.createAssistant(username,invalidPassword);
+>>>>>>> main
 		} catch (IllegalArgumentException e) { 
 			error = e.getMessage();
 		}
@@ -228,6 +366,7 @@ public class AssistantServiceTest {
 		assertNull(assistant);
 		assertEquals("Password must contain at least one numeric character",error);
 	}
+<<<<<<< HEAD
 	
 	@Test
 	public void testUpdateAssistantUsername() {
@@ -259,10 +398,44 @@ public class AssistantServiceTest {
 	assertEquals("newPassword123",assistant.getPassword());
    }
 	
+=======
+
+	@Test
+	public void testUpdateAssistantUsername() {
+		Assistant assistant = null;
+
+		try {
+			assistant = assisService.updateAssistant(ASSISTANT_USERNAME,"NewAssisName",ASSISTANT_PASSWORD);
+		}catch(IllegalArgumentException e) {
+			fail();
+		}
+		assertNotNull(assistant);
+		assertEquals(ASSISTANT_PASSWORD,assistant.getPassword());
+		assertEquals("NewAssisName",assistant.getUsername());
+	}
+
+
+
+	@Test
+	public void testUpdateAssistantPassword() {
+		Assistant assistant = null;
+
+		try {
+			assistant = assisService.updateAssistant(ASSISTANT_USERNAME,ASSISTANT_USERNAME,"newPassword123");
+		}catch(IllegalArgumentException e) {
+			fail();
+		}
+		assertNotNull(assistant);
+		assertEquals(ASSISTANT_USERNAME,assistant.getUsername());
+		assertEquals("newPassword123",assistant.getPassword());
+	}
+
+>>>>>>> main
 	@Test
 	public void testUpdateSamePassword() {
 		Assistant assistant = null;
 
+<<<<<<< HEAD
 	try {
 		assistant = assisService.updateAssistant(ASSISTANT_USERNAME,ASSISTANT_USERNAME,ASSISTANT_PASSWORD);
 	}catch(IllegalArgumentException e) {
@@ -273,6 +446,18 @@ public class AssistantServiceTest {
 	assertEquals(ASSISTANT_PASSWORD,assistant.getPassword());
   }
 	
+=======
+		try {
+			assistant = assisService.updateAssistant(ASSISTANT_USERNAME,ASSISTANT_USERNAME,ASSISTANT_PASSWORD);
+		}catch(IllegalArgumentException e) {
+			fail();
+		}
+		assertNotNull(assistant);
+		assertEquals(ASSISTANT_USERNAME,assistant.getUsername());
+		assertEquals(ASSISTANT_PASSWORD,assistant.getPassword());
+	}
+
+>>>>>>> main
 	@Test
 	public void testUpdateAssistantWithInvalidPasswordLessThan8Chars() {
 		Assistant assistant =null;
@@ -280,7 +465,11 @@ public class AssistantServiceTest {
 		String error = "";
 
 		try {
+<<<<<<< HEAD
 		assistant = assisService.updateAssistant(ASSISTANT_USERNAME,ASSISTANT_USERNAME,invalidPassword);
+=======
+			assistant = assisService.updateAssistant(ASSISTANT_USERNAME,ASSISTANT_USERNAME,invalidPassword);
+>>>>>>> main
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -294,7 +483,11 @@ public class AssistantServiceTest {
 		String error = "";
 
 		try {
+<<<<<<< HEAD
 		assistant = assisService.updateAssistant(ASSISTANT_USERNAME,ASSISTANT_USERNAME,invalidPassword);
+=======
+			assistant = assisService.updateAssistant(ASSISTANT_USERNAME,ASSISTANT_USERNAME,invalidPassword);
+>>>>>>> main
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -308,7 +501,11 @@ public class AssistantServiceTest {
 		String error = "";
 
 		try {
+<<<<<<< HEAD
 		assistant = assisService.updateAssistant(ASSISTANT_USERNAME,ASSISTANT_USERNAME,invalidPassword);
+=======
+			assistant = assisService.updateAssistant(ASSISTANT_USERNAME,ASSISTANT_USERNAME,invalidPassword);
+>>>>>>> main
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -322,7 +519,11 @@ public class AssistantServiceTest {
 		String error = "";
 
 		try {
+<<<<<<< HEAD
 		assistant = assisService.updateAssistant(ASSISTANT_USERNAME,ASSISTANT_USERNAME,invalidPassword);
+=======
+			assistant = assisService.updateAssistant(ASSISTANT_USERNAME,ASSISTANT_USERNAME,invalidPassword);
+>>>>>>> main
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -336,7 +537,11 @@ public class AssistantServiceTest {
 		String error = "";
 
 		try {
+<<<<<<< HEAD
 		assistant = assisService.updateAssistant(ASSISTANT_USERNAME,ASSISTANT_USERNAME,invalidPassword);
+=======
+			assistant = assisService.updateAssistant(ASSISTANT_USERNAME,ASSISTANT_USERNAME,invalidPassword);
+>>>>>>> main
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -346,12 +551,21 @@ public class AssistantServiceTest {
 	@Test
 	public void testDeleteAssistant() {
 		boolean assistant =false;
+<<<<<<< HEAD
 		String error = "";
 		try {
      assistant = assisService.deleteAssistant(ASSISTANT_USERNAME);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 	}
+=======
+
+		try {
+			assistant = assisService.deleteAssistant(ASSISTANT_USERNAME);
+		}catch (IllegalArgumentException e) {
+			fail();
+		}
+>>>>>>> main
 		assertEquals(assistant,true);
 	}
 	@Test
@@ -359,15 +573,25 @@ public class AssistantServiceTest {
 		boolean assistant =false;
 		String error = "";
 		try {
+<<<<<<< HEAD
      assistant = assisService.deleteAssistant("error");
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 	}
 		assertEquals(assistant,false);
+=======
+			assistant = assisService.deleteAssistant("error");
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertEquals(assistant,false);
+		assertEquals(error, "assistant with username error does not exist");
+>>>>>>> main
 	}
 }
 
 
+<<<<<<< HEAD
 	
 	
 	
@@ -382,3 +606,19 @@ public class AssistantServiceTest {
 	
 	
 	
+=======
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> main

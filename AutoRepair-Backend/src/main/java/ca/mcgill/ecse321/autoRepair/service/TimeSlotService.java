@@ -37,7 +37,7 @@ public class TimeSlotService {
         ts.setEndDate(startDate);
         availableTimeSlots.add(ts);
 
-        List<TimeSlot> timeSlotsPerDay = timeSlotRepository.findTimeSlotsByDate(startDate.toString());
+        List<TimeSlot> timeSlotsPerDay = timeSlotRepository.findTimeSlotsByStartDate(startDate);
         for(TimeSlot aTS: timeSlotsPerDay){
             for (int j = 0; j < availableTimeSlots.size(); j++) {
                TimeSlot TS = availableTimeSlots.get(j);
@@ -89,7 +89,7 @@ public class TimeSlotService {
 
     @Transactional
     public List<TimeSlot> getUnavailableTimeSlots(Date date){
-        return timeSlotRepository.findTimeSlotsByDate(date.toString());
+        return timeSlotRepository.findTimeSlotsByStartDate(date);
     }
 
     private static boolean isOverlap(TimeSlot TS1, TimeSlot TS2) {

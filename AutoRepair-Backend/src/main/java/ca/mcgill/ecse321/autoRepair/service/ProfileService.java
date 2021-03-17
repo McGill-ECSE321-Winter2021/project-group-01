@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ca.mcgill.ecse321.autoRepair.dao.CustomerRepository;
@@ -12,6 +13,7 @@ import ca.mcgill.ecse321.autoRepair.dao.ProfileRepository;
 import ca.mcgill.ecse321.autoRepair.model.Customer;
 import ca.mcgill.ecse321.autoRepair.model.Profile;
 
+@Service
 public class ProfileService {
 
 
@@ -68,7 +70,7 @@ public class ProfileService {
 	}
 
 	@Transactional
-	public Profile updateProfile(String username, String firstName, String lastName, String address, String zipCode, String phoneNumber, String email) {
+	public Customer updateProfile(String username, String firstName, String lastName, String address, String zipCode, String phoneNumber, String email) {
 		Customer customer = customerRepository.findCustomerByUsername(username);
 		
 		if(customer==null)
@@ -117,9 +119,11 @@ public class ProfileService {
 			profile.setAddress(address);
 		}
 
+		customer.setProfile(profile);
+		customerRepository.save(customer);
 		profileRepository.save(profile);
 
-		return profile;
+		return customer;
 	}
 
 

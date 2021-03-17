@@ -364,20 +364,20 @@ public class ProfileServiceTest {
 		String phoneNumber = "012344567";
 		String address = "222, 5th Ave";
 		String zip = "G79 DE4";
-		Profile profile = null;
+		Customer customer = null;
 		try {
-			profile = service.updateProfile(CUSTOMER_USERNAME, firstName, lastName, address, zip, phoneNumber, email);
+			customer = service.updateProfile(CUSTOMER_USERNAME, firstName, lastName, address, zip, phoneNumber, email);
 		}catch (IllegalArgumentException e) {
 			fail();
 		}
-
-		assertNotNull(profile);
-		assertEquals(firstName, profile.getFirstName());
-		assertEquals(lastName, profile.getLastName());
-		assertEquals(address, profile.getAddress());
-		assertEquals(email, profile.getEmail());
-		assertEquals(phoneNumber, profile.getPhoneNumber());
-		assertEquals(zip, profile.getZipCode());
+		
+		assertNotNull(customer);
+		assertEquals(firstName, customer.getProfile().getFirstName());
+		assertEquals(lastName, customer.getProfile().getLastName());
+		assertEquals(address, customer.getProfile().getAddress());
+		assertEquals(email, customer.getProfile().getEmail());
+		assertEquals(phoneNumber, customer.getProfile().getPhoneNumber());
+		assertEquals(zip, customer.getProfile().getZipCode());
 	}
 
 	@Test
@@ -390,15 +390,15 @@ public class ProfileServiceTest {
 		String phoneNumber = "012344567";
 		String address = "222, 5th Ave";
 		String zip = "G79 DE4";
-		Profile profile = null;
+		Customer customer = null;
 		String error = null;
 		try {
-			profile = service.updateProfile(firstName, firstName, lastName, address, zip, phoneNumber, email);
+			customer = service.updateProfile(firstName, firstName, lastName, address, zip, phoneNumber, email);
 		}catch (IllegalArgumentException e) {
 			error=e.getMessage();
 		}
 
-		assertNull(profile);
+		assertNull(customer);
 		assertEquals(error, "Customer not found.");
 	}
 	
@@ -412,15 +412,15 @@ public class ProfileServiceTest {
 		String phoneNumber = "012344567";
 		String address = "222, 5th Ave";
 		String zip = "G79 DE4";
-		Profile profile = null;
+		Customer customer = null;
 		String error = null;
 		try {
-			profile = service.updateProfile(CUSTOMER_USERNAME, firstName, lastName, address, zip, phoneNumber, email);
+			customer = service.updateProfile(CUSTOMER_USERNAME, firstName, lastName, address, zip, phoneNumber, email);
 		}catch (IllegalArgumentException e) {
 			error=e.getMessage();
 		}
 
-		assertNull(profile);
+		assertNull(customer);
 		assertEquals(error, "Invalid email.");
 	}
 
@@ -435,15 +435,15 @@ public class ProfileServiceTest {
 		String phoneNumber = "abcdefgh";
 		String address = "222, 5th Ave";
 		String zip = "G79 DE4";
-		Profile profile = null;
+		Customer customer = null;
 		String error = null;
 		try {
-			profile = service.updateProfile(CUSTOMER_USERNAME, firstName, lastName, address, zip, phoneNumber, email);
+			customer = service.updateProfile(CUSTOMER_USERNAME, firstName, lastName, address, zip, phoneNumber, email);
 		}catch (IllegalArgumentException e) {
 			error=e.getMessage();
 		}
 
-		assertNull(profile);
+		assertNull(customer);
 		assertEquals(error, "Invalid phone number.");
 	}
 	
@@ -457,15 +457,15 @@ public class ProfileServiceTest {
 		String phoneNumber = "012344567";
 		String address = "222, 5th Ave";
 		String zip = "G79 DE4";
-		Profile profile = null;
+		Customer customer = null;
 		String error=null;
 		try {
-			profile = service.updateProfile(CUSTOMER_USERNAME, firstName, lastName, address, zip, phoneNumber, email);
+			customer = service.updateProfile(CUSTOMER_USERNAME, firstName, lastName, address, zip, phoneNumber, email);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
-		assertNull(profile);
+		assertNull(customer);
 		assertEquals(error, "Customer with email entered already exists.");
 	}
 

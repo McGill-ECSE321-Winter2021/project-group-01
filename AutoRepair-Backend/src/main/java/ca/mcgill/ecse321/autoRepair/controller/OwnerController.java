@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.autoRepair.dao.OwnerRepository;
 import ca.mcgill.ecse321.autoRepair.dto.AppointmentDTO;
+import ca.mcgill.ecse321.autoRepair.dto.AssistantDTO;
 import ca.mcgill.ecse321.autoRepair.dto.ChosenServiceDTO;
 import ca.mcgill.ecse321.autoRepair.dto.CustomerDTO;
 import ca.mcgill.ecse321.autoRepair.dto.OwnerDTO;
@@ -39,22 +40,29 @@ public class OwnerController {
 	
 
 	
-	@GetMapping(value = { "/owner" })
+	@GetMapping(value = { "/view_owner" })
 	public List<OwnerDTO> getAllOwners() {
 		return ownerService.getAllOwners().stream().map(owner -> convertToDTO(owner)).collect(Collectors.toList());
 	}
+	
+	@GetMapping(value = {"/view_owner/{username}"})
+	public OwnerDTO viewOwner(@PathVariable("username") String username) {
+		return convertToDTO(ownerService.getOwner(username));
+	}
+	
+	
 
-	@PostMapping(value = { "/create owner/{name}/{password}/{authentificationCode}" })
-	public OwnerDTO createOwner(@PathVariable("name") String name,@PathVariable("password") String password
-			,@PathVariable("authentification") String authentificationCode) {
+	@PostMapping(value = {"/create_owner"})
+	public OwnerDTO createOwner(@RequestParam("name") String name,@RequestParam("password") String password
+			,@RequestParam("authentification") String authentificationCode) {
 		
 		Owner owner = ownerService.createOwner(name,password,authentificationCode);
 		return convertToDTO(owner); 
 	}
 	
-	@PostMapping(value = { "/update owner/{oldUsername}/{newUsername}/{newPassword}" })
+	@PostMapping(value = { "/update_owner" })
 	public OwnerDTO updateOwner(@PathVariable("oldUsername") String oldUsername,
-			@PathVariable("newUsername") String newUsername,@PathVariable("newPassword") String newPassword) {
+			@RequestParam("newUsername") String newUsername,@RequestParam("newPassword") String newPassword) {
         Owner owner = ownerService.updateOwner(oldUsername, newUsername, newPassword);
 		return convertToDTO(owner);
 	}

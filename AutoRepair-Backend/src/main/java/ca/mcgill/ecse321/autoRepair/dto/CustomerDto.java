@@ -8,12 +8,9 @@ import javax.validation.constraints.NotEmpty;
 
 public class CustomerDTO {
 
-	@NotBlank(message = "Username cannot be blank.")
-	@NotEmpty(message = "Username cannot be blank.")
+
 	private String username;
 	
-	@NotBlank(message = "Password cannot be blank.")
-	@NotEmpty(message = "Password cannot be blank.")
 	private String password;
 	private int noShow;
 	private int show;
@@ -24,6 +21,8 @@ public class CustomerDTO {
 
 	public CustomerDTO(String username, String password, int noShow, int show, List<CarDTO> cars, ProfileDTO profile) {
 		
+		this.username=username;
+		this.password=password;
 		this.noShow=noShow;
 		this.show = show;
 		this.cars=cars;
@@ -31,8 +30,7 @@ public class CustomerDTO {
 	
 	}
 
-	
-	
+
 	public String getUsername() {
 		return username;
 	}

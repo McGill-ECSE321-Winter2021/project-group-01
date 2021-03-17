@@ -1310,7 +1310,7 @@ public class AppointmentServiceTest {
     }
 
     @Test
-    private void testCancelAppointmentDifferentDay(){
+    public void testCancelAppointmentDifferentDay(){
         SystemTime.setSysTime(Time.valueOf("09:00:00"));
         SystemTime.setSysDate(Date.valueOf("2021-03-31"));
 

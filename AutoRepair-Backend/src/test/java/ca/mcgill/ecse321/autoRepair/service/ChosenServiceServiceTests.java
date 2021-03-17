@@ -5,6 +5,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -60,13 +62,13 @@ public class ChosenServiceServiceTests {
 	}
 
 	@Test
-	public void testCreateChosenService() { 
-		assertEquals(0, csService.getAllChosenService().size()); 
+	public void testCreateChosenService() {
+		assertEquals(0, csService.getAllChosenService().size());
 		String namee = "Service1";
-		int dur = 5; 
+		int dur = 5;
 		Double price = thePrice;
 		ChosenService cs = null;
-		
+
 		try {
 			cs = csService.createChosenService(namee,dur,price);
 		}catch (IllegalArgumentException e) {
@@ -80,8 +82,8 @@ public class ChosenServiceServiceTests {
 	}
 
 	@Test
-	public void testNullNameCreateChosenService() { 
-		assertEquals(0, csService.getAllChosenService().size()); 
+	public void testNullNameCreateChosenService() {
+		assertEquals(0, csService.getAllChosenService().size());
 		String namee = null;
 		int dur = 5;
 		Double price = thePrice;
@@ -99,7 +101,7 @@ public class ChosenServiceServiceTests {
 
 	@Test
 	public void testEmptyNameCreateChosenService() {
-		assertEquals(0, csService.getAllChosenService().size()); 
+		assertEquals(0, csService.getAllChosenService().size());
 		String namee = "";
 		Double price = thePrice;
 		int dur = 5;
@@ -117,7 +119,7 @@ public class ChosenServiceServiceTests {
 
 	@Test
 	public void testSpacesNameCreateChosenService() {
-		assertEquals(0, csService.getAllChosenService().size()); 
+		assertEquals(0, csService.getAllChosenService().size());
 		String namee = "       ";
 		int dur = 5;
 		Double price = thePrice;
@@ -135,7 +137,7 @@ public class ChosenServiceServiceTests {
 
 	@Test
 	public void testCreateChosenServiceNullPrice() {
-		assertEquals(0, csService.getAllChosenService().size()); 
+		assertEquals(0, csService.getAllChosenService().size());
 		String namee = "Service2";
 		int dur = 5;
 		Double price = null;
@@ -150,10 +152,10 @@ public class ChosenServiceServiceTests {
 		assertNull(cs);
 		assertEquals("Invalid Price", error);
 	}
-	
+
 	@Test
-	public void testCreateChosenServiceTakenName() { 
-		assertEquals(0, csService.getAllChosenService().size()); 
+	public void testCreateChosenServiceTakenName() {
+		assertEquals(0, csService.getAllChosenService().size());
 		int dur = 7;
 		Double price = thePrice;
 		ChosenService cs = null;
@@ -172,7 +174,7 @@ public class ChosenServiceServiceTests {
 
 	@Test
 	public void testNoDurationCreateChosenService() {
-		assertEquals(0, csService.getAllChosenService().size()); 
+		assertEquals(0, csService.getAllChosenService().size());
 		String namee = "Servicito";
 		int dur = 0;
 		Double price = thePrice;
@@ -187,7 +189,7 @@ public class ChosenServiceServiceTests {
 		assertNull(cs);
 		assertEquals("Invalid duration", error);
 	}
-	
+
 	@Test
 	public void testEditChosenService() {
 		assertEquals(0, csService.getAllChosenService().size());
@@ -204,10 +206,10 @@ public class ChosenServiceServiceTests {
 		assertEquals(6,cs.getDuration());
 		assertEquals(8.6, cs.getPayment());
 	}
-	
+
 	@Test
 	public void testEditChosenServiceNullName() {
-		assertEquals(0, csService.getAllChosenService().size()); 
+		assertEquals(0, csService.getAllChosenService().size());
 
 		String namee = null;
 		int dur = 9;
@@ -224,7 +226,7 @@ public class ChosenServiceServiceTests {
 	}
 	@Test
 	public void testEditChosenServiceEmptyName() {
-		assertEquals(0, csService.getAllChosenService().size()); 
+		assertEquals(0, csService.getAllChosenService().size());
 
 		String namee = "";
 		int dur = 9;
@@ -241,7 +243,7 @@ public class ChosenServiceServiceTests {
 	}
 	@Test
 	public void testEditChosenServiceSpacesName() {
-		assertEquals(0, csService.getAllChosenService().size()); 
+		assertEquals(0, csService.getAllChosenService().size());
 
 		String namee = "";
 		int dur = 9;
@@ -256,10 +258,10 @@ public class ChosenServiceServiceTests {
 		assertNull(cs);
 		assertEquals("Invalid name",error);
 	}
-	
+
 	@Test
 	public void testEditChosenServiceZeroDuration() {
-		assertEquals(0, csService.getAllChosenService().size()); 
+		assertEquals(0, csService.getAllChosenService().size());
 
 		String namee = CSName;
 		int dur = 0;
@@ -274,10 +276,10 @@ public class ChosenServiceServiceTests {
 		assertNull(cs);
 		assertEquals("Invalid duration",error);
 	}
-	
+
 	@Test
 	public void testEditChosenServiceNullPrice() {
-		assertEquals(0, csService.getAllChosenService().size()); 
+		assertEquals(0, csService.getAllChosenService().size());
 
 		String namee = CSName;
 		int dur = 9;
@@ -292,10 +294,10 @@ public class ChosenServiceServiceTests {
 		assertNull(cs);
 		assertEquals("Invalid Price",error);
 	}
-	
+
 	@Test
 	public void testEditChosenServiceNotThere() {
-		assertEquals(0, csService.getAllChosenService().size()); 
+		assertEquals(0, csService.getAllChosenService().size());
 
 		String namee = "hello";
 		int dur = 9;
@@ -310,82 +312,82 @@ public class ChosenServiceServiceTests {
 		assertNull(cs);
 		assertEquals("Chosen Service invalid",error);
 	}
-	
+
 	@Test
 	public void testDeleteChosenService() {
 		assertEquals(0, csService.getAllChosenService().size());
 
 		String namee = CSName;
-		ChosenService cs = null;
+		boolean cs = false;
 		try {
 			cs = csService.deleteChosenService(namee);
 		}catch (IllegalArgumentException e) {
 			fail();
 		}
-		assertNull(cs);
+		assertTrue(cs);
 	}
 
 	@Test
 	public void testDeleteChosenServiceNotThere() {
-		assertEquals(0, csService.getAllChosenService().size()); 
+		assertEquals(0, csService.getAllChosenService().size());
 
 		String namee = "hi";
-		ChosenService cs = null;
+		boolean cs = false;
 		String error = null;
 		try {
 			cs = csService.deleteChosenService(namee);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		assertNull(cs);
+		assertFalse(cs);
 		assertEquals("Chosen Service invalid",error);
 	}
-	
+
 	@Test
 	public void testDeleteChosenServiceNullName() {
-		assertEquals(0, csService.getAllChosenService().size()); 
+		assertEquals(0, csService.getAllChosenService().size());
 
 		String namee = null;
-		ChosenService cs = null;
+		boolean cs = false;
 		String error = null;
 		try {
 			cs = csService.deleteChosenService(namee);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		assertNull(cs);
+		assertFalse(cs);
 		assertEquals("Invalid name",error);
 	}
-	
+
 	@Test
 	public void testDeleteChosenServiceEmptyName() {
-		assertEquals(0, csService.getAllChosenService().size()); 
+		assertEquals(0, csService.getAllChosenService().size());
 
 		String namee = "";
-		ChosenService cs = null;
+		boolean cs = false;
 		String error = null;
 		try {
 			cs = csService.deleteChosenService(namee);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		assertNull(cs);
+		assertFalse(cs);
 		assertEquals("Invalid name",error);
 	}
-	
+
 	@Test
 	public void testDeleteChosenServiceSpacesName() {
-		assertEquals(0, csService.getAllChosenService().size()); 
+		assertEquals(0, csService.getAllChosenService().size());
 
 		String namee = "  ";
-		ChosenService cs = null;
+		boolean cs = false;
 		String error = null;
 		try {
 			cs = csService.deleteChosenService(namee);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		assertNull(cs);
+		assertFalse(cs);
 		assertEquals("Invalid name",error);
 	}
 

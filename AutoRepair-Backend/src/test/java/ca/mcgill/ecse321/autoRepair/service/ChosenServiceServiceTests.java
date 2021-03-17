@@ -5,6 +5,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -316,13 +318,13 @@ public class ChosenServiceServiceTests {
 		assertEquals(0, csService.getAllChosenService().size());
 
 		String namee = CSName;
-		ChosenService cs = null;
+		boolean cs = false;
 		try {
 			cs = csService.deleteChosenService(namee);
 		}catch (IllegalArgumentException e) {
 			fail();
 		}
-		assertNull(cs);
+		assertTrue(cs);
 	}
 
 	@Test
@@ -330,14 +332,14 @@ public class ChosenServiceServiceTests {
 		assertEquals(0, csService.getAllChosenService().size()); 
 
 		String namee = "hi";
-		ChosenService cs = null;
+		boolean cs = false;
 		String error = null;
 		try {
 			cs = csService.deleteChosenService(namee);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		assertNull(cs);
+		assertFalse(cs);
 		assertEquals("Chosen Service invalid",error);
 	}
 	
@@ -346,14 +348,14 @@ public class ChosenServiceServiceTests {
 		assertEquals(0, csService.getAllChosenService().size()); 
 
 		String namee = null;
-		ChosenService cs = null;
+		boolean cs = false;
 		String error = null;
 		try {
 			cs = csService.deleteChosenService(namee);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		assertNull(cs);
+		assertFalse(cs);
 		assertEquals("Invalid name",error);
 	}
 	
@@ -362,14 +364,14 @@ public class ChosenServiceServiceTests {
 		assertEquals(0, csService.getAllChosenService().size()); 
 
 		String namee = "";
-		ChosenService cs = null;
+		boolean cs = false;
 		String error = null;
 		try {
 			cs = csService.deleteChosenService(namee);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		assertNull(cs);
+		assertFalse(cs);
 		assertEquals("Invalid name",error);
 	}
 	
@@ -378,14 +380,14 @@ public class ChosenServiceServiceTests {
 		assertEquals(0, csService.getAllChosenService().size()); 
 
 		String namee = "  ";
-		ChosenService cs = null;
+		boolean cs = false;
 		String error = null;
 		try {
 			cs = csService.deleteChosenService(namee);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		assertNull(cs);
+		assertFalse(cs);
 		assertEquals("Invalid name",error);
 	}
 

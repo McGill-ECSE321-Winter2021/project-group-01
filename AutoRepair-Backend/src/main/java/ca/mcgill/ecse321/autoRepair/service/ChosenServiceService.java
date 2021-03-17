@@ -68,7 +68,7 @@ public class ChosenServiceService {
 	}
 	
 	@Transactional
-	public ChosenService deleteChosenService(String name) { // boolean return type?
+	public boolean deleteChosenService(String name) { // boolean return type?
 		
 		if(name == null || name.equals("") || containsCharacter(name)==false) {
 			throw new IllegalArgumentException("Invalid name");
@@ -77,7 +77,7 @@ public class ChosenServiceService {
 		if(cs!=null) {
 		chosenServiceRepository.delete(cs);
 		//chosenServiceRepository.save(cs); //?
-		return null;
+		return true;
 		}
 		else throw new IllegalArgumentException("Chosen Service invalid");
 	}

@@ -4,10 +4,12 @@ public class ChosenServiceDTO {
 	
 	private String name;
 	private int duration;
+	private Double price;
 
-	public ChosenServiceDTO(String name,int duration) {
+	public ChosenServiceDTO(String name,int duration,Double price) {
 		this.name = name;
 		this.duration = duration;
+		this.price = price;
 	}
 
 	public String getName() {
@@ -18,4 +20,7 @@ public class ChosenServiceDTO {
 		return duration;
 	}
 	
+	public Double getPrice() {
+		return price;
+	}
 }

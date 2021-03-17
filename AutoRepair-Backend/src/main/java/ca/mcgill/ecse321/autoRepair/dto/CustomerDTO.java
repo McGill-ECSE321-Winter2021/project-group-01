@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.autoRepair.dto;
 
 import java.util.List;
 
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 

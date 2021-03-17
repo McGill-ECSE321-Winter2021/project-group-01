@@ -601,13 +601,36 @@ public class BusinessServiceTest {
 		try {
 			operatingHour = service.createOperatingHour(dayOfWeek, startTime, endTime);
 			assertNotNull(operatingHour);
-			operatingHour = service.deleteOperatingHour(dayOfWeek, startTime, endTime);
+			operatingHour = service.deleteOperatingHour(dayOfWeek);
 		}catch (IllegalArgumentException e) {
 			fail();
 		}
 		
 		assertEquals(new ArrayList<OperatingHour>(), service.getAllOperatingHour());
 		assertNull(operatingHour);
+		
+	}
+	
+	@Test
+	public void testDeleteOperatingHourNotFound() {
+
+		assertEquals(0, service.getAllOperatingHour().size());
+		
+		DayOfWeek dayOfWeek = DayOfWeek.Monday;
+		Time startTime = Time.valueOf("10:00:00");
+		Time endTime = Time.valueOf("18:00:00");
+		String error = "";
+
+		OperatingHour operatingHour = null;
+		try {
+			operatingHour = service.createOperatingHour(dayOfWeek, startTime, endTime);
+			assertNotNull(operatingHour);
+			operatingHour = service.deleteOperatingHour(DayOfWeek.Tuesday);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Operating hour cannot be found");
 		
 	}
 	

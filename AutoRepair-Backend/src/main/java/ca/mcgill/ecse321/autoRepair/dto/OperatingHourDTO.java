@@ -12,7 +12,6 @@ public class OperatingHourDTO
   // STATIC VARIABLES
   //------------------------
 
-  private Long id; 
   private DayOfWeek dayOfWeek;
   private Time startTime;
   private Time endTime;
@@ -21,9 +20,6 @@ public class OperatingHourDTO
 	  this.dayOfWeek=dayOfWeek;
 	  this.startTime=startTime;
 	  this.endTime=endTime;
-  }
-  public Long getId() {
-    return id;
   }
 
   public DayOfWeek getDayOfWeek() {

@@ -1,36 +1,38 @@
 package ca.mcgill.ecse321.autoRepair.controller;
 
-import ca.mcgill.ecse321.autoRepair.dao.CustomerRepository;
-import ca.mcgill.ecse321.autoRepair.dao.ChosenServiceRepository;
-import ca.mcgill.ecse321.autoRepair.dao.TimeSlotRepository;
-import ca.mcgill.ecse321.autoRepair.dto.AppointmentDTO;
-import ca.mcgill.ecse321.autoRepair.dto.CarDTO;
-import ca.mcgill.ecse321.autoRepair.dto.CustomerDTO;
-import ca.mcgill.ecse321.autoRepair.dto.ProfileDTO;
-import ca.mcgill.ecse321.autoRepair.model.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.*;
-
-import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins = "*")
-@RestController
-public class AutoRepairController {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import ca.mcgill.ecse321.autoRepair.dto.CarDTO;
+import ca.mcgill.ecse321.autoRepair.dto.CustomerDTO;
+import ca.mcgill.ecse321.autoRepair.dto.ProfileDTO;
+import ca.mcgill.ecse321.autoRepair.model.Car;
+import ca.mcgill.ecse321.autoRepair.model.Profile;
+import ca.mcgill.ecse321.autoRepair.model.Customer;
+import ca.mcgill.ecse321.autoRepair.service.ProfileService;
+
+
+
+public class ProfileController {
+
 
 
 	@Autowired
-	CustomerRepository customerRepository;
+	private ProfileService profileService;
 
-	@Autowired
-	TimeSlotRepository timeSlotRepository;
 
-	@Autowired
-	ChosenServiceRepository chosenServiceRepository;
+	@PostMapping(value = {"/edit_profile/{username}"})
+	public CustomerDTO editProfile (@PathVariable("username") CustomerDTO customerDTO, @RequestParam String firstName, @RequestParam String lastName, @RequestParam String phoneNumber,
+			@RequestParam String email, @RequestParam String address, @RequestParam String zipCode) {
+
+		return convertToDTO(profileService.updateProfile(customerDTO.getUsername(), firstName, lastName, address, zipCode, phoneNumber, email));
+	}
+
 
 
 	private CustomerDTO convertToDTO(Customer customer) {
@@ -43,7 +45,6 @@ public class AutoRepairController {
 
 		return new CustomerDTO(customer.getUsername(), customer.getPassword(), customer.getNoShow(), 
 				customer.getShow(), cars, convertToDTO(customer.getProfile()));
-
 	}
 
 	private CarDTO convertToDTO(Car car) {
@@ -56,4 +57,7 @@ public class AutoRepairController {
 		return new ProfileDTO(profile.getFirstName(), profile.getLastName(), profile.getAddress(), 
 				profile.getZipCode(), profile.getPhoneNumber(), profile.getEmail());
 	}
+
+
+
 }

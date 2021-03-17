@@ -73,8 +73,8 @@ public class AppointmentService {
     }
 
     @Transactional
-    public Appointment getAppointment(Date startDate, Time startTime){
-        Appointment appointment = appointmentRepository.findAppointmentByStartDateAndStartTime(startDate.toString(),startTime.toString());
+    public Appointment getAppointment(TimeSlot timeSlot){
+        Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
         return appointment;
     }
 
@@ -113,7 +113,7 @@ public class AppointmentService {
         TimeSlot timeSlot = calcTimeSlot(oldStartDate,oldStartTime,oldStartDate,oldEndTime);
         TimeSlot newTimeSlot = calcTimeSlot(newStartDate,newStartTime,newStartDate, newEndTime);
 
-        Appointment appointment= appointmentRepository.findAppointmentByStartDateAndStartTime(oldStartDate.toString(),oldStartTime.toString());
+        Appointment appointment= appointmentRepository.findAppointmentByTimeSlot(timeSlot);
         if(appointment==null) throw new IllegalArgumentException("The appointment does not exist");
         Appointment updatedApp = appointment;
         appointmentRepository.delete(appointment);
@@ -156,7 +156,7 @@ public class AppointmentService {
         ChosenService chosenService =chosenServiceRepository.findChosenServiceByName(serviceName);
         Time endTime = findEndTimeOfApp(chosenService,startTime.toLocalTime());
         TimeSlot timeSlot = calcTimeSlot(startDate,startTime,startDate,endTime);
-        Appointment appointment = appointmentRepository.findAppointmentByStartDateAndStartTime(startDate.toString(),startTime.toString());
+        Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
         if(appointment==null) throw new IllegalArgumentException("The appointment does not exist.");
         appointmentRepository.delete(appointment);
         timeSlotRepository.delete(timeSlot);
@@ -168,8 +168,8 @@ public class AppointmentService {
     }
 
     @Transactional
-    public List<Appointment> getAppointmentsOfCustomer(String username){
-        return toList(appointmentRepository.findAppointmentsByCustomer(username));
+    public List<Appointment> getAppointmentsOfCustomer(Customer customer){
+        return toList(appointmentRepository.findAppointmentsByCustomer(customer));
     }
 
     private TimeSlot calcTimeSlot(Date startDate, Time startTime, Date endDate, Time endTime){
@@ -198,7 +198,7 @@ public class AppointmentService {
         LocalTime endTime = timeSlot.getEndTime().toLocalTime();
         LocalTime startTimeOH = operatingHour.getStartTime().toLocalTime();
         LocalTime endTimeOH = operatingHour.getEndTime().toLocalTime();
-        List<TimeSlot> timeSlot1 = timeSlotRepository.findTimeSlotsByDate(startDate.toString());
+        List<TimeSlot> timeSlot1 = timeSlotRepository.findTimeSlotsByStartDate(startDate);
         if(timeSlot1==null){
             if((startTimeOH.isBefore(startTime) || startTimeOH.equals(startTime)) && (endTimeOH.isAfter(endTime) || endTimeOH.equals(endTime))) {
                 return true;

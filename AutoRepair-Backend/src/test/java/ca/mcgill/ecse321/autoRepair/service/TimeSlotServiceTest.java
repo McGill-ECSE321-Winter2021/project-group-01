@@ -15,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
 import java.sql.Date;
 import java.sql.Time;
@@ -37,6 +36,7 @@ public class TimeSlotServiceTest {
     TimeSlotService timeSlotService;
 
     private static final String STRING_DATE_FRIDAY = "2021-04-30";
+    private static final Date DATE_FRIDAY = Date.valueOf(STRING_DATE_FRIDAY);
     private static final String STRING_START_TIME1 = "12:00:00";
     private static final String STRING_START_TIME2 = "14:00:00";
     private static final String STRING_START_TIME3 = "15:00:00";
@@ -45,16 +45,23 @@ public class TimeSlotServiceTest {
     private static final String STRING_END_TIME3 = "16:30:00";
 
     private static final String STRING_DATE_MONDAY = "2021-05-03";
+    private static final Date DATE_MONDAY = Date.valueOf(STRING_DATE_MONDAY);
     private static final String STRING_START_TIME_NEW1 = "06:00:00";
     private static final String STRING_END_TIME_NEW1 = "07:00:00";
     private static final String STRING_START_TIME_NEW2 = "19:00:00";
     private static final String STRING_END_TIME_NEW2 = "20:00:00";
 
     private static final String STRING_DATE_TUESDAY = "2021-05-04";
+    private static final Date DATE_TUESDAY = Date.valueOf(STRING_DATE_TUESDAY);
     private static final String STRING_DATE_WEDNESDAY = "2021-05-05";
+    private static final Date DATE_WEDNESDAY = Date.valueOf(STRING_DATE_WEDNESDAY);
     private static final String STRING_DATE_THURSDAY = "2021-05-06";
+    private static final Date DATE_THURSDAY = Date.valueOf(STRING_DATE_THURSDAY);
     private static final String STRING_DATE_SATURDAY = "2021-05-08";
+    private static final Date DATE_SATURDAY = Date.valueOf(STRING_DATE_SATURDAY);
     private static final String STRING_DATE_SUNDAY = "2021-05-09";
+    private static final Date DATE_SUNDAY = Date.valueOf(STRING_DATE_SUNDAY);
+
 
     private static final OperatingHour.DayOfWeek FRIDAY = OperatingHour.DayOfWeek.Friday;
     private static final OperatingHour.DayOfWeek SATURDAY = OperatingHour.DayOfWeek.Saturday;
@@ -68,14 +75,14 @@ public class TimeSlotServiceTest {
 
     @BeforeEach
     public void setMockOutput() {
-        lenient().when(timeSlotRepository.findTimeSlotsByDate(anyString())).thenAnswer((InvocationOnMock invocation) -> {
-            if (invocation.getArgument(0).equals(STRING_DATE_FRIDAY) || invocation.getArgument(0).equals(STRING_DATE_SATURDAY) || invocation.getArgument(0).equals(STRING_DATE_SUNDAY) ||
-                    invocation.getArgument(0).equals(STRING_DATE_TUESDAY) || invocation.getArgument(0).equals(STRING_DATE_WEDNESDAY) || invocation.getArgument(0).equals(STRING_DATE_THURSDAY)
-            || invocation.getArgument(0).equals(STRING_DATE_MONDAY)) {
+        lenient().when(timeSlotRepository.findTimeSlotsByStartDate(any(Date.class))).thenAnswer((InvocationOnMock invocation) -> {
+            if (((Date)invocation.getArgument(0)).compareTo(DATE_FRIDAY)==0 || ((Date)invocation.getArgument(0)).compareTo(DATE_SATURDAY)==0 || ((Date)invocation.getArgument(0)).compareTo(DATE_SUNDAY)==0 ||
+            		((Date)invocation.getArgument(0)).compareTo(DATE_TUESDAY)==0 || ((Date)invocation.getArgument(0)).compareTo(DATE_WEDNESDAY)==0 || ((Date)invocation.getArgument(0)).compareTo(DATE_THURSDAY)==0
+            || ((Date)invocation.getArgument(0)).compareTo(DATE_MONDAY)==0) {
                 List<TimeSlot> timeSlotList = new ArrayList<>();
                 String date = null;
 
-                if(invocation.getArgument(0).equals(STRING_DATE_MONDAY)){
+                if(((Date)invocation.getArgument(0)).compareTo(DATE_MONDAY)==0){
                     date = STRING_DATE_MONDAY;
                     TimeSlot timeSlot1 = new TimeSlot();
                     timeSlot1.setEndDate(Date.valueOf(date));
@@ -92,22 +99,22 @@ public class TimeSlotServiceTest {
                     timeSlotList.add(timeSlot2);
 
                 }else {
-                    if (invocation.getArgument(0).equals(STRING_DATE_FRIDAY)) {
+                    if (((Date)invocation.getArgument(0)).compareTo(DATE_FRIDAY)==0) {
                         date = STRING_DATE_FRIDAY;
                     }
-                    if (invocation.getArgument(0).equals(STRING_DATE_SATURDAY)) {
+                    if (((Date)invocation.getArgument(0)).compareTo(DATE_SATURDAY)==0) {
                         date = STRING_DATE_SATURDAY;
                     }
-                    if (invocation.getArgument(0).equals(STRING_DATE_SUNDAY)) {
+                    if (((Date)invocation.getArgument(0)).compareTo(DATE_SUNDAY)==0) {
                         date = STRING_DATE_SUNDAY;
                     }
-                    if (invocation.getArgument(0).equals(STRING_DATE_TUESDAY)) {
+                    if (((Date)invocation.getArgument(0)).compareTo(DATE_TUESDAY)==0) {
                         date = STRING_DATE_TUESDAY;
                     }
-                    if (invocation.getArgument(0).equals(STRING_DATE_WEDNESDAY)) {
+                    if (((Date)invocation.getArgument(0)).compareTo(DATE_WEDNESDAY)==0) {
                         date = STRING_DATE_WEDNESDAY;
                     }
-                    if (invocation.getArgument(0).equals(STRING_DATE_THURSDAY)) {
+                    if (((Date)invocation.getArgument(0)).compareTo(DATE_THURSDAY)==0) {
                         date = STRING_DATE_THURSDAY;
                     }
 

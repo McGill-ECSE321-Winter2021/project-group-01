@@ -68,7 +68,9 @@ public class AppointmentServiceTest {
     private static final int SERVICE_DURATION2 = 30;
 
     private static final String STRING_DATE = "2021-04-30";
-    private static final String TODAY_DATE = "2021-03-31";
+    private static final Date DATE = Date.valueOf(STRING_DATE);
+    private static final String TODAY_DATE_STRING = "2021-03-31";
+    private static final Date TODAY_DATE = Date.valueOf(TODAY_DATE_STRING);
     private static final String STRING_START_TIME1 = "12:00:00";
     private static final String STRING_START_TIME2 = "14:00:00";
     private static final String STRING_START_TIME3 = "15:00:00";
@@ -81,10 +83,15 @@ public class AppointmentServiceTest {
     private static final String DAY_START_TIME_STRING = "06:00:00";
     private static final String DAY_END_TIME_STRING = "20:00:00";
 
-    private static final String START_DATE = "2021-04-30";
-    private static final String START_DATE2 = "2021-03-31";
-    private static final String START_TIME = "10:00:00";
-    private static final String END_TIME = "10:30:00";
+    private static final String START_DATE_STRING = "2021-04-30";
+    private static final Date START_DATE = Date.valueOf(START_DATE_STRING);
+    private static final String START_DATE2_STRING = "2021-03-31";
+    private static final Date START_DATE2 = Date.valueOf(START_DATE2_STRING);
+    private static final String START_TIME_STRING = "10:00:00";
+    private static final Time START_TIME = Time.valueOf(START_TIME_STRING);
+    private static final String END_TIME_STRING = "10:30:00";
+    private static final Time END_TIME = Time.valueOf(END_TIME_STRING);
+
 
     @BeforeEach
     public void setMockOutput() {
@@ -142,13 +149,13 @@ public class AppointmentServiceTest {
             }
         });
 
-        lenient().when(timeSlotRepository.findTimeSlotsByDate(anyString())).thenAnswer((InvocationOnMock invocation) -> {
-            if (invocation.getArgument(0).equals(STRING_DATE) || invocation.getArgument(0).equals(TODAY_DATE)) {
+        lenient().when(timeSlotRepository.findTimeSlotsByStartDate(any(Date.class))).thenAnswer((InvocationOnMock invocation) -> {
+            if (((Date) invocation.getArgument(0)).compareTo(DATE)==0 || ((Date) invocation.getArgument(0)).compareTo(TODAY_DATE)==0) {
                 List<TimeSlot> timeSlotList = new ArrayList<>();
 
                 String date = null;
-                if (invocation.getArgument(0).equals(STRING_DATE)) date = STRING_DATE;
-                if (invocation.getArgument(0).equals(TODAY_DATE)) date = TODAY_DATE;
+                if (((Date) invocation.getArgument(0)).compareTo(DATE)==0) date = STRING_DATE;
+                if (((Date) invocation.getArgument(0)).compareTo(TODAY_DATE)==0) date = TODAY_DATE_STRING;
 
                 TimeSlot timeSlot1 = new TimeSlot();
                 timeSlot1.setEndDate(Date.valueOf(date));
@@ -196,19 +203,19 @@ public class AppointmentServiceTest {
         });
 
 
-        lenient().when(appointmentRepository.findAppointmentByStartDateAndStartTime(anyString(), anyString())).thenAnswer((InvocationOnMock invocation) -> {
-            if ((invocation.getArgument(0).equals(START_DATE) || invocation.getArgument(0).equals(START_DATE2)) && invocation.getArgument(1).equals(START_TIME)) {
+        lenient().when(appointmentRepository.findAppointmentByTimeSlot(any(TimeSlot.class))).thenAnswer((InvocationOnMock invocation) -> {
+            if (((TimeSlot) invocation.getArgument(0)).getStartDate().compareTo(START_DATE)==0 || ((TimeSlot) invocation.getArgument(0)).getStartDate().compareTo(START_DATE2)==0 && ((TimeSlot) invocation.getArgument(0)).getStartTime().compareTo(START_TIME)==0) {
                 TimeSlot timeSlot = new TimeSlot();
-                if ((invocation.getArgument(0).equals(START_DATE))) {
-                    timeSlot.setStartDate(Date.valueOf(START_DATE));
-                    timeSlot.setEndDate(Date.valueOf(START_DATE));
+                if (((TimeSlot)invocation.getArgument(0)).getStartDate().compareTo(START_DATE)==0) {
+                    timeSlot.setStartDate(START_DATE);
+                    timeSlot.setEndDate(START_DATE);
                 }
-                if ((invocation.getArgument(0).equals(START_DATE2))) {
-                    timeSlot.setStartDate(Date.valueOf(START_DATE2));
-                    timeSlot.setEndDate(Date.valueOf(START_DATE2));
+                if (((TimeSlot) invocation.getArgument(0)).getStartDate().compareTo(START_DATE2)==0) {
+                    timeSlot.setStartDate(START_DATE2);
+                    timeSlot.setEndDate(START_DATE2);
                 }
-                timeSlot.setEndTime(Time.valueOf(END_TIME));
-                timeSlot.setStartTime(Time.valueOf(START_TIME));
+                timeSlot.setEndTime(END_TIME);
+                timeSlot.setStartTime(START_TIME);
 
                 Appointment appointment = new Appointment();
                 appointment.setTimeSlot(timeSlot);
@@ -219,10 +226,17 @@ public class AppointmentServiceTest {
                 return null;
             }
         });
-        lenient().when((appointmentRepository.findAppointmentsByCustomer("TestCustomer"))).thenAnswer((InvocationOnMock invocation) -> {
+        lenient().when(appointmentRepository.findAppointmentsByCustomer(any(Customer.class))).thenAnswer((InvocationOnMock invocation) -> {
             List<Appointment> list = new ArrayList<>();
-            list.add(appointmentRepository.findAppointmentByStartDateAndStartTime(START_DATE, START_TIME));
-            list.add(appointmentRepository.findAppointmentByStartDateAndStartTime(START_DATE2, START_TIME));
+            TimeSlot timeSlot1 = new TimeSlot();
+            timeSlot1.setStartDate(START_DATE);
+            timeSlot1.setStartTime(START_TIME);
+            
+            TimeSlot timeSlot2 = new TimeSlot();
+            timeSlot2.setStartDate(START_DATE2);
+            timeSlot2.setStartTime(START_TIME);
+            list.add(appointmentRepository.findAppointmentByTimeSlot(timeSlot1));
+            list.add(appointmentRepository.findAppointmentByTimeSlot(timeSlot2));
 
             return list;
         });
@@ -1303,8 +1317,13 @@ public class AppointmentServiceTest {
         String serviceName = "Test Service 2";
         Date startDate = Date.valueOf("2021-04-30");
         Time startTime = Time.valueOf("10:00:00");
+        TimeSlot timeSlot = new TimeSlot();
+        timeSlot.setStartDate(startDate);
+        timeSlot.setStartTime(startTime);
+        timeSlot.setEndDate(startDate);
+        timeSlot.setEndTime(startTime);
 
-        Appointment appointment = appointmentRepository.findAppointmentByStartDateAndStartTime(startDate.toString(),startTime.toString());
+        Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
 
         try{
             appointmentService.cancelAppointment(serviceName, startDate,startTime);
@@ -1323,8 +1342,13 @@ public class AppointmentServiceTest {
         String serviceName = "Test Service 2";
         Date startDate = Date.valueOf("2021-03-31");
         Time startTime = Time.valueOf("10:00:00");
+        TimeSlot timeSlot = new TimeSlot();
+        timeSlot.setStartDate(startDate);
+        timeSlot.setStartTime(startTime);
+        timeSlot.setEndDate(startDate);
+        timeSlot.setEndTime(startTime);
 
-        Appointment appointment = appointmentRepository.findAppointmentByStartDateAndStartTime(startDate.toString(),startTime.toString());
+        Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
 
         try{
             appointmentService.cancelAppointment(serviceName, startDate,startTime);
@@ -1483,12 +1507,17 @@ public class AppointmentServiceTest {
         Date startDate = Date.valueOf("2021-04-30");
         Time startTime = Time.valueOf("10:00:00");
         Time endTime = Time.valueOf("10:30:00");
+        TimeSlot timeSlot = new TimeSlot();
+        timeSlot.setStartDate(startDate);
+        timeSlot.setStartTime(startTime);
+        timeSlot.setEndTime(endTime);
+        timeSlot.setEndDate(startDate);
         Appointment appointment = null;
         String customerName = "TestCustomer";
         String serviceName= "Test Service 2";
 
         try{
-            appointment = appointmentService.getAppointment(startDate,startTime);
+            appointment = appointmentService.getAppointment(timeSlot);
         }catch (IllegalArgumentException e){
             fail();
         }
@@ -1514,7 +1543,7 @@ public class AppointmentServiceTest {
         List<Appointment> appointmentList = null;
 
         try{
-            appointmentList=appointmentService.getAppointmentsOfCustomer(customerUsername);
+            appointmentList=appointmentService.getAppointmentsOfCustomer(cusRepo.findCustomerByUsername(customerUsername));
         }catch (IllegalArgumentException e){
             fail();
         }

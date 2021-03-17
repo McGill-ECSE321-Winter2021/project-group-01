@@ -37,11 +37,11 @@ public class AssistantService {
 	}
 
 	@Transactional
-	public Assistant updateAssistant(String oldUsername,String newUsername,String newPassword) {
+	public Assistant updateAssistant(String oldUsername,String newPassword) {
 		Assistant oldAssistant = assistantRepository.findAssistantByUsername(oldUsername);
-		if(oldAssistant.getUsername() != newUsername && usernameIsValidAssistant(newUsername)) {
-			oldAssistant.setUsername(newUsername);
-		}
+//		if(oldAssistant.getUsername() != newUsername && usernameIsValidAssistant(newUsername)) {
+//			oldAssistant.setUsername(newUsername);
+//		}
 		if(oldAssistant.getPassword() != newPassword && passwordIsValid(newPassword)) {
 			oldAssistant.setPassword(newPassword);
 		}

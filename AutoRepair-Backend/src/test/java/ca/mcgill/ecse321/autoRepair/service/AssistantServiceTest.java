@@ -212,28 +212,13 @@ public class AssistantServiceTest {
 		assertEquals("Password must contain at least one numeric character",error);
 	}
 
-	@Test
-	public void testUpdateAssistantUsername() {
-		Assistant assistant = null;
-
-		try {
-			assistant = assisService.updateAssistant(ASSISTANT_USERNAME,"NewAssisName",ASSISTANT_PASSWORD);
-		}catch(IllegalArgumentException e) {
-			fail();
-		}
-		assertNotNull(assistant);
-		assertEquals(ASSISTANT_PASSWORD,assistant.getPassword());
-		assertEquals("NewAssisName",assistant.getUsername());
-	}
-
-
 
 	@Test
 	public void testUpdateAssistantPassword() {
 		Assistant assistant = null;
 
 		try {
-			assistant = assisService.updateAssistant(ASSISTANT_USERNAME,ASSISTANT_USERNAME,"newPassword123");
+			assistant = assisService.updateAssistant(ASSISTANT_USERNAME,"newPassword123");
 		}catch(IllegalArgumentException e) {
 			fail();
 		}
@@ -247,7 +232,7 @@ public class AssistantServiceTest {
 		Assistant assistant = null;
 
 		try {
-			assistant = assisService.updateAssistant(ASSISTANT_USERNAME,ASSISTANT_USERNAME,ASSISTANT_PASSWORD);
+			assistant = assisService.updateAssistant(ASSISTANT_USERNAME,ASSISTANT_PASSWORD);
 		}catch(IllegalArgumentException e) {
 			fail();
 		}
@@ -263,7 +248,7 @@ public class AssistantServiceTest {
 		String error = "";
 
 		try {
-			assistant = assisService.updateAssistant(ASSISTANT_USERNAME,ASSISTANT_USERNAME,invalidPassword);
+			assistant = assisService.updateAssistant(ASSISTANT_USERNAME,invalidPassword);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -277,7 +262,7 @@ public class AssistantServiceTest {
 		String error = "";
 
 		try {
-			assistant = assisService.updateAssistant(ASSISTANT_USERNAME,ASSISTANT_USERNAME,invalidPassword);
+			assistant = assisService.updateAssistant(ASSISTANT_USERNAME,invalidPassword);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -291,7 +276,7 @@ public class AssistantServiceTest {
 		String error = "";
 
 		try {
-			assistant = assisService.updateAssistant(ASSISTANT_USERNAME,ASSISTANT_USERNAME,invalidPassword);
+			assistant = assisService.updateAssistant(ASSISTANT_USERNAME,invalidPassword);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -305,7 +290,7 @@ public class AssistantServiceTest {
 		String error = "";
 
 		try {
-			assistant = assisService.updateAssistant(ASSISTANT_USERNAME,ASSISTANT_USERNAME,invalidPassword);
+			assistant = assisService.updateAssistant(ASSISTANT_USERNAME,invalidPassword);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -319,7 +304,7 @@ public class AssistantServiceTest {
 		String error = "";
 
 		try {
-			assistant = assisService.updateAssistant(ASSISTANT_USERNAME,ASSISTANT_USERNAME,invalidPassword);
+			assistant = assisService.updateAssistant(ASSISTANT_USERNAME,invalidPassword);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}

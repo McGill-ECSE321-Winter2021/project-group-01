@@ -49,10 +49,10 @@ return assisService.getAllAssistants().stream().map(assistant -> convertToDTO(as
 	
 	
 	
-	@PostMapping(value = { "/update_assistant}" })
+	@PostMapping(value = { "/update_assistant/{oldUsername}" })
 	public AssistantDTO updateAssistant(@PathVariable("oldUsername") String oldUsername,
-			@RequestParam("newUsername") String newUsername,@RequestParam("newPassword") String newPassword) {
-        Assistant assistant = assisService.updateAssistant(oldUsername, newUsername, newPassword);
+			@RequestParam("newPassword") String newPassword) {
+        Assistant assistant = assisService.updateAssistant(oldUsername,newPassword);
 		return convertToDTO(assistant);
 	}
 	

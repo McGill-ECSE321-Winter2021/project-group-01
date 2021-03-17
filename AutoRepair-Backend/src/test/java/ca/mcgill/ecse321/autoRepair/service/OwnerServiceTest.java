@@ -223,7 +223,7 @@ public class OwnerServiceTest {
 	Owner owner = null;
 
 	try {
-		owner = ownerService.updateOwner(OWNER_USERNAME,OWNER_USERNAME,"newPassword123");
+		owner = ownerService.updateOwner(OWNER_USERNAME,"newPassword123");
 	}catch(IllegalArgumentException e) {
 		fail();
 	}
@@ -237,7 +237,7 @@ public class OwnerServiceTest {
 	Owner owner = null;
 
 	try {
-		owner = ownerService.updateOwner(OWNER_USERNAME,OWNER_USERNAME,OWNER_PASSWORD);
+		owner = ownerService.updateOwner(OWNER_USERNAME,OWNER_PASSWORD);
  	}catch(IllegalArgumentException e) {
 	 	fail();
 	}
@@ -248,25 +248,13 @@ public class OwnerServiceTest {
 	
 	
 	@Test
-	public void testUpdateOwnerUsername() {
-	Owner owner = null;
-
-	try {
-		owner = ownerService.updateOwner(OWNER_USERNAME,"newUsername","newPassword123");
- 	}catch (IllegalArgumentException e) {
-		fail();
-	}
-	assertEquals(OWNER_USERNAME,owner.getUsername()); 
-  }
-	
-	@Test
 	public void testUpdateOwnerWithInvalidPasswordLessThan8Chars() {
 		Owner owner =null;
 		String invalidPassword ="invalid";
 		String error = "";
 
 		try {
-		owner = ownerService.updateOwner(OWNER_USERNAME,OWNER_USERNAME,invalidPassword);
+		owner = ownerService.updateOwner(OWNER_USERNAME,invalidPassword);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -280,7 +268,7 @@ public class OwnerServiceTest {
 		String error = "";
 
 		try {
-		owner = ownerService.updateOwner(OWNER_USERNAME,OWNER_USERNAME,invalidPassword);
+		owner = ownerService.updateOwner(OWNER_USERNAME,invalidPassword);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -294,7 +282,7 @@ public class OwnerServiceTest {
 		String error = "";
 
 		try {
-		owner = ownerService.updateOwner(OWNER_USERNAME,OWNER_USERNAME,invalidPassword);
+		owner = ownerService.updateOwner(OWNER_USERNAME,invalidPassword);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -308,7 +296,7 @@ public class OwnerServiceTest {
 		String error = "";
 
 		try {
-		owner = ownerService.updateOwner(OWNER_USERNAME,OWNER_USERNAME,invalidPassword);
+		owner = ownerService.updateOwner(OWNER_USERNAME,invalidPassword);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -322,7 +310,7 @@ public class OwnerServiceTest {
 		String error = "";
 
 		try {
-		owner = ownerService.updateOwner(OWNER_USERNAME,OWNER_USERNAME,invalidPassword);
+		owner = ownerService.updateOwner(OWNER_USERNAME,invalidPassword);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}

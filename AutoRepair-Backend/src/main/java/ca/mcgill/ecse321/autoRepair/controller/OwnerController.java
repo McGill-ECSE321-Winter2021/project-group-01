@@ -60,10 +60,10 @@ public class OwnerController {
 		return convertToDTO(owner); 
 	}
 	
-	@PostMapping(value = { "/update_owner" })
+	@PostMapping(value = { "/update_owner/{oldUsername}"})
 	public OwnerDTO updateOwner(@PathVariable("oldUsername") String oldUsername,
-			@RequestParam("newUsername") String newUsername,@RequestParam("newPassword") String newPassword) {
-        Owner owner = ownerService.updateOwner(oldUsername, newUsername, newPassword);
+			@RequestParam("newPassword") String newPassword) {
+        Owner owner = ownerService.updateOwner(oldUsername, newPassword);
 		return convertToDTO(owner);
 	}
 	

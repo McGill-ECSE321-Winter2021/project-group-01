@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ca.mcgill.ecse321.autoRepair.dao.CustomerRepository;
@@ -12,6 +13,7 @@ import ca.mcgill.ecse321.autoRepair.dao.ProfileRepository;
 import ca.mcgill.ecse321.autoRepair.model.Customer;
 import ca.mcgill.ecse321.autoRepair.model.Profile;
 
+@Service
 public class ProfileService {
 
 

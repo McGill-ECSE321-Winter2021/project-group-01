@@ -4,8 +4,8 @@ public class ChosenServiceDTO {
 	
 	private String name;
 	private int duration;
-	
-	public ChosenServiceDTO(String name, int duration) {
+
+	public ChosenServiceDTO(String name,int duration) {
 		this.name = name;
 		this.duration = duration;
 	}
@@ -13,7 +13,7 @@ public class ChosenServiceDTO {
 	public String getName() {
 		return name;
 	}
-	
+
 	public int getDuration() {
 		return duration;
 	}

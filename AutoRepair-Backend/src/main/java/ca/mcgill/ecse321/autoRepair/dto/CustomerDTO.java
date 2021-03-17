@@ -2,10 +2,15 @@ package ca.mcgill.ecse321.autoRepair.dto;
 
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
 
 public class CustomerDTO {
 
+
 	private String username;
+	
 	private String password;
 	private int noShow;
 	private int show;
@@ -16,6 +21,8 @@ public class CustomerDTO {
 
 	public CustomerDTO(String username, String password, int noShow, int show, List<CarDTO> cars, ProfileDTO profile) {
 		
+		this.username=username;
+		this.password=password;
 		this.noShow=noShow;
 		this.show = show;
 		this.cars=cars;
@@ -23,12 +30,10 @@ public class CustomerDTO {
 	
 	}
 
-	
-	
+
 	public String getUsername() {
 		return username;
 	}
-
 
 
 	public String getPassword() {

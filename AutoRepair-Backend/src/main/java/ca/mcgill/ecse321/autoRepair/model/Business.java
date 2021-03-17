@@ -68,8 +68,6 @@ public class Business{
     this.holidays = holidays;
   }
 
-
-
   public String toString()
   {
     return super.toString() + "["+

@@ -76,9 +76,11 @@ public class TestCustomerPersistence {
 
 		testCustomer=null;
 
+		boolean exists = customerRepository.existsCustomerByUsername(username);
 		testCustomer= customerRepository.findCustomerByUsername(username);
 
 		assertNotNull(testCustomer);
+		assertEquals(exists, true);
 		assertEquals(username, testCustomer.getUsername());
 		assertEquals(password,testCustomer.getPassword());
 		assertEquals(password,testCustomer.getPassword());

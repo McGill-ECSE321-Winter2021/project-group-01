@@ -50,7 +50,7 @@ public class TestTimeSlotPersistence {
 
 			ts = null;
 
-			ts = timeSlotRepository.findTimeSlotByStartDateAndStartTime(sD, sT);
+			ts = timeSlotRepository.findTimeSlotByStartDateAndStartTimeAndEndTime(sD, sT,eT);
 
 			assertNotNull(ts);
 			assertEquals(sD, ts.getStartDate());

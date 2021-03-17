@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TimeSlotRepository extends CrudRepository<TimeSlot, Long>{
 	
-	TimeSlot findTimeSlotByStartDateAndTime(Date startDate, Time startTime, Time endTime);
+	TimeSlot findTimeSlotByStartDateAndStartTimeAndEndTime(Date startDate, Time startTime, Time endTime);
 	TimeSlot findTimeSlotByStartDateAndStartTime(Date startDate, Time startTime);
-	List<TimeSlot> findTimeSlotsByDate(Date startDate);
+	List<TimeSlot> findTimeSlotsByStartDate(Date startDate);
 }

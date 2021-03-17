@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ca.mcgill.ecse321.autoRepair.dao.ChosenServiceRepository;
 import ca.mcgill.ecse321.autoRepair.dao.CustomerRepository;
 import ca.mcgill.ecse321.autoRepair.dao.ReviewRepository;
-import ca.mcgill.ecse321.autoRepair.dto.ReviewDTO;
 import ca.mcgill.ecse321.autoRepair.model.Appointment;
 import ca.mcgill.ecse321.autoRepair.model.ChosenService;
 import ca.mcgill.ecse321.autoRepair.model.Customer;

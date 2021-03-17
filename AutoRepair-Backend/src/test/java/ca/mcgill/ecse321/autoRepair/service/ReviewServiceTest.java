@@ -3,8 +3,8 @@ package ca.mcgill.ecse321.autoRepair.service;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -12,23 +12,17 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
-import static org.mockito.Mockito.when;
 import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
-import org.junit.Assert;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
 import ca.mcgill.ecse321.autoRepair.dao.AppointmentRepository;
@@ -107,7 +101,6 @@ public class ReviewServiceTest {
 	private static final Time END_TIME2 = Time.valueOf("10:30:00");
 
 	private static final String CUSTOMER_USERNAME ="TestCustomer";
-	private static final String CUSTOMER_USERNAME2 ="TestCustomer2";
 	private static final String CUSTOMER_PASSWORD ="TestPassword123";
 	private static final String NULLCUSTOMER_USERNAME = "hamood";
 
@@ -133,7 +126,6 @@ public class ReviewServiceTest {
 	private static final String PROFILE2_ZIP ="55555";
 
 	private static final String CAR2_MODEL ="BMW X6";
-	private static final String CAR2_PLATE ="124 ABC";
 	private static final CarTransmission CAR2_TRANSMISSION = CarTransmission.Automatic;
 
 
@@ -914,12 +906,11 @@ public class ReviewServiceTest {
 		appointment.setId(APPOINTMENT_ID);
 
 		Review review = reviewRepo.findReviewByAppointment(appointment);
-		String error = null;
 
 		try {
 			review = service.editReview(appointment, "Awful", 0);
 		}catch (IllegalArgumentException e) {
-			error = e.getMessage();
+			fail();
 		}
 		assertNotNull(review);
 		assertEquals("Awful", review.getDescription());
@@ -1116,14 +1107,13 @@ public class ReviewServiceTest {
 		appointment.setTimeSlot(timeslot);
 		appointment.setId(APPOINTMENT_ID);
 
-		Review review = reviewRepo.findReviewByAppointment(appointment);
-		String error = null;
+		
 		boolean isDeleted = false;
 
 		try {
 			isDeleted = service.deleteReview(appointment);
 		}catch (IllegalArgumentException e) {
-			error = e.getMessage();
+			fail();
 		}
 		assertTrue(isDeleted);
 	}
@@ -1144,7 +1134,6 @@ public class ReviewServiceTest {
 		appointment.setTimeSlot(timeslot);
 		appointment.setId(APPOINTMENT_ID);
 
-		Review review = service.getReview(appointment);
 		String error = null;
 		boolean isDeleted = false;
 
@@ -1161,13 +1150,12 @@ public class ReviewServiceTest {
 	public void tesgetAverageServiceReview() {
 		assertEquals(0, service.getAllReviews().size());
 
-		String error = null;
 		double averageServiceRating = 0.0;
 
 		try {
 			averageServiceRating = service.getAverageServiceReview(CHOSENSERVICE_NAME);
 		}catch (IllegalArgumentException e) {
-			error = e.getMessage();
+			fail();
 		}
 		assertEquals(4.5, averageServiceRating);
 	}
@@ -1177,10 +1165,9 @@ public class ReviewServiceTest {
 		assertEquals(0, service.getAllReviews().size());
 
 		String error = null;
-		double averageServiceRating = 0.0;
 
 		try {
-			averageServiceRating = service.getAverageServiceReview("Tire change");
+			service.getAverageServiceReview("Tire change");
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -1188,6 +1175,3 @@ public class ReviewServiceTest {
 	}
 	
 }
-
-
-

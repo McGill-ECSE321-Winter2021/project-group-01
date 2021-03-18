@@ -54,17 +54,16 @@ public class ReviewController {
 	private CustomerRepository customerRepository;
 
 	@PostMapping(value = {"/create_review/"})
-	public ReviewDTO createReview(@RequestParam("startDate") String startDate, @RequestParam("startTime") String startTime, @RequestParam("serviceName")
-	String serviceName, @RequestParam("customerName") String customerName, @RequestParam("description")
-	String description, @RequestParam("serviceRating") int serviceRating) {
+	public ReviewDTO createReview(@RequestParam("startDate") String startDate, @RequestParam("startTime") String startTime,
+			@RequestParam("description") String description, @RequestParam("serviceRating") int serviceRating) {
 
 		Date date = Date.valueOf(startDate);
 		Time time = Time.valueOf(startTime);
 		TimeSlot timeSlot = timeSlotRepoisoty.findTimeSlotByStartDateAndStartTime(date, time);
 		Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
 
-		Review review = reviewService.createReview(appointment, serviceName,
-				customerName, description, serviceRating);
+		Review review = reviewService.createReview(appointment, appointment.getChosenService().getName(),
+				appointment.getCustomer().getUsername(), description, serviceRating);
 
 		return convertToDTO(review);
 	}

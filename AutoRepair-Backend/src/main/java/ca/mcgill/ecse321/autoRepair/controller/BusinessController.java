@@ -73,7 +73,6 @@ public class BusinessController {
 	public OperatingHourDTO deleteBusinessHours(@RequestParam String dayOfWeek) {
 		
 		OperatingHour operatingHour = businessService.deleteOperatingHour(DayOfWeek.valueOf(dayOfWeek));
-				
 		return convertToDTO(operatingHour);
 
 	}

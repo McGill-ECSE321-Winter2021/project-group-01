@@ -158,6 +158,8 @@ public class ReminderService {
 				}
 				}
 				
+				
+				
 				Customer oldCustomer = customerRepository.findCustomerByUsername(customerName);
 		        if (oldCustomer == null)
 		            throw new IllegalArgumentException("The following user does not exist: " + customerName);
@@ -169,6 +171,10 @@ public class ReminderService {
 		        ChosenService newChosenService = chosenServiceRepository.findChosenServiceByName(newServiceName);
 		        if (newChosenService == null)
 		            throw new IllegalArgumentException("The following service does not exist: " + newServiceName);
+		        Reminder r2 = reminderRepository.findByCustomerAndChosenService(oldCustomer, newChosenService);
+		        if(r2!=null) 
+		        	throw new IllegalArgumentException("Such a reminder is already exists.");
+		   
 //		        Reminder r = reminderRepository.findByCustomerAndChosenService(customer, chosenService);
 //				if(r!=null) throw new IllegalArgumentException("This reminder is already created");
 		        

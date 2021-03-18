@@ -63,41 +63,19 @@ public class ReminderController {
 	(@RequestParam String username,@RequestParam String serviceName,@RequestParam String datestring,@RequestParam String description, @RequestParam String timestring ) {
 		Date date = Date.valueOf(datestring);
 		Time time = Time.valueOf(timestring);
-		Date curDate = Date.valueOf("2021-05-30");
-		SystemTime.setSysDate(curDate);
-		Time curTime = Time.valueOf("09:00:00");
-		SystemTime.setSysTime(curTime);
+		SystemTime.setSysDate(Date.valueOf(LocalDate.now()));
+		SystemTime.setSysTime(Time.valueOf(LocalTime.now()));
 		Reminder reminder = reminderService.createReminder(serviceName, username, date, description, time);
 		return convertToDTO(reminder);
 	}
-	
-//	@PostMapping(value = { "/create_reminder/","/create_reminder" })
-//	public ReminderDTO createReminder
-//	(@RequestParam String username,@RequestParam String serviceName,
-//			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "YYYY:mm:dd") LocalDate datestring,
-//			@RequestParam String description, 
-//			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm:ss") LocalTime timestring) {
-//		//Date date = Date.valueOf(datestring);
-//		//Time time = Time.valueOf(timestring);
-//		Date date = Date.valueOf(datestring);
-//		Time time = Time.valueOf(timestring);
-//		Date curDate = Date.valueOf("2021-05-30");
-//		SystemTime.setSysDate(curDate);
-//		Time curTime = Time.valueOf("09:00:00");
-//		SystemTime.setSysTime(curTime);
-//		Reminder reminder = reminderService.createReminder(serviceName, username, date, description, time);
-//		return convertToDTO(reminder);
-//	}
 
 	@PostMapping(value = { "/update_reminder","/update_reminder/" })
 	public ReminderDTO updateReminder
 	(@RequestParam String username,@RequestParam String oldServiceName, @RequestParam String newServiceName ,@RequestParam String datestring,@RequestParam String description, @RequestParam String timestring ) {
 		Date date = Date.valueOf(datestring);
 		Time time = Time.valueOf(timestring);
-		Date curDate = Date.valueOf("2021-05-30");
-		SystemTime.setSysDate(curDate);
-		Time curTime = Time.valueOf("09:00:00");
-		SystemTime.setSysTime(curTime);
+		SystemTime.setSysDate(Date.valueOf(LocalDate.now()));
+		SystemTime.setSysTime(Time.valueOf(LocalTime.now()));
 		Reminder reminder = reminderService.editReminder(oldServiceName, newServiceName, username, date, description, time);
 		return convertToDTO(reminder);
 	}

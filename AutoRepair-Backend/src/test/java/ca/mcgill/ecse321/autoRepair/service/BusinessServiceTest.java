@@ -565,7 +565,7 @@ public class BusinessServiceTest {
 		DayOfWeek dayOfWeek = DayOfWeek.Monday;
 		Boolean success = false;
 		try {
-			success = service.deleteOperatingHour(dayOfWeek);
+			success = service.deleteOperatingHour("TestBusinessName", dayOfWeek);
 		}catch (IllegalArgumentException e) {
 			fail();
 		}

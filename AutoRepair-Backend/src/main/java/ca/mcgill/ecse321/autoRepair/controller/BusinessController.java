@@ -1,9 +1,11 @@
+
 package ca.mcgill.ecse321.autoRepair.controller;
 
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -37,55 +39,69 @@ public class BusinessController {
 	
 	@PostMapping(value = {"/register_business"})
 	public BusinessDTO registerBusiness(@RequestParam String name, @RequestParam String email, @RequestParam String address,
-			@RequestParam String phoneNumber, @RequestParam String dayOfWeek, @RequestParam String startTimeBH, @RequestParam String endTimeBH, 
-			@RequestParam String startTimeH, @RequestParam String endTimeH, @RequestParam String startDateH, @RequestParam String endDateH) {
+			@RequestParam String phoneNumber) {
 		
-		OperatingHour operatingHour = businessService.createOperatingHour(DayOfWeek.valueOf(dayOfWeek), Time.valueOf(startTimeBH+":00"), Time.valueOf(endTimeBH+":00"));
-		List<OperatingHour> operatingHours = new ArrayList<OperatingHour>();
-		operatingHours.add(operatingHour);
-				
+		Business business = businessService.createBusiness(name, email, address, phoneNumber);
+
+		return convertToDTO(business);
+
+	}
 	
-		TimeSlot holiday = new TimeSlot();
-		holiday.setStartTime(Time.valueOf(startTimeH+":00"));
-		holiday.setEndTime(Time.valueOf(endTimeH+":00"));
-		holiday.setStartDate(Date.valueOf(startDateH));
-		holiday.setEndDate(Date.valueOf(endDateH));
-		timeSlotRepository.save(holiday);
-		List<TimeSlot> holidays = new ArrayList<TimeSlot>();
-		holidays.add(holiday);
+	@PostMapping(value = {"/edit_business"})
+	public BusinessDTO editBusiness(@RequestParam String name, @RequestParam String name1, @RequestParam String email, @RequestParam String address,
+			@RequestParam String phoneNumber) {
 		
-		Business business = businessService.createBusiness(name, email, address, phoneNumber, operatingHours, holidays);
+		Business business = businessService.editBusiness(name, name1, email, address, phoneNumber);
 
 		return convertToDTO(business);
 
 	}
 	
 	@PostMapping(value = {"/add_business_hours"})
-	public OperatingHourDTO addBusinessHours(@RequestParam String dayOfWeek, @RequestParam String startTime, @RequestParam String endTime) {
+	public OperatingHourDTO addBusinessHours(@RequestParam String businessName, @RequestParam String dayOfWeek, @RequestParam String startTime, @RequestParam String endTime) {
 		
-		OperatingHour operatingHour = businessService.createOperatingHour(DayOfWeek.valueOf(dayOfWeek), Time.valueOf(startTime+":00"), Time.valueOf(endTime+":00"));
-				
+		return convertToDTO(businessService.createOperatingHour(businessName, DayOfWeek.valueOf(dayOfWeek), Time.valueOf(startTime+":00"), Time.valueOf(endTime+":00")));
+
+	}
+	
+	@PostMapping(value = {"/edit_business_hours"})
+	public OperatingHourDTO editBusinessHours(@RequestParam String dayOfWeek, @RequestParam String dayOfWeek1, @RequestParam String startTime1, @RequestParam String endTime1) {
+		
+		OperatingHour operatingHour = businessService.editOperatingHour(DayOfWeek.valueOf(dayOfWeek), DayOfWeek.valueOf(dayOfWeek1), Time.valueOf(startTime1+":00"), Time.valueOf(endTime1+":00"));
+
 		return convertToDTO(operatingHour);
 
 	}
 	
 	@PostMapping(value = {"/delete_business_hours"})
-	public OperatingHourDTO deleteBusinessHours(@RequestParam String dayOfWeek) {
+	public boolean deleteBusinessHours(@RequestParam String businessName, @RequestParam String dayOfWeek) {
 		
-		OperatingHour operatingHour = businessService.deleteOperatingHour(DayOfWeek.valueOf(dayOfWeek));
-				
-		return convertToDTO(operatingHour);
+		return businessService.deleteOperatingHour(businessName, DayOfWeek.valueOf(dayOfWeek));
 
 	}
 	
-//	@PostMapping(value = {"/edit_business_hours"})
-//	public OperatingHourDTO editBusinessHours(@RequestParam String dayOfWeek, @RequestParam String startTime, @RequestParam String endTime, @RequestParam String dayOfWeek1, @RequestParam String startTime1, @RequestParam String endTime1) {
-//		
-//		OperatingHour operatingHour = businessService.editOperatingHour(DayOfWeek.valueOf(dayOfWeek), Time.valueOf(startTime+":00"), Time.valueOf(endTime+":00"), DayOfWeek.valueOf(dayOfWeek1), Time.valueOf(startTime1+":00"), Time.valueOf(endTime1+":00"));
-//				
-//		return convertToDTO(operatingHour);
-//
-//	}
+	@GetMapping(value = {"/view_business_info", "/view_business_info/"})
+	public BusinessDTO viewBusinessInfo(@RequestParam String businessName){
+
+		return convertToDTO(businessService.getBusiness(businessName));
+	
+	}
+	
+	@GetMapping(value = {"/view_operating_hours", "/view_operating_hours/"})
+	public List<OperatingHourDTO> viewOperatingHours(){
+
+		return businessService.getAllOperatingHour().stream().map(c ->
+		convertToDTO(c)).collect(Collectors.toList());
+	
+	}
+	
+	@GetMapping(value = {"/view_operating_hour_by_day", "/view_operating_hour_by_day/"})
+	public OperatingHourDTO viewOperatingHourByDay(@RequestParam String dayOfWeek){
+
+		return convertToDTO(businessService.getOperatingHour(DayOfWeek.valueOf(dayOfWeek)));
+	
+	}
+	
 	
 	private TimeSlotDTO convertToDTO(TimeSlot timeSlot) {
     	if(timeSlot==null) throw new IllegalArgumentException("Time slot not found.");

@@ -68,7 +68,7 @@ public class BusinessService {
 	}
 
 	@Transactional
-	public OperatingHour createOperatingHour(String name, DayOfWeek dayOfWeek, Time startTime, Time endTime) {
+	public OperatingHour createOperatingHour(String businessName, DayOfWeek dayOfWeek, Time startTime, Time endTime) {
 		if(dayOfWeek==null) throw new IllegalArgumentException("Day of week cannot be blank");
 		if(startTime==null) throw new IllegalArgumentException("Start time cannot be blank");
 		if(endTime==null) throw new IllegalArgumentException("End time cannot be blank");
@@ -78,10 +78,10 @@ public class BusinessService {
 		operatingHour.setDayOfWeek(dayOfWeek);
 		operatingHour.setStartTime(startTime);
 		operatingHour.setEndTime(endTime);
-		Business business = businessRepository.findBusinessByName(name);
+		Business business = businessRepository.findBusinessByName(businessName);
 		business.getBusinessHours().add(operatingHour);
-		businessRepository.save(business);
 		operatingHourRepository.save(operatingHour);
+		businessRepository.save(business);
 		return operatingHour;
 	}
 	
@@ -102,13 +102,17 @@ public class BusinessService {
 	}
 	
 	@Transactional
-	public boolean deleteOperatingHour(DayOfWeek dayOfWeek) {
+	public boolean deleteOperatingHour(String businessName, DayOfWeek dayOfWeek) {
 		if(dayOfWeek==null) throw new IllegalArgumentException("Day of week cannot be blank");
-		if(operatingHourRepository.findByDayOfWeek(dayOfWeek)==null) throw new IllegalArgumentException("Operating hour cannot be found");
+		OperatingHour operatingHour = operatingHourRepository.findByDayOfWeek(dayOfWeek);
+		if(operatingHour==null) throw new IllegalArgumentException("Operating hour cannot be found");
+		Business business = businessRepository.findBusinessByName(businessName);
+		if(business==null) throw new IllegalArgumentException("Business not found");
+		business.getBusinessHours().remove(operatingHour);
+		businessRepository.save(business);
 		operatingHourRepository.delete(operatingHourRepository.findByDayOfWeek(dayOfWeek));
 		return true;
 	}
-	
 	
 	
 	@Transactional

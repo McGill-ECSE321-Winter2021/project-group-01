@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ca.mcgill.ecse321.autoRepair.dao.ChosenServiceRepository;
@@ -14,6 +15,7 @@ import ca.mcgill.ecse321.autoRepair.model.ChosenService;
 import ca.mcgill.ecse321.autoRepair.model.Customer;
 import ca.mcgill.ecse321.autoRepair.model.Review;
 
+@Service
 public class ReviewService {
 
 	@Autowired
@@ -24,6 +26,7 @@ public class ReviewService {
 
 	@Autowired
 	private ChosenServiceRepository serviceRepository;
+	
 
 	@Transactional
 	public Review createReview(Appointment appointment, String serviceName,
@@ -114,11 +117,6 @@ public class ReviewService {
 		return true;
 	}
 
-	@Transactional 
-	public List<Review> viewAllReviews() {
-		return toList(reviewRepository.findAll());
-	}
-
 	@Transactional
 	public List<Review> viewReviewsForService(ChosenService service) {
 		return toList(reviewRepository.findReviewByChosenService(service));
@@ -160,10 +158,10 @@ public class ReviewService {
 		return toList(reviewRepository.findAll());
 	}
 
-	@Transactional
-	public List<Review> geServiceReviews(ChosenService service){
-		return reviewRepository.findReviewByChosenService(service);
-	}
+//	@Transactional
+//	public List<Review> getServiceReviews(ChosenService service){
+//		return reviewRepository.findReviewByChosenService(service);
+//	}
 
 	private <T> List<T> toList(Iterable<T> iterable){
 		List<T> resultList = new ArrayList<T>();

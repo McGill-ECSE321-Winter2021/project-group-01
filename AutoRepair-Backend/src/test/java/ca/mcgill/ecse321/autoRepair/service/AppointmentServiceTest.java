@@ -240,6 +240,27 @@ public class AppointmentServiceTest {
 
             return list;
         });
+        lenient().when(timeSlotRepository.findTimeSlotByStartDateAndStartTimeAndEndTime(any(Date.class), any(Time.class), any(Time.class))).thenAnswer((InvocationOnMock invocation) -> {
+            if (( invocation.getArgument(0)).equals(START_DATE) || (invocation.getArgument(0)).equals(START_DATE2)
+                    && (invocation.getArgument(1)).equals(START_TIME) && ( invocation.getArgument(2)).equals(END_TIME)) {
+                TimeSlot timeSlot = new TimeSlot();
+                if ((invocation.getArgument(0)).equals(START_DATE)) {
+                    timeSlot.setStartDate(START_DATE);
+                    timeSlot.setEndDate(START_DATE);
+                }
+                if ((invocation.getArgument(0)).equals(START_DATE2)) {
+                    timeSlot.setStartDate(START_DATE2);
+                    timeSlot.setEndDate(START_DATE2);
+                }
+                timeSlot.setEndTime(END_TIME);
+                timeSlot.setStartTime(START_TIME);
+
+
+                return timeSlot;
+            } else {
+                return null;
+            }
+        });
     }
 
     @Test
@@ -1310,7 +1331,7 @@ public class AppointmentServiceTest {
     }
 
     @Test
-    private void testCancelAppointmentDifferentDay(){
+    public void testCancelAppointmentDifferentDay(){
         SystemTime.setSysTime(Time.valueOf("09:00:00"));
         SystemTime.setSysDate(Date.valueOf("2021-03-31"));
 

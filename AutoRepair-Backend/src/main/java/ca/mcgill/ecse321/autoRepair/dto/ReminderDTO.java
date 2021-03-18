@@ -4,30 +4,29 @@ import java.sql.Date;
 import java.sql.Time;
 
 public class ReminderDTO {
-	
+
 	private String description;
 	private Date date;
 	private Time time;
 	private CustomerDTO customer;
-	private AppointmentDTO appointment;
-	
-	public ReminderDTO(String description, Date date, Time time, CustomerDTO customer,
-			AppointmentDTO appointment) {
+	private ChosenServiceDTO service;
+
+	public ReminderDTO(CustomerDTO customer, ChosenServiceDTO service, Date date, Time time, String description) {
 		this.description = description;
 		this.date = date;
 		this.time = time;
-		this.appointment = appointment;
 		this.customer = customer;
+		this.service = service;
 	}
-	
+
 	public String getDescription() {
 		return description;
 	}
-	
+
 	public Date getDate() {
 		return date;
 	}
-	
+
 	public Time getTime() {
 		return time;
 	}
@@ -36,8 +35,8 @@ public class ReminderDTO {
 		return customer;
 	}
 
-	public AppointmentDTO getAppointment() {
-		return appointment;
+	public ChosenServiceDTO getChosenService() {
+		return service;
 	}
 
 }

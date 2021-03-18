@@ -44,10 +44,10 @@ public class AppointmentController {
     @Autowired
     TimeSlotRepository timeSlotRepository;
 
-    @PostMapping(value = { "/make_appointment/{username}/{serviceName}/{dateString}/{startTimeString}" })
-    public AppointmentDTO makeAppointment(@PathVariable("username") String username, @PathVariable("dateString") String dateString,
-                                          @PathVariable String startTimeString,
-                                          @PathVariable("serviceName") String serviceName) throws IllegalArgumentException {
+    @PostMapping(value = { "/make_appointment/{username}" })
+    public AppointmentDTO makeAppointment(@PathVariable("username") String username, @RequestParam String dateString,
+                                          @RequestParam String startTimeString,
+                                          @RequestParam String serviceName) throws IllegalArgumentException {
         SystemTime.setSysTime(Time.valueOf(LocalTime.now()));
         SystemTime.setSysDate(Date.valueOf(LocalDate.now()));
         Date date = Date.valueOf(dateString);
@@ -116,15 +116,15 @@ public class AppointmentController {
         return convertToDTO(appointment);
     }
 
-    @PostMapping(value = {"/cancel_appointment/{username}/{date}/{time}"})
-    public boolean cancelAppointment(@PathVariable("username") String username, @PathVariable("date") String dateString, @RequestParam String startTimeString, @RequestParam String serviceName){
+    @PostMapping(value = {"/cancel_appointment/{username}/{date}/{time}/{service}"})
+    public boolean cancelAppointment(@PathVariable("username") String username, @PathVariable("date") String dateString, @PathVariable("time") String startTimeString, @PathVariable("service") String serviceName){
         SystemTime.setSysTime(Time.valueOf(LocalTime.now()));
         SystemTime.setSysDate(Date.valueOf(LocalDate.now()));
         Date date = Date.valueOf(dateString);
         Time startTime = Time.valueOf(startTimeString);
 
         Customer customer = customerRepository.findCustomerByUsername(username);
-        Date oldDate = Date.valueOf(dateString);
+        //Date oldDate = Date.valueOf(dateString);
         Time oldTime = Time.valueOf(startTimeString);
         ChosenService oldService = chosenServiceRepository.findChosenServiceByName(serviceName);
         Time endOldTime = findEndTimeOfApp(oldService, oldTime.toLocalTime());

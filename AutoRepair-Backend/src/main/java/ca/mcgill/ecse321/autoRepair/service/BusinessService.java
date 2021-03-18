@@ -91,8 +91,7 @@ public class BusinessService {
 		if(operatingHourRepository.findByDayOfWeek(dayOfWeek)==null) {
 			throw new IllegalArgumentException("Operating hour cannot be found");
 		}
-		operatingHourRepository.delete(operatingHourRepository.findByDayOfWeek(dayOfWeek));
-		OperatingHour operatingHour = new OperatingHour();
+		OperatingHour operatingHour = operatingHourRepository.findByDayOfWeek(dayOfWeek);
 		operatingHour.setDayOfWeek(dayOfWeek1);
 		operatingHour.setStartTime(startTime1);
 		operatingHour.setEndTime(endTime1);
@@ -101,11 +100,8 @@ public class BusinessService {
 	}
 	
 	@Transactional
-	public OperatingHour deleteOperatingHour(DayOfWeek dayOfWeek, Time startTime, Time endTime) {
+	public OperatingHour deleteOperatingHour(DayOfWeek dayOfWeek) {
 		if(dayOfWeek==null) throw new IllegalArgumentException("Day of week cannot be blank");
-		if(startTime==null) throw new IllegalArgumentException("Start time cannot be blank");
-		if(endTime==null) throw new IllegalArgumentException("End time cannot be blank");
-		if(startTime.after(endTime)) throw new IllegalArgumentException("Start time cannot be before end time");
 		if(operatingHourRepository.findByDayOfWeek(dayOfWeek)==null) throw new IllegalArgumentException("Operating hour cannot be found");
 		operatingHourRepository.delete(operatingHourRepository.findByDayOfWeek(dayOfWeek));
 		return null;

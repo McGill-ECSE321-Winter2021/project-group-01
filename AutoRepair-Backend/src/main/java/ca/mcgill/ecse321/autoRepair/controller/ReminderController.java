@@ -35,6 +35,12 @@ public class ReminderController {
 	@Autowired
 	ReminderService reminderService;
 	
+	/**
+	 * @author Robert Aprahamian
+	 * Gets all reminders associated with a given customer
+	 * @param username
+	 * @return list of reminder DTO
+	 */
 	@GetMapping(value = { "/view_reminders_for_customer","/view_reminders_for_customer/" })
 	public List<ReminderDTO> getAllRemindersForCustomer(@RequestParam String username) {
 		Customer customer = customerRepository.findCustomerByUsername(username);
@@ -43,6 +49,13 @@ public class ReminderController {
 		return reminderService.getCustomerReminders(customer).stream().map(reminder -> convertToDTO(reminder)).collect(Collectors.toList());
 	}
 	
+	/**
+	 * @author Robert Aprahamian
+	 * Gets a reminder given a customer and a chosen service
+	 * @param username
+	 * @param serviceName
+	 * @return reminderDTO
+	 */
 	@GetMapping(value = { "/get_reminder","/get_reminder/" })
 	public ReminderDTO getReminder(@RequestParam String username, @RequestParam String serviceName) {
 		Customer customer = customerRepository.findCustomerByUsername(username);
@@ -54,6 +67,16 @@ public class ReminderController {
 		return convertToDTO(reminderService.getReminder(customer,chosenService ));//.stream().map(service -> convertToDTO(service)).collect(Collectors.toList());
 	}
 
+	/**
+	 * @author Robert Aprahamian
+	 * Creates a reminder
+	 * @param username
+	 * @param serviceName
+	 * @param datestring
+	 * @param description
+	 * @param timestring
+	 * @return reminderDTO
+	 */
 	@PostMapping(value = { "/create_reminder/","/create_reminder" })
 	public ReminderDTO createReminder
 	(@RequestParam String username,@RequestParam String serviceName,@RequestParam String datestring,@RequestParam String description, @RequestParam String timestring ) {
@@ -65,6 +88,17 @@ public class ReminderController {
 		return convertToDTO(reminder);
 	}
 
+	/**
+	 * @author Robert Aprahamian
+	 * Updates a reminder
+	 * @param username
+	 * @param oldServiceName
+	 * @param newServiceName
+	 * @param datestring
+	 * @param description
+	 * @param timestring
+	 * @return reminderDTO
+	 */
 	@PostMapping(value = { "/update_reminder","/update_reminder/" })
 	public ReminderDTO updateReminder
 	(@RequestParam String username,@RequestParam String oldServiceName, @RequestParam String newServiceName ,@RequestParam String datestring,@RequestParam String description, @RequestParam String timestring ) {
@@ -76,6 +110,13 @@ public class ReminderController {
 		return convertToDTO(reminder);
 	}
 
+	/**
+	 * @author Robert Aprahamian
+	 * Deletes a reminder
+	 * @param username
+	 * @param serviceName
+	 * @return true if reminder is successfully deleted
+	 */
 	@PostMapping(value = { "/delete_reminder","/delete_reminder/" })
 	public boolean deleteReminder
 	(@RequestParam String username,@RequestParam String serviceName) {

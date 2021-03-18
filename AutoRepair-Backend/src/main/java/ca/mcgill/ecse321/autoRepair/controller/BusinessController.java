@@ -34,6 +34,15 @@ public class BusinessController {
 	@Autowired
 	TimeSlotRepository timeSlotRepository;
 	
+	/**
+	 * @author Fadi Tawfik Beshay
+	 * Registers a business given its business information
+	 * @param name
+	 * @param email
+	 * @param address
+	 * @param phoneNumber
+	 * @return businessDTO
+	 */
 	@PostMapping(value = {"/register_business"})
 	public BusinessDTO registerBusiness(@RequestParam String name, @RequestParam String email, @RequestParam String address,
 			@RequestParam String phoneNumber) {
@@ -44,6 +53,16 @@ public class BusinessController {
 
 	}
 	
+	/**
+	 * @author Fadi Tawfik Beshay
+	 * Edits the business information of a given business
+	 * @param name
+	 * @param name1
+	 * @param email
+	 * @param address
+	 * @param phoneNumber
+	 * @return businessDTO
+	 */
 	@PostMapping(value = {"/edit_business"})
 	public BusinessDTO editBusiness(@RequestParam String name, @RequestParam String name1, @RequestParam String email, @RequestParam String address,
 			@RequestParam String phoneNumber) {
@@ -54,6 +73,15 @@ public class BusinessController {
 
 	}
 	
+	/**
+	 * @author Fadi Tawfik Beshay
+	 * Adds the business hours of a business
+	 * @param businessName
+	 * @param dayOfWeek
+	 * @param startTime
+	 * @param endTime
+	 * @return operatingHourDTO
+	 */
 	@PostMapping(value = {"/add_business_hours"})
 	public OperatingHourDTO addBusinessHours(@RequestParam String businessName, @RequestParam String dayOfWeek, @RequestParam String startTime, @RequestParam String endTime) {
 		
@@ -61,6 +89,15 @@ public class BusinessController {
 
 	}
 	
+	/**
+	 * @author Fadi Tawfik Beshay
+	 * Edits the business hours of a business
+	 * @param dayOfWeek
+	 * @param dayOfWeek1
+	 * @param startTime1
+	 * @param endTime1
+	 * @return operatingHourDTO
+	 */
 	@PostMapping(value = {"/edit_business_hours"})
 	public OperatingHourDTO editBusinessHours(@RequestParam String dayOfWeek, @RequestParam String dayOfWeek1, @RequestParam String startTime1, @RequestParam String endTime1) {
 		
@@ -70,6 +107,13 @@ public class BusinessController {
 
 	}
 	
+	/**
+	 * @author Fadi Tawfik Beshay
+	 * Deletes the business hours of a given business
+	 * @param businessName
+	 * @param dayOfWeek
+	 * @return true when successfully deleted
+	 */
 	@PostMapping(value = {"/delete_business_hours"})
 	public boolean deleteBusinessHours(@RequestParam String businessName, @RequestParam String dayOfWeek) {
 		
@@ -77,6 +121,12 @@ public class BusinessController {
 
 	}
 	
+	/**
+	 * @author Fadi Tawfik Beshay
+	 * Returns the business information of a business given a business name
+	 * @param businessName
+	 * @return businessDTO
+	 */
 	@GetMapping(value = {"/view_business_info", "/view_business_info/"})
 	public BusinessDTO viewBusinessInfo(@RequestParam String businessName){
 
@@ -84,6 +134,11 @@ public class BusinessController {
 	
 	}
 	
+	/**
+	 * @author Fadi Tawfik Beshay
+	 * Gets all the operating hours a business
+	 * @return list containing all the operating hours of a business
+	 */
 	@GetMapping(value = {"/view_operating_hours", "/view_operating_hours/"})
 	public List<OperatingHourDTO> viewOperatingHours(){
 
@@ -92,6 +147,12 @@ public class BusinessController {
 	
 	}
 	
+	/**
+	 * @author Fadi Tawfik Beshay
+	 * Returns an operating hour given any day of the week
+	 * @param dayOfWeek
+	 * @return operatingHourDTO
+	 */
 	@GetMapping(value = {"/view_operating_hour_by_day", "/view_operating_hour_by_day/"})
 	public OperatingHourDTO viewOperatingHourByDay(@RequestParam String dayOfWeek){
 

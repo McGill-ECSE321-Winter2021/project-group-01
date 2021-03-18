@@ -25,26 +25,47 @@ public class AssistantController {
 	@Autowired
 	private AssistantService assisService;
 	
-
+	/**
+	 * @author Marc Saber
+	 * returns a list of all the assistants 
+	 * @return list of all assistants
+	 */
 	@GetMapping(value = { "/view_assistants"})
 	public List<AssistantDTO> getAllAssitants() {
 return assisService.getAllAssistants().stream().map(assistant -> convertToDTO(assistant)).collect(Collectors.toList());
 	}
 	
-	
+	/**
+	 * @author Marc Saber
+	 * Gets an assistant DTO given a name
+	 * @param username
+	 * @return assistantDTO
+	 */
 	@GetMapping(value = {"/view_assistant/{username}"})
 	public AssistantDTO viewAssistant(@PathVariable("username") String username) {
 		return convertToDTO(assisService.getAssistant(username));
 	}
 	
+	/**
+	 * @author Marc Saber
+	 * Creates an Assistant
+	 * @param username
+	 * @param password
+	 * @return assistantDTO
+	 */
 	@PostMapping(value = {"/create_assistant"})
 	public AssistantDTO createAssitant(@RequestParam("username") String username,@RequestParam("password") String password) {
 		Assistant assistant = assisService.createAssistant(username,password);
 		return convertToDTO(assistant);
 	}
 	
-	
-	
+	/**
+	 * @author Marc Saber
+	 * Updates an assistant's password
+	 * @param oldUsername
+	 * @param newPassword
+	 * @return assistantDTO
+	 */
 	@PostMapping(value = { "/update_assistant/{oldUsername}" })
 	public AssistantDTO updateAssistant(@PathVariable("oldUsername") String oldUsername,
 			@RequestParam("newPassword") String newPassword) {
@@ -52,6 +73,12 @@ return assisService.getAllAssistants().stream().map(assistant -> convertToDTO(as
 		return convertToDTO(assistant);
 	}
 	
+	/**
+	 * @author Marc Saber
+	 * Deletes an assistant
+	 * @param username
+	 * @return true when assistant is successfully deleted
+	 */
 	@PostMapping(value = { "/delete_assistant/{username}" })
 	public boolean deleteAssistant(@PathVariable("username") String username){
         boolean assistant = assisService.deleteAssistant(username);

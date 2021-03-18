@@ -36,7 +36,16 @@ public class CarController {
 	private CarService carService;
 
 
-
+	/**
+	 * @author Eric Chehata
+	 * Given a username of a customer, method adds a car to the list of cars
+	 * belonging to the customer
+	 * @param username
+	 * @param model
+	 * @param plateNumber
+	 * @param carTransmission
+	 * @return customerDTO
+	 */
 	@PostMapping(value = {"/add_car/{username}"})
 	public CustomerDTO addCar (@PathVariable("username") String username, @RequestParam String model, 
 			@RequestParam String plateNumber, @RequestParam String carTransmission) {
@@ -50,12 +59,25 @@ public class CarController {
 		return convertToDTO(customerService.getCustomer(username));
 	}
 
+	/**
+	 * @author Eric Chehata
+	 * Removes a car from a customer's list of cars
+	 * @param username
+	 * @param plateNumber
+	 * @return customerDTO
+	 */
 	@PostMapping(value = {"/remove_car/{username}"})
 	public CustomerDTO removeCar(@PathVariable("username") String username, @RequestParam String plateNumber) {
 		carService.removeCar(username, plateNumber);
 		return convertToDTO(customerService.getCustomer(username));
 	}
 
+	/**
+	 * @author Eric Chehata
+	 * Gets the list of cars belonging to a specific customer
+	 * @param username
+	 * @return list of cars belonging to a specific customer
+	 */
 	@GetMapping(value = {"/cars/{username}"})
 	public List<CarDTO> getCustomerCars(@PathVariable("username") String username){
 		Customer customer = customerService.getCustomer(username);
@@ -66,12 +88,22 @@ public class CarController {
 		return cars;
 	}
 
+	/**
+	 * @author Eric Chehata
+	 * Gets a car given the plate number
+	 * @param plateNumber
+	 * @return carDTO
+	 */
 	@GetMapping(value = {"/car","/car/"})
 	public CarDTO getCar(@RequestParam String plateNumber) {
 		return convertToDTO(carService.getCar(plateNumber));
 	}
 
-
+	/**
+	 * @author Eric Chehata
+	 * Gets a list of all the cars
+	 * @return list of all the cars
+	 */
 	@GetMapping(value = {"/cars" , "/cars/"})
 	public List<CarDTO> getAllCars(){
 		List<CarDTO> cars = new ArrayList<CarDTO>();

@@ -29,6 +29,16 @@ public class ReminderService {
 	@Autowired
 	ChosenServiceRepository chosenServiceRepository;
 	
+	/**
+	 * @author Robert Aprahamian
+	 * Creates a reminder
+	 * @param serviceName
+	 * @param customerName
+	 * @param date
+	 * @param description
+	 * @param time
+	 * @return reminder
+	 */
 	@Transactional
 	public Reminder createReminder(String serviceName, String customerName, Date date,
 			String description, Time time) {
@@ -93,6 +103,17 @@ public class ReminderService {
 	
 	}
 	
+	/**
+	 * @author Robert Aprahamian
+	 * Edits a reminder
+	 * @param oldServiceName
+	 * @param newServiceName
+	 * @param customerName
+	 * @param newDate
+	 * @param description
+	 * @param newTime
+	 * @return reminder
+	 */
 	@Transactional
 	public Reminder editReminder(String oldServiceName, String newServiceName, String customerName, Date newDate,
 			String description, Time newTime) {
@@ -177,6 +198,13 @@ public class ReminderService {
 	}
 	
 
+	/**
+	 * @author Robert Aprahamian
+	 * Deletes a reminder
+	 * @param serviceName
+	 * @param customerName
+	 * @return true when reminder is successfully deleted
+	 */
 	@Transactional
 	public boolean deleteReminder(String serviceName, String customerName) {
 
@@ -209,16 +237,34 @@ public class ReminderService {
 		else throw new IllegalArgumentException("Reminder does not exist");
 	}
 
+	/**
+	 * @author Robert Aprahamian
+	 * Gets a reminder given a customer and a chosen service
+	 * @param customer
+	 * @param service
+	 * @return reminder
+	 */
 	@Transactional
 	public Reminder getReminder(Customer customer, ChosenService service) {
 		return reminderRepository.findByCustomerAndChosenService(customer, service);
 	}
 
+	/**
+	 * @author Robert Aprahamian
+	 * Returns a list of all the reminders
+	 * @return list of all reminders
+	 */
 	@Transactional
 	public List<Reminder> getAllReminders(){
 		return toList(reminderRepository.findAll());
 	}
 	
+	/**
+	 * @author Robert Aprahamian
+	 * Returns a list of all the reminders associated to a given customer
+	 * @param customer
+	 * @return list of reminders associated to a given customer
+	 */
 	@Transactional
 	public List<Reminder> getCustomerReminders(Customer customer){
 		return reminderRepository.findByCustomer(customer);

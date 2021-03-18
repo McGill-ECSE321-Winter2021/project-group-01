@@ -16,6 +16,14 @@ public class ChosenServiceService {
 	@Autowired
 	ChosenServiceRepository chosenServiceRepository;
 	
+	/**
+	 * @author Robert Aprahamian
+	 * Creates a chosen service
+	 * @param name
+	 * @param duration
+	 * @param price
+	 * @return cService
+	 */
 	@Transactional
 	public ChosenService createChosenService(String name, int duration, Double price) { //Add service
 		
@@ -41,6 +49,14 @@ public class ChosenServiceService {
 		return cService;
 	}
 	
+	/**
+	 * @author Robert Aprahamian
+	 * Edits a chosen service
+	 * @param name
+	 * @param duration
+	 * @param price
+	 * @return cService
+	 */
 	@Transactional
 	public ChosenService editChosenService(String name, int duration,Double price) { 
 		
@@ -62,6 +78,12 @@ public class ChosenServiceService {
 		return cService;
 	}
 	
+	/**
+	 * @author Robert Aprahamian
+	 * Deletes a chosen service given a service name
+	 * @param name
+	 * @return true
+	 */
 	@Transactional
 	public boolean deleteChosenService(String name) {
 		
@@ -76,12 +98,22 @@ public class ChosenServiceService {
 		else throw new IllegalArgumentException("Chosen Service invalid");
 	}
 	
-	
+	/**
+	 * @author Robert Aprahamian
+	 * Returns a chosen service given a service name
+	 * @param name
+	 * @return chosenService
+	 */
 	@Transactional
 	public ChosenService getChosenService(String name) {
 		return chosenServiceRepository.findChosenServiceByName(name);
 	}
 	
+	/**
+	 * @author Robert Aprahamian
+	 * Returns a list of all the chosen services
+	 * @return list of all chosen services
+	 */
 	@Transactional
 	public List<ChosenService> getAllChosenService(){
 		return toList(chosenServiceRepository.findAll());

@@ -18,7 +18,14 @@ public class OwnerService {
 	@Autowired
 	OwnerRepository ownerRepository;
 	
-	
+	/**
+	 * @author Marc Saber
+	 * Creates an owner
+	 * @param username
+	 * @param password
+	 * @param authentificationCode
+	 * @return owner
+	 */
 	@Transactional
 	public Owner createOwner(String username,String password,String authentificationCode) {
 		
@@ -37,7 +44,14 @@ public class OwnerService {
 	 	ownerRepository.save(owner);
 		return owner;
 	}
-		
+	
+	/**
+	 * @author Marc Saber
+	 * Updates an owner's password
+	 * @param oldUsername
+	 * @param newPassword
+	 * @return owner
+	 */
 	@Transactional
 	public Owner updateOwner(String oldUsername,String newPassword) {
 		Owner oldOwner = ownerRepository.findOwnerByUsername(oldUsername);
@@ -54,12 +68,23 @@ public class OwnerService {
 		return oldOwner;	
 	}
 	
+	/**
+	 * @author Marc Saber
+	 * Gets an owner given a valid username
+	 * @param name
+	 * @return owner
+	 */
 	@Transactional
 	public Owner getOwner(String name) {
 		Owner owner = ownerRepository.findOwnerByUsername(name);
 		return owner;
 	}
 	
+	/**
+	 * @author Marc Saber
+	 * Returns a list of all the owners
+	 * @return list of all owners
+	 */
 	@Transactional
 	public List<Owner> getAllOwners(){             
 		return toList(ownerRepository.findAll());

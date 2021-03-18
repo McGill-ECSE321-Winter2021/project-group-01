@@ -43,6 +43,18 @@ public class AppointmentController {
     @Autowired
     TimeSlotRepository timeSlotRepository;
 
+    /**
+     * @author Tamara Zard Aboujaoudeh
+     * 
+     * Makes an appointment
+     * 
+     * @param username
+     * @param dateString
+     * @param startTimeString
+     * @param serviceName
+     * @return
+     * @throws IllegalArgumentException
+     */
     @PostMapping(value = { "/make_appointment/{username}" })
     public AppointmentDTO makeAppointment(@PathVariable("username") String username, @RequestParam String dateString,
                                           @RequestParam String startTimeString,
@@ -55,6 +67,20 @@ public class AppointmentController {
         return convertToDTO(appointment);
     }
 
+    /**
+     * @author Tamara Zard Aboujaoudeh
+     * 
+     * Updates an appointment
+     * 
+     * @param username
+     * @param oldDateString
+     * @param oldTimeString
+     * @param newDateString
+     * @param oldServiceString
+     * @param newStartTimeString
+     * @param newServiceString
+     * @return
+     */
     @PostMapping(value = {"/update_appointment/{username}"})
     public AppointmentDTO updateAppointment(@PathVariable("username") String username, @RequestParam String oldDateString, @RequestParam String oldTimeString,
                                             @RequestParam String newDateString, @RequestParam String oldServiceString, @RequestParam
@@ -112,6 +138,17 @@ public class AppointmentController {
         return convertToDTO(appointment);
     }
 
+    /**
+     * @author Tamara Zard Aboujaoudeh
+     * 
+     * Deletes an appointment
+     * 
+     * @param username
+     * @param dateString
+     * @param startTimeString
+     * @param serviceName
+     * @return true when successfully deleted
+     */
     @PostMapping(value = {"/cancel_appointment/{username}/{date}/{time}/{service}"})
     public boolean cancelAppointment(@PathVariable("username") String username, @PathVariable("date") String dateString, @PathVariable("time") String startTimeString, @PathVariable("service") String serviceName){
         SystemTime.setSysTime(Time.valueOf(LocalTime.now()));
@@ -143,6 +180,11 @@ public class AppointmentController {
         return Time.valueOf(localEndTime);
     }
 
+    /**
+     * @author Tamara Zard Aboujaoudeh
+     * Gets a list of all the appointments
+     * @return list of all appointments 
+     */
     @GetMapping(value = { "/appointments" })
     public List<AppointmentDTO> getAllAppointments() {
         List<AppointmentDTO> appDtos = new ArrayList<>();
@@ -152,11 +194,23 @@ public class AppointmentController {
         return appDtos;
     }
 
+    /**
+     * @author Tamara Zard Aboujaoudeh
+     * Gets a list of all the appointments for a specific customer
+     * @param username
+     * @return list of all the appointments for a specific customer
+     */
     @GetMapping(value = { "/appointments/{name}" })
     public List<AppointmentDTO> getAppointmentsOfCustomer(@PathVariable("name") String username) {
         return createAppointmentDtosForCustomer(username);
     }
 
+    /**
+     * @author Tamara Zard Aboujaoudeh
+     * Gets all the available time slots
+     * @param stringDate
+     * @return list containing all the available time slots
+     */
     @GetMapping(value = {"/availableTimeSlots/{date}"})
     public List<TimeSlotDTO> getAvailableTimeSlotsForDay(@PathVariable("date") String stringDate){
         Date date = Date.valueOf(stringDate);
@@ -168,6 +222,12 @@ public class AppointmentController {
         return availableTimeSlots;
     }
 
+    /**
+     * @author Tamara Zard Aboujaoudeh
+     * Gets a list of all the unavailable time slots
+     * @param stringDate
+     * @return list of all the unavailable time slots
+     */
     @GetMapping(value = {"/unavailableTimeSlots/{date}"})
     public List<TimeSlotDTO> getUnavailableTimeSlotsForDay(@PathVariable("date") String stringDate){
         Date date = Date.valueOf(stringDate);

@@ -196,7 +196,7 @@ public class ReminderService {
 	
 
 	@Transactional
-	public Reminder deleteReminder(String serviceName, String customerName) {
+	public boolean deleteReminder(String serviceName, String customerName) {
 
 		String error = "";
 
@@ -224,7 +224,7 @@ public class ReminderService {
 		Reminder r = getReminder(customer, chosenService);
 		if(r!=null) {
 			reminderRepository.delete(r);
-			return null;
+			return true;
 		}
 		else throw new IllegalArgumentException("Reminder does not exist");
 	}
@@ -238,7 +238,7 @@ public class ReminderService {
 	public List<Reminder> getAllReminders(){
 		return toList(reminderRepository.findAll());
 	}
-
+	
 	@Transactional
 	public List<Reminder> getCustomerReminders(Customer customer){
 		return reminderRepository.findByCustomer(customer);

@@ -1,7 +1,6 @@
 package ca.mcgill.ecse321.autoRepair.controller;
 
-import ca.mcgill.ecse321.autoRepair.dto.ChosenServiceDTO;
-import ca.mcgill.ecse321.autoRepair.model.ChosenService;
+
 
 public class ChosenServiceController {
 	

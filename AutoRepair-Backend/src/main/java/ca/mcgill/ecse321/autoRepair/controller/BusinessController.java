@@ -1,7 +1,6 @@
 
 package ca.mcgill.ecse321.autoRepair.controller;
 
-import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,14 +9,12 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.autoRepair.dao.TimeSlotRepository;
 import ca.mcgill.ecse321.autoRepair.dto.BusinessDTO;
-import ca.mcgill.ecse321.autoRepair.dto.CustomerDTO;
 import ca.mcgill.ecse321.autoRepair.dto.OperatingHourDTO;
 import ca.mcgill.ecse321.autoRepair.dto.TimeSlotDTO;
 import ca.mcgill.ecse321.autoRepair.model.Business;

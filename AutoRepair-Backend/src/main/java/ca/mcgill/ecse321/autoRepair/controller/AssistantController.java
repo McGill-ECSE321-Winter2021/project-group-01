@@ -12,13 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.autoRepair.dao.AssistantRepository;
-import ca.mcgill.ecse321.autoRepair.dao.OwnerRepository;
 import ca.mcgill.ecse321.autoRepair.dto.AssistantDTO;
-import ca.mcgill.ecse321.autoRepair.dto.OwnerDTO;
 import ca.mcgill.ecse321.autoRepair.model.Assistant;
-import ca.mcgill.ecse321.autoRepair.model.Owner;
 import ca.mcgill.ecse321.autoRepair.service.AssistantService;
-import ca.mcgill.ecse321.autoRepair.service.OwnerService;
 
 
 @CrossOrigin(origins = "*")

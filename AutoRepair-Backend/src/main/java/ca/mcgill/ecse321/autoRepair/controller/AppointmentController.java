@@ -10,7 +10,6 @@ import ca.mcgill.ecse321.autoRepair.service.AppointmentService;
 import ca.mcgill.ecse321.autoRepair.service.ChosenServiceService;
 import ca.mcgill.ecse321.autoRepair.service.TimeSlotService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
@@ -69,10 +68,6 @@ public class AppointmentController {
         Time endOldTime = findEndTimeOfApp(oldService, oldTime.toLocalTime());
 
         TimeSlot timeSlot = timeSlotRepository.findTimeSlotByStartDateAndStartTimeAndEndTime(oldDate,oldTime,endOldTime);
-//        timeSlot.setStartTime(oldTime);
-//        timeSlot.setStartDate(oldDate);
-//        timeSlot.setEndDate(oldDate);
-//        timeSlot.setEndTime(endOldTime);
 
         Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
         List<Appointment> appointmentLists = appointmentRepository.findAppointmentsByCustomer(customer);
@@ -82,7 +77,8 @@ public class AppointmentController {
         }
         if(exists==false) throw new IllegalArgumentException("The appointment does not exist for the customer");
 
-        Appointment updatedAppointment = new Appointment();
+        @SuppressWarnings("unused")
+		Appointment updatedAppointment = new Appointment();
         Date newDate = null;
         Time newStartTime = null;
 
@@ -124,16 +120,11 @@ public class AppointmentController {
         Time startTime = Time.valueOf(startTimeString);
 
         Customer customer = customerRepository.findCustomerByUsername(username);
-        //Date oldDate = Date.valueOf(dateString);
         Time oldTime = Time.valueOf(startTimeString);
         ChosenService oldService = chosenServiceRepository.findChosenServiceByName(serviceName);
         Time endOldTime = findEndTimeOfApp(oldService, oldTime.toLocalTime());
 
         TimeSlot timeSlot = timeSlotRepository.findTimeSlotByStartDateAndStartTimeAndEndTime(date,startTime,endOldTime);
-//        timeSlot.setStartTime(oldTime);
-//        timeSlot.setStartDate(oldDate);
-//        timeSlot.setEndDate(oldDate);
-//        timeSlot.setEndTime(endOldTime);
 
         Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
         List<Appointment> appointmentLists = appointmentRepository.findAppointmentsByCustomer(customer);

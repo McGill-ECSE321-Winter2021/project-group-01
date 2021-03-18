@@ -158,7 +158,7 @@ public class ReviewController {
 
 	private ChosenServiceDTO convertToDTO(ChosenService service) {
 		if(service == null) throw new IllegalArgumentException("Service not found");
-		return new ChosenServiceDTO(service.getName(), service.getDuration());
+		return new ChosenServiceDTO(service.getName(), service.getDuration(), service.getPayment());
 	}
 
 	private AppointmentDTO convertToDTO(Appointment appointment){

@@ -19,13 +19,11 @@ public class ChosenServiceService {
 	@Transactional
 	public ChosenService createChosenService(String name, int duration, Double price) { //Add service
 		
-		
-		
 		if(name == null || name.equals("") || containsCharacter(name)==false) {
 			throw new IllegalArgumentException("Invalid name");
 		}
 		
-		if(duration == 0) { // Maybe change to wrapper class
+		if(duration == 0) {
 			throw new IllegalArgumentException("Invalid duration");
 		}
 		
@@ -49,7 +47,7 @@ public class ChosenServiceService {
 		if(name == null || name.equals("") || containsCharacter(name)==false) {
 			throw new IllegalArgumentException("Invalid name");
 		}
-		if(duration == 0) { // Maybe change to wrapper class
+		if(duration == 0) { 
 			throw new IllegalArgumentException("Invalid duration");
 		}
 		if(price == null) {
@@ -62,13 +60,10 @@ public class ChosenServiceService {
 		cService.setPayment(price);
 		chosenServiceRepository.save(cService);
 		return cService;
-	
-		
-		
 	}
 	
 	@Transactional
-	public boolean deleteChosenService(String name) { // boolean return type?
+	public boolean deleteChosenService(String name) {
 		
 		if(name == null || name.equals("") || containsCharacter(name)==false) {
 			throw new IllegalArgumentException("Invalid name");
@@ -76,7 +71,6 @@ public class ChosenServiceService {
 		ChosenService cs = getChosenService(name);
 		if(cs!=null) {
 		chosenServiceRepository.delete(cs);
-		//chosenServiceRepository.save(cs); //?
 		return true;
 		}
 		else throw new IllegalArgumentException("Chosen Service invalid");

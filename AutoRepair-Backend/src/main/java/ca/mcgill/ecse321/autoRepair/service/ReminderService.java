@@ -32,21 +32,17 @@ public class ReminderService {
 	@Transactional
 	public Reminder createReminder(String serviceName, String customerName, Date date,
 			String description, Time time) {
-		//String error = "";
 		
 		if(serviceName == null || serviceName.equals("") || containsCharacter(serviceName)==false) {
 			throw new IllegalArgumentException("Service Invalid");
-			//error = error.concat("Service not found. ");
 		}
 		
 		if(customerName == null || customerName.equals("") || containsCharacter(customerName)==false) {
-			//error = error.concat("Customer not found. ");
 			throw new IllegalArgumentException("Customer Invalid");
 		}
 		
 		if (description==null|| description.equals("") || containsCharacter(description)==false) {
 			throw new IllegalArgumentException("Description Invalid");
-			//error = error.concat("Invalid date. ");
 		}
 		
 		if(description.length()>50) {
@@ -55,19 +51,16 @@ public class ReminderService {
 		
 		if (time==null) {
 			throw new IllegalArgumentException("Time Invalid");
-		//error = error.concat("");
 		}
 		
 		if (date==null) {
 			throw new IllegalArgumentException("Date Invalid");
-			//error = error.concat("Invalid date. ");
 		}
 		else {
 		LocalDate localDate = date.toLocalDate();
 		Date now = SystemTime.getSysDate();
 		LocalDate now2 = now.toLocalDate();
 		if(localDate.isBefore(now2)) {
-			//error = error.concat("Date has passed. ");
 			throw new IllegalArgumentException("Date has passed");
 		}
 		
@@ -75,7 +68,6 @@ public class ReminderService {
 		if(localDate.isEqual(now2)) {
 			LocalTime localTime = time.toLocalTime();
 			if(localTime.isBefore(SystemTime.getSysTime().toLocalTime())) {
-				//error = error.concat("Time has passed.");
 				throw new IllegalArgumentException("Time has passed");
 			}
 		}
@@ -103,28 +95,22 @@ public class ReminderService {
 	
 	@Transactional
 	public Reminder editReminder(String oldServiceName, String newServiceName, String customerName, Date newDate,
-			String description, Time newTime) { //String newCustomerName,
-		//String error = "";
+			String description, Time newTime) {
 		
 				if(oldServiceName == null || oldServiceName.equals("") || containsCharacter(oldServiceName)==false) {
 					throw new IllegalArgumentException("Old Service Invalid");
-					//error = error.concat("Service not found. ");
 				}
 				
 				if(newServiceName == null || newServiceName.equals("") || containsCharacter(newServiceName)==false) {
 					throw new IllegalArgumentException("New Service Invalid");
-					//error = error.concat("Service not found. ");
 				}
 				
 				if(customerName == null || customerName.equals("") || containsCharacter(customerName)==false) {
-					//error = error.concat("Customer not found. ");
 					throw new IllegalArgumentException("Customer Invalid");
 				}
 				
-				//Maybe do a constraint for description
 				if (description==null|| description.equals("") || containsCharacter(description)==false) {
 					throw new IllegalArgumentException("Description Invalid");
-					//error = error.concat("Invalid date. ");
 				}
 				if(description.length()>50) {
 					throw new IllegalArgumentException("Description Invalid, must be less than 50 characters");
@@ -132,19 +118,16 @@ public class ReminderService {
 				
 				if (newTime==null) {
 					throw new IllegalArgumentException("Time Invalid");
-				//error = error.concat("");
 				}
 				
 				if (newDate==null) {
 					throw new IllegalArgumentException("Date Invalid");
-					//error = error.concat("Invalid date. ");
 				}
 				else {
 				LocalDate localDate = newDate.toLocalDate();
 				Date now = SystemTime.getSysDate();
 				LocalDate now2 = now.toLocalDate();
 				if(localDate.isBefore(now2)) {
-					//error = error.concat("Date has passed. ");
 					throw new IllegalArgumentException("Date has passed");
 				}
 				
@@ -152,14 +135,10 @@ public class ReminderService {
 				if(localDate.isEqual(now2)) {
 					LocalTime localTime = newTime.toLocalTime();
 					if(localTime.isBefore(SystemTime.getSysTime().toLocalTime())) {
-						//error = error.concat("Time has passed.");
 						throw new IllegalArgumentException("Time has passed");
 					}
 				}
 				}
-				
-				
-				
 				Customer oldCustomer = customerRepository.findCustomerByUsername(customerName);
 		        if (oldCustomer == null)
 		            throw new IllegalArgumentException("The following user does not exist: " + customerName);
@@ -174,10 +153,7 @@ public class ReminderService {
 		        Reminder r2 = reminderRepository.findByCustomerAndChosenService(oldCustomer, newChosenService);
 		        if(r2!=null) 
 		        	throw new IllegalArgumentException("Such a reminder is already exists.");
-		   
-//		        Reminder r = reminderRepository.findByCustomerAndChosenService(customer, chosenService);
-//				if(r!=null) throw new IllegalArgumentException("This reminder is already created");
-		        
+       
 					Reminder reminder = getReminder(oldCustomer,oldChosenService);
 					
 					Date oldDate = reminder.getDate();
@@ -207,13 +183,11 @@ public class ReminderService {
 		String error = "";
 
 		if(serviceName == null || serviceName.equals("") || containsCharacter(serviceName)==false) {
-			//throw new IllegalArgumentException("Service Invalid");
 			error = error.concat("Service Invalid");
 		}
 
 		if(customerName == null || customerName.equals("") || containsCharacter(customerName)==false) {
 			error = error.concat("Customer Invalid");
-			//throw new IllegalArgumentException("Customer Invalid");
 		}
 		
 		if (!(error.equals(""))) {

@@ -67,8 +67,9 @@ public class AppointmentService {
         if(isAvailable(timeSlot)){
             app.setTimeSlot(timeSlot);
         }else throw new IllegalArgumentException("Chosen time slot is unavailable.");
-        appointmentRepository.save(app);
         timeSlotRepository.save(timeSlot);
+        appointmentRepository.save(app);
+
         return app;
     }
 
@@ -110,31 +111,41 @@ public class AppointmentService {
         }
         Time oldEndTime = findEndTimeOfApp(oldService,oldStartTime.toLocalTime());
         Time newEndTime= findEndTimeOfApp(newService, newStartTime.toLocalTime());
-        TimeSlot timeSlot = calcTimeSlot(oldStartDate,oldStartTime,oldStartDate,oldEndTime);
+        TimeSlot timeSlot = timeSlotRepository.findTimeSlotByStartDateAndStartTimeAndEndTime(oldStartDate,oldStartTime,oldEndTime);
+        //TimeSlot timeSlot = calcTimeSlot(oldStartDate,oldStartTime,oldStartDate,oldEndTime);
         TimeSlot newTimeSlot = calcTimeSlot(newStartDate,newStartTime,newStartDate, newEndTime);
+
 
         Appointment appointment= appointmentRepository.findAppointmentByTimeSlot(timeSlot);
         if(appointment==null) throw new IllegalArgumentException("The appointment does not exist");
         Appointment updatedApp = appointment;
+
+
         appointmentRepository.delete(appointment);
+        timeSlotRepository.delete(timeSlot);
 
         if(!(oldServiceName.equals(newServiceName))){
-            timeSlotRepository.delete(timeSlot);
-            if(isAvailable(newTimeSlot)){
+            if(newTimeSlot.equals(timeSlot)){
+                updatedApp.setChosenService(newService);
+            }else if(isAvailable(newTimeSlot)){
                 updatedApp.setTimeSlot(newTimeSlot);
                 updatedApp.setChosenService(newService);
-                appointmentRepository.save(updatedApp);
-                timeSlotRepository.save(newTimeSlot);
+
             }else throw new IllegalArgumentException("The time slot is not available.");
         }else{
-            timeSlotRepository.delete(timeSlot);
+
             if(isAvailable(newTimeSlot)){
                 updatedApp.setTimeSlot(newTimeSlot);
-                appointmentRepository.save(updatedApp);
-                timeSlotRepository.save(newTimeSlot);
+
             }else throw new IllegalArgumentException("The time slot is not available.");
         }
-        return updatedApp;
+        appointment=updatedApp;
+        timeSlot=newTimeSlot;
+
+        timeSlotRepository.save(timeSlot);
+        appointmentRepository.save(appointment);
+
+        return appointment;
     }
 
     private Time findEndTimeOfApp(ChosenService service, LocalTime startTime){
@@ -155,11 +166,12 @@ public class AppointmentService {
         }
         ChosenService chosenService =chosenServiceRepository.findChosenServiceByName(serviceName);
         Time endTime = findEndTimeOfApp(chosenService,startTime.toLocalTime());
-        TimeSlot timeSlot = calcTimeSlot(startDate,startTime,startDate,endTime);
+        TimeSlot timeSlot = timeSlotRepository.findTimeSlotByStartDateAndStartTimeAndEndTime(startDate,startTime,endTime);
         Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
         if(appointment==null) throw new IllegalArgumentException("The appointment does not exist.");
-        appointmentRepository.delete(appointment);
         timeSlotRepository.delete(timeSlot);
+        appointmentRepository.delete(appointment);
+
     }
 
     @Transactional

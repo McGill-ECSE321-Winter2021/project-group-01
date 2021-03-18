@@ -4,18 +4,14 @@ import ca.mcgill.ecse321.autoRepair.dao.ChosenServiceRepository;
 import ca.mcgill.ecse321.autoRepair.dao.CustomerRepository;
 import ca.mcgill.ecse321.autoRepair.dao.ReminderRepository;
 import ca.mcgill.ecse321.autoRepair.dto.ReminderDTO;
-import ca.mcgill.ecse321.autoRepair.dto.ReminderDTO;
 import ca.mcgill.ecse321.autoRepair.dto.CarDTO;
 import ca.mcgill.ecse321.autoRepair.dto.ChosenServiceDTO;
 import ca.mcgill.ecse321.autoRepair.dto.CustomerDTO;
 import ca.mcgill.ecse321.autoRepair.dto.ProfileDTO;
-import ca.mcgill.ecse321.autoRepair.dto.ReminderDTO;
 import ca.mcgill.ecse321.autoRepair.model.*;
-import ca.mcgill.ecse321.autoRepair.service.ChosenServiceService;
 import ca.mcgill.ecse321.autoRepair.service.ReminderService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;

@@ -4,22 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.autoRepair.dto.CarDTO;
 import ca.mcgill.ecse321.autoRepair.dto.CustomerDTO;
+import ca.mcgill.ecse321.autoRepair.dto.ProfileDTO;
 import ca.mcgill.ecse321.autoRepair.model.Car;
 import ca.mcgill.ecse321.autoRepair.model.Car.CarTransmission;
 import ca.mcgill.ecse321.autoRepair.model.Customer;
+import ca.mcgill.ecse321.autoRepair.model.Profile;
 import ca.mcgill.ecse321.autoRepair.service.CarService;
 import ca.mcgill.ecse321.autoRepair.service.CustomerService;
 
 
-
-
+@CrossOrigin(origins = "*")
+@RestController
 public class CarController {
 
 
@@ -34,25 +38,27 @@ public class CarController {
 
 
 	@PostMapping(value = {"/add_car/{username}"})
-	public boolean addCar (@PathVariable("username") CustomerDTO customerDTO, @RequestParam String model, 
+	public CustomerDTO addCar (@PathVariable("username") String username, @RequestParam String model, 
 			@RequestParam String plateNumber, @RequestParam String carTransmission) {
 
 		CarTransmission transmission = null;
-		if(carTransmission=="Automatic") transmission = CarTransmission.Automatic;
-		else if(carTransmission=="Manual") transmission = CarTransmission.Manual;
+		if(carTransmission.equals("Automatic")) transmission = CarTransmission.Automatic;
+		else if(carTransmission.equals("Manual")) transmission = CarTransmission.Manual;
 		else throw new IllegalArgumentException("Invalid car transmission");
 		Car car = carService.createCar(plateNumber, model, transmission);
-		return carService.addCar(customerDTO.getUsername(), car);
+		carService.addCar(username, car);
+		return convertToDTO(customerService.getCustomer(username));
 	}
 
-	@PostMapping(value = {"/remove_car/{username"})
-	public boolean removeCar(@PathVariable("username") CustomerDTO customerDTO, @RequestParam String plateNumber) {
-		return carService.removeCar(customerDTO.getUsername(), plateNumber);
+	@PostMapping(value = {"/remove_car/{username}"})
+	public CustomerDTO removeCar(@PathVariable("username") String username, @RequestParam String plateNumber) {
+		carService.removeCar(username, plateNumber);
+		return convertToDTO(customerService.getCustomer(username));
 	}
 
 	@GetMapping(value = {"/cars/{username}"})
-	public List<CarDTO> getCustomerCars(@PathVariable("username") CustomerDTO customerDTO){
-		Customer customer = customerService.getCustomer(customerDTO.getUsername());
+	public List<CarDTO> getCustomerCars(@PathVariable("username") String username){
+		Customer customer = customerService.getCustomer(username);
 		List<CarDTO> cars = new ArrayList<CarDTO>();
 		for(Car c : customer.getCars()) {
 			cars.add(convertToDTO(c));
@@ -76,9 +82,28 @@ public class CarController {
 	}
 
 
+	private CustomerDTO convertToDTO(Customer customer) {
+		if(customer==null) throw new IllegalArgumentException("Customer not found.");
+		List<CarDTO> cars = new ArrayList<CarDTO>();
+
+		for (Car car : customer.getCars()) {
+			cars.add(convertToDTO(car));
+		}
+
+		return new CustomerDTO(customer.getUsername(), customer.getPassword(), customer.getNoShow(), 
+				customer.getShow(), cars, convertToDTO(customer.getProfile()));
+
+	}
+
 	private CarDTO convertToDTO(Car car) {
 		if(car==null) throw new IllegalArgumentException("Car not found.");
 		return new CarDTO(car.getModel(), car.getTransmission(), car.getPlateNumber());
+	}
+
+	private ProfileDTO convertToDTO(Profile profile) {
+		if(profile == null) throw new IllegalArgumentException("Profile not found.");
+		return new ProfileDTO(profile.getFirstName(), profile.getLastName(), profile.getAddress(), 
+				profile.getZipCode(), profile.getPhoneNumber(), profile.getEmail());
 	}
 
 }

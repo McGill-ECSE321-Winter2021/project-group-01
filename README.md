@@ -42,7 +42,7 @@ To access the wiki>>[Sprint 2](https://github.com/McGill-ECSE321-Winter2021/proj
 ### Roles and Tasks
 | Name                    | Roles/Tasks                                                                                                   | 
 | ------------------------| --------------------------------------------------------------------------------------------------------------|
-| Robert Aprahamian       | Backend Implementation, _Service_ & _Reminder_ classes Unit Testing, Integration Testing, Documentation       |              
+| Robert Aprahamian       | Backend Implementation, _ChosenService_ & _Reminder_ classes Unit Testing, Integration Testing, Documentation       |              
 | Fadi Tawfik Beshay      | Backend Implementation, _OperatingHour_ & _Business_ classes Unit Testing, Integration Testing, Documentation |                
 | Eric Chehata            | Backend Implementation, _Cutomer, Profile_ & _Car_ classes Unit Testing, Integration Testing, Documentation   |             
 | Mohammad Saeid Nafar    | Backend Implementation, _Review_ class Unit Testing, Integration Testing, Documentation                       |         

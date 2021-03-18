@@ -1,7 +1,7 @@
 package ca.mcgill.ecse321.autoRepair.dto;
 
 public class ChosenServiceDTO {
-
+	
 	private String name;
 	private int duration;
 	private Double price;
@@ -19,7 +19,7 @@ public class ChosenServiceDTO {
 	public int getDuration() {
 		return duration;
 	}
-
+	
 	public Double getPrice() {
 		return price;
 	}

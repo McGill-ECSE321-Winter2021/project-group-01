@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
@@ -11,7 +12,7 @@ import ca.mcgill.ecse321.autoRepair.model.Owner;
 import ca.mcgill.ecse321.autoRepair.dao.OwnerRepository;
 
 
-
+@Service
 public class OwnerService {
 
 	@Autowired
@@ -36,14 +37,13 @@ public class OwnerService {
 	 	ownerRepository.save(owner);
 		return owner;
 	}
-	
-	
+		
 	@Transactional
-	public Owner updateOwner(String oldUsername,String newUsername,String newPassword) {
+	public Owner updateOwner(String oldUsername,String newPassword) {
 		Owner oldOwner = ownerRepository.findOwnerByUsername(oldUsername);
-		if(oldOwner.getUsername() == newUsername && newUsername!="") {
-			oldOwner.setUsername(newUsername);
-		}
+//	 	if(oldOwner.getUsername() != newUsername && newUsername!="") {
+//			oldOwner.setUsername(newUsername);
+//		}
 		if(oldOwner.getPassword() != newPassword && newPassword!="") {
 			if (passwordIsValid(newPassword)) {
 				oldOwner.setPassword(newPassword);		

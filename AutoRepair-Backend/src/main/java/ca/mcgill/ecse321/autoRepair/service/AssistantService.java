@@ -1,3 +1,4 @@
+  
 package ca.mcgill.ecse321.autoRepair.service;
 
 import java.util.ArrayList;
@@ -5,12 +6,13 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ca.mcgill.ecse321.autoRepair.model.Assistant;
 
 import ca.mcgill.ecse321.autoRepair.dao.AssistantRepository;
 
-
+@Service
 public class AssistantService {
 
 	@Autowired
@@ -19,7 +21,7 @@ public class AssistantService {
 	@Transactional
 	public Assistant createAssistant(String username,String password) {
 
-		if(username==null || username=="") throw new IllegalArgumentException("Username cannot be blank");
+	 	if(username==null || username=="") throw new IllegalArgumentException("Username cannot be blank");
 		if(password==null || password=="") throw new IllegalArgumentException("Password cannot be blank");
 
 		Assistant assistant = new Assistant();
@@ -35,11 +37,11 @@ public class AssistantService {
 	}
 
 	@Transactional
-	public Assistant updateAssistant(String oldUsername,String newUsername,String newPassword) {
+	public Assistant updateAssistant(String oldUsername,String newPassword) {
 		Assistant oldAssistant = assistantRepository.findAssistantByUsername(oldUsername);
-		if(oldAssistant.getUsername() != newUsername && usernameIsValidAssistant(newUsername)) {
-			oldAssistant.setUsername(newUsername);
-		}
+//		if(oldAssistant.getUsername() != newUsername && usernameIsValidAssistant(newUsername)) {
+//			oldAssistant.setUsername(newUsername);
+//		}
 		if(oldAssistant.getPassword() != newPassword && passwordIsValid(newPassword)) {
 			oldAssistant.setPassword(newPassword);
 		}
@@ -114,3 +116,4 @@ public class AssistantService {
 
 
 }
+

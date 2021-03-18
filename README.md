@@ -38,7 +38,7 @@ To access the wiki>>[Sprint 1](https://github.com/McGill-ECSE321-Winter2021/proj
 | Tamara Zard Aboujaoudeh | Requirements, Use Case Diagrams, Domain Model, Gradle/Spring/Heroku setup , Persistence Testing|               
 
 ## Sprint 2
-To access the wiki>>
+To access the wiki>>[Sprint 2](https://github.com/McGill-ECSE321-Winter2021/project-group-01/wiki#sprint-2)
 ### Roles and Tasks
 | Name                    | Roles/Tasks                                                                                                   | 
 | ------------------------| --------------------------------------------------------------------------------------------------------------|

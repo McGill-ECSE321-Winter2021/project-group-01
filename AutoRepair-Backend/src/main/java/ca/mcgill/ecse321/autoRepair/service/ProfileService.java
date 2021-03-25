@@ -23,7 +23,17 @@ public class ProfileService {
 	@Autowired
 	CustomerRepository customerRepository;
 
-
+	/**
+	 * @author Eric Chehata
+	 * Creates a profile
+	 * @param firstName
+	 * @param lastName
+	 * @param address
+	 * @param zipCode
+	 * @param phoneNumber
+	 * @param email
+	 * @return profile
+	 */
 	@Transactional
 	public Profile createProfile(String firstName, String lastName, String address, String zipCode, String phoneNumber, String email) {
 		if(firstName ==null || firstName =="") 
@@ -64,11 +74,29 @@ public class ProfileService {
 		return profile;
 	}
 
+	/**
+	 * @author Eric Chehata
+	 * Gets a profile given an email
+	 * @param email
+	 * @return profile
+	 */
 	@Transactional
 	public Profile getProfile(String email) {
 		return profileRepository.findByEmail(email);
 	}
 
+	/**
+	 * @author Eric Chehata
+	 * Updates a profile
+	 * @param username
+	 * @param firstName
+	 * @param lastName
+	 * @param address
+	 * @param zipCode
+	 * @param phoneNumber
+	 * @param email
+	 * @return profile
+	 */
 	@Transactional
 	public Customer updateProfile(String username, String firstName, String lastName, String address, String zipCode, String phoneNumber, String email) {
 		Customer customer = customerRepository.findCustomerByUsername(username);
@@ -127,8 +155,11 @@ public class ProfileService {
 	}
 
 
-
-
+	/**
+	 * @author Eric Chehata
+	 * Returns a list of all the profiles
+	 * @return list of all profiles
+	 */
 	@Transactional
 	public List<Profile> getAllProfiles(){
 		return toList(profileRepository.findAll());

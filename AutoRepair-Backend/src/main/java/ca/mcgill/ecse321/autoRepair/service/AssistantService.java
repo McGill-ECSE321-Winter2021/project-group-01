@@ -18,6 +18,13 @@ public class AssistantService {
 	@Autowired
 	AssistantRepository assistantRepository;
 
+	/**
+	 * @author Marc Saber
+	 * Creates an Assistant
+	 * @param username
+	 * @param password
+	 * @return assistant
+	 */
 	@Transactional
 	public Assistant createAssistant(String username,String password) {
 
@@ -36,6 +43,13 @@ public class AssistantService {
 		return assistant;
 	}
 
+	/**
+	 * @author Marc Saber
+	 * Updates an assistants passwords
+	 * @param oldUsername
+	 * @param newPassword
+	 * @return updated assistant
+	 */
 	@Transactional
 	public Assistant updateAssistant(String oldUsername,String newPassword) {
 		Assistant oldAssistant = assistantRepository.findAssistantByUsername(oldUsername);
@@ -51,6 +65,12 @@ public class AssistantService {
 		return oldAssistant;
 	}
 
+	/**
+	 * @author Marc Saber
+	 * Deletes an assistant given the assistant's username
+	 * @param username
+	 * @return true when the assistant is successfully deleted
+	 */
 	@Transactional
 	public boolean deleteAssistant(String username) {
 		boolean deleted = false;
@@ -67,12 +87,23 @@ public class AssistantService {
 
 	}
 
+	/**
+	 * @author Marc Saber
+	 * Gets an assistant given a name
+	 * @param name
+	 * @return assistant
+	 */
 	@Transactional
 	public Assistant getAssistant(String name) {
 		Assistant assistant = assistantRepository.findAssistantByUsername(name);
 		return assistant;
 	}
 
+	/**
+	 * @author Marc Saber
+	 * returns a list of all the assistants 
+	 * @return
+	 */
 	@Transactional
 	public List<Assistant> getAllAssistants(){           
 		return toList(assistantRepository.findAll());

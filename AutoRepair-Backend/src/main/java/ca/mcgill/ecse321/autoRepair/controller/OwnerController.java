@@ -1,14 +1,10 @@
 package ca.mcgill.ecse321.autoRepair.controller;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalTime;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,16 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.autoRepair.dao.OwnerRepository;
-import ca.mcgill.ecse321.autoRepair.dto.AppointmentDTO;
-import ca.mcgill.ecse321.autoRepair.dto.AssistantDTO;
-import ca.mcgill.ecse321.autoRepair.dto.ChosenServiceDTO;
-import ca.mcgill.ecse321.autoRepair.dto.CustomerDTO;
 import ca.mcgill.ecse321.autoRepair.dto.OwnerDTO;
-import ca.mcgill.ecse321.autoRepair.model.Appointment;
-import ca.mcgill.ecse321.autoRepair.model.ChosenService;
-import ca.mcgill.ecse321.autoRepair.model.Customer;
 import ca.mcgill.ecse321.autoRepair.model.Owner;
-import ca.mcgill.ecse321.autoRepair.model.TimeSlot;
 import ca.mcgill.ecse321.autoRepair.service.OwnerService;
 
 @CrossOrigin(origins = "*")
@@ -37,21 +25,35 @@ public class OwnerController {
 	@Autowired
 	private OwnerService ownerService;
 	
-	
-
-	
+	/**
+	 * @author Marc Saber
+	 * Gets a list of all the owners
+	 * @return
+	 */
 	@GetMapping(value = { "/view_owner" })
 	public List<OwnerDTO> getAllOwners() {
 		return ownerService.getAllOwners().stream().map(owner -> convertToDTO(owner)).collect(Collectors.toList());
 	}
 	
+	/**
+	 * @author Marc Saber
+	 * Gets an owner given a username
+	 * @param username
+	 * @return owner DTO
+	 */
 	@GetMapping(value = {"/view_owner/{username}"})
 	public OwnerDTO viewOwner(@PathVariable("username") String username) {
 		return convertToDTO(ownerService.getOwner(username));
 	}
 	
-	
-
+	/**
+	 * @author Marc Saber
+	 * Creates an owner
+	 * @param name
+	 * @param password
+	 * @param authentificationCode
+	 * @return ownerDTO
+	 */
 	@PostMapping(value = {"/create_owner"})
 	public OwnerDTO createOwner(@RequestParam("name") String name,@RequestParam("password") String password
 			,@RequestParam("authentification") String authentificationCode) {
@@ -60,13 +62,19 @@ public class OwnerController {
 		return convertToDTO(owner); 
 	}
 	
+	/**
+	 * @author Marc Saber
+	 * Updates an owner's password
+	 * @param oldUsername
+	 * @param newPassword
+	 * @return ownerDTO
+	 */
 	@PostMapping(value = { "/update_owner/{oldUsername}"})
 	public OwnerDTO updateOwner(@PathVariable("oldUsername") String oldUsername,
 			@RequestParam("newPassword") String newPassword) {
         Owner owner = ownerService.updateOwner(oldUsername, newPassword);
 		return convertToDTO(owner);
 	}
-	
 	
 	private OwnerDTO convertToDTO(Owner owner) {
 		if(owner == null) throw new IllegalArgumentException("Owner not found.");

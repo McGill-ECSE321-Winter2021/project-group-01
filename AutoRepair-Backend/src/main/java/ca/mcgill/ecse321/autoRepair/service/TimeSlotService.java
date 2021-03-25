@@ -25,6 +25,12 @@ public class TimeSlotService {
     @Autowired
     OperatingHourRepository operatingHourRepository;
 
+    /**
+     * @author Tamara Zard Aboujaoudeh
+     * Gets all the available time slots
+     * @param startDate
+     * @return list containing all the available time slots
+     */
     @Transactional
     public List<TimeSlot> getAvailableTimeSlots(Date startDate) {
         List<TimeSlot> availableTimeSlots = new ArrayList<>();
@@ -87,6 +93,12 @@ public class TimeSlotService {
         return availableTimeSlots;
     }
 
+    /**
+     * @author Tamara Zard Aboujaoudeh
+     * Gets a list of all the unavailable time slots
+     * @param date
+     * @return list containing all the unavailable time slots
+     */
     @Transactional
     public List<TimeSlot> getUnavailableTimeSlots(Date date){
         return timeSlotRepository.findTimeSlotsByStartDate(date);

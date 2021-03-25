@@ -23,8 +23,17 @@ public class BusinessService {
 	@Autowired
 	OperatingHourRepository operatingHourRepository;
 
+	/**
+	 * @author Fadi Tawfik Beshay
+	 * Creates the business information of a given business
+	 * @param name
+	 * @param email
+	 * @param address
+	 * @param phoneNumber
+	 * @return business
+	 */
 	@Transactional
-	public Business createBusiness(String name, String email, String address, String phoneNumber, List<OperatingHour> businessHours, List<TimeSlot> holidays) {
+	public Business createBusiness(String name, String email, String address, String phoneNumber) {
 		if(name==null || name=="") throw new IllegalArgumentException("Name cannot be blank");
 		if(email==null || email=="") throw new IllegalArgumentException("Email cannot be blank");
 		if(address==null || address=="") throw new IllegalArgumentException("Address cannot be blank");
@@ -37,14 +46,24 @@ public class BusinessService {
 		business.setEmail(email);
 		business.setAddress(address);
 		business.setPhoneNumber(phoneNumber);
-		business.setBusinessHours(businessHours);
-		business.setHolidays(holidays);
+		business.setBusinessHours(new ArrayList<OperatingHour>());
+		business.setHolidays(new ArrayList<TimeSlot>());
 		businessRepository.save(business);
 		return business;
 	}
 	
+	/**
+	 * @author Fadi Tawfik Beshay
+	 * Edits the business information of a given business
+	 * @param name
+	 * @param name1
+	 * @param email
+	 * @param address
+	 * @param phoneNumber
+	 * @return business
+	 */
 	@Transactional
-	public Business editBusiness(String name, String email, String address, String phoneNumber, List<OperatingHour> businessHours, List<TimeSlot> holidays) {
+	public Business editBusiness(String name, String name1, String email, String address, String phoneNumber) {
 		if(name==null || name=="") throw new IllegalArgumentException("Name cannot be blank");
 		if(email==null || email=="") throw new IllegalArgumentException("Email cannot be blank");
 		if(address==null || address=="") throw new IllegalArgumentException("Address cannot be blank");
@@ -52,47 +71,72 @@ public class BusinessService {
 		if ((email.indexOf('@') == -1) || (email.indexOf('.') == -1) || (email.indexOf('.') < email.indexOf('@')) || (email.indexOf('@') == email.length()-1) || (email.indexOf('.') == email.length()-1)){
 			throw new IllegalArgumentException("Invalid email");
 		}	
-		Business business = new Business();
-		business.setName(name);
+		Business business = businessRepository.findBusinessByName(name);
+		if(business==null) throw new IllegalArgumentException("Business not found");
+		business.setName(name1);
 		business.setEmail(email);
 		business.setAddress(address);
 		business.setPhoneNumber(phoneNumber);
-		business.setBusinessHours(businessHours);
-		business.setHolidays(holidays);
 		businessRepository.save(business);
 		return business;
 	}
 
+	/**
+	 * @author Fadi Tawfik Beshay
+	 * Returns a business given a name
+	 * @param name
+	 * @return business
+	 */
 	@Transactional
 	public Business getBusiness(String name) {
 		return businessRepository.findBusinessByName(name);
 	}
 
+	/**
+	 * @author Fadi Tawfik Beshay
+	 * Creates an operating hour for the business
+	 * @param businessName
+	 * @param dayOfWeek
+	 * @param startTime
+	 * @param endTime
+	 * @return operatingHour
+	 */
 	@Transactional
-	public OperatingHour createOperatingHour(DayOfWeek dayOfWeek, Time startTime, Time endTime) {
-		if(dayOfWeek==null || dayOfWeek.equals("")) throw new IllegalArgumentException("Day of week cannot be blank");
-		if(startTime==null || startTime.equals("")) throw new IllegalArgumentException("Start time cannot be blank");
-		if(endTime==null || endTime.equals("")) throw new IllegalArgumentException("End time cannot be blank");
+	public OperatingHour createOperatingHour(String businessName, DayOfWeek dayOfWeek, Time startTime, Time endTime) {
+		if(dayOfWeek==null) throw new IllegalArgumentException("Day of week cannot be blank");
+		if(startTime==null) throw new IllegalArgumentException("Start time cannot be blank");
+		if(endTime==null) throw new IllegalArgumentException("End time cannot be blank");
 		if(startTime.after(endTime)) throw new IllegalArgumentException("Start time cannot be before end time");
+		if(operatingHourRepository.findByDayOfWeek(dayOfWeek)!=null) throw new IllegalArgumentException("Operating hour already exists");
 		OperatingHour operatingHour = new OperatingHour();
 		operatingHour.setDayOfWeek(dayOfWeek);
 		operatingHour.setStartTime(startTime);
 		operatingHour.setEndTime(endTime);
+		Business business = businessRepository.findBusinessByName(businessName);
+		business.getBusinessHours().add(operatingHour);
 		operatingHourRepository.save(operatingHour);
+		businessRepository.save(business);
 		return operatingHour;
 	}
 	
+	/**
+	 * @author Fadi Tawfik Beshay
+	 * edits the operating hour of a business
+	 * @param dayOfWeek
+	 * @param dayOfWeek1
+	 * @param startTime1
+	 * @param endTime1
+	 * @return operatingHour
+	 */
 	@Transactional
-	public OperatingHour editOperatingHour(DayOfWeek dayOfWeek, Time startTime, Time endTime, DayOfWeek dayOfWeek1, Time startTime1, Time endTime1) {
+	public OperatingHour editOperatingHour(DayOfWeek dayOfWeek, DayOfWeek dayOfWeek1, Time startTime1, Time endTime1) {
 		
 		if(dayOfWeek==null || dayOfWeek1==null) throw new IllegalArgumentException("Day of week cannot be blank");
-		if(startTime==null || startTime1==null) throw new IllegalArgumentException("Start time cannot be blank");
-		if(endTime==null || endTime1==null) throw new IllegalArgumentException("End time cannot be blank");
-		if(operatingHourRepository.findByDayOfWeek(dayOfWeek)==null) {
-			throw new IllegalArgumentException("Operating hour cannot be found");
-		}
-		operatingHourRepository.delete(operatingHourRepository.findByDayOfWeek(dayOfWeek));
-		OperatingHour operatingHour = new OperatingHour();
+		if(startTime1==null) throw new IllegalArgumentException("Start time cannot be blank");
+		if(endTime1==null) throw new IllegalArgumentException("End time cannot be blank");
+		if(startTime1.after(endTime1)) throw new IllegalArgumentException("Start time cannot be before end time");
+		if(operatingHourRepository.findByDayOfWeek(dayOfWeek)==null) throw new IllegalArgumentException("Operating hour cannot be found");
+		OperatingHour operatingHour = operatingHourRepository.findByDayOfWeek(dayOfWeek);
 		operatingHour.setDayOfWeek(dayOfWeek1);
 		operatingHour.setStartTime(startTime1);
 		operatingHour.setEndTime(endTime1);
@@ -100,24 +144,42 @@ public class BusinessService {
 		return operatingHour;
 	}
 	
+	/**
+	 * @author Fadi Tawfik Beshay
+	 * Deletes an operating hour of a business
+	 * @param businessName
+	 * @param dayOfWeek
+	 * @return true when operating hour is deleted
+	 */
 	@Transactional
-	public OperatingHour deleteOperatingHour(DayOfWeek dayOfWeek, Time startTime, Time endTime) {
+	public boolean deleteOperatingHour(String businessName, DayOfWeek dayOfWeek) {
 		if(dayOfWeek==null) throw new IllegalArgumentException("Day of week cannot be blank");
-		if(startTime==null) throw new IllegalArgumentException("Start time cannot be blank");
-		if(endTime==null) throw new IllegalArgumentException("End time cannot be blank");
-		if(startTime.after(endTime)) throw new IllegalArgumentException("Start time cannot be before end time");
-		if(operatingHourRepository.findByDayOfWeek(dayOfWeek)==null) throw new IllegalArgumentException("Operating hour cannot be found");
+		OperatingHour operatingHour = operatingHourRepository.findByDayOfWeek(dayOfWeek);
+		if(operatingHour==null) throw new IllegalArgumentException("Operating hour cannot be found");
+		Business business = businessRepository.findBusinessByName(businessName);
+		if(business==null) throw new IllegalArgumentException("Business not found");
+		business.getBusinessHours().remove(operatingHour);
+		businessRepository.save(business);
 		operatingHourRepository.delete(operatingHourRepository.findByDayOfWeek(dayOfWeek));
-		return null;
+		return true;
 	}
 	
-	
-	
+	/**
+	 * @author Fadi Tawfik Beshay
+	 * Gets an operating hour given any day of the week
+	 * @param dayOfWeek
+	 * @return operatingHour
+	 */
 	@Transactional
 	public OperatingHour getOperatingHour(DayOfWeek dayOfWeek) {
 		return operatingHourRepository.findByDayOfWeek(dayOfWeek);
 	}
 	
+	/**
+	 * @author Fadi Tawfik Beshay
+	 * Gets all operating hours of a business
+	 * @return list of operating hours
+	 */
 	@Transactional
 	public List<OperatingHour> getAllOperatingHour() {
 		return toList(operatingHourRepository.findAll());

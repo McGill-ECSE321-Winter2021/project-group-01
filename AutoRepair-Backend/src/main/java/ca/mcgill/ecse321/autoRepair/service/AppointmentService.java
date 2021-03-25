@@ -33,6 +33,17 @@ public class AppointmentService {
     @Autowired
     TimeSlotService timeSlotService;
 
+    /**
+     * @author Tamara Zard Aboujaoudeh
+     * 
+     * Makes an appointment
+     * 
+     * @param customerName
+     * @param serviceName  
+     * @param startDate    
+     * @param startTime  
+     * @return appointment that was just made
+     */
     @Transactional
     public Appointment makeAppointment(String customerName, String serviceName,Date startDate, Time startTime) {
         if (customerName == null || !containsCharacter(customerName)) throw new IllegalArgumentException("The username cannot be empty or null");
@@ -67,17 +78,39 @@ public class AppointmentService {
         if(isAvailable(timeSlot)){
             app.setTimeSlot(timeSlot);
         }else throw new IllegalArgumentException("Chosen time slot is unavailable.");
-        appointmentRepository.save(app);
         timeSlotRepository.save(timeSlot);
+        appointmentRepository.save(app);
+
         return app;
     }
 
+    /**
+     * @author Tamara Zard Aboujaoudeh
+     * 
+     * Gets an appointment given a time slot
+     * 
+     * @param timeSlot
+     * @return appointment associated with given time slot
+     */
     @Transactional
     public Appointment getAppointment(TimeSlot timeSlot){
         Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
         return appointment;
     }
 
+    /**
+     * @author Tamara Zard Aboujaoudeh
+     * 
+     * Updates an appointment
+     * 
+     * @param oldStartDate 
+     * @param oldStartTime
+     * @param oldServiceName
+     * @param newStartDate
+     * @param newStartTime
+     * @param newServiceName
+     * @return updated appointment
+     */
     @Transactional
     public Appointment updateAppointment(Date oldStartDate, Time oldStartTime, String oldServiceName, Date newStartDate, Time newStartTime, String newServiceName){
         if(newServiceName == null || !containsCharacter(newServiceName)) throw new IllegalArgumentException("The chosen service cannot be empty or null");
@@ -110,31 +143,41 @@ public class AppointmentService {
         }
         Time oldEndTime = findEndTimeOfApp(oldService,oldStartTime.toLocalTime());
         Time newEndTime= findEndTimeOfApp(newService, newStartTime.toLocalTime());
-        TimeSlot timeSlot = calcTimeSlot(oldStartDate,oldStartTime,oldStartDate,oldEndTime);
+        TimeSlot timeSlot = timeSlotRepository.findTimeSlotByStartDateAndStartTimeAndEndTime(oldStartDate,oldStartTime,oldEndTime);
+        //TimeSlot timeSlot = calcTimeSlot(oldStartDate,oldStartTime,oldStartDate,oldEndTime);
         TimeSlot newTimeSlot = calcTimeSlot(newStartDate,newStartTime,newStartDate, newEndTime);
+
 
         Appointment appointment= appointmentRepository.findAppointmentByTimeSlot(timeSlot);
         if(appointment==null) throw new IllegalArgumentException("The appointment does not exist");
         Appointment updatedApp = appointment;
+
+
         appointmentRepository.delete(appointment);
+        timeSlotRepository.delete(timeSlot);
 
         if(!(oldServiceName.equals(newServiceName))){
-            timeSlotRepository.delete(timeSlot);
-            if(isAvailable(newTimeSlot)){
+            if(newTimeSlot.equals(timeSlot)){
+                updatedApp.setChosenService(newService);
+            }else if(isAvailable(newTimeSlot)){
                 updatedApp.setTimeSlot(newTimeSlot);
                 updatedApp.setChosenService(newService);
-                appointmentRepository.save(updatedApp);
-                timeSlotRepository.save(newTimeSlot);
+
             }else throw new IllegalArgumentException("The time slot is not available.");
         }else{
-            timeSlotRepository.delete(timeSlot);
+
             if(isAvailable(newTimeSlot)){
                 updatedApp.setTimeSlot(newTimeSlot);
-                appointmentRepository.save(updatedApp);
-                timeSlotRepository.save(newTimeSlot);
+
             }else throw new IllegalArgumentException("The time slot is not available.");
         }
-        return updatedApp;
+        appointment=updatedApp;
+        timeSlot=newTimeSlot;
+
+        timeSlotRepository.save(timeSlot);
+        appointmentRepository.save(appointment);
+
+        return appointment;
     }
 
     private Time findEndTimeOfApp(ChosenService service, LocalTime startTime){
@@ -142,6 +185,15 @@ public class AppointmentService {
         return Time.valueOf(localEndTime);
     }
 
+    /**
+     * @author Tamara Zard Aboujaoudeh
+     * 
+     * Cancels an appointment
+     * 
+     * @param serviceName
+     * @param startDate
+     * @param startTime
+     */
     @Transactional
     public void cancelAppointment(String serviceName,Date startDate, Time startTime){
         if(serviceName==null || !containsCharacter(serviceName)) throw new IllegalArgumentException("The service to cancel cannot be empty or null");
@@ -155,18 +207,30 @@ public class AppointmentService {
         }
         ChosenService chosenService =chosenServiceRepository.findChosenServiceByName(serviceName);
         Time endTime = findEndTimeOfApp(chosenService,startTime.toLocalTime());
-        TimeSlot timeSlot = calcTimeSlot(startDate,startTime,startDate,endTime);
+        TimeSlot timeSlot = timeSlotRepository.findTimeSlotByStartDateAndStartTimeAndEndTime(startDate,startTime,endTime);
         Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
         if(appointment==null) throw new IllegalArgumentException("The appointment does not exist.");
-        appointmentRepository.delete(appointment);
         timeSlotRepository.delete(timeSlot);
+        appointmentRepository.delete(appointment);
+
     }
 
+    /**
+     * @author Tamara Zard Aboujaoudeh
+     * Gets a list of all the appointments
+     * @return list of all appointments
+     */
     @Transactional
     public List<Appointment> getAllAppointments(){
         return toList(appointmentRepository.findAll());
     }
 
+    /**
+     * @author Tamara Zard Aboujaoudeh
+     * Gets a list of all the appointments for a specific customer
+     * @param customer
+     * @return list of all appointments for a specific customer
+     */
     @Transactional
     public List<Appointment> getAppointmentsOfCustomer(Customer customer){
         return toList(appointmentRepository.findAppointmentsByCustomer(customer));

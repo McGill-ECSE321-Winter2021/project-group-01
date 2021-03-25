@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ca.mcgill.ecse321.autoRepair.dao.ChosenServiceRepository;
@@ -14,6 +15,7 @@ import ca.mcgill.ecse321.autoRepair.model.ChosenService;
 import ca.mcgill.ecse321.autoRepair.model.Customer;
 import ca.mcgill.ecse321.autoRepair.model.Review;
 
+@Service
 public class ReviewService {
 
 	@Autowired
@@ -24,7 +26,18 @@ public class ReviewService {
 
 	@Autowired
 	private ChosenServiceRepository serviceRepository;
+	
 
+	/**
+	 * @author Mohammad Saeid Nafar
+	 * Creates a review
+	 * @param appointment
+	 * @param serviceName
+	 * @param customerName
+	 * @param description
+	 * @param serviceRating
+	 * @return review
+	 */
 	@Transactional
 	public Review createReview(Appointment appointment, String serviceName,
 			String customerName, String description, int serviceRating) {
@@ -77,6 +90,14 @@ public class ReviewService {
 		return review;
 	}
 
+	/**
+	 * @author Mohammad Saeid Nafar
+	 * Edits a review
+	 * @param appointment
+	 * @param newDescription
+	 * @param newRating
+	 * @return review
+	 */
 	@Transactional
 	public Review editReview(Appointment appointment, String newDescription, int newRating) {
 
@@ -104,6 +125,12 @@ public class ReviewService {
 		return review;
 	}
 
+	/**
+	 * @author Mohammad Saeid Nafar
+	 * Deletes a review
+	 * @param appointment
+	 * @return true when review is successfully deleted
+	 */
 	@Transactional
 	public boolean deleteReview(Appointment appointment) {
 		if(appointment == null) {
@@ -114,21 +141,34 @@ public class ReviewService {
 		return true;
 	}
 
-	@Transactional 
-	public List<Review> viewAllReviews() {
-		return toList(reviewRepository.findAll());
-	}
-
+	/**
+	 * @author Mohammad Saeid Nafar
+	 * Returns a list of reviews associated to a given a chosen service
+	 * @param service
+	 * @return list of reviews associated to a given a chosen service
+	 */
 	@Transactional
 	public List<Review> viewReviewsForService(ChosenService service) {
 		return toList(reviewRepository.findReviewByChosenService(service));
 	}
 
+	/**
+	 * @author Mohammad Saeid Nafar
+	 * Returns a list of reviews associated to a given customer
+	 * @param customer
+	 * @return a list of reviews associated to a given customer
+	 */
 	@Transactional
 	public List<Review> viewReviewsOfCustomer(Customer customer) {
 		return toList(reviewRepository.findReviewByCustomer(customer));
 	}
 
+	/**
+	 * @author Mohammad Saeid Nafar
+	 * Gets the average service rating of a given chosen service
+	 * @param serviceName
+	 * @return double averageServiceRating
+	 */
 	@Transactional
 	public double getAverageServiceReview(String serviceName) {
 		ChosenService service = serviceRepository.findChosenServiceByName(serviceName);
@@ -145,25 +185,31 @@ public class ReviewService {
 		return averageServiceRating;
 	}
 
+	/**
+	 * @author Mohammad Saeid Nafar
+	 * Gets a review associated to a given appointment
+	 * @param appointment
+	 * @return review
+	 */
 	@Transactional
 	public Review getReview(Appointment appointment) {
 		return reviewRepository.findReviewByAppointment(appointment);
 	}
 
-	@Transactional
-	public List<Review> getReview(Customer customer) {
-		return reviewRepository.findReviewByCustomer(customer);
-	}
-
+	/**
+	 * @author Mohammad Saeid Nafar
+	 * Gets all the reviews 
+	 * @return a list containing all the reviews
+	 */
 	@Transactional
 	public List<Review> getAllReviews(){
 		return toList(reviewRepository.findAll());
 	}
 
-	@Transactional
-	public List<Review> geServiceReviews(ChosenService service){
-		return reviewRepository.findReviewByChosenService(service);
-	}
+//	@Transactional
+//	public List<Review> getServiceReviews(ChosenService service){
+//		return reviewRepository.findReviewByChosenService(service);
+//	}
 
 	private <T> List<T> toList(Iterable<T> iterable){
 		List<T> resultList = new ArrayList<T>();

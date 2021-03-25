@@ -24,8 +24,15 @@ public class CustomerService {
 	@Autowired
 	ProfileRepository profileRepository;
 
-
-
+	/**
+	 * @author Eric Chehata
+	 * Creates a customer
+	 * @param username
+	 * @param password
+	 * @param profile
+	 * @param cars
+	 * @return customer
+	 */
 	@Transactional
 	public Customer createCustomer(String username, String password, Profile profile, List<Car> cars) {
 
@@ -50,6 +57,13 @@ public class CustomerService {
 		return customer;
 	}
 
+	/**
+	 * @author Eric Chehata
+	 * Edits the password of a customer
+	 * @param username
+	 * @param password
+	 * @return customer
+	 */
 	@Transactional
 	public Customer editCustomerPassword(String username, String password) {
 		Customer customer = customerRepository.findCustomerByUsername(username);
@@ -62,6 +76,12 @@ public class CustomerService {
 		return customer;
 	}
 
+	/**
+	 * @author Eric Chehata
+	 * Deletes a customer given a username
+	 * @param username
+	 * @return true
+	 */
 	@Transactional
 	public boolean deleteCustomer(String username) {
 		Customer customer = getCustomer(username);
@@ -74,13 +94,23 @@ public class CustomerService {
 		return true;
 	}
 
-
+	/**
+	 * @author Eric Chehata
+	 * Gets a customer given a username
+	 * @param username
+	 * @return customer
+	 */
 	@Transactional
 	public Customer getCustomer(String username) {
 		return customerRepository.findCustomerByUsername(username);
 
 	}
 
+	/**
+	 * @author Eric Chehata
+	 * Returns a list of all the customers
+	 * @return
+	 */
 	@Transactional
 	public List<Customer> getAllCustomers(){
 		return toList(customerRepository.findAll());

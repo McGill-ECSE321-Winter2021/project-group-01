@@ -5,6 +5,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -1446,7 +1448,7 @@ public class ReminderServiceTests {
 		
 	    String customerName = CUSTOMER_USERNAME;
 		String serviceName = CSName;
-		Reminder r = null;
+		boolean r = false;
 		
 		try {
 			r = reminderService.deleteReminder(serviceName, customerName);
@@ -1454,7 +1456,7 @@ public class ReminderServiceTests {
 			fail();
 		}
 		
-		assertNull(r);
+		assertTrue(r);
 	}
 	
 	@Test
@@ -1466,7 +1468,7 @@ public class ReminderServiceTests {
 		
 	    String customerName = null;
 		String serviceName = CSName;
-		Reminder r = null;
+		boolean r = false;
 		String error = null;
 		
 		try {
@@ -1475,7 +1477,7 @@ public class ReminderServiceTests {
 			error = e.getMessage();
 		}
 		
-		assertNull(r);
+		assertFalse(r);
 		assertEquals("Customer Invalid",error);
 	}
 	
@@ -1488,7 +1490,7 @@ public class ReminderServiceTests {
 		
 	    String customerName = "";
 		String serviceName = CSName;
-		Reminder r = null;
+		boolean r = false;
 		String error = null;
 		
 		try {
@@ -1497,7 +1499,7 @@ public class ReminderServiceTests {
 			error = e.getMessage();
 		}
 		
-		assertNull(r);
+		assertFalse(r);
 		assertEquals("Customer Invalid",error);
 	}
 	
@@ -1510,7 +1512,7 @@ public class ReminderServiceTests {
 		
 	    String customerName = "          ";
 		String serviceName = CSName;
-		Reminder r = null;
+		boolean r = false;
 		String error = null;
 		
 		try {
@@ -1519,7 +1521,7 @@ public class ReminderServiceTests {
 			error = e.getMessage();
 		}
 		
-		assertNull(r);
+		assertFalse(r);
 		assertEquals("Customer Invalid",error);
 	}
 	
@@ -1532,7 +1534,7 @@ public class ReminderServiceTests {
 		
 	    String customerName = "Messi";
 		String serviceName = CSName;
-		Reminder r = null;
+		boolean r = false;
 		String error = null;
 		
 		try {
@@ -1541,7 +1543,7 @@ public class ReminderServiceTests {
 			error = e.getMessage();
 		}
 		
-		assertNull(r);
+		assertFalse(r);
 		assertEquals("The following user does not exist: " + customerName,error);
 	}
 	
@@ -1555,7 +1557,7 @@ public class ReminderServiceTests {
 		
 	    String customerName = CUSTOMER_USERNAME;
 		String serviceName = null;
-		Reminder r = null;
+		boolean r = false;
 		String error = null;
 		
 		try {
@@ -1564,7 +1566,7 @@ public class ReminderServiceTests {
 			error = e.getMessage();
 		}
 		
-		assertNull(r);
+		assertFalse(r);
 		assertEquals("Service Invalid",error);
 	}	
 	
@@ -1577,7 +1579,7 @@ public class ReminderServiceTests {
 		
 	    String customerName = CUSTOMER_USERNAME;
 		String serviceName = "";
-		Reminder r = null;
+		boolean r = false;
 		String error = null;
 		
 		try {
@@ -1586,7 +1588,7 @@ public class ReminderServiceTests {
 			error = e.getMessage();
 		}
 		
-		assertNull(r);
+		assertFalse(r);
 		assertEquals("Service Invalid",error);
 	}
 	
@@ -1599,7 +1601,7 @@ public class ReminderServiceTests {
 		
 	    String customerName = CUSTOMER_USERNAME;
 		String serviceName = "      ";
-		Reminder r = null;
+		boolean r = false;
 		String error = null;
 		
 		try {
@@ -1608,7 +1610,7 @@ public class ReminderServiceTests {
 			error = e.getMessage();
 		}
 		
-		assertNull(r);
+		assertFalse(r);
 		assertEquals("Service Invalid",error);
 	}
 	
@@ -1621,7 +1623,7 @@ public class ReminderServiceTests {
 		
 	    String customerName = CUSTOMER_USERNAME;
 		String serviceName = "Change door";
-		Reminder r = null;
+		boolean r = false;
 		String error = null;
 		
 		try {
@@ -1630,7 +1632,7 @@ public class ReminderServiceTests {
 			error = e.getMessage();
 		}
 		
-		assertNull(r);
+		assertFalse(r);
 		assertEquals("The following service does not exist: " + serviceName,error);
 	}
 	
@@ -1643,7 +1645,7 @@ public class ReminderServiceTests {
 		
 	    String customerName = CUSTOMER_USERNAME;
 		String serviceName = CSName2;
-		Reminder r = null;
+		boolean r = false;
 		String error = null;
 		
 		try {
@@ -1652,7 +1654,7 @@ public class ReminderServiceTests {
 			error = e.getMessage();
 		}
 		
-		assertNull(r);
+		assertFalse(r);
 		assertEquals("Reminder does not exist",error);
 	}
 	

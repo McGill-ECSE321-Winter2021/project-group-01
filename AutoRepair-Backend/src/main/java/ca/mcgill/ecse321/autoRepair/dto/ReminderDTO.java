@@ -9,15 +9,14 @@ public class ReminderDTO {
 	private Date date;
 	private Time time;
 	private CustomerDTO customer;
-	private AppointmentDTO appointment;
+	private ChosenServiceDTO service;
 	
-	public ReminderDTO(String description, Date date, Time time, CustomerDTO customer,
-			AppointmentDTO appointment) {
+	public ReminderDTO(CustomerDTO customer, ChosenServiceDTO service, Date date, Time time, String description) {
 		this.description = description;
 		this.date = date;
 		this.time = time;
-		this.appointment = appointment;
 		this.customer = customer;
+		this.service = service;
 	}
 	
 	public String getDescription() {
@@ -36,8 +35,8 @@ public class ReminderDTO {
 		return customer;
 	}
 
-	public AppointmentDTO getAppointment() {
-		return appointment;
+	public ChosenServiceDTO getChosenService() {
+		return service;
 	}
 
 }

@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,6 +52,17 @@ public class ReviewController {
 	@Autowired
 	private CustomerRepository customerRepository;
 
+	/**
+	 * @author Mohammad Saeid Nafar
+	 * Creates a review
+	 * @param startDate
+	 * @param startTime
+	 * @param serviceName
+	 * @param customerName
+	 * @param description
+	 * @param serviceRating
+	 * @return reviewDTO
+	 */
 	@PostMapping(value = {"/create_review/"})
 	public ReviewDTO createReview(@RequestParam("startDate") String startDate, @RequestParam("startTime") String startTime,
 			@RequestParam("description") String description, @RequestParam("serviceRating") int serviceRating) {
@@ -68,6 +78,15 @@ public class ReviewController {
 		return convertToDTO(review);
 	}
 
+	/**
+	 * @author Mohammad Saeid Nafar
+	 * Edits a review description and/or service rating
+	 * @param startDate
+	 * @param startTime
+	 * @param newDescription
+	 * @param newRating
+	 * @return reviewDTO
+	 */
 	@PostMapping(value = {"/edit_review/"})
 	public ReviewDTO editReview(@RequestParam("startDate") String startDate, @RequestParam("startTime")
 	String startTime, @RequestParam("newDescription") String newDescription,
@@ -83,6 +102,13 @@ public class ReviewController {
 		return convertToDTO(review);
 	}
 
+	/**
+	 * @author Mohammad Saeid Nafar
+	 * Deletes a review
+	 * @param startDate
+	 * @param startTime
+	 * @return true if given review is successfully deleted
+	 */
 	@PostMapping(value = {"/delete_review/"})
 	public boolean deleteReview(@RequestParam("startDate") String startDate, @RequestParam("startTime")
 	String startTime) {
@@ -95,12 +121,23 @@ public class ReviewController {
 		return reviewService.deleteReview(appointment);
 	}
 
+	/**
+	 * @author Mohammad Saeid Nafar
+	 * Gets all reviews
+	 * @return list of review DTOs
+	 */
 	@GetMapping(value = {"/view_all_reviews"})
 	public List<ReviewDTO> getAllReviews() {
 		return reviewService.getAllReviews().stream().map(review -> 
 		convertToDTO(review)).collect(Collectors.toList());
 	}
 
+	/**
+	 * @author Mohammad Saeid Nafar
+	 * Gets all reviews for a given chosen service
+	 * @param serviceName
+	 * @return list of review DTOs for a given chosen service
+	 */
 	@GetMapping(value = {"/view_reviews_for_service"})
 	public List<ReviewDTO> viewReviewsForService(@RequestParam("serviceName") String serviceName) {
 		ChosenService service = serviceRepository.findChosenServiceByName(serviceName);
@@ -108,6 +145,12 @@ public class ReviewController {
 		convertToDTO(review)).collect(Collectors.toList());
 	}
 
+	/**
+	 * @author Mohammad Saeid Nafar
+	 * Gets all reviews associated to a given customer
+	 * @param username
+	 * @return list of review DTOs associated to a given customer
+	 */
 	@GetMapping(value = {"/view_reviews_of_customer"})
 	public List<ReviewDTO> viewReviewsOfCustomer(@RequestParam("username") String username) {
 		Customer customer = customerRepository.findCustomerByUsername(username);
@@ -115,11 +158,24 @@ public class ReviewController {
 		convertToDTO(review)).collect(Collectors.toList());
 	}
 
+	/**
+	 * @author Mohammad Saeid Nafar
+	 * Gets the average service review of a given chosen service
+	 * @param serviceName
+	 * @return double averageServiceReview
+	 */
 	@GetMapping(value = {"/get_average_service_review"})
 	public double getAverageServiceReview(@RequestParam("serviceName") String serviceName) {
 		return reviewService.getAverageServiceReview(serviceName);
 	}
 
+	/**
+	 * @author Mohammad Saeid Nafar
+	 * Gets a review given an appointment 
+	 * @param startDate
+	 * @param startTime
+	 * @return reviewDTO associated to a given appointment
+	 */
 	@GetMapping(value = {"/get_review"})
 	public ReviewDTO getReview(@RequestParam("startDate") String startDate, @RequestParam("startTime")
 	String startTime) {

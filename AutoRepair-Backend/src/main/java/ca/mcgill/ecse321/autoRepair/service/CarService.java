@@ -20,7 +20,14 @@ public class CarService {
 	@Autowired
 	CarRepository carRepository;
 
-
+	/**
+	 * @author Eric Chehata
+	 * Creates a car
+	 * @param plateNumber
+	 * @param model
+	 * @param transmission
+	 * @return car
+	 */
 	@Transactional
 	public Car createCar(String plateNumber, String model, Car.CarTransmission transmission) {
 		
@@ -48,6 +55,14 @@ public class CarService {
 		return car;
 	}
 
+	/**
+	 * @author Eric Chehata
+	 * Given a username of a customer, method adds a car to the list of cars
+	 * belonging to the customer
+	 * @param username
+	 * @param car
+	 * @return true 
+	 */
 	@Transactional
 	public boolean addCar(String username, Car car) {
 		Customer customer = customerRepository.findCustomerByUsername(username);
@@ -58,6 +73,13 @@ public class CarService {
 		return true;
 	}
 	
+	/**
+	 * @author Eric Chehata
+	 * Removes a car from a customer's list of cars
+	 * @param username
+	 * @param plateNumber
+	 * @return true
+	 */
 	@Transactional
 	public boolean removeCar(String username, String plateNumber) {
 		Customer customer = customerRepository.findCustomerByUsername(username);
@@ -83,12 +105,22 @@ public class CarService {
 		return true;
 	}
 
+	/**
+	 * @author Eric Chehata
+	 * Gets a car given the plate number
+	 * @param plateNumber
+	 * @return car
+	 */
 	@Transactional
 	public Car getCar(String plateNumber) {
 		return carRepository.findCarByPlateNumber(plateNumber);
 	}
 
-
+	/**
+	 * @author Eric Chehata
+	 * Returns a list of all the cars
+	 * @return a list of of all the cars
+	 */
 	@Transactional
 	public List<Car> getAllCars(){
 		return toList(carRepository.findAll());

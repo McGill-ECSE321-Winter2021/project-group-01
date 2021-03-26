@@ -33,6 +33,17 @@ public class AppointmentService {
     @Autowired
     TimeSlotService timeSlotService;
 
+    /**
+     * @author Tamara Zard Aboujaoudeh
+     * 
+     * Makes an appointment
+     * 
+     * @param customerName
+     * @param serviceName  
+     * @param startDate    
+     * @param startTime  
+     * @return appointment that was just made
+     */
     @Transactional
     public Appointment makeAppointment(String customerName, String serviceName,Date startDate, Time startTime) {
         if (customerName == null || !containsCharacter(customerName)) throw new IllegalArgumentException("The username cannot be empty or null");
@@ -73,12 +84,33 @@ public class AppointmentService {
         return app;
     }
 
+    /**
+     * @author Tamara Zard Aboujaoudeh
+     * 
+     * Gets an appointment given a time slot
+     * 
+     * @param timeSlot
+     * @return appointment associated with given time slot
+     */
     @Transactional
     public Appointment getAppointment(TimeSlot timeSlot){
         Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
         return appointment;
     }
 
+    /**
+     * @author Tamara Zard Aboujaoudeh
+     * 
+     * Updates an appointment
+     * 
+     * @param oldStartDate 
+     * @param oldStartTime
+     * @param oldServiceName
+     * @param newStartDate
+     * @param newStartTime
+     * @param newServiceName
+     * @return updated appointment
+     */
     @Transactional
     public Appointment updateAppointment(Date oldStartDate, Time oldStartTime, String oldServiceName, Date newStartDate, Time newStartTime, String newServiceName){
         if(newServiceName == null || !containsCharacter(newServiceName)) throw new IllegalArgumentException("The chosen service cannot be empty or null");
@@ -153,6 +185,15 @@ public class AppointmentService {
         return Time.valueOf(localEndTime);
     }
 
+    /**
+     * @author Tamara Zard Aboujaoudeh
+     * 
+     * Cancels an appointment
+     * 
+     * @param serviceName
+     * @param startDate
+     * @param startTime
+     */
     @Transactional
     public void cancelAppointment(String serviceName,Date startDate, Time startTime){
         if(serviceName==null || !containsCharacter(serviceName)) throw new IllegalArgumentException("The service to cancel cannot be empty or null");
@@ -174,11 +215,22 @@ public class AppointmentService {
 
     }
 
+    /**
+     * @author Tamara Zard Aboujaoudeh
+     * Gets a list of all the appointments
+     * @return list of all appointments
+     */
     @Transactional
     public List<Appointment> getAllAppointments(){
         return toList(appointmentRepository.findAll());
     }
 
+    /**
+     * @author Tamara Zard Aboujaoudeh
+     * Gets a list of all the appointments for a specific customer
+     * @param customer
+     * @return list of all appointments for a specific customer
+     */
     @Transactional
     public List<Appointment> getAppointmentsOfCustomer(Customer customer){
         return toList(appointmentRepository.findAppointmentsByCustomer(customer));

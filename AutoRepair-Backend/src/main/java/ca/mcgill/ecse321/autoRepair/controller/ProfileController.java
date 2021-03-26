@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.autoRepair.dto.CarDTO;
 import ca.mcgill.ecse321.autoRepair.dto.CustomerDTO;
@@ -17,7 +20,8 @@ import ca.mcgill.ecse321.autoRepair.model.Customer;
 import ca.mcgill.ecse321.autoRepair.service.ProfileService;
 
 
-
+@CrossOrigin(origins = "*")
+@RestController
 public class ProfileController {
 
 
@@ -25,12 +29,48 @@ public class ProfileController {
 	@Autowired
 	private ProfileService profileService;
 
-
+	/**
+	 * @author Eric Chehata
+	 * Edits a profile
+	 * @param username
+	 * @param firstName
+	 * @param lastName
+	 * @param phoneNumber
+	 * @param email
+	 * @param address
+	 * @param zipCode
+	 * @return customerDTO
+	 */
 	@PostMapping(value = {"/edit_profile/{username}"})
-	public CustomerDTO editProfile (@PathVariable("username") CustomerDTO customerDTO, @RequestParam String firstName, @RequestParam String lastName, @RequestParam String phoneNumber,
+	public CustomerDTO editProfile (@PathVariable("username") String username, @RequestParam String firstName, @RequestParam String lastName, @RequestParam String phoneNumber,
 			@RequestParam String email, @RequestParam String address, @RequestParam String zipCode) {
 
-		return convertToDTO(profileService.updateProfile(customerDTO.getUsername(), firstName, lastName, address, zipCode, phoneNumber, email));
+		return convertToDTO(profileService.updateProfile(username, firstName, lastName, address, zipCode, phoneNumber, email));
+	}
+	
+	/**
+	 * @author Eric Chehata
+	 * Gets a profile given an email
+	 * @param email
+	 * @return profileDTO
+	 */
+	@GetMapping(value = {"/profile","/profile/"})
+	public ProfileDTO getProfile (@RequestParam String email) {
+		return convertToDTO(profileService.getProfile(email));
+	}
+	
+	/**
+	 * @author Eric Chehata
+	 * Gets all profiles
+	 * @return all profile DTOs
+	 */
+	@GetMapping(value = {"/profiles" , "/profiles/"})
+	public List<ProfileDTO> getAllProfiles(){
+		List<ProfileDTO> profiles = new ArrayList<ProfileDTO>();
+		for(Profile p : profileService.getAllProfiles()) {
+			profiles.add(convertToDTO(p));
+		}
+		return profiles;
 	}
 
 

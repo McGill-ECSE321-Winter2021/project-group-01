@@ -17,8 +17,6 @@ public class AssistantDTO {
 		this.username = username;
 	
 	}
-
-	
 	
 	public String getUsername() {
 		return username;
@@ -29,3 +27,4 @@ public class AssistantDTO {
 
 	}
 	
+

@@ -78,14 +78,5 @@ public class OwnerController {
 		return new OwnerDTO(owner.getUsername(),owner.getPassword());
 	}
 
-//	private Owner convertToDomainObject(OwnerDTO ownerDto) {      //unused.
-//	List<Owner> allOwners = ownerService.getAllOwners();
-//	for (Owner owner : allOwners) {
-//		if (owner.getUsername().equals(ownerDto.getUsername())) {
-//			return owner;
-//		}
-//	}
-//	return null;
-//	}
 
 }

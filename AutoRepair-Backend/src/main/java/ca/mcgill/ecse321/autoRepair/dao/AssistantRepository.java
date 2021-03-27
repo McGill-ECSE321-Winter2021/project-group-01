@@ -8,5 +8,7 @@ import org.springframework.stereotype.Repository;
 public interface AssistantRepository extends CrudRepository<Assistant, String>{
 	
 	Assistant findAssistantByUsername(String username);
+    boolean existsAssitantByUsername(String username);
+
 
 }

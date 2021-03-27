@@ -21,7 +21,7 @@ import ca.mcgill.ecse321.autoRepair.service.AssistantService;
 public class AssistantController {
 	@Autowired
 	private AssistantService assisService;
-	
+
 	/**
 	 * @author Marc Saber
 	 * returns a list of all the assistants 
@@ -29,9 +29,9 @@ public class AssistantController {
 	 */
 	@GetMapping(value = { "/view_assistants"})
 	public List<AssistantDTO> getAllAssitants() {
-return assisService.getAllAssistants().stream().map(assistant -> convertToDTO(assistant)).collect(Collectors.toList());
+		return assisService.getAllAssistants().stream().map(assistant -> convertToDTO(assistant)).collect(Collectors.toList());
 	}
-	
+
 	/**
 	 * @author Marc Saber
 	 * Gets an assistant DTO given a name
@@ -42,7 +42,7 @@ return assisService.getAllAssistants().stream().map(assistant -> convertToDTO(as
 	public AssistantDTO viewAssistant(@PathVariable("username") String username) {
 		return convertToDTO(assisService.getAssistant(username));
 	}
-	
+
 	/**
 	 * @author Marc Saber
 	 * Creates an Assistant
@@ -55,7 +55,7 @@ return assisService.getAllAssistants().stream().map(assistant -> convertToDTO(as
 		Assistant assistant = assisService.createAssistant(username,password);
 		return convertToDTO(assistant);
 	}
-	
+
 	/**
 	 * @author Marc Saber
 	 * Updates an assistant's password
@@ -66,10 +66,10 @@ return assisService.getAllAssistants().stream().map(assistant -> convertToDTO(as
 	@PostMapping(value = { "/update_assistant/{oldUsername}" })
 	public AssistantDTO updateAssistant(@PathVariable("oldUsername") String oldUsername,
 			@RequestParam("newPassword") String newPassword) {
-        Assistant assistant = assisService.updateAssistant(oldUsername,newPassword);
+		Assistant assistant = assisService.updateAssistant(oldUsername,newPassword);
 		return convertToDTO(assistant);
 	}
-	
+
 	/**
 	 * @author Marc Saber
 	 * Deletes an assistant
@@ -78,10 +78,10 @@ return assisService.getAllAssistants().stream().map(assistant -> convertToDTO(as
 	 */
 	@PostMapping(value = { "/delete_assistant/{username}" })
 	public boolean deleteAssistant(@PathVariable("username") String username){
-        boolean assistant = assisService.deleteAssistant(username);
+		boolean assistant = assisService.deleteAssistant(username);
 		return assistant;
 	}
-	
+
 	private AssistantDTO convertToDTO(Assistant assistant) {
 		if(assistant == null) throw new IllegalArgumentException("Assistant not found.");
 		return new AssistantDTO(assistant.getUsername(),assistant.getPassword());

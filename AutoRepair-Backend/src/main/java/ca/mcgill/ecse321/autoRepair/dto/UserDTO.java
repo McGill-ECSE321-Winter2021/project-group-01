@@ -11,9 +11,12 @@ public abstract class UserDTO {
 	@NotEmpty(message = "Password cannot be blank.")
 	private String password;
 	
-	public UserDTO(String username, String password) {
+	private String userType;
+	
+	public UserDTO(String username, String password, String userType) {
 		this.username=username;
 		this.password=password;
+		this.userType=userType;
 	}
 
 	public String getUsername() {
@@ -22,6 +25,10 @@ public abstract class UserDTO {
 
 	public String getPassword() {
 		return password;
+	}
+
+	public String getUserType() {
+		return userType;
 	}
 
 	

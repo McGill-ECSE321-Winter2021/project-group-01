@@ -15,7 +15,7 @@ public class CustomerDTO extends UserDTO{
 
 	public CustomerDTO(String username, String password, int noShow, int show, List<CarDTO> cars, ProfileDTO profile) {
 		
-		super(username, password);
+		super(username, password, "customer");
 		this.noShow=noShow;
 		this.show = show;
 		this.cars=cars;

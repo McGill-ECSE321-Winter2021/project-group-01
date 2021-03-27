@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+
     <body>
       <div class="wrap">
         <div class="container">
@@ -12,13 +13,13 @@
                 <div class="col">
                   <div class="top-wrap d-flex">
                     <div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-location-arrow"></span></div>
-                    <div class="text"><span>Address</span><span>721 New York NY 10016</span></div>
+                    <div class="text"><span style="color:white;">Address</span> <span>721 New York NY 10016</span> </div>
                   </div>
                 </div>
                 <div class="col">
                   <div class="top-wrap d-flex">
                     <div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-location-arrow"></span></div>
-                    <div class="text"><span>Call us</span><span>(+01) 123 456 7890</span></div>
+                    <div class="text"><span style="color:white;">Call us</span><span>(+01) 123 456 7890</span></div>
                   </div>
                 </div>
                 <div class="col-md-3 d-flex justify-content-end align-items-center">
@@ -36,9 +37,9 @@
           </div>
         </div>
       </div>
-      <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+      <nav class="navbar navbar-expand-lg navbar-light ftco_navbar bg-light ftco-navbar-light" id="ftco-navbar">
         <div class="container">
-        
+
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="fa fa-bars"></span> Menu
           </button>
@@ -61,9 +62,9 @@
         </div>
       </nav>
       <!-- END nav -->
-      
+
       <router-view></router-view>
-      
+
       <footer class="footer ftco-section">
         <div class="container">
           <div class="row mb-5">
@@ -71,11 +72,6 @@
               <div class="ftco-footer-widget mb-4">
                 <h2 class="logo"><a href="#">Autorepair<span>.</span></a></h2>
                 <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-4">
-                  <li class="ftco-animate"><a href="#"><span class="fa fa-twitter"></span></a></li>
-                  <li class="ftco-animate"><a href="#"><span class="fa fa-facebook"></span></a></li>
-                  <li class="ftco-animate"><a href="#"><span class="fa fa-instagram"></span></a></li>
-                </ul>
               </div>
             </div>
             <div class="col-md-6 col-lg">
@@ -108,7 +104,7 @@
                 <div class="opening-hours">
                   <h4>Opening Days:</h4>
                   <p class="pl-3">
-                    <span>Monday – Friday : 9am to 20 pm</span>
+                    <span>Monday â€“ Friday : 9am to 20 pm</span>
                     <span>Saturday : 9am to 17 pm</span>
                   </p>
                   <h4>Vacations:</h4>

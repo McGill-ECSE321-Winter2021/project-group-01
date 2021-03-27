@@ -1,9 +1,13 @@
 <template>
-  <div class="hello">
+  <div class="addService">
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
+    <div>
+    <button type="button" v-on:click="login()">Login</button>
+    </div>
+
     <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs2</a></li>
+      <li><a href="https://vuejs.org" target="_blank">Core Docs3</a></li>
       <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
       <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
       <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
@@ -22,7 +26,7 @@
 
 <script>
 export default {
-  name: 'Hello',
+  name: 'AddService',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'

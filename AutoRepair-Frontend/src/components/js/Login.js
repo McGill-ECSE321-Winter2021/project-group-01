@@ -41,27 +41,30 @@ export default {
 		}
 	},
 	methods: {
-		login (username, password) {
-		AXIOS.post('/login/', $.param({username: username, password: password}))
-		.then(response => {
-			response.data
-			this.errorLogin=''
-			 if (this.response != '') {
-                    
+		login: function (username, password) {
+			AXIOS.post('/login/', {}, {
+				params: {
+					username: username,
+					password: password
+				}})
+				.then(response => {
+					this.response = response.data
+					this.errorLogin= ''
+					if (this.response != '') {
+                   
                     window.location.href = "/"
-				}
-				else{
-					this.errorLogin = "Wrong username or password"
-					console.log(this.errorLogin)
-				}
-
-			})
-		 .catch(e => {
-                var errorMessage = e.response
-                console.log(e)
-                this.errorLogin = errorMessage
-            })	
-		}
+                }
+                else {
+                    this.errorLogin = 'Wrong email or password!'
+                    console.log(this.errorlogin)
+                }
+				})
+				.catch(e => {
+					var errorMSG = e.response.data.message
+					console.log(errorMSG)
+					this.errorLogin = errorMSG
+				})
+		},
 	}
-}
 
+}

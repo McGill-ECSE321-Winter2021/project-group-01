@@ -1,12 +1,12 @@
 <template>
   <div id="hello">
-  <div class="hero-wrap">
-	    <div class="home-slider owl-carousel">
-	      <div class="slider-item" style="background-image:url(../static/images/bg_1.jpg);">
+  <div class="hero-image">
+	    <div class="home">
+	      <div class="item" style="background-image:url(../static/images/bg_1.jpg);" data-stellar-background-ratio="0.5">
 	      	<div class="overlay"></div>
 	        <div class="container">
 	          <div class="row no-gutters slider-text align-items-center justify-content-start">
-		          <div class="col-md-6 ftco-animate">
+		          <div class="col-md-6">
 		          	<div class="text w-100">
 		          		<h2>We are best car repair services</h2>
 			            <h1 class="mb-4">Make your car last longer</h1>
@@ -17,23 +17,9 @@
 	        </div>
 	      </div>
 
-	      <div class="slider-item" style="background-image:url(../static/images/bg_2.jpg);">
-	      	<div class="overlay"></div>
-	        <div class="container">
-	          <div class="row no-gutters slider-text align-items-center justify-content-start">
-		          <div class="col-md-6 ftco-animate">
-		          	<div class="text w-100">
-		          		<h2>We care about your car</h2>
-			            <h1 class="mb-4">It's time to come to repair your car</h1>
-			            <p><a href="#" class="btn btn-primary">Book an appointment</a></p>
-		            </div>
-		          </div>
-		        </div>
-	        </div>
-	      </div>
 	    </div>
 	  </div>
-		
+
 		<section class="intro">
 			<div class="container intro-wrap">
 				<div class="row no-gutters">
@@ -47,19 +33,19 @@
 						<a href="#" class="bg-primary btn-custom d-flex align-items-center"><span>Book an Appointment</span></a>
 					</div>
 				</div>
-			</div>	
+			</div>
 		</section>
 
-    <section class="ftco-section">
+    <section class="service">
     	<div class="container">
     		<div class="row justify-content-center pb-5 mb-3">
-          <div class="col-md-7 heading-section text-center ftco-animate">
+          <div class="col-md-7 heading-section text-center">
           	<span class="subheading">We offer Services</span>
             <h2>Our car services</h2>
           </div>
         </div>
     		<div class="row">
-          <div class="col-md-4 services ftco-animate">
+          <div class="col-md-4 services">
             <div class="d-block d-flex">
               <div class="icon d-flex justify-content-center align-items-center">
             		<span class="flaticon-car-service"></span>
@@ -79,10 +65,10 @@
                 <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
                 <p><a href="#" class="btn-custom">Read more</a></p>
               </div>
-            </div> 
+            </div>
 
           </div>
-          <div class="col-md-4 services ftco-animate">
+          <div class="col-md-4 services">
             <div class="d-block d-flex">
               <div class="icon d-flex justify-content-center align-items-center">
             		<span class="flaticon-battery"></span>
@@ -92,7 +78,7 @@
                 <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
                 <p><a href="#" class="btn-custom">Read more</a></p>
               </div>
-            </div> 
+            </div>
             <div class="d-block d-flex">
               <div class="icon d-flex justify-content-center align-items-center">
             		<span class="flaticon-car-engine"></span>
@@ -102,10 +88,10 @@
                 <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
                 <p><a href="#" class="btn-custom">Read more</a></p>
               </div>
-            </div>    
+            </div>
           </div>
 
-          <div class="col-md-4 services ftco-animate">
+          <div class="col-md-4 services">
             <div class="d-block d-flex">
               <div class="icon d-flex justify-content-center align-items-center">
             		<span class="flaticon-tow-truck"></span>
@@ -125,12 +111,12 @@
                 <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
                 <p><a href="#" class="btn-custom">Read more</a></p>
               </div>
-            </div>       
+            </div>
           </div>
         </div>
     	</div>
     </section>
-   	
+
     <section class="ftco-section ftco-no-pt ftco-no-pb bg-light">
     	<div class="container">
     		<div class="row d-flex no-gutters">
@@ -386,7 +372,7 @@
         </div>
       </div>
     </section>
-		
+
 		<section class="ftco-section">
       <div class="container">
         <div class="row justify-content-center pb-5 mb-3">
@@ -462,7 +448,7 @@
 	            <div class="text-center">
             	<span class="excerpt d-block">First PMS</span>
 	            <span class="price"><sup>$</sup> <span class="number">78.98</span></span>
-	            
+
 	            <div class="pricing-text">
 	              <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
 	            </div>
@@ -476,7 +462,7 @@
 	            <div class="text-center">
             	<span class="excerpt d-block">Engine Diagnostics</span>
 	            <span class="price"><sup>$</sup> <span class="number">83.75</span></span>
-	            
+
 	            <div class="pricing-text">
 	              <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
 	            </div>
@@ -490,7 +476,7 @@
 	            <div class="text-center">
             	<span class="excerpt d-block">Tow Truck</span>
 	            <span class="price"><sup>$</sup> <span class="number">85.00</span></span>
-	            
+
 	            <div class="pricing-text">
 	              <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
 	            </div>
@@ -504,7 +490,7 @@
 	            <div class="text-center">
             	<span class="excerpt d-block">Car Wash</span>
 	            <span class="price"><sup>$</sup> <span class="number">30.50</span></span>
-	            
+
 	            <div class="pricing-text">
 	              <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
 	            </div>

@@ -15,14 +15,14 @@ This project consists on building a system for an Auto-repair car shop. Customer
 
 ## Roles and Hours spent
 
-| Name                    | Roles/Tasks                                | Sprint 1           | Sprint 2| Sprint 3| Sprint 4|
-| ------------------------| -------------------------------------------|--------------------|---------|---------|---------|
-| Robert Aprahamian       | Software Developer, Testing, Documentation |                35  | -       | -       | -       |
-| Fadi Tawfik Beshay      | Software Developer, Testing, Documentation |                35  | -       | -       | -       |
-| Eric Chehata            | Software Developer, Testing, Documentation |                35  | -       | -       | -       |  
-| Mohammad Saeid Nafar    | Software Developer, Testing, Documentation |                35  | -       | -       | -       |
-| Marc Saber              | Software Developer, Testing, Documentation |                35  | -       | -       | -       |
-| Tamara Zard Aboujaoudeh | Software Developer, Testing, Documentation |                35  | -       | -       | -       |
+| Name                    | Roles/Tasks                                | Sprint 1           | Sprint 2 | Sprint 3| Sprint 4|
+| ------------------------| -------------------------------------------|--------------------|----------|---------|---------|
+| Robert Aprahamian       | Software Developer, Testing, Documentation |                35  | 40       | -       | -       |
+| Fadi Tawfik Beshay      | Software Developer, Testing, Documentation |                35  | 40       | -       | -       |
+| Eric Chehata            | Software Developer, Testing, Documentation |                35  | 40       | -       | -       |  
+| Mohammad Saeid Nafar    | Software Developer, Testing, Documentation |                35  | 40       | -       | -       |
+| Marc Saber              | Software Developer, Testing, Documentation |                35  | 40       | -       | -       |
+| Tamara Zard Aboujaoudeh | Software Developer, Testing, Documentation |                35  | 40       | -       | -       |
 
 
 ## Sprint 1 
@@ -38,11 +38,11 @@ To access the wiki>>[Sprint 1](https://github.com/McGill-ECSE321-Winter2021/proj
 | Tamara Zard Aboujaoudeh | Requirements, Use Case Diagrams, Domain Model, Gradle/Spring/Heroku setup , Persistence Testing|               
 
 ## Sprint 2
-To access the wiki>>
+To access the wiki>>[Sprint 2](https://github.com/McGill-ECSE321-Winter2021/project-group-01/wiki#sprint-2)
 ### Roles and Tasks
 | Name                    | Roles/Tasks                                                                                                   | 
 | ------------------------| --------------------------------------------------------------------------------------------------------------|
-| Robert Aprahamian       | Backend Implementation, _Service_ & _Reminder_ classes Unit Testing, Integration Testing, Documentation       |              
+| Robert Aprahamian       | Backend Implementation, _ChosenService_ & _Reminder_ classes Unit Testing, Integration Testing, Documentation       |              
 | Fadi Tawfik Beshay      | Backend Implementation, _OperatingHour_ & _Business_ classes Unit Testing, Integration Testing, Documentation |                
 | Eric Chehata            | Backend Implementation, _Cutomer, Profile_ & _Car_ classes Unit Testing, Integration Testing, Documentation   |             
 | Mohammad Saeid Nafar    | Backend Implementation, _Review_ class Unit Testing, Integration Testing, Documentation                       |         

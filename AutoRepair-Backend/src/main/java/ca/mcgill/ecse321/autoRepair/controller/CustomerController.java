@@ -37,7 +37,22 @@ public class CustomerController {
 	@Autowired
 	private CarService carService;
 
-
+	/**
+	 * @author Eric Chehata
+	 * Registers a customer
+	 * @param firstName
+	 * @param lastName
+	 * @param phoneNumber
+	 * @param email
+	 * @param address
+	 * @param zipCode
+	 * @param username
+	 * @param password
+	 * @param model
+	 * @param plateNumber
+	 * @param carTransmission
+	 * @return customerDTO
+	 */
 	@PostMapping(value = {"/register_customer"})
 	public CustomerDTO registerCustomer(@RequestParam String firstName, @RequestParam String lastName, @RequestParam String phoneNumber,
 			@RequestParam String email, @RequestParam String address, @RequestParam String zipCode, @RequestParam String username, 
@@ -58,16 +73,33 @@ public class CustomerController {
 
 	}
 	
+	/**
+	 * @author Eric Chehata
+	 * Deletes a customer given a username
+	 * @param username
+	 * @return true if customer is successfully deleted
+	 */
 	@PostMapping(value = {"/delete_customer/{username}"})
 	public boolean deleteCustomer(@PathVariable("username") String username) {
 		return customerService.deleteCustomer(username);
 	}
 	
+	/**
+	 * @author Eric Chehata
+	 * Gets a customer given a username
+	 * @param username
+	 * @return customerDTO
+	 */
 	@GetMapping(value = {"/view_customer/{username}"})
 	public CustomerDTO viewCustomer(@PathVariable("username") String username) {
 		return convertToDTO(customerService.getCustomer(username));
 	}
 
+	/**
+	 * @author Eric Chehata
+	 * Gets all customers
+	 * @return list containing all customer DTOs
+	 */
 	@GetMapping(value = {"/view_customers", "/view_customers/"})
 	public List<CustomerDTO> viewCustomers(){
 
@@ -76,6 +108,13 @@ public class CustomerController {
 	
 	}
 	
+	/**
+	 * @author Eric Chehata
+	 * Edits the password of a customer
+	 * @param username
+	 * @param password
+	 * @return customerDTO
+	 */
 	@PostMapping(value = {"/change_password/{username}"})
 	public CustomerDTO changePassword(@PathVariable("username") String username, @RequestParam String password) {
 		return convertToDTO(customerService.editCustomerPassword(username, password));

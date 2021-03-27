@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
@@ -11,13 +12,20 @@ import ca.mcgill.ecse321.autoRepair.model.Owner;
 import ca.mcgill.ecse321.autoRepair.dao.OwnerRepository;
 
 
-
+@Service
 public class OwnerService {
 
 	@Autowired
 	OwnerRepository ownerRepository;
 	
-	
+	/**
+	 * @author Marc Saber
+	 * Creates an owner
+	 * @param username
+	 * @param password
+	 * @param authentificationCode
+	 * @return owner
+	 */
 	@Transactional
 	public Owner createOwner(String username,String password,String authentificationCode) {
 		
@@ -37,13 +45,19 @@ public class OwnerService {
 		return owner;
 	}
 	
-	
+	/**
+	 * @author Marc Saber
+	 * Updates an owner's password
+	 * @param oldUsername
+	 * @param newPassword
+	 * @return owner
+	 */
 	@Transactional
-	public Owner updateOwner(String oldUsername,String newUsername,String newPassword) {
+	public Owner updateOwner(String oldUsername,String newPassword) {
 		Owner oldOwner = ownerRepository.findOwnerByUsername(oldUsername);
-		if(oldOwner.getUsername() == newUsername && newUsername!="") {
-			oldOwner.setUsername(newUsername);
-		}
+//	 	if(oldOwner.getUsername() != newUsername && newUsername!="") {
+//			oldOwner.setUsername(newUsername);
+//		}
 		if(oldOwner.getPassword() != newPassword && newPassword!="") {
 			if (passwordIsValid(newPassword)) {
 				oldOwner.setPassword(newPassword);		
@@ -54,12 +68,23 @@ public class OwnerService {
 		return oldOwner;	
 	}
 	
+	/**
+	 * @author Marc Saber
+	 * Gets an owner given a valid username
+	 * @param name
+	 * @return owner
+	 */
 	@Transactional
 	public Owner getOwner(String name) {
 		Owner owner = ownerRepository.findOwnerByUsername(name);
 		return owner;
 	}
 	
+	/**
+	 * @author Marc Saber
+	 * Returns a list of all the owners
+	 * @return list of all owners
+	 */
 	@Transactional
 	public List<Owner> getAllOwners(){             
 		return toList(ownerRepository.findAll());

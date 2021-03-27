@@ -23,6 +23,15 @@ public class BusinessService {
 	@Autowired
 	OperatingHourRepository operatingHourRepository;
 
+	/**
+	 * @author Fadi Tawfik Beshay
+	 * Creates the business information of a given business
+	 * @param name
+	 * @param email
+	 * @param address
+	 * @param phoneNumber
+	 * @return business
+	 */
 	@Transactional
 	public Business createBusiness(String name, String email, String address, String phoneNumber) {
 		if(name==null || name=="") throw new IllegalArgumentException("Name cannot be blank");
@@ -43,6 +52,16 @@ public class BusinessService {
 		return business;
 	}
 	
+	/**
+	 * @author Fadi Tawfik Beshay
+	 * Edits the business information of a given business
+	 * @param name
+	 * @param name1
+	 * @param email
+	 * @param address
+	 * @param phoneNumber
+	 * @return business
+	 */
 	@Transactional
 	public Business editBusiness(String name, String name1, String email, String address, String phoneNumber) {
 		if(name==null || name=="") throw new IllegalArgumentException("Name cannot be blank");
@@ -62,11 +81,26 @@ public class BusinessService {
 		return business;
 	}
 
+	/**
+	 * @author Fadi Tawfik Beshay
+	 * Returns a business given a name
+	 * @param name
+	 * @return business
+	 */
 	@Transactional
 	public Business getBusiness(String name) {
 		return businessRepository.findBusinessByName(name);
 	}
 
+	/**
+	 * @author Fadi Tawfik Beshay
+	 * Creates an operating hour for the business
+	 * @param businessName
+	 * @param dayOfWeek
+	 * @param startTime
+	 * @param endTime
+	 * @return operatingHour
+	 */
 	@Transactional
 	public OperatingHour createOperatingHour(String businessName, DayOfWeek dayOfWeek, Time startTime, Time endTime) {
 		if(dayOfWeek==null) throw new IllegalArgumentException("Day of week cannot be blank");
@@ -85,6 +119,15 @@ public class BusinessService {
 		return operatingHour;
 	}
 	
+	/**
+	 * @author Fadi Tawfik Beshay
+	 * edits the operating hour of a business
+	 * @param dayOfWeek
+	 * @param dayOfWeek1
+	 * @param startTime1
+	 * @param endTime1
+	 * @return operatingHour
+	 */
 	@Transactional
 	public OperatingHour editOperatingHour(DayOfWeek dayOfWeek, DayOfWeek dayOfWeek1, Time startTime1, Time endTime1) {
 		
@@ -101,6 +144,13 @@ public class BusinessService {
 		return operatingHour;
 	}
 	
+	/**
+	 * @author Fadi Tawfik Beshay
+	 * Deletes an operating hour of a business
+	 * @param businessName
+	 * @param dayOfWeek
+	 * @return true when operating hour is deleted
+	 */
 	@Transactional
 	public boolean deleteOperatingHour(String businessName, DayOfWeek dayOfWeek) {
 		if(dayOfWeek==null) throw new IllegalArgumentException("Day of week cannot be blank");
@@ -114,12 +164,22 @@ public class BusinessService {
 		return true;
 	}
 	
-	
+	/**
+	 * @author Fadi Tawfik Beshay
+	 * Gets an operating hour given any day of the week
+	 * @param dayOfWeek
+	 * @return operatingHour
+	 */
 	@Transactional
 	public OperatingHour getOperatingHour(DayOfWeek dayOfWeek) {
 		return operatingHourRepository.findByDayOfWeek(dayOfWeek);
 	}
 	
+	/**
+	 * @author Fadi Tawfik Beshay
+	 * Gets all operating hours of a business
+	 * @return list of operating hours
+	 */
 	@Transactional
 	public List<OperatingHour> getAllOperatingHour() {
 		return toList(operatingHourRepository.findAll());

@@ -144,7 +144,7 @@ public class TimeSlotService {
 
     @Transactional
     public TimeSlot getTimeSlot(Date startDate, Time startTime){
-        return timeSlotRepository.findTimeSlotByStartDateAndStartTimeAndEndTime(startDate,startTime);
+        return timeSlotRepository.findTimeSlotByStartDateAndStartTime(startDate,startTime);
     }
 
 }

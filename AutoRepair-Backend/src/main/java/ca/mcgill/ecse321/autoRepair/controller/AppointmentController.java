@@ -1,13 +1,10 @@
 package ca.mcgill.ecse321.autoRepair.controller;
 
-import ca.mcgill.ecse321.autoRepair.dao.AppointmentRepository;
-import ca.mcgill.ecse321.autoRepair.dao.CustomerRepository;
-import ca.mcgill.ecse321.autoRepair.dao.ChosenServiceRepository;
-import ca.mcgill.ecse321.autoRepair.dao.TimeSlotRepository;
 import ca.mcgill.ecse321.autoRepair.dto.*;
 import ca.mcgill.ecse321.autoRepair.model.*;
 import ca.mcgill.ecse321.autoRepair.service.AppointmentService;
 import ca.mcgill.ecse321.autoRepair.service.ChosenServiceService;
+import ca.mcgill.ecse321.autoRepair.service.CustomerService;
 import ca.mcgill.ecse321.autoRepair.service.TimeSlotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,22 +23,13 @@ public class AppointmentController {
     AppointmentService appointmentService;
 
     @Autowired
-    AppointmentRepository appointmentRepository;
-
-    @Autowired
-    CustomerRepository customerRepository;
-
-    @Autowired
-    ChosenServiceRepository chosenServiceRepository;
+    CustomerService customerService;
 
     @Autowired
     TimeSlotService timeSlotService;
 
     @Autowired
     ChosenServiceService chosenServiceService;
-
-    @Autowired
-    TimeSlotRepository timeSlotRepository;
 
     /**
      * @author Tamara Zard Aboujaoudeh
@@ -87,16 +75,16 @@ public class AppointmentController {
                                                     String newStartTimeString, @RequestParam String newServiceString){
         SystemTime.setSysTime(Time.valueOf(LocalTime.now()));
         SystemTime.setSysDate(Date.valueOf(LocalDate.now()));
-        Customer customer = customerRepository.findCustomerByUsername(username);
+        Customer customer = customerService.getCustomer(username);
         Date oldDate = Date.valueOf(oldDateString);
         Time oldTime = Time.valueOf(oldTimeString);
-        ChosenService oldService = chosenServiceRepository.findChosenServiceByName(oldServiceString);
+        ChosenService oldService = chosenServiceService.getChosenService(oldServiceString);
         Time endOldTime = findEndTimeOfApp(oldService, oldTime.toLocalTime());
 
-        TimeSlot timeSlot = timeSlotRepository.findTimeSlotByStartDateAndStartTimeAndEndTime(oldDate,oldTime,endOldTime);
+        TimeSlot timeSlot = timeSlotService.getTimeSlot(oldDate, oldTime);
 
-        Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
-        List<Appointment> appointmentLists = appointmentRepository.findAppointmentsByCustomer(customer);
+        Appointment appointment = appointmentService.getAppointment(timeSlot);
+        List<Appointment> appointmentLists = appointmentService.getAppointmentsOfCustomer(customer);
         boolean exists = false;
         for(int i=0; i<appointmentLists.size(); i++){
             if(appointment.equals(appointmentLists.get(i))) exists=true;
@@ -156,15 +144,15 @@ public class AppointmentController {
         Date date = Date.valueOf(dateString);
         Time startTime = Time.valueOf(startTimeString);
 
-        Customer customer = customerRepository.findCustomerByUsername(username);
+        Customer customer = customerService.getCustomer(username);
         Time oldTime = Time.valueOf(startTimeString);
-        ChosenService oldService = chosenServiceRepository.findChosenServiceByName(serviceName);
+        ChosenService oldService = chosenServiceService.getChosenService(serviceName);
         Time endOldTime = findEndTimeOfApp(oldService, oldTime.toLocalTime());
 
-        TimeSlot timeSlot = timeSlotRepository.findTimeSlotByStartDateAndStartTimeAndEndTime(date,startTime,endOldTime);
+        TimeSlot timeSlot = timeSlotService.getTimeSlot(date, startTime);
 
-        Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
-        List<Appointment> appointmentLists = appointmentRepository.findAppointmentsByCustomer(customer);
+        Appointment appointment = appointmentService.getAppointment(timeSlot);
+        List<Appointment> appointmentLists = appointmentService.getAppointmentsOfCustomer(customer);
         boolean exists = false;
         for(int i=0; i<appointmentLists.size(); i++){
             if(appointment.equals(appointmentLists.get(i))) exists=true;
@@ -239,8 +227,8 @@ public class AppointmentController {
         return unavailableTimeSlots;
     }
     private List<AppointmentDTO> createAppointmentDtosForCustomer(String username) {
-        Customer customer = customerRepository.findCustomerByUsername(username);
-        List<Appointment> appointmentsForCustomer = appointmentRepository.findAppointmentsByCustomer(customer);
+        Customer customer = customerService.getCustomer(username);
+        List<Appointment> appointmentsForCustomer = appointmentService.getAppointmentsOfCustomer(customer);
         List<AppointmentDTO> appointments = new ArrayList<>();
         for (Appointment appointment : appointmentsForCustomer) {
             appointments.add(convertToDTO(appointment));

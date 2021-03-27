@@ -2,7 +2,7 @@
   <div id="hello">
   <div class="hero-wrap">
 	    <div class="home-slider owl-carousel">
-	      <div class="slider-item" style="background-image:url(images/bg_1.jpg);">
+	      <div class="slider-item" style="background-image:url(../static/images/bg_1.jpg);">
 	      	<div class="overlay"></div>
 	        <div class="container">
 	          <div class="row no-gutters slider-text align-items-center justify-content-start">
@@ -17,7 +17,7 @@
 	        </div>
 	      </div>
 
-	      <div class="slider-item" style="background-image:url(images/bg_2.jpg);">
+	      <div class="slider-item" style="background-image:url(../static/images/bg_2.jpg);">
 	      	<div class="overlay"></div>
 	        <div class="container">
 	          <div class="row no-gutters slider-text align-items-center justify-content-start">
@@ -135,7 +135,7 @@
     	<div class="container">
     		<div class="row d-flex no-gutters">
     			<div class="col-md-6 d-flex">
-    				<div class="img img-video d-flex align-self-stretch align-items-center justify-content-center mb-4 mb-sm-0" style="background-image:url(images/about.jpg);">
+    				<div class="img img-video d-flex align-self-stretch align-items-center justify-content-center mb-4 mb-sm-0" style="background-image:url(../static/images/about.jpg);">
     					<a href="https://vimeo.com/45830194" class="icon-video popup-vimeo d-flex justify-content-center align-items-center">
     						<span class="fa fa-play"></span>
     					</a>
@@ -226,7 +226,7 @@
     	</div>
     </section>
 
-		<section class="ftco-appointment ftco-section ftco-no-pt ftco-no-pb img" style="background-image: url(images/bg_3.jpg);">
+		<section class="ftco-appointment ftco-section ftco-no-pt ftco-no-pb img" style="background-image: url(../static/images/bg_3.jpg);">
 			<div class="overlay"></div>
     	<div class="container">
     		<div class="row d-md-flex justify-content-end">
@@ -312,7 +312,7 @@
                   <div class="text">
                     <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
                     <div class="d-flex align-items-center">
-                    	<div class="user-img" style="background-image: url(images/person_1.jpg)"></div>
+                    	<div class="user-img" style="background-image: url(../static/images/person_1.jpg)"></div>
                     	<div class="pl-3">
 		                    <p class="name">Roger Scott</p>
 		                    <span class="position">Marketing Manager</span>
@@ -327,7 +327,7 @@
                   <div class="text">
                     <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
                     <div class="d-flex align-items-center">
-                    	<div class="user-img" style="background-image: url(images/person_2.jpg)"></div>
+                    	<div class="user-img" style="background-image: url(../static/images/person_2.jpg)"></div>
                     	<div class="pl-3">
 		                    <p class="name">Roger Scott</p>
 		                    <span class="position">Marketing Manager</span>
@@ -342,7 +342,7 @@
                   <div class="text">
                     <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
                     <div class="d-flex align-items-center">
-                    	<div class="user-img" style="background-image: url(images/person_3.jpg)"></div>
+                    	<div class="user-img" style="background-image: url(../static/images/person_3.jpg)"></div>
                     	<div class="pl-3">
 		                    <p class="name">Roger Scott</p>
 		                    <span class="position">Marketing Manager</span>
@@ -357,7 +357,7 @@
                   <div class="text">
                     <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
                     <div class="d-flex align-items-center">
-                    	<div class="user-img" style="background-image: url(images/person_1.jpg)"></div>
+                    	<div class="user-img" style="background-image: url(../static/images/person_1.jpg)"></div>
                     	<div class="pl-3">
 		                    <p class="name">Roger Scott</p>
 		                    <span class="position">Marketing Manager</span>
@@ -372,7 +372,7 @@
                   <div class="text">
                     <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
                     <div class="d-flex align-items-center">
-                    	<div class="user-img" style="background-image: url(images/person_2.jpg)"></div>
+                    	<div class="user-img" style="background-image: url(../static/images/person_2.jpg)"></div>
                     	<div class="pl-3">
 		                    <p class="name">Roger Scott</p>
 		                    <span class="position">Marketing Manager</span>
@@ -398,11 +398,11 @@
         <div class="row d-flex">
           <div class="col-md-4 d-flex ftco-animate">
             <div class="blog-entry align-self-stretch">
-              <a href="blog-single.html" class="block-20 rounded" style="background-image: url('images/image_1.jpg');">
+              <a href="blog-single.html" class="block-20 rounded" style="background-image: url('../static/images/image_1.jpg');">
               </a>
               <div class="text mt-3">
               	<div class="posted mb-3 d-flex">
-              		<div class="img author" style="background-image: url(images/person_2.jpg);"></div>
+              		<div class="img author" style="background-image: url(../static/images/person_2.jpg);"></div>
               		<div class="desc pl-3">
               			<span>Posted by John doe</span>
               			<span>24 February 2020</span>
@@ -414,11 +414,11 @@
           </div>
           <div class="col-md-4 d-flex ftco-animate">
             <div class="blog-entry align-self-stretch">
-              <a href="blog-single.html" class="block-20 rounded" style="background-image: url('images/image_2.jpg');">
+              <a href="blog-single.html" class="block-20 rounded" style="background-image: url('../static/images/image_2.jpg');">
               </a>
               <div class="text mt-3">
               	<div class="posted mb-3 d-flex">
-              		<div class="img author" style="background-image: url(images/person_3.jpg);"></div>
+              		<div class="img author" style="background-image: url(../static/images/person_3.jpg);"></div>
               		<div class="desc pl-3">
               			<span>Posted by John doe</span>
               			<span>24 February 2020</span>
@@ -430,11 +430,11 @@
           </div>
           <div class="col-md-4 d-flex ftco-animate">
             <div class="blog-entry align-self-stretch">
-              <a href="blog-single.html" class="block-20 rounded" style="background-image: url('images/image_3.jpg');">
+              <a href="blog-single.html" class="block-20 rounded" style="background-image: url('../static/images/image_3.jpg');">
               </a>
               <div class="text mt-3">
               	<div class="posted mb-3 d-flex">
-              		<div class="img author" style="background-image: url(images/person_1.jpg);"></div>
+              		<div class="img author" style="background-image: url(../static/images/person_1.jpg);"></div>
               		<div class="desc pl-3">
               			<span>Posted by John doe</span>
               			<span>24 February 2020</span>
@@ -529,8 +529,8 @@
 			<div class="container-fluid px-md-0">
 				<div class="row no-gutters">
           <div class="col-md-3 ftco-animate">
-            <div class="work img d-flex align-items-end" style="background-image: url(images/work-1.jpg);">
-            	<a href="images/work-1.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+            <div class="work img d-flex align-items-end" style="background-image: url(../static/images/work-1.jpg);">
+            	<a href="../static/images/work-1.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
 	    					<span class="fa fa-expand"></span>
 	    				</a>
             	<div class="desc w-100 px-4">
@@ -542,8 +542,8 @@
             </div>
           </div>
           <div class="col-md-3 ftco-animate">
-            <div class="work img d-flex align-items-end" style="background-image: url(images/work-2.jpg);">
-            	<a href="images/work-2.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+            <div class="work img d-flex align-items-end" style="background-image: url(../static/images/work-2.jpg);">
+            	<a href="../static/images/work-2.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
 	    					<span class="fa fa-expand"></span>
 	    				</a>
             	<div class="desc w-100 px-4">
@@ -555,8 +555,8 @@
             </div>
           </div>
           <div class="col-md-3 ftco-animate">
-            <div class="work img d-flex align-items-end" style="background-image: url(images/work-3.jpg);">
-            	<a href="images/work-3.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+            <div class="work img d-flex align-items-end" style="background-image: url(../static/images/work-3.jpg);">
+            	<a href="../static/images/work-3.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
 	    					<span class="fa fa-expand"></span>
 	    				</a>
             	<div class="desc w-100 px-4">
@@ -569,8 +569,8 @@
           </div>
 
           <div class="col-md-3 ftco-animate">
-            <div class="work img d-flex align-items-end" style="background-image: url(images/work-4.jpg);">
-            	<a href="images/work-4.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+            <div class="work img d-flex align-items-end" style="background-image: url(../static/images/work-4.jpg);">
+            	<a href="../static/images/work-4.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
 	    					<span class="fa fa-expand"></span>
 	    				</a>
             	<div class="desc w-100 px-4">

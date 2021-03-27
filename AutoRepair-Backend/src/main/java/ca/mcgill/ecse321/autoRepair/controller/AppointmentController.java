@@ -50,7 +50,7 @@ public class AppointmentController {
         SystemTime.setSysTime(Time.valueOf(LocalTime.now()));
         SystemTime.setSysDate(Date.valueOf(LocalDate.now()));
         Date date = Date.valueOf(dateString);
-        Time startTime = Time.valueOf(startTimeString);
+        Time startTime = Time.valueOf(startTimeString + ":00");
         Appointment appointment = appointmentService.makeAppointment(username,serviceName,date, startTime);
         return convertToDTO(appointment);
     }
@@ -69,7 +69,7 @@ public class AppointmentController {
      * @param newServiceString
      * @return
      */
-    @PostMapping(value = {"/update_appointment/{username}"})
+    @PatchMapping(value = {"/update_appointment/{username}"})
     public AppointmentDTO updateAppointment(@PathVariable("username") String username, @RequestParam String oldDateString, @RequestParam String oldTimeString,
                                             @RequestParam String newDateString, @RequestParam String oldServiceString, @RequestParam
                                                     String newStartTimeString, @RequestParam String newServiceString){
@@ -77,7 +77,7 @@ public class AppointmentController {
         SystemTime.setSysDate(Date.valueOf(LocalDate.now()));
         Customer customer = customerService.getCustomer(username);
         Date oldDate = Date.valueOf(oldDateString);
-        Time oldTime = Time.valueOf(oldTimeString);
+        Time oldTime = Time.valueOf(oldTimeString + ":00");
         ChosenService oldService = chosenServiceService.getChosenService(oldServiceString);
         Time endOldTime = findEndTimeOfApp(oldService, oldTime.toLocalTime());
 
@@ -101,7 +101,7 @@ public class AppointmentController {
             newDate = Date.valueOf(newDateString);
         }
         if(newStartTimeString!=null && containsCharacter(newStartTimeString)) {
-            newStartTime = Time.valueOf(newStartTimeString);
+            newStartTime = Time.valueOf(newStartTimeString + ":00");
         }
 
         if(newService!=null){
@@ -137,15 +137,15 @@ public class AppointmentController {
      * @param serviceName
      * @return true when successfully deleted
      */
-    @PostMapping(value = {"/cancel_appointment/{username}/{date}/{time}/{service}"})
+    @DeleteMapping(value = {"/cancel_appointment/{username}/{date}/{time}/{service}"})
     public boolean cancelAppointment(@PathVariable("username") String username, @PathVariable("date") String dateString, @PathVariable("time") String startTimeString, @PathVariable("service") String serviceName){
         SystemTime.setSysTime(Time.valueOf(LocalTime.now()));
         SystemTime.setSysDate(Date.valueOf(LocalDate.now()));
         Date date = Date.valueOf(dateString);
-        Time startTime = Time.valueOf(startTimeString);
+        Time startTime = Time.valueOf(startTimeString + ":00");
 
         Customer customer = customerService.getCustomer(username);
-        Time oldTime = Time.valueOf(startTimeString);
+        Time oldTime = Time.valueOf(startTimeString + ":00");
         ChosenService oldService = chosenServiceService.getChosenService(serviceName);
         Time endOldTime = findEndTimeOfApp(oldService, oldTime.toLocalTime());
 

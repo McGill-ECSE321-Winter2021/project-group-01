@@ -2,7 +2,7 @@
   <div id="hello">
     <div class="hero-wrap">
 	    <div class="hero-image">
-	      <div class="item" style="height:800px; width: 100%; object-fit:cover; background-image:url(../static/images/bg_2.jpg);" >
+	      <div class="item" style="height:800px; width: 100%; background-image:url(../static/images/bg_2.jpg);" >
 	      	<div class="overlay"></div>
 	        <div class="container">
 	          <div class="row no-gutters slider-text align-items-center justify-content-start">
@@ -19,19 +19,19 @@
 	    </div>
 	  </div>
 
-		
-  
+
+
 		<section class="intro">
-			<div class="container intro-wrap">
+			<div class="container intro-wrap" >
 				<div class="row no-gutters">
-					<div class="col-md-12 col-lg-9 bg-intro d-sm-flex align-items-center align-items-stretch">
+					<div class="col-md-12 col-lg-9 bg-intro d-sm-flex align-items-center align-items-stretch" >
 						<div class="intro-box d-flex align-items-center">
-							<div class="icon d-flex align-items-center justify-content-center">
+							<div class="icon d-flex align-items-center justify-content-center" style="background-color:orange;">
 								<i class="flaticon-repair"></i>
 							</div>
 							<h2 class="mb-0">Are you ready? <span>Let's repair it now!</span></h2>
 						</div>
-						<a href="#" class="bg-primary btn-custom d-flex align-items-center"><span>Book an Appointment</span></a>
+						<a href="#" class="bg-primary btn-custom d-flex align-items-center"><span style="color:orange;">Book an Appointment</span></a>
 					</div>
 				</div>
 			</div>
@@ -118,7 +118,7 @@
     	</div>
     </section>
 
-   
+
 
     <section class="ftco-counter" id="section-counter">
     	<div class="container">
@@ -328,7 +328,7 @@
       </div>
     </section>
 
-		
+
     <section class="ftco-section bg-light">
     	<div class="container">
     		<div class="row justify-content-center pb-5 mb-3">

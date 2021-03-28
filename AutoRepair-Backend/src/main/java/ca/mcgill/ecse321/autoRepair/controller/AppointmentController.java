@@ -1,13 +1,10 @@
 package ca.mcgill.ecse321.autoRepair.controller;
 
-import ca.mcgill.ecse321.autoRepair.dao.AppointmentRepository;
-import ca.mcgill.ecse321.autoRepair.dao.CustomerRepository;
-import ca.mcgill.ecse321.autoRepair.dao.ChosenServiceRepository;
-import ca.mcgill.ecse321.autoRepair.dao.TimeSlotRepository;
 import ca.mcgill.ecse321.autoRepair.dto.*;
 import ca.mcgill.ecse321.autoRepair.model.*;
 import ca.mcgill.ecse321.autoRepair.service.AppointmentService;
 import ca.mcgill.ecse321.autoRepair.service.ChosenServiceService;
+import ca.mcgill.ecse321.autoRepair.service.CustomerService;
 import ca.mcgill.ecse321.autoRepair.service.TimeSlotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,22 +23,13 @@ public class AppointmentController {
     AppointmentService appointmentService;
 
     @Autowired
-    AppointmentRepository appointmentRepository;
-
-    @Autowired
-    CustomerRepository customerRepository;
-
-    @Autowired
-    ChosenServiceRepository chosenServiceRepository;
+    CustomerService customerService;
 
     @Autowired
     TimeSlotService timeSlotService;
 
     @Autowired
     ChosenServiceService chosenServiceService;
-
-    @Autowired
-    TimeSlotRepository timeSlotRepository;
 
     /**
      * @author Tamara Zard Aboujaoudeh
@@ -62,7 +50,7 @@ public class AppointmentController {
         SystemTime.setSysTime(Time.valueOf(LocalTime.now()));
         SystemTime.setSysDate(Date.valueOf(LocalDate.now()));
         Date date = Date.valueOf(dateString);
-        Time startTime = Time.valueOf(startTimeString);
+        Time startTime = Time.valueOf(startTimeString + ":00");
         Appointment appointment = appointmentService.makeAppointment(username,serviceName,date, startTime);
         return convertToDTO(appointment);
     }
@@ -81,22 +69,22 @@ public class AppointmentController {
      * @param newServiceString
      * @return
      */
-    @PostMapping(value = {"/update_appointment/{username}"})
+    @PatchMapping(value = {"/update_appointment/{username}"})
     public AppointmentDTO updateAppointment(@PathVariable("username") String username, @RequestParam String oldDateString, @RequestParam String oldTimeString,
                                             @RequestParam String newDateString, @RequestParam String oldServiceString, @RequestParam
                                                     String newStartTimeString, @RequestParam String newServiceString){
         SystemTime.setSysTime(Time.valueOf(LocalTime.now()));
         SystemTime.setSysDate(Date.valueOf(LocalDate.now()));
-        Customer customer = customerRepository.findCustomerByUsername(username);
+        Customer customer = customerService.getCustomer(username);
         Date oldDate = Date.valueOf(oldDateString);
-        Time oldTime = Time.valueOf(oldTimeString);
-        ChosenService oldService = chosenServiceRepository.findChosenServiceByName(oldServiceString);
+        Time oldTime = Time.valueOf(oldTimeString + ":00");
+        ChosenService oldService = chosenServiceService.getChosenService(oldServiceString);
         Time endOldTime = findEndTimeOfApp(oldService, oldTime.toLocalTime());
 
-        TimeSlot timeSlot = timeSlotRepository.findTimeSlotByStartDateAndStartTimeAndEndTime(oldDate,oldTime,endOldTime);
+        TimeSlot timeSlot = timeSlotService.getTimeSlot(oldDate, oldTime);
 
-        Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
-        List<Appointment> appointmentLists = appointmentRepository.findAppointmentsByCustomer(customer);
+        Appointment appointment = appointmentService.getAppointment(timeSlot);
+        List<Appointment> appointmentLists = appointmentService.getAppointmentsOfCustomer(customer);
         boolean exists = false;
         for(int i=0; i<appointmentLists.size(); i++){
             if(appointment.equals(appointmentLists.get(i))) exists=true;
@@ -113,7 +101,7 @@ public class AppointmentController {
             newDate = Date.valueOf(newDateString);
         }
         if(newStartTimeString!=null && containsCharacter(newStartTimeString)) {
-            newStartTime = Time.valueOf(newStartTimeString);
+            newStartTime = Time.valueOf(newStartTimeString + ":00");
         }
 
         if(newService!=null){
@@ -149,22 +137,22 @@ public class AppointmentController {
      * @param serviceName
      * @return true when successfully deleted
      */
-    @PostMapping(value = {"/cancel_appointment/{username}/{date}/{time}/{service}"})
+    @DeleteMapping(value = {"/cancel_appointment/{username}/{date}/{time}/{service}"})
     public boolean cancelAppointment(@PathVariable("username") String username, @PathVariable("date") String dateString, @PathVariable("time") String startTimeString, @PathVariable("service") String serviceName){
         SystemTime.setSysTime(Time.valueOf(LocalTime.now()));
         SystemTime.setSysDate(Date.valueOf(LocalDate.now()));
         Date date = Date.valueOf(dateString);
-        Time startTime = Time.valueOf(startTimeString);
+        Time startTime = Time.valueOf(startTimeString + ":00");
 
-        Customer customer = customerRepository.findCustomerByUsername(username);
-        Time oldTime = Time.valueOf(startTimeString);
-        ChosenService oldService = chosenServiceRepository.findChosenServiceByName(serviceName);
+        Customer customer = customerService.getCustomer(username);
+        Time oldTime = Time.valueOf(startTimeString + ":00");
+        ChosenService oldService = chosenServiceService.getChosenService(serviceName);
         Time endOldTime = findEndTimeOfApp(oldService, oldTime.toLocalTime());
 
-        TimeSlot timeSlot = timeSlotRepository.findTimeSlotByStartDateAndStartTimeAndEndTime(date,startTime,endOldTime);
+        TimeSlot timeSlot = timeSlotService.getTimeSlot(date, startTime);
 
-        Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
-        List<Appointment> appointmentLists = appointmentRepository.findAppointmentsByCustomer(customer);
+        Appointment appointment = appointmentService.getAppointment(timeSlot);
+        List<Appointment> appointmentLists = appointmentService.getAppointmentsOfCustomer(customer);
         boolean exists = false;
         for(int i=0; i<appointmentLists.size(); i++){
             if(appointment.equals(appointmentLists.get(i))) exists=true;
@@ -239,8 +227,8 @@ public class AppointmentController {
         return unavailableTimeSlots;
     }
     private List<AppointmentDTO> createAppointmentDtosForCustomer(String username) {
-        Customer customer = customerRepository.findCustomerByUsername(username);
-        List<Appointment> appointmentsForCustomer = appointmentRepository.findAppointmentsByCustomer(customer);
+        Customer customer = customerService.getCustomer(username);
+        List<Appointment> appointmentsForCustomer = appointmentService.getAppointmentsOfCustomer(customer);
         List<AppointmentDTO> appointments = new ArrayList<>();
         for (Appointment appointment : appointmentsForCustomer) {
             appointments.add(convertToDTO(appointment));

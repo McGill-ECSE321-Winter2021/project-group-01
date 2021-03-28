@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
@@ -139,6 +140,11 @@ public class TimeSlotService {
             return OperatingHour.DayOfWeek.Monday;
         }
         return null;
+    }
+
+    @Transactional
+    public TimeSlot getTimeSlot(Date startDate, Time startTime){
+        return timeSlotRepository.findTimeSlotByStartDateAndStartTime(startDate,startTime);
     }
 
 }

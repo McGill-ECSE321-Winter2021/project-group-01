@@ -12,13 +12,13 @@
                 <div class="col">
                   <div class="top-wrap d-flex">
                     <div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-location-arrow"></span></div>
-                    <div class="text"><span>Address</span><span>721 New York NY 10016</span></div>
+                    <div class="text"><span style= "color:white;">Address</span><span>721 New York NY 10016</span></div>
                   </div>
                 </div>
                 <div class="col">
                   <div class="top-wrap d-flex">
                     <div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-location-arrow"></span></div>
-                    <div class="text"><span>Call us</span><span>(+01) 123 456 7890</span></div>
+                    <div class="text"><span style= "color:white;">Call us</span><span>(+01) 123 456 7890</span></div>
                   </div>
                 </div>
                 <div class="col-md-3 d-flex justify-content-end align-items-center">
@@ -36,31 +36,8 @@
           </div>
         </div>
       </div>
-      <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-        <div class="container">
-        
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="fa fa-bars"></span> Menu
-          </button>
-          <form action="#" class="searchform order-lg-last">
-            <div class="form-group d-flex">
-              <input type="text" class="form-control pl-3" placeholder="Search">
-              <button type="submit" placeholder="" class="form-control search"><span class="fa fa-search"></span></button>
-            </div>
-          </form>
-          <div class="collapse navbar-collapse" id="ftco-nav">
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
-              <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-              <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
-              <li class="nav-item"><a href="project.html" class="nav-link">Project</a></li>
-              <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-              <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-      <!-- END nav -->
+      
+      
       <router-view></router-view>
       
       <footer class="footer ftco-section">
@@ -121,10 +98,6 @@
           </div>
           <div class="row">
             <div class="col-md-12 text-center">
-
-              <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
             </div>
           </div>
         </div>

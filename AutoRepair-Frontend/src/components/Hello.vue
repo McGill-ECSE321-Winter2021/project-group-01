@@ -15,15 +15,17 @@
           <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item active">
-                <router-link class="nav-link" to="/">Home</router-link>
+                <router-link class="nav-link" to="/">Home</router-link></li>
               <li class="nav-item">
-                <router-link class="nav-link" to="/owner">Owner</router-link>
+                <router-link class="nav-link" to="/owner">Owner</router-link></li>
               <li class="nav-item">
-                <router-link class="nav-link" to="/services">Services</router-link>
-              <li class="nav-item"><a href="project.html" class="nav-link">Project</a></li>
+                <router-link class="nav-link" to="/services">Services</router-link></li>
               <li class="nav-item">
-                <router-link class="nav-link" to="/login">Login</router-link>
-              <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+				<router-link class="nav-link" to="/assistant">Assistant</router-link></li>
+              <li class="nav-item">
+                <router-link class="nav-link" to="/login">Login</router-link></li>
+              <li class="nav-item">
+				<router-link class="nav-link" to="/login">Contact</router-link></li>
             </ul>
           </div>
         </div>

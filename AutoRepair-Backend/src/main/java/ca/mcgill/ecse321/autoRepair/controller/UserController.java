@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ca.mcgill.ecse321.autoRepair.dto.AssistantDTO;
 import ca.mcgill.ecse321.autoRepair.dto.CarDTO;
 import ca.mcgill.ecse321.autoRepair.dto.CustomerDTO;
+import ca.mcgill.ecse321.autoRepair.dto.ErrorUserDTO;
 import ca.mcgill.ecse321.autoRepair.dto.OwnerDTO;
 import ca.mcgill.ecse321.autoRepair.dto.ProfileDTO;
 import ca.mcgill.ecse321.autoRepair.dto.UserDTO;
@@ -32,8 +33,15 @@ public class UserController {
 	
 	@PostMapping(value = {"/login", "/login/"})
 	public UserDTO login(@RequestParam String username, @RequestParam String password) {
-		User user = userService.login(username, password);
+		User user = null;
+		try {
+			user = userService.login(username, password);
+		}catch(IllegalArgumentException e) {
+			return new ErrorUserDTO("","","",e.getMessage());
+		
+		}
 		if(user instanceof Customer) {
+
 			return convertToDTO((Customer) user);
 		}
 		

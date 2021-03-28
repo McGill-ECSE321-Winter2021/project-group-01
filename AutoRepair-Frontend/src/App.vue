@@ -107,5 +107,3 @@
 </template>
 
 
-<script src ="./components/js/app.js"></script>
-

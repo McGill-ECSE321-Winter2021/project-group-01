@@ -267,6 +267,7 @@
     	</div>
     </section>
 
+
     <section class="ftco-section testimony-section bg-light">
       <div class="container">
         <div class="row justify-content-center pb-5 mb-3">
@@ -282,7 +283,7 @@
                 <div class="testimony-wrap py-4">
                 	<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></span></div>
                   <div class="text">
-                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                    <p class="mb-4">Far far away, in the land of Valhalla, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
                     <div class="d-flex align-items-center">
                     	<div class="user-img" style="background-image: url(../static/images/person_1.jpg)"></div>
                     	<div class="pl-3">
@@ -441,7 +442,8 @@
 			<div class="container-fluid px-md-0">
 				<div class="row no-gutters">
           <div class="col-md-3 ">
-            <div class="work img d-flex align-items-end" style="background-image: url(../static/images/work-1.jpg);">
+            <div class="work img d-flex align-items-end"
+			 style="background-image: url(../static/images/work-1.jpg);">
             	<a href="../static/images/work-1.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
 	    					<span class="fa fa-expand"></span>
 	    				</a>

@@ -1,7 +1,301 @@
 <template>
 	<div id="Owner">
-	
-	<h1> Hello </h1>
+
+
+<nav class="navbar navbar-expand-lg navbar-light ftco_navbar bg-light ftco-navbar-light" id="ftco-navbar">
+        <div class="container">
+        
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="fa fa-bars"></span> Menu
+          </button>
+          <form action="#" class="searchform order-lg-last">
+            <div class="form-group d-flex">
+              <input type="text" class="form-control pl-3" placeholder="Search">
+              <button type="submit" placeholder="" class="form-control search"><span class="fa fa-search"></span></button>
+            </div>
+          </form>
+          <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <router-link class="nav-link" to="/">Home</router-link></li>
+              <li class="nav-item">
+                <router-link class="nav-link" to="/owner">Owner</router-link></li>
+              <li class="nav-item">
+                <router-link class="nav-link" to="/services">Services</router-link></li>
+              <li class="nav-item">
+				<router-link class="nav-link" to="/assistant">Assistant</router-link></li>
+
+              <li class="nav-item">
+                <router-link class="nav-link" to="/login">Login</router-link></li>
+              <li class="nav-item">
+				<router-link class="nav-link" to="/login">Contact</router-link></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+
+<section class="ftco-appointment ftco-section ftco-no-pt ftco-no-pb img" style="background-image: url(../static/images/bg_3.jpg);">
+			<div class="overlay"></div>
+    	<div class="container">
+    		<div class="row d-md-flex justify-content-end">
+    			<div class="col-md-12 col-lg-6 half p-3 py-5 pl-lg-5">
+    				<span class="subheading">Adding a service</span>
+    				<h2 class="mb-4">Plese enter the details below</h2>
+    				<form action="#" class="appointment">
+    					<div class="row">
+    						<!--<div class="col-md-12">
+									<div class="form-group">
+			    					<div class="form-field">
+	          					<div class="select-wrap">
+	                      <div class="icon"><span class="fa fa-chevron-down"></span></div>
+	                      <select name="" id="" class="form-control">
+	                      	<option value="">Select services</option>
+	                        <option value="">Change Oil</option>
+	                        <option value="">Engine Repair</option>
+	                        <option value="">Battery Replace</option>
+	                        <option value="">Change Tire</option>
+	                        <option value="">Tow Truck</option>
+	                      </select>
+	                    </div>
+			              </div>
+			    				</div>
+								</div> -->
+								<div class="col-md-12">
+									<div class="form-group">
+			              <input type="text" class="form-control" placeholder="Service Name">
+			            </div>
+								</div>
+							<!--	<div class="col-md-6">
+									<div class="form-group">
+			              <input type="text" class="form-control" placeholder="Vehicle number">
+			            </div>
+								</div> -->
+
+								<!-- <div class="col-md-6">
+									<div class="form-group">
+			    					<div class="input-wrap">
+			            		<div class="icon"><span class="fa fa-calendar"></span></div>
+			            		<input type="text" class="form-control appointment_date" placeholder="Date">
+		            		</div>
+			    				</div>
+								</div> -->
+
+                <div class="col-md-6">
+									<div class="form-group">
+			    					<div class="input-wrap">
+			            		<!-- <div class="icon"><span class="fa fa-calendar"></span></div> -->
+			            	<!--	<input type="text" class="form-control appointment_date" placeholder="Date"> -->
+                      <input type="number" min="0" class="form-control" placeholder="Duration in minutes">
+		            		</div>
+			    				</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group">
+			    					<div class="input-wrap">
+			            		<!-- <div class="icon"><span class="fa fa-clock-o"></span></div> -->
+			            		<input type="number" min="0" step="0.01" class="form-control" placeholder="Price">
+		            		</div>
+			    				</div>
+								</div>
+								<!-- <div class="col-md-12">
+									<div class="form-group">
+			              <textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
+			            </div>
+								</div> -->
+								<div class="col-md-12">
+									<div class="form-group">
+			              <input type="submit" value="Add the Service" class="btn btn-dark py-3 px-4">
+			            </div>
+								</div>
+
+
+
+
+    					</div>
+	          </form>
+    			</div>
+    		</div>
+    	</div>
+
+<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+        <!-- <div class="overlay"></div> -->
+        <div class="container">
+          <div class="row d-md-flex justify-content-end">
+            <div class="col-md-12 col-lg-6 half p-3 py-5 pl-lg-5">
+              <span class="subheading">Updating a service</span>
+              <h2 class="mb-4">Plese enter the new details below</h2>
+              <form action="#" class="appointment">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <div class="form-field">
+                        <div class="select-wrap">
+                          <div class="icon"><span class="fa fa-chevron-down"></span></div>
+                          <select name="" id="" class="form-control">
+                            <option value="">Select service</option>
+                            <option value="">Change Oil</option>
+                            <option value="">Engine Repair</option>
+                            <option value="">Battery Replace</option>
+                            <option value="">Change Tire</option>
+                            <option value="">Tow Truck</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--<div class="col-md-12">
+                    <div class="form-group">
+                      <input type="text" class="form-control" placeholder="New Service Name">
+                    </div>
+                  </div> -->
+                 <!--	<div class="col-md-6">
+                    <div class="form-group">
+                      <input type="text" class="form-control" placeholder="Vehicle number">
+                    </div>
+                  </div> -->
+
+                  <!-- <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-wrap">
+                        <div class="icon"><span class="fa fa-calendar"></span></div>
+                        <input type="text" class="form-control appointment_date" placeholder="Date">
+                      </div>
+                    </div>
+                  </div> -->
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-wrap">
+                        <!-- <div class="icon"><span class="fa fa-calendar"></span></div> -->
+                      <!--	<input type="text" class="form-control appointment_date" placeholder="Date"> -->
+                        <input type="number" min="0" class="form-control" placeholder="New duration in minutes">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-wrap">
+                        <!-- <div class="icon"><span class="fa fa-clock-o"></span></div> -->
+                        <input type="number" min="0" step="0.01" class="form-control" placeholder="New price">
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div class="col-md-12">
+                    <div class="form-group">
+                      <textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
+                    </div>
+                  </div> -->
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <input type="submit" value="Update the Service" class="btn btn-dark py-3 px-4">
+                    </div>
+                  </div>
+
+
+
+
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+          <div class="container">
+          <div class="row d-md-flex justify-content-end">
+            <div class="col-md-12 col-lg-6 half p-3 py-5 pl-lg-5">
+              <span class="subheading">Deleting a service</span>
+              <h2 class="mb-4">Plese enter the details below</h2>
+              <form action="#" class="appointment">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <div class="form-field">
+                        <div class="select-wrap">
+                          <div class="icon"><span class="fa fa-chevron-down"></span></div>
+                          <select name="" id="" class="form-control">
+                            <option value="">Select service</option>
+                            <option value="">Change Oil</option>
+                            <option value="">Engine Repair</option>
+                            <option value="">Battery Replace</option>
+                            <option value="">Change Tire</option>
+                            <option value="">Tow Truck</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--<div class="col-md-12">
+                    <div class="form-group">
+                      <input type="text" class="form-control" placeholder="New Service Name">
+                    </div>
+                  </div> -->
+                 <!--	<div class="col-md-6">
+                    <div class="form-group">
+                      <input type="text" class="form-control" placeholder="Vehicle number">
+                    </div>
+                  </div> -->
+
+                  <!-- <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-wrap">
+                        <div class="icon"><span class="fa fa-calendar"></span></div>
+                        <input type="text" class="form-control appointment_date" placeholder="Date">
+                      </div>
+                    </div>
+                  </div> -->
+
+                  <!-- <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-wrap"> -->
+                        <!-- <div class="icon"><span class="fa fa-calendar"></span></div> -->
+                      <!--	<input type="text" class="form-control appointment_date" placeholder="Date"> -->
+                        <!-- <input type="number" min="0" class="form-control" placeholder="New duration in minutes">
+                      </div>
+                    </div>
+                  </div> -->
+
+                  <!-- <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-wrap"> -->
+                        <!-- <div class="icon"><span class="fa fa-clock-o"></span></div> -->
+                       <!-- <input type="number" min="0" step="0.01" class="form-control" placeholder="New price">
+                      </div>
+                    </div>
+                  </div> -->
+                  <!-- <div class="col-md-12">
+                    <div class="form-group">
+                      <textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
+                    </div>
+                  </div> -->
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <input type="submit" value="Delete the Service" class="btn btn-dark py-3 px-4">
+                    </div>
+                  </div>
+
+
+
+
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+    </section>
+
+
+<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+
+
 	<section class="ftco-section testimony-section bg-light">
       <div class="container">
         <div class="row justify-content-center pb-5 mb-3">
@@ -95,3 +389,74 @@
     </section>
 	</div>
 </template>
+
+
+
+<!-- <section class="ftco-appointment ftco-section ftco-no-pt ftco-no-pb img" style="background-image: url(../static/images/bg_3.jpg);">
+			<div class="overlay"></div>
+    	<div class="container">
+    		<div class="row d-md-flex justify-content-end">
+    			<div class="col-md-12 col-lg-6 half p-3 py-5 pl-lg-5">
+    				<span class="subheading">Booking an Appointment</span>
+    				<h2 class="mb-4">Free Consultation</h2>
+    				<form action="#" class="appointment">
+    					<div class="row">
+    						<div class="col-md-12">
+									<div class="form-group">
+			    					<div class="form-field">
+	          					<div class="select-wrap">
+	                      <div class="icon"><span class="fa fa-chevron-down"></span></div>
+	                      <select name="" id="" class="form-control">
+	                      	<option value="">Select services</option>
+	                        <option value="">Change Oil</option>
+	                        <option value="">Engine Repair</option>
+	                        <option value="">Battery Replace</option>
+	                        <option value="">Change Tire</option>
+	                        <option value="">Tow Truck</option>
+	                      </select>
+	                    </div>
+			              </div>
+			    				</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+			              <input type="text" class="form-control" placeholder="Your Name">
+			            </div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+			              <input type="text" class="form-control" placeholder="Vehicle number">
+			            </div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+			    					<div class="input-wrap">
+			            		<div class="icon"><span class="fa fa-calendar"></span></div>
+			            		<input type="text" class="form-control appointment_date" placeholder="Date">
+		            		</div>
+			    				</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+			    					<div class="input-wrap">
+			            		<div class="icon"><span class="fa fa-clock-o"></span></div>
+			            		<input type="text" class="form-control appointment_time" placeholder="Time">
+		            		</div>
+			    				</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+			              <textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
+			            </div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+			              <input type="submit" value="Send message" class="btn btn-dark py-3 px-4">
+			            </div>
+								</div>
+    					</div>
+	          </form>
+    			</div>
+    		</div>
+    	</div>
+    </section> -->

@@ -9,5 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface OwnerRepository extends CrudRepository<Owner, String>{
 
     Owner findOwnerByUsername(String name);
+    boolean existsOwnerByUsername(String username);
 
 }

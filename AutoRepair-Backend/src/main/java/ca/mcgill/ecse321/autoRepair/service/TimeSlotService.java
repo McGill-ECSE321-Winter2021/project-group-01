@@ -141,10 +141,10 @@ public class TimeSlotService {
         }
         return null;
     }
-    
+
     @Transactional
-    public TimeSlot getTimeSlot(Date date, Time time) {
-    	return timeSlotRepository.findTimeSlotByStartDateAndStartTime(date, time);
+    public TimeSlot getTimeSlot(Date startDate, Time startTime){
+        return timeSlotRepository.findTimeSlotByStartDateAndStartTime(startDate,startTime);
     }
 
 }

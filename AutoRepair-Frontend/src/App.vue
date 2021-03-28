@@ -107,7 +107,7 @@
                 <div class="opening-hours">
                   <h4>Opening Days:</h4>
                   <p class="pl-3">
-                    <span>Monday – Friday : 9am to 20 pm</span>
+                    <span>Monday ï¿½ Friday : 9am to 20 pm</span>
                     <span>Saturday : 9am to 17 pm</span>
                   </p>
                   <h4>Vacations:</h4>
@@ -134,5 +134,5 @@
 </template>
 
 
-<script></script>
+<script src ="./components/js/app.js"></script>
 

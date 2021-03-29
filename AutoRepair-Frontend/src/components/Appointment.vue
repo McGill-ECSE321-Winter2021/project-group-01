@@ -60,8 +60,8 @@
                         <div class="form-field">
                           <div class="select-wrap">
                             <div class="icon"><span class="fa fa-chevron-down"></span></div>
-                            <select name="" id="" class="form-control" v-model="selectedService">
-                                 <option value="" disabled selected>Select Service</option>
+                            <select name="serviceName" id="" class="form-control" v-model="serviceName">
+                                 <option value="">Select Service</option>
                                   <option v-for="service in services" >
                                     {{ service.name }}
                                   </option>
@@ -73,14 +73,20 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <div class="input-wrap">
-                          <input type="date" class="form-control appointment_date" placeholder="Date" v-model="startDate">
+                          <input type="date" class="form-control appointment_date" placeholder="Date" v-model="appointmentDate" name="appointmentDate"
+                          @change="getAvailableTimeSlots(appointmentDate.toString())">
                         </div>
                       </div>
                     </div>
                     <div class="col-md-6">
+                       <div class="form-group">
+                            <h1> {{availableTimeSlots}} </h1>
+                       </div>
+                    </div>
+                    <div class="col-md-6">
                       <div class="form-group">
                         <div class="input-wrap">
-                          <input type="time" class="form-control appointment_time" placeholder="Time" v-model="startTime">
+                          <input type="time" class="form-control appointment_time" placeholder="Time" v-model="appointmentTime" name="appointmentTime">
                         </div>
                       </div>
                     </div>
@@ -88,7 +94,7 @@
                       <div class="form-group">
                         <button type="button"
                           class="btn btn-dark py-3 px-4"
-                          @click="makeAppointment(tamara,startDate,startTime,selectedService)">Book
+                          @click="makeAppointment(tamara,appointmentDate.toString(),appointmentTime.toString(),serviceName)">Book
                         </button>
                       </div>
                     </div>

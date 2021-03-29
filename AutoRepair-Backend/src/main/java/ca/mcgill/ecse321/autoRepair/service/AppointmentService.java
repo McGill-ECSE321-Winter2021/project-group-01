@@ -48,8 +48,6 @@ public class AppointmentService {
     public Appointment makeAppointment(String customerName, String serviceName,Date startDate, Time startTime) {
         if (customerName == null || !containsCharacter(customerName)) throw new IllegalArgumentException("The username cannot be empty or null");
         if(serviceName == null || !containsCharacter(serviceName)) throw new IllegalArgumentException("The chosen service cannot be empty or null");
-        if(startTime == null) throw new IllegalArgumentException("The start time cannot be null") ;
-        if(startDate == null)  throw new IllegalArgumentException("The start date cannot be null");
 
         LocalTime toCompare = LocalTime.parse("02:00:00");
         if (startDate.toLocalDate().isBefore(SystemTime.getSysDate().toLocalDate())) {

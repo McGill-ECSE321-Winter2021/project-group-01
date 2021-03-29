@@ -38,6 +38,7 @@ export default {
       services: [],
       availableTimeSlots: [],
       unavailableTimeSlots: [],
+      username: '',
       appointment: '',
       serviceName: '',
       appointmentDate: '',
@@ -57,28 +58,28 @@ export default {
       .catch(e => {
         this.errorService = e
       })
+
+      AXIOS.get('/availableTimeSlots/',$.param({appointmentDate:appointmentDate}))
+      .then(response => {
+      // JSON responses are automatically parsed.
+        this.availableTimeSlots = response.data
+      })
+
   },
 
   methods: {
-  makeAppointment (username, date, time, service) {
-  			AXIOS.post('/make_appointment/'.concat(username),$.param({serviceName: service, appointmentDate:date , appointmentTime:appointmentTime}))
+  makeAppointment (username, appointmentDate, appointmentTime, serviceName) {
+  			AXIOS.post('/make_appointment/',$.param({username: username, serviceName: serviceName, appointmentDate:appointmentDate , appointmentTime:appointmentTime}))
   			.then(response => {
-  			var d1 = new Date(date);
-  			if(date.getTime()== d1.getTime()){
-          this.errorMakeAppointment = "Incorrect username or password"
-          console.log(this.errorMakeAppointment)
-  			}
   				this.appointment = response.data
   				appointments.push(response.data)
   				window.location.href = "/appointments"
   			})
   			.catch(e => {
-
-  				this.errorMakeAppointment = "Incorrect username or password"
-  				console.log(this.errorMakeAppointment)
+  			  this.errorMakeAppointment = e.response.data
 
   			})
-  		},
+  },
 //     makeAppointment: function (username, date, time, service) {
 //        AXIOS.post('/make_appointment/'.concat(username), {}, {
 //        params: {
@@ -106,18 +107,20 @@ export default {
 //        })
 //     },
 
-     getAvailableTimeSlots: function (date) {
-        AXIOS.get('/availableTimeSlots/'.concat(date), {}, {})
+     getAvailableTimeSlots: function(appointmentDate) {
+        AXIOS.get('/availableTimeSlots/',$.param({appointmentDate:appointmentDate}))
         .then(response => {
-        // JSON responses are automatically parsed.
-          this.availableTimeSlots = response.data
-        })
+        if(status==201){
+          this.errorMakeAppointment="ttre"
+          // JSON responses are automatically parsed.
+            this.availableTimeSlots = response.data
+        }})
         .catch(e => {
-          var errorMsg = e.response.data.message
-          console.log(errorMsg)
-          this.errorMakeAppointment = errorMsg
+           this.errorMakeAppointment=e.response.data
         })
+
      },
+
      getUnavailableTimeSlots: function (date) {
          AXIOS.get('/unavailableTimeSlots/'.concat(date), {}, {})
          .then(response => {

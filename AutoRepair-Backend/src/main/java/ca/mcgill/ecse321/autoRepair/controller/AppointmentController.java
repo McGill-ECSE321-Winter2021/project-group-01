@@ -7,6 +7,8 @@ import ca.mcgill.ecse321.autoRepair.service.ChosenServiceService;
 import ca.mcgill.ecse321.autoRepair.service.CustomerService;
 import ca.mcgill.ecse321.autoRepair.service.TimeSlotService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
@@ -37,22 +39,33 @@ public class AppointmentController {
      * Makes an appointment
      * 
      * @param username
-     * @param dateString
-     * @param startTimeString
+     * @param appointmentDate
+     * @param appointmentTime
      * @param serviceName
      * @return
      * @throws IllegalArgumentException
      */
-    @PostMapping(value = { "/make_appointment/{username}" })
-    public AppointmentDTO makeAppointment(@PathVariable("username") String username, @RequestParam String dateString,
-                                          @RequestParam String startTimeString,
+    @PostMapping(value = { "/make_appointment/" })
+    public ResponseEntity<?> makeAppointment(@RequestParam String username, @RequestParam String appointmentDate,
+                                          @RequestParam String appointmentTime,
                                           @RequestParam String serviceName) throws IllegalArgumentException {
-        SystemTime.setSysTime(Time.valueOf(LocalTime.now()));
-        SystemTime.setSysDate(Date.valueOf(LocalDate.now()));
-        Date date = Date.valueOf(dateString);
-        Time startTime = Time.valueOf(startTimeString + ":00");
-        Appointment appointment = appointmentService.makeAppointment(username,serviceName,date, startTime);
-        return convertToDTO(appointment);
+        if(appointmentDate=="") {
+            return new ResponseEntity<>("The date cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        if(appointmentTime=="") {
+            return new ResponseEntity<>("The time cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        try {
+            SystemTime.setSysTime(Time.valueOf(LocalTime.now()));
+            SystemTime.setSysDate(Date.valueOf(LocalDate.now()));
+            Date date = Date.valueOf(appointmentDate);
+            Time startTime = Time.valueOf(appointmentTime + ":00");
+
+            Appointment appointment = appointmentService.makeAppointment(username, serviceName, date, startTime);
+            return new ResponseEntity<>(convertToDTO(appointment), HttpStatus.CREATED);
+        }catch (IllegalArgumentException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
@@ -69,8 +82,8 @@ public class AppointmentController {
      * @param newServiceString
      * @return
      */
-    @PatchMapping(value = {"/update_appointment/{username}"})
-    public AppointmentDTO updateAppointment(@PathVariable("username") String username, @RequestParam String oldDateString, @RequestParam String oldTimeString,
+    @PatchMapping(value = {"/update_appointment/"})
+    public ResponseEntity<?> updateAppointment(@RequestParam String username, @RequestParam String oldDateString, @RequestParam String oldTimeString,
                                             @RequestParam String newDateString, @RequestParam String oldServiceString, @RequestParam
                                                     String newStartTimeString, @RequestParam String newServiceString){
         SystemTime.setSysTime(Time.valueOf(LocalTime.now()));
@@ -89,10 +102,8 @@ public class AppointmentController {
         for(int i=0; i<appointmentLists.size(); i++){
             if(appointment.equals(appointmentLists.get(i))) exists=true;
         }
-        if(exists==false) throw new IllegalArgumentException("The appointment does not exist for the customer");
+        if(exists==false) return new ResponseEntity<>("The appointment does not exist for the customer", HttpStatus.INTERNAL_SERVER_ERROR);
 
-        @SuppressWarnings("unused")
-		Appointment updatedAppointment = new Appointment();
         Date newDate = null;
         Time newStartTime = null;
 
@@ -103,27 +114,30 @@ public class AppointmentController {
         if(newStartTimeString!=null && containsCharacter(newStartTimeString)) {
             newStartTime = Time.valueOf(newStartTimeString + ":00");
         }
-
-        if(newService!=null){
-            if(newDate==null && newStartTime==null){
-                appointmentService.updateAppointment(timeSlot.getStartDate(),timeSlot.getStartTime(),oldService.getName(), timeSlot.getStartDate(), timeSlot.getStartTime(),newService.getName());
-            }else if (newDate!=null && newStartTime==null){
-                updatedAppointment=appointmentService.updateAppointment(timeSlot.getStartDate(),timeSlot.getStartTime(),oldService.getName(), newDate, timeSlot.getStartTime(),newService.getName());
-            }else if (newDate==null && newStartTime!=null){
-                updatedAppointment=appointmentService.updateAppointment(timeSlot.getStartDate(),timeSlot.getStartTime(),oldService.getName(), timeSlot.getStartDate(), newStartTime,newService.getName());
-            }else if(newDate!=null && newStartTime!=null){
-                updatedAppointment=appointmentService.updateAppointment(timeSlot.getStartDate(),timeSlot.getStartTime(),oldService.getName(), newDate, newStartTime,newService.getName());
+        try {
+            if (newService != null) {
+                if (newDate == null && newStartTime == null) {
+                    appointmentService.updateAppointment(timeSlot.getStartDate(), timeSlot.getStartTime(), oldService.getName(), timeSlot.getStartDate(), timeSlot.getStartTime(), newService.getName());
+                } else if (newDate != null && newStartTime == null) {
+                    appointmentService.updateAppointment(timeSlot.getStartDate(), timeSlot.getStartTime(), oldService.getName(), newDate, timeSlot.getStartTime(), newService.getName());
+                } else if (newDate == null && newStartTime != null) {
+                    appointmentService.updateAppointment(timeSlot.getStartDate(), timeSlot.getStartTime(), oldService.getName(), timeSlot.getStartDate(), newStartTime, newService.getName());
+                } else if (newDate != null && newStartTime != null) {
+                    appointmentService.updateAppointment(timeSlot.getStartDate(), timeSlot.getStartTime(), oldService.getName(), newDate, newStartTime, newService.getName());
+                }
+            } else {
+                if (newDate != null && newStartTime == null) {
+                    appointmentService.updateAppointment(timeSlot.getStartDate(), timeSlot.getStartTime(), oldService.getName(), newDate, timeSlot.getStartTime(), oldService.getName());
+                } else if (newDate == null && newStartTime != null) {
+                    appointmentService.updateAppointment(timeSlot.getStartDate(), timeSlot.getStartTime(), oldService.getName(), timeSlot.getStartDate(), newStartTime, oldService.getName());
+                } else if (newDate != null && newStartTime != null) {
+                    appointmentService.updateAppointment(timeSlot.getStartDate(), timeSlot.getStartTime(), oldService.getName(), newDate, newStartTime, oldService.getName());
+                }
             }
-        }else{
-            if (newDate!=null && newStartTime==null){
-                updatedAppointment=appointmentService.updateAppointment(timeSlot.getStartDate(),timeSlot.getStartTime(),oldService.getName(), newDate, timeSlot.getStartTime(),oldService.getName());
-            }else if (newDate==null && newStartTime!=null){
-                updatedAppointment=appointmentService.updateAppointment(timeSlot.getStartDate(),timeSlot.getStartTime(),oldService.getName(), timeSlot.getStartDate(), newStartTime,oldService.getName());
-            }else if(newDate!=null && newStartTime!=null){
-                appointmentService.updateAppointment(timeSlot.getStartDate(),timeSlot.getStartTime(),oldService.getName(), newDate, newStartTime,oldService.getName());
-            }
+            return new ResponseEntity<>(convertToDTO(appointment), HttpStatus.CREATED);
+        }catch (IllegalArgumentException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return convertToDTO(appointment);
     }
 
     /**
@@ -138,7 +152,7 @@ public class AppointmentController {
      * @return true when successfully deleted
      */
     @DeleteMapping(value = {"/cancel_appointment/{username}/{date}/{time}/{service}"})
-    public boolean cancelAppointment(@PathVariable("username") String username, @PathVariable("date") String dateString, @PathVariable("time") String startTimeString, @PathVariable("service") String serviceName){
+    public ResponseEntity<?> cancelAppointment(@PathVariable("username") String username, @PathVariable("date") String dateString, @PathVariable("time") String startTimeString, @PathVariable("service") String serviceName){
         SystemTime.setSysTime(Time.valueOf(LocalTime.now()));
         SystemTime.setSysDate(Date.valueOf(LocalDate.now()));
         Date date = Date.valueOf(dateString);
@@ -157,10 +171,13 @@ public class AppointmentController {
         for(int i=0; i<appointmentLists.size(); i++){
             if(appointment.equals(appointmentLists.get(i))) exists=true;
         }
-        if(exists==false) throw new IllegalArgumentException("The appointment does not exist for the customer");
-
-        appointmentService.cancelAppointment(serviceName,date,startTime);
-        return true;
+        if(exists==false) return new ResponseEntity<>("The appointment does not exist for the customer", HttpStatus.INTERNAL_SERVER_ERROR);
+        try {
+            appointmentService.cancelAppointment(serviceName, date, startTime);
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }catch (IllegalArgumentException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     private Time findEndTimeOfApp(ChosenService service, LocalTime startTime){
@@ -196,18 +213,18 @@ public class AppointmentController {
     /**
      * @author Tamara Zard Aboujaoudeh
      * Gets all the available time slots
-     * @param stringDate
+     * @param appointmentDate
      * @return list containing all the available time slots
      */
-    @GetMapping(value = {"/availableTimeSlots/{date}"})
-    public List<TimeSlotDTO> getAvailableTimeSlotsForDay(@PathVariable("date") String stringDate){
-        Date date = Date.valueOf(stringDate);
-        List<TimeSlot> timeSlotsList = timeSlotService.getAvailableTimeSlots(date);
+    @GetMapping(value = {"/availableTimeSlots/"})
+    public ResponseEntity<?> getAvailableTimeSlotsForDay(@RequestParam String appointmentDate){
+        Date date1 = Date.valueOf(appointmentDate);
+        List<TimeSlot> timeSlotsList = timeSlotService.getAvailableTimeSlots(date1);
         List<TimeSlotDTO> availableTimeSlots = new ArrayList<>();
         for(TimeSlot timeSlot : timeSlotsList ){
             availableTimeSlots.add(convertToDTO(timeSlot));
         }
-        return availableTimeSlots;
+        return new ResponseEntity<>(availableTimeSlots, HttpStatus.CREATED);
     }
 
     /**
@@ -217,14 +234,14 @@ public class AppointmentController {
      * @return list of all the unavailable time slots
      */
     @GetMapping(value = {"/unavailableTimeSlots/{date}"})
-    public List<TimeSlotDTO> getUnavailableTimeSlotsForDay(@PathVariable("date") String stringDate){
+    public ResponseEntity<?> getUnavailableTimeSlotsForDay(@PathVariable("date") String stringDate){
         Date date = Date.valueOf(stringDate);
         List<TimeSlot> timeSlotsList = timeSlotService.getUnavailableTimeSlots(date);
         List<TimeSlotDTO> unavailableTimeSlots = new ArrayList<>();
         for(TimeSlot timeSlot : timeSlotsList ){
             unavailableTimeSlots.add(convertToDTO(timeSlot));
         }
-        return unavailableTimeSlots;
+        return new ResponseEntity<>(unavailableTimeSlots, HttpStatus.OK);
     }
     private List<AppointmentDTO> createAppointmentDtosForCustomer(String username) {
         Customer customer = customerService.getCustomer(username);

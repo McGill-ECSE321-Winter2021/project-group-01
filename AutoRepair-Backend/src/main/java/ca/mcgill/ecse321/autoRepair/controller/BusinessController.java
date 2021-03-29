@@ -64,9 +64,10 @@ public class BusinessController {
 	 * @return businessDTO
 	 */
 	@PostMapping(value = {"/edit_business"})
-	public BusinessDTO editBusiness(@RequestParam String name, @RequestParam String name1, @RequestParam String email, @RequestParam String address,
+	public BusinessDTO editBusiness(@RequestParam String name1, @RequestParam String email, @RequestParam String address,
 			@RequestParam String phoneNumber) {
 		
+		String name = businessService.getBusiness().getName();
 		Business business = businessService.editBusiness(name, name1, email, address, phoneNumber);
 
 		return convertToDTO(business);
@@ -83,9 +84,10 @@ public class BusinessController {
 	 * @return operatingHourDTO
 	 */
 	@PostMapping(value = {"/add_business_hours"})
-	public OperatingHourDTO addBusinessHours
-	(@RequestParam String businessName, @RequestParam String dayOfWeek, @RequestParam String startTime, @RequestParam String endTime) {
+	public OperatingHourDTO addBusinessHours(@RequestParam String dayOfWeek, @RequestParam String startTime, @RequestParam String endTime) {
+		String businessName = businessService.getBusiness().getName();
 		return convertToDTO(businessService.createOperatingHour(businessName, DayOfWeek.valueOf(dayOfWeek), Time.valueOf(startTime+":00"), Time.valueOf(endTime+":00")));
+
 	}
 	
 	/**
@@ -114,8 +116,8 @@ public class BusinessController {
 	 * @return true when successfully deleted
 	 */
 	@PostMapping(value = {"/delete_business_hours"})
-	public boolean deleteBusinessHours(@RequestParam String businessName, @RequestParam String dayOfWeek) {
-		
+	public boolean deleteBusinessHours( @RequestParam String dayOfWeek) {
+		String businessName = businessService.getBusiness().getName();
 		return businessService.deleteOperatingHour(businessName, DayOfWeek.valueOf(dayOfWeek));
 
 	}
@@ -127,9 +129,9 @@ public class BusinessController {
 	 * @return businessDTO
 	 */
 	@GetMapping(value = {"/view_business_info", "/view_business_info/"})
-	public BusinessDTO viewBusinessInfo(@RequestParam String businessName){
+	public BusinessDTO viewBusinessInfo(){
 
-		return convertToDTO(businessService.getBusiness(businessName));
+		return convertToDTO(businessService.getBusiness());
 	
 	}
 	

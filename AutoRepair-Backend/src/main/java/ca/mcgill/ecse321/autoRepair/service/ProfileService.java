@@ -36,6 +36,7 @@ public class ProfileService {
 	 */
 	@Transactional
 	public Profile createProfile(String firstName, String lastName, String address, String zipCode, String phoneNumber, String email) {
+
 		if(firstName ==null || firstName =="") 
 			throw new IllegalArgumentException("First name cannot be blank.");
 
@@ -57,9 +58,10 @@ public class ProfileService {
 		if(!emailIsValid(email)) 
 			throw new IllegalArgumentException("Invalid email.");
 		
-		if(profileRepository.findByEmail(email)!=null)
+		if(profileRepository.findByEmail(email)!=null) {
+			profileRepository.delete(profileRepository.findByEmail(email));
 			throw new IllegalArgumentException("Customer with email entered already exists.");
-
+		}
 		
 		Profile profile = new Profile();
 		profile.setFirstName(firstName);
@@ -152,6 +154,15 @@ public class ProfileService {
 		profileRepository.save(profile);
 
 		return customer;
+	}
+	@Transactional
+	public boolean deleteByEmail(String email) {
+		Profile profile = profileRepository.findByEmail(email);
+		if(profile!=null) { 
+			profileRepository.delete(profile);
+			return true;
+		}
+		return false;
 	}
 
 

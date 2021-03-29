@@ -33,6 +33,8 @@ export default {
 	name:'Login',
 	data () {
 		return {
+			user: '',
+			type:'',
 			username: '',
 			password: '',
 			errorLogin: '',
@@ -40,30 +42,32 @@ export default {
 		}
 	},
 	methods: {
-		login: function (username, password) {
-			AXIOS.post('/login/', {}, {
-				params: {
-					username: username,
-					password: password
-				}})
-				.then(response => {
-					this.response = response.data
-					this.errorLogin= ''
-					if (this.response != '') {
-                   
-                    window.location.href = "/"
-                }
-                else {
-                    this.errorLogin = 'Wrong email or password!'
-                    console.log(this.errorlogin)
-                }
-				})
-				.catch(e => {
-					var errorMSG = e.response.data.message
-					console.log(errorMSG)
-					this.errorLogin = errorMSG
-				})
-		},
+		login (username, password) {
+			AXIOS.post('/login/',$.param({username: username, password: password}))
+			.then(response => {
+				this.user = response.data
+				if (response.status===200) {
+					this.type = this.user.userType
+					
+					if(this.type.localeCompare("customer")==0){
+						window.location.href = "/customer"
+					}
+					else if(this.type.localeCompare("assistant")==0){
+						window.location.href = "/assistant"
+					}
+					else {
+						window.location.href = "/owner"
+					}
+					
+				}
+			})
+			.catch(e => {
+				
+				this.errorLogin = e.response.data
+				console.log(this.errorLogin)
+				
+			})
+		}
 	}
 
 }

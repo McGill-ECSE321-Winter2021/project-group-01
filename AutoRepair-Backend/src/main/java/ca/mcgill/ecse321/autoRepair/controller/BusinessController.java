@@ -83,10 +83,9 @@ public class BusinessController {
 	 * @return operatingHourDTO
 	 */
 	@PostMapping(value = {"/add_business_hours"})
-	public OperatingHourDTO addBusinessHours(@RequestParam String businessName, @RequestParam String dayOfWeek, @RequestParam String startTime, @RequestParam String endTime) {
-		
+	public OperatingHourDTO addBusinessHours
+	(@RequestParam String businessName, @RequestParam String dayOfWeek, @RequestParam String startTime, @RequestParam String endTime) {
 		return convertToDTO(businessService.createOperatingHour(businessName, DayOfWeek.valueOf(dayOfWeek), Time.valueOf(startTime+":00"), Time.valueOf(endTime+":00")));
-
 	}
 	
 	/**

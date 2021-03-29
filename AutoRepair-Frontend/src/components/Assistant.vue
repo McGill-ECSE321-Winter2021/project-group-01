@@ -40,7 +40,7 @@
 
 	<section
    class="ftco-appointment ftco-section ftco-no-pt ftco-no-pb img" 
-  style="background-image: url(../static/images/bg_2.jpg);">
+  style="background-image: url(../static/images/bg_2.jpg);" >
 			<div class="overlay"></div>
     	<div class="container">
     		<div class="row d-md-flex justify-content-end">
@@ -316,9 +316,7 @@
         </div>
 
 </section>
-
-
-
-
   </div>
   </template>
+  		<script src="./js/AddOpHours.js"></script>
+

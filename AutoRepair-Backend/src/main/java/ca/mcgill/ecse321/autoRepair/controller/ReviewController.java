@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import ca.mcgill.ecse321.autoRepair.dao.TimeSlotRepository;
 import ca.mcgill.ecse321.autoRepair.dto.AppointmentDTO;
 import ca.mcgill.ecse321.autoRepair.dto.CarDTO;
 import ca.mcgill.ecse321.autoRepair.dto.ChosenServiceDTO;
@@ -28,10 +27,11 @@ import ca.mcgill.ecse321.autoRepair.model.Customer;
 import ca.mcgill.ecse321.autoRepair.model.Profile;
 import ca.mcgill.ecse321.autoRepair.model.Review;
 import ca.mcgill.ecse321.autoRepair.model.TimeSlot;
-import ca.mcgill.ecse321.autoRepair.dao.AppointmentRepository;
-import ca.mcgill.ecse321.autoRepair.dao.ChosenServiceRepository;
-import ca.mcgill.ecse321.autoRepair.dao.CustomerRepository;
+import ca.mcgill.ecse321.autoRepair.service.AppointmentService;
+import ca.mcgill.ecse321.autoRepair.service.ChosenServiceService;
+import ca.mcgill.ecse321.autoRepair.service.CustomerService;
 import ca.mcgill.ecse321.autoRepair.service.ReviewService;
+import ca.mcgill.ecse321.autoRepair.service.TimeSlotService;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -39,18 +39,18 @@ public class ReviewController {
 
 	@Autowired
 	private ReviewService reviewService;
+	
+	@Autowired
+	private AppointmentService appointmentService;
 
 	@Autowired
-	private AppointmentRepository appointmentRepository; 
+	private TimeSlotService timeSlotService; 
 
 	@Autowired
-	private TimeSlotRepository timeSlotRepoisoty;
+	private ChosenServiceService chosenServiceService;
 
 	@Autowired
-	private ChosenServiceRepository serviceRepository;
-
-	@Autowired
-	private CustomerRepository customerRepository;
+	private CustomerService customerService;
 
 	/**
 	 * @author Mohammad Saeid Nafar
@@ -64,17 +64,16 @@ public class ReviewController {
 	 * @return reviewDTO
 	 */
 	@PostMapping(value = {"/create_review/"})
-	public ReviewDTO createReview(@RequestParam("startDate") String startDate, @RequestParam("startTime") String startTime, @RequestParam("serviceName")
-	String serviceName, @RequestParam("customerName") String customerName, @RequestParam("description")
-	String description, @RequestParam("serviceRating") int serviceRating) {
+	public ReviewDTO createReview(@RequestParam("startDate") String startDate, @RequestParam("startTime") String startTime,
+			@RequestParam("description") String description, @RequestParam("serviceRating") int serviceRating) {
 
 		Date date = Date.valueOf(startDate);
 		Time time = Time.valueOf(startTime);
-		TimeSlot timeSlot = timeSlotRepoisoty.findTimeSlotByStartDateAndStartTime(date, time);
-		Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
+		TimeSlot timeSlot = timeSlotService.getTimeSlot(date, time);
+        Appointment appointment = appointmentService.getAppointment(timeSlot);
 
-		Review review = reviewService.createReview(appointment, serviceName,
-				customerName, description, serviceRating);
+		Review review = reviewService.createReview(appointment, appointment.getChosenService().getName(),
+				appointment.getCustomer().getUsername(), description, serviceRating);
 
 		return convertToDTO(review);
 	}
@@ -95,8 +94,8 @@ public class ReviewController {
 
 		Date date = Date.valueOf(startDate);
 		Time time = Time.valueOf(startTime);
-		TimeSlot timeSlot = timeSlotRepoisoty.findTimeSlotByStartDateAndStartTime(date, time);
-		Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
+		TimeSlot timeSlot = timeSlotService.getTimeSlot(date, time);
+        Appointment appointment = appointmentService.getAppointment(timeSlot);
 
 		Review review = reviewService.editReview(appointment, newDescription, newRating);
 
@@ -116,8 +115,8 @@ public class ReviewController {
 
 		Date date = Date.valueOf(startDate);
 		Time time = Time.valueOf(startTime);
-		TimeSlot timeSlot = timeSlotRepoisoty.findTimeSlotByStartDateAndStartTime(date, time);
-		Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
+		TimeSlot timeSlot = timeSlotService.getTimeSlot(date, time);
+        Appointment appointment = appointmentService.getAppointment(timeSlot);
 
 		return reviewService.deleteReview(appointment);
 	}
@@ -141,7 +140,8 @@ public class ReviewController {
 	 */
 	@GetMapping(value = {"/view_reviews_for_service"})
 	public List<ReviewDTO> viewReviewsForService(@RequestParam("serviceName") String serviceName) {
-		ChosenService service = serviceRepository.findChosenServiceByName(serviceName);
+		
+		ChosenService service = chosenServiceService.getChosenService(serviceName);
 		return reviewService.viewReviewsForService(service).stream().map(review -> 
 		convertToDTO(review)).collect(Collectors.toList());
 	}
@@ -154,7 +154,7 @@ public class ReviewController {
 	 */
 	@GetMapping(value = {"/view_reviews_of_customer"})
 	public List<ReviewDTO> viewReviewsOfCustomer(@RequestParam("username") String username) {
-		Customer customer = customerRepository.findCustomerByUsername(username);
+		Customer customer = customerService.getCustomer(username);
 		return reviewService.viewReviewsOfCustomer(customer).stream().map(review -> 
 		convertToDTO(review)).collect(Collectors.toList());
 	}
@@ -182,8 +182,8 @@ public class ReviewController {
 	String startTime) {
 		Date date = Date.valueOf(startDate);
 		Time time = Time.valueOf(startTime);
-		TimeSlot timeSlot = timeSlotRepoisoty.findTimeSlotByStartDateAndStartTime(date, time);
-		Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
+		TimeSlot timeSlot = timeSlotService.getTimeSlot(date, time);
+        Appointment appointment = appointmentService.getAppointment(timeSlot);
 		Review review = reviewService.getReview(appointment);
 		return convertToDTO(review);
 	}

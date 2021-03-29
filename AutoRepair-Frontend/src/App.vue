@@ -5,29 +5,64 @@
         <div class="container">
           <div class="row justify-content-between">
             <div class="col-md-3 d-flex align-items-center">
-              <a class="navbar-brand" href="index.html">Autorepair<span>.</span></a>
+              <a class="navbar-brand" href="index.html"
+                >Autorepair<span>.</span></a
+              >
             </div>
             <div class="col-md-7">
               <div class="row">
                 <div class="col">
                   <div class="top-wrap d-flex">
-                    <div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-location-arrow"></span></div>
-                    <div class="text"><span style= "color:white;">Address</span><span>721 New York NY 10016</span></div>
+                    <div
+                      class="icon d-flex align-items-center justify-content-center"
+                    >
+                      <span class="fa fa-location-arrow"></span>
+                    </div>
+                    <div class="text">
+                      <span style="color: white">Address</span
+                      ><span>721 New York NY 10016</span>
+                    </div>
                   </div>
                 </div>
                 <div class="col">
                   <div class="top-wrap d-flex">
-                    <div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-location-arrow"></span></div>
-                    <div class="text"><span style= "color:white;">Call us</span><span>(+01) 123 456 7890</span></div>
+                    <div
+                      class="icon d-flex align-items-center justify-content-center"
+                    >
+                      <span class="fa fa-location-arrow"></span>
+                    </div>
+                    <div class="text">
+                      <span style="color: white">Call us</span
+                      ><span>(+01) 123 456 7890</span>
+                    </div>
                   </div>
                 </div>
-                <div class="col-md-3 d-flex justify-content-end align-items-center">
+                <div
+                  class="col-md-3 d-flex justify-content-end align-items-center"
+                >
                   <div class="social-media">
                     <p class="mb-0 d-flex">
-                      <a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-facebook"><i class="sr-only">Facebook</i></span></a>
-                      <a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-twitter"><i class="sr-only">Twitter</i></span></a>
-                      <a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-instagram"><i class="sr-only">Instagram</i></span></a>
-                      <a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-dribbble"><i class="sr-only">Dribbble</i></span></a>
+                      <a
+                        href="#"
+                        class="d-flex align-items-center justify-content-center"
+                        ><span class="fa fa-facebook"
+                          ><i class="sr-only">Facebook</i></span
+                        ></a
+                      >
+                      <a
+                        href="#"
+                        class="d-flex align-items-center justify-content-center"
+                        ><span class="fa fa-twitter"
+                          ><i class="sr-only">Twitter</i></span
+                        ></a
+                      >
+                      <a
+                        href="#"
+                        class="d-flex align-items-center justify-content-center"
+                        ><span class="fa fa-instagram"
+                          ><i class="sr-only">Instagram</i></span
+                        ></a
+                      >
                     </p>
                   </div>
                 </div>
@@ -37,7 +72,6 @@
         </div>
       </div>
 
-
       <router-view></router-view>
 
       <footer class="footer ftco-section">
@@ -45,12 +79,25 @@
           <div class="row mb-5">
             <div class="col-md-6 col-lg">
               <div class="ftco-footer-widget mb-4">
-                <h2 class="logo"><a href="#">Autorepair<span>.</span></a></h2>
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-4">
-                  <li class="ftco-animate"><a href="#"><span class="fa fa-twitter"></span></a></li>
-                  <li class="ftco-animate"><a href="#"><span class="fa fa-facebook"></span></a></li>
-                  <li class="ftco-animate"><a href="#"><span class="fa fa-instagram"></span></a></li>
+                <h2 class="logo">
+                  <a href="#">Autorepair<span>.</span></a>
+                </h2>
+                <p>
+                  Far far away, behind the word mountains, far from the
+                  countries Vokalia and Consonantia, there live the blind texts.
+                </p>
+                <ul
+                  class="ftco-footer-social list-unstyled float-md-left float-lft mt-4"
+                >
+                  <li class="ftco-animate">
+                    <a href="#"><span class="fa fa-twitter"></span></a>
+                  </li>
+                  <li class="ftco-animate">
+                    <a href="#"><span class="fa fa-facebook"></span></a>
+                  </li>
+                  <li class="ftco-animate">
+                    <a href="#"><span class="fa fa-instagram"></span></a>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -58,11 +105,31 @@
               <div class="ftco-footer-widget mb-4 ml-md-5">
                 <h2 class="ftco-heading-2">Services</h2>
                 <ul class="list-unstyled">
-                  <li><a href="#" class="py-1 d-block"><span class="fa fa-check mr-3"></span>Oil Change</a></li>
-                  <li><a href="#" class="py-1 d-block"><span class="fa fa-check mr-3"></span>Batteries</a></li>
-                  <li><a href="#" class="py-1 d-block"><span class="fa fa-check mr-3"></span>Tow Truck</a></li>
-                  <li><a href="#" class="py-1 d-block"><span class="fa fa-check mr-3"></span>Tire Change</a></li>
-                  <li><a href="#" class="py-1 d-block"><span class="fa fa-check mr-3"></span>Engine Repair</a></li>
+                  <li>
+                    <a href="#" class="py-1 d-block"
+                      ><span class="fa fa-check mr-3"></span>Oil Change</a
+                    >
+                  </li>
+                  <li>
+                    <a href="#" class="py-1 d-block"
+                      ><span class="fa fa-check mr-3"></span>Batteries</a
+                    >
+                  </li>
+                  <li>
+                    <a href="#" class="py-1 d-block"
+                      ><span class="fa fa-check mr-3"></span>Tow Truck</a
+                    >
+                  </li>
+                  <li>
+                    <a href="#" class="py-1 d-block"
+                      ><span class="fa fa-check mr-3"></span>Tire Change</a
+                    >
+                  </li>
+                  <li>
+                    <a href="#" class="py-1 d-block"
+                      ><span class="fa fa-check mr-3"></span>Engine Repair</a
+                    >
+                  </li>
                 </ul>
               </div>
             </div>
@@ -71,9 +138,25 @@
                 <h2 class="ftco-heading-2">Contact information</h2>
                 <div class="block-23 mb-3">
                   <ul>
-                    <li><span class="icon fa fa-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
-                    <li><a href="#"><span class="icon fa fa-phone"></span><span class="text">+2 392 3929 210</span></a></li>
-                    <li><a href="#"><span class="icon fa fa-paper-plane"></span><span class="text">info@yourdomain.com</span></a></li>
+                    <li>
+                      <span class="icon fa fa-map-marker"></span
+                      ><span class="text"
+                        >203 Fake St. Mountain View, San Francisco, California,
+                        USA</span
+                      >
+                    </li>
+                    <li>
+                      <a href="#"
+                        ><span class="icon fa fa-phone"></span
+                        ><span class="text">+2 392 3929 210</span></a
+                      >
+                    </li>
+                    <li>
+                      <a href="#"
+                        ><span class="icon fa fa-paper-plane"></span
+                        ><span class="text">info@yourdomain.com</span></a
+                      >
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -97,8 +180,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-12 text-center">
-            </div>
+            <div class="col-md-12 text-center"></div>
           </div>
         </div>
       </footer>

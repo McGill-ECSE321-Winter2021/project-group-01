@@ -45,8 +45,8 @@ export default {
 		}
 	},
 	methods: {
-		login (username, password) {
-			AXIOS.post('/login/',$.param({username: username, password: password}))
+		registerBusiness (name, email, address, phoneNumber) {
+			AXIOS.post('/registerBusiness/',$.param({name: name, password: password, address: address, phoneNumber: phoneNumber}))
 			.then(response => {
 				this.user = response.data
 				if (response.status===200) {
@@ -66,8 +66,8 @@ export default {
 			})
 			.catch(e => {
 				
-				this.errorLogin = e.response.data
-				console.log(this.errorLogin)
+				this.errorBusiness = e.response.data
+				console.log(this.errorBusiness)
 				
 			})
 		}

@@ -38,7 +38,7 @@
 								</div>
                 <div class="col-md-12">
 									<div class="form-group">
-                    <h5 v-if="errorLogin" style="color:red; padding-top:20px">Error: {{errorLogin}}</h5> 
+                    <h5 v-if="errorBusiness" style="color:red; padding-top:20px">Error: {{errorBusiness}}</h5> 
                   </div>
 								</div>
 								<div class="col-md-12">
@@ -46,8 +46,8 @@
                     <button 
                       type="button" 
                       class="btn btn-dark py-3 px-4"
-                      v-bind:disabled="!name || !email || !address|| !phoneNumber"
-                      @click="login(username, password)">Confirm</button>
+
+                      @click="registerBusiness(name, email, address, phoneNumber)">Confirm</button>
                   </div>
 								</div>
     					</div>

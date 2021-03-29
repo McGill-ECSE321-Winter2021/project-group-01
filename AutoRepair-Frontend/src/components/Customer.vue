@@ -115,19 +115,66 @@
                   </div>
                 </div>
                 <div class="col-md-12">
-                  <div class="form-group">
-                    <input
-                      type="submit"
-                      value="Submit"
-                      class="btn btn-dark py-3 px-4"
-                    />
-                  </div>
+                <div class="form-group">
+                  <h5 v-if="errorReview" style="color: red; padding-top: 20px">
+                    Error: {{ errorReview }}
+                  </h5>
                 </div>
+              </div>
+                <div class="col-md-12">
+                <div class="form-group">
+                  <button
+                    type="button"
+                    class="btn btn-dark py-3 px-4"
+                    @click="created()"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
               </div>
             </form>
           </div>
         </div>
       </div>
     </section>
+    <section class="ftco-section testimony-section bg-light">
+      <div class="container">
+        <div class="row justify-content-center pb-5 mb-3">
+          <div class="col-md-7 heading-section heading-section-white text-center">
+          	<span class="subheading">Testimonies</span>
+            <h2>Happy Clients &amp; Feedbacks</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="carousel-testimony">
+              <div class="item" v-for="review in reviews" :key=review.id>
+                <div class="testimony-wrap py-4">
+                	<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></span></div>
+                  <div class="text">
+                    <p class="mb-4">{{review.description}}</p>
+                    <div class="d-flex align-items-center">
+                    	<div class="user-img" style="background-image: url(../static/images/person_1.jpg)"></div>
+                    	<div class="pl-3">
+		                    <p class="name">{{review.service.name}}</p>
+		                    <span class="position">{{review.customer.profile.firstName}} {{review.customer.profile.lastName}}</span>
+                        <br>
+                        <span class="position">Rating: {{review.serviceRating}}</span>
+                        <br>
+                        <span class="position">{{review.appointment.timeSlot.startDate}}</span>
+		                  </div>
+	                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
+
+<script src="./js/review.js">
+</script>

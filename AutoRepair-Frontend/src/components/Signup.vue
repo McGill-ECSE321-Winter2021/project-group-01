@@ -137,16 +137,7 @@
                   />
                 </div>
               </div>
-              <!-- <div class="col-md-12">
-                <div class="form-group">
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="carTransmission"
-                    placeholder="Car transmission"
-                  />
-                </div>
-              </div> -->
+
               <div class="col-md-12">
                 <div class="form-group">
                   <div class="form-field">
@@ -154,7 +145,7 @@
                       <div class="icon">
                         <span class="fa fa-chevron-down"></span>
                       </div>
-                      <select name="carTransmission" id="" class="form-control" v-model="carTransmission" placeholder="Car transmission">
+                      <select name="carTransmission" id="" class="form-control" v-model="carTransmission">
                         <option value="">Select car transmission</option>
                         <option value="Automatic">Automatic</option>
                         <option value="Manual">Manual</option>

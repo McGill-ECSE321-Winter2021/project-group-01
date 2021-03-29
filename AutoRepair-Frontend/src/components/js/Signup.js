@@ -58,21 +58,6 @@ export default {
                 this.errorSignup="Passwords do not match."
             }else{
                 this.errorSignup=''
-                // AXIOS.post('/register_customer/',{},{
-                //     params: {
-                //     firstName: firstName,
-                //     lastName: lastName,
-                //     phoneNumber: phoneNumber,
-                //     email: email,
-                //     address: address,
-                //     zipCode: zipCode,
-                //     username: username,
-                //     password: password,
-                //     model: model,
-                //     plateNumber: plateNumber,
-                //     carTransmission:carTransmission
-
-                // }})
                 AXIOS.post('/register_customer/', {}, {
                     params:{
                         firstName: firstName,
@@ -88,15 +73,12 @@ export default {
                         carTransmission:carTransmission
                 }})
                 .then(response => {
-                    this.response=response
-                    if(this.response.data.username!=''){
+                    this.errorSignup=''
+                    if(response.status===201){
                         window.location.href = "/customer"
-                    }else{
-                        this.errorSignup=this.response.data;
-                    }
-            })
+                     }})
                 .catch(e => {
-                    this.errorSignup = e
+                   this.errorSignup = e.response.data
                 })
 
             }

@@ -47,27 +47,24 @@ export default {
 			AXIOS.post('/login/',$.param({username: username, password: password}))
 			.then(response => {
 				this.user = response.data
-				if (this.user != '') {
+				if (response.status===200) {
 					this.type = this.user.userType
+					
 					if(this.type.localeCompare("customer")==0){
 						window.location.href = "/customer"
 					}
 					else if(this.type.localeCompare("assistant")==0){
 						window.location.href = "/assistant"
 					}
-					else if(this.type.localeCompare("owner")==0){
-						window.location.href = "/owner"
-					}
 					else {
-						this.errorLogin=this.user.error
-						console.log(this.errorLogin)
+						window.location.href = "/owner"
 					}
 					
 				}
 			})
 			.catch(e => {
 				
-				this.errorLogin = "Incorrect username or password"
+				this.errorLogin = e.response.data
 				console.log(this.errorLogin)
 				
 			})

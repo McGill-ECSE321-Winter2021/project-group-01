@@ -300,6 +300,11 @@
 
  class="ftco-appointment ftco-section ftco-no-pt ftco-no-pb img" 
  style="background-image: url(../static/images/work-2.jpg);">
+ <div style="background-color:#262626;">
+        <br>
+        <br>
+        <br>
+      </div>
 
         <div class="overlay"></div> 
 

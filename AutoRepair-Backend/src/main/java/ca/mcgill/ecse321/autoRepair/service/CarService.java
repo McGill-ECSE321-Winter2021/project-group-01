@@ -115,6 +115,16 @@ public class CarService {
 	public Car getCar(String plateNumber) {
 		return carRepository.findCarByPlateNumber(plateNumber);
 	}
+	
+	@Transactional
+	public boolean deleteCar(String plateNumber) {
+		Car car = carRepository.findCarByPlateNumber(plateNumber);
+		if(car!=null) {
+			carRepository.delete(car);
+			return true;
+		}
+		return false;
+	}
 
 	/**
 	 * @author Eric Chehata

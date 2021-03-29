@@ -59,32 +59,38 @@ public class CustomerController {
 	public ResponseEntity<?> registerCustomer(@RequestParam String firstName, @RequestParam String lastName, @RequestParam String phoneNumber,
 			@RequestParam String email, @RequestParam String address, @RequestParam String zipCode, @RequestParam String username, 
 			@RequestParam String password, @RequestParam String model, @RequestParam String plateNumber, @RequestParam String carTransmission) {
-
+		
+		
 		CarTransmission transmission = null;
 		if(carTransmission.equals("Automatic")) transmission = CarTransmission.Automatic;
 		else if(carTransmission.equals("Manual")) transmission = CarTransmission.Manual;
 		else {
-			//throw new IllegalArgumentException("Invalid car transmission");
 			return new ResponseEntity<>("Invalid car transmission", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+		
 		Profile profile = null;
 		try {
 			profile = profileService.createProfile(firstName, lastName, address, zipCode, phoneNumber, email);
 		}catch(IllegalArgumentException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+		
 		Car car = null;
 		try {
 			car = carService.createCar(plateNumber, model, transmission);
 		}catch(IllegalArgumentException e) {
+			profileService.deleteByEmail(email);
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		List<Car> cars = new ArrayList<Car>();
 		cars.add(car);
+		
 		Customer customer = null;
 		try {
 			customer = customerService.createCustomer(username, password, profile, cars);
 		}catch(IllegalArgumentException e) {
+			profileService.deleteByEmail(email);
+			carService.deleteCar(plateNumber);
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 
 		}

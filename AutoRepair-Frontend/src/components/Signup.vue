@@ -137,7 +137,7 @@
                   />
                 </div>
               </div>
-              <div class="col-md-12">
+              <!-- <div class="col-md-12">
                 <div class="form-group">
                   <input
                     type="text"
@@ -146,25 +146,26 @@
                     placeholder="Car transmission"
                   />
                 </div>
-              </div>
-              <!-- <div class="col-md-12">
+              </div> -->
+              <div class="col-md-12">
                 <div class="form-group">
                   <div class="form-field">
                     <div class="select-wrap">
                       <div class="icon">
                         <span class="fa fa-chevron-down"></span>
                       </div>
-                      <select name="" id="" class="form-control" v-model="carTransmission"  @change="pick">
-                        <option value="">Automatic</option>
-                        <option value="">Manual</option>
+                      <select name="carTransmission" id="" class="form-control" v-model="carTransmission" placeholder="Car transmission">
+                        <option value="">Select car transmission</option>
+                        <option value="Automatic">Automatic</option>
+                        <option value="Manual">Manual</option>
                       </select>
                     </div>
                   </div>
                 </div>
-              </div> -->
+              </div>
                <div class="col-md-12">
                 <div class="form-group">
-                    <h1> {{username}}</h1>
+                    <h1> {{carTransmission}}</h1>
                 </div>
               </div>
               <div class="col-md-12">
@@ -177,6 +178,9 @@
                   <button
                     type="button"
                     class="btn btn-dark py-3 px-4"
+                    v-bind:disabled="!username || !password || !confirmPassword ||
+                     !firstName || !lastName || !address|| !zipCode || !email || !phoneNumber ||
+                     !model|| !plateNumber || !carTransmission"
                     @click="signup(username, password, confirmPassword,
                      firstName, lastName, address, zipCode, email, phoneNumber,
                      model, plateNumber, carTransmission)">

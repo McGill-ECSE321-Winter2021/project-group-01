@@ -46,7 +46,7 @@
                     <button 
                       type="button" 
                       class="btn btn-dark py-3 px-4"
-
+					  v-bind:disabled="!email||!address||!phoneNumber"
                       @click="registerBusiness(name, email, address, phoneNumber)">Confirm</button>
                   </div>
 								</div>
@@ -168,3 +168,4 @@
     </section>
 	</div>
 </template>
+<script src="./js/Owner.js"></script>

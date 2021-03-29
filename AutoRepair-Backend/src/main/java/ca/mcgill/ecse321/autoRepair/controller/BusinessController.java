@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,12 +46,17 @@ public class BusinessController {
 	 * @return businessDTO
 	 */
 	@PostMapping(value = {"/register_business"})
-	public BusinessDTO registerBusiness(@RequestParam String name, @RequestParam String email, @RequestParam String address,
+	public ResponseEntity<?> registerBusiness(@RequestParam String name, @RequestParam String email, @RequestParam String address,
 			@RequestParam String phoneNumber) {
 		
-		Business business = businessService.createBusiness(name, email, address, phoneNumber);
-
-		return convertToDTO(business);
+		Business business=null;
+		try {
+			business = businessService.createBusiness(name, email, address, phoneNumber);
+		}
+		catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(convertToDTO(business), HttpStatus.CREATED);
 
 	}
 	
@@ -64,13 +71,18 @@ public class BusinessController {
 	 * @return businessDTO
 	 */
 	@PostMapping(value = {"/edit_business"})
-	public BusinessDTO editBusiness(@RequestParam String name1, @RequestParam String email, @RequestParam String address,
+	public ResponseEntity<?> editBusiness(@RequestParam String email, @RequestParam String address,
 			@RequestParam String phoneNumber) {
 		
-		String name = businessService.getBusiness().getName();
-		Business business = businessService.editBusiness(name, name1, email, address, phoneNumber);
-
-		return convertToDTO(business);
+		String businessName = businessService.getBusiness().getName();
+		Business business=null;
+		try {
+			business = businessService.editBusiness(businessName, businessName, email, address, phoneNumber);
+		}
+		catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(convertToDTO(business), HttpStatus.OK);
 
 	}
 	

@@ -12,7 +12,7 @@
                 <div class="col">
                   <div class="top-wrap d-flex">
                     <div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-location-arrow"></span></div>
-                    <div class="text"><span style= "color:white;">Address</span><span>721 New York NY 10016</span></div>
+                    <div class="text"><span style= "color:white;">Address</span><span>{{address}}</span></div>
                   </div>
                 </div>
                 <div class="col">
@@ -107,5 +107,5 @@
 </template>
 
 
-<script></script>
+<script src="./main.js"></script>
 

@@ -46,28 +46,23 @@ export default {
 	},
 	methods: {
 		registerBusiness (name, email, address, phoneNumber) {
-			AXIOS.post('/registerBusiness/',$.param({name: name, password: password, address: address, phoneNumber: phoneNumber}))
+			AXIOS.post('/register_business/',$.param({name: name, email: email, address: address, phoneNumber: phoneNumber}))
 			.then(response => {
-				this.user = response.data
-				if (response.status===200) {
-					this.type = this.user.userType
-					
-					if(this.type.localeCompare("customer")==0){
-						window.location.href = "/customer"
-					}
-					else if(this.type.localeCompare("assistant")==0){
-						window.location.href = "/assistant"
-					}
-					else {
-						window.location.href = "/owner"
-					}
-					
-				}
+				this.errorBusiness = ''
 			})
 			.catch(e => {
-				
-				this.errorBusiness = e.response.data
-				console.log(this.errorBusiness)
+				if(e.response.data=="Business already exists"){
+					AXIOS.post('/edit_business/',$.param({email: email, address: address, phoneNumber: phoneNumber}))
+					.then(response => {
+						this.errorBusiness = ''
+					})
+					.catch(error => {
+					this.errorBusiness = error.response.data
+					})
+				}
+				else{
+					this.errorBusiness = e.response.data
+				}
 				
 			})
 		}

@@ -33,21 +33,23 @@ var AXIOS = axios.create({
     data () {
         return {
             dayOfWeek:'',
-            startTime:'',
-            endTime:'',
+            dayOfWeek1:'',
+            startTime1:'',
+            endTime1:'',
             errorOpHours:'',
             response:[]
         }
     },
     methods: {
 
-        addOpHours: function (dayOfWeek, startTime, endTime){
+        editOpHours: function (dayOfWeek,dayOfWeek1, startTime1, endTime1){
                 this.errorOpHours=''
-                AXIOS.post('/add_business_hours/', {}, {
+                AXIOS.post('/edit_business_hours/', {}, {
                     params:{
                         dayOfWeek: dayOfWeek,
-                        startTime: startTime,
-                        endTime: endTime,                
+                        dayOfWeek1: dayOfWeek1,
+                        startTime1: startTime1,
+                        endTime1: endTime1,                
                 }})
                 .then(response => {
                     this.errorOpHours=''

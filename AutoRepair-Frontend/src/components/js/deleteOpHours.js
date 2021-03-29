@@ -28,26 +28,23 @@ var AXIOS = axios.create({
     headers: { 'Access-Control-Allow-Origin': frontendUrl }
   })
 
+  
   export default {
     name:"assistant",
     data () {
         return {
             dayOfWeek:'',
-            startTime:'',
-            endTime:'',
             errorOpHours:'',
             response:[]
         }
     },
     methods: {
 
-        addOpHours: function (dayOfWeek, startTime, endTime){
+        addOpHours: function (dayOfWeek){
                 this.errorOpHours=''
-                AXIOS.post('/add_business_hours/', {}, {
+                AXIOS.post('/delete_business_hours/', {}, {
                     params:{
-                        dayOfWeek: dayOfWeek,
-                        startTime: startTime,
-                        endTime: endTime,                
+                        dayOfWeek: dayOfWeek            
                 }})
                 .then(response => {
                     this.errorOpHours=''

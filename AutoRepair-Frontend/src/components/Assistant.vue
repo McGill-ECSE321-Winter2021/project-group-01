@@ -53,52 +53,62 @@
 			    					<div class="form-field">
 	          					<div class="select-wrap">
 	                      <div class="icon"><span class="fa fa-chevron-down"></span></div>
-	                      <select name="" id="" class="form-control">
-	                      	<option value="">Monday</option>
-	                        <option value="">Tuesday</option>
-	                        <option value="">Wednesday</option>
-	                        <option value="">Thursday</option>
-	                        <option value="">Friday</option>
-	                        <option value="">Saturday</option>
-                          <option value="">Sunday</option>
+	                      <select name="" id="" v-model= "dayOfWeek" class="form-control">
+
+	                      	<option value="">Select Day</option> <!-- fix later -->
+	                      	<option value="Monday">Monday</option>
+	                        <option value="Tuesday">Tuesday</option>
+	                        <option value="Wednesday">Wednesday</option>
+	                        <option value="Thursday">Thursday</option>
+	                        <option value="Friday">Friday</option>
+	                        <option value="Saturday">Saturday</option>
+                          <option value="Sunday">Sunday</option>
 	                      </select>
 	                    </div>
 			              </div>
 			    				</div>
 								</div>
 		
-								<div class="col-md-5">
+        				<div class="col-md-5">
 									<div class="form-group">
 			    					<div class="input-wrap">
-                                             <h5> Start Time </h5>
-
-			            		<input type="time" class="form-control appointment_time" placeholder="HH:mm">
+                       <h5> Start Time </h5>
+			    	<input type="time" class="form-control appointment_time" v-model= "startTime" placeholder="HH:mm">
 		            		</div>
-			    				</div>
-								</div>
+			    		</div>
+					</div>
 
-                		
-								<div class="col-md-5">
+
+				        				<div class="col-md-5">
 									<div class="form-group">
 			    					<div class="input-wrap">
                        <h5> End Time </h5>
 
-			            		<input type="time" class="form-control appointment_time" placeholder="HH:mm">
+			            		<input type="time" class="form-control appointment_time"
+								v-model= "endTime" placeholder="HH:mm">
 		            		</div>
 			    				</div>
 								</div>
-						
-								<div class="col-md-10">
-									<div class="form-group">
+	 	 </div>
 
-			              <input type="submit" value="Add Operating hours" class="btn btn-dark py-3 px-4">
+						
+						 <div class="col-md-10">
+                <div class="form-group">
+                  <button
+                    type="button"
+                    class="btn btn-dark py-3 px-4"
+
+                  v-bind:disabled="!dayOfWeek||!startTime||!endTime"
+                    @click="addOpHours(dayOfWeek, startTime, endTime)">
+					 Add Operating Hours</button>
 			            </div>
-								</div>
     					</div>
 	          </form>
     			</div>
     		</div>
     	</div>
+
+
 
     	<div class="container">
     		<div class="row d-md-flex justify-content-end">
@@ -118,6 +128,8 @@
 			              </div>
 			    				</div>
 								</div>
+
+								
 		
 								<div class="col-md-5">
 									<div class="form-group">
@@ -171,7 +183,7 @@
 			    				</div>
 								</div>
 		
-                		
+						
 							
 						
 								<div class="col-md-10">
@@ -319,4 +331,6 @@
   </div>
   </template>
   		<script src="./js/AddOpHours.js"></script>
+		 <script src="./js/deleteOpHours.js"></script>
+
 

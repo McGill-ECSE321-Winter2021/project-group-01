@@ -86,7 +86,10 @@ public class BusinessController {
 	@PostMapping(value = {"/add_business_hours"})
 	public OperatingHourDTO addBusinessHours(@RequestParam String dayOfWeek, @RequestParam String startTime, @RequestParam String endTime) {
 		String businessName = businessService.getBusiness().getName();
-		return convertToDTO(businessService.createOperatingHour(businessName, DayOfWeek.valueOf(dayOfWeek), Time.valueOf(startTime+":00"), Time.valueOf(endTime+":00")));
+		OperatingHour businessHour = businessService.createOperatingHour
+		(businessName, DayOfWeek.valueOf(dayOfWeek), Time.valueOf(startTime+":00"), Time.valueOf(endTime+":00"));
+		return new ResponseEntity<>(convertToDTO(businessHour), HttpStatus.CREATED);
+
 
 	}
 	
@@ -102,10 +105,10 @@ public class BusinessController {
 	@PostMapping(value = {"/edit_business_hours"})
 	public OperatingHourDTO editBusinessHours(@RequestParam String dayOfWeek, @RequestParam String dayOfWeek1, @RequestParam String startTime1, @RequestParam String endTime1) {
 		
-		OperatingHour operatingHour = businessService.editOperatingHour(DayOfWeek.valueOf(dayOfWeek), DayOfWeek.valueOf(dayOfWeek1), Time.valueOf(startTime1+":00"), Time.valueOf(endTime1+":00"));
-
-		return convertToDTO(operatingHour);
-
+OperatingHour operatingHour = businessService.editOperatingHour
+String dayOfWeek = businessService.getOperatingHour(dayOfWeek1);
+(DayOfWeek.valueOf(dayOfWeek), DayOfWeek.valueOf(dayOfWeek1), Time.valueOf(startTime1+":00"), Time.valueOf(endTime1+":00"));
+		return new ResponseEntity<>(convertToDTO(operatingHour), HttpStatus.CREATED);
 	}
 	
 	/**

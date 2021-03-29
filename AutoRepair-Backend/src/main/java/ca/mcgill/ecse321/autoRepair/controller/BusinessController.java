@@ -90,9 +90,6 @@ public class BusinessController {
 
 	}
 
-
-	
-	
 	/**
 	 * @author Fadi Tawfik Beshay
 	 * Edits the business hours of a business

@@ -8876,9 +8876,12 @@ h1, h2, h3, h4, h5,
     .staff:hover .text h3, .staff:focus .text h3 {
       color: #f79f24; }
 
+
 .ftco-appointment {
   background-position: center center !important;
-  position: relative; }
+  position: relative;
+
+ }
   .ftco-appointment .overlay {
     position: absolute;
     top: 0;

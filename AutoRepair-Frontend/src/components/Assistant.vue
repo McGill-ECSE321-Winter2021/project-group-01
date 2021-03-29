@@ -39,8 +39,8 @@
  
 
 	<section
-   class="ftco-appointment ftco-section ftco-no-pt ftco-no-pb img" 
-  style="background-image: url(../static/images/bg_2.jpg);" >
+   class="ftco-appointment ftco-no-pt ftco-no-pb img;"
+  style="background-image: url(../static/images/mechanicHand.jpg);" >
 			<div class="overlay"></div>
     	<div class="container">
     		<div class="row d-md-flex justify-content-end">
@@ -51,7 +51,7 @@
     						<div class="col-md-10">
 									<div class="form-group">
 			    					<div class="form-field">
-	          					<div class="select-wrap">
+	          					<div class="select-wrap">	
 	                      <div class="icon"><span class="fa fa-chevron-down"></span></div>
 	                      <select name="" id="" v-model= "dayOfWeek" class="form-control">
 
@@ -238,7 +238,7 @@
 <section
 
    class="ftco-section ftco-no-pt ftco-no-pb img" 
-  style="background-image: url(../static/images/bg_2.jpg);">
+  style="background-image: url(../static/images/holiday.jpg);">
 
 <div style="background-color:#262626;">
         <br>

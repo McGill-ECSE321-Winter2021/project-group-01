@@ -41,6 +41,7 @@ var AXIOS = axios.create({
             response:[]
         }
     },
+
     methods: {
         addOpHours: function (dayOfWeek, startTime, endTime){
                 this.errorOpHours=''
@@ -52,6 +53,7 @@ var AXIOS = axios.create({
                 }})
                 .then(response => {
                     this.errorOpHours=''
+
             })
                 .catch(e => {
                     this.errorOpHours = e.response.data

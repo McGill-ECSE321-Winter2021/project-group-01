@@ -164,7 +164,8 @@
 
 
       
-    	<div class="container">
+    
+    		<div class="container">
     		<div class="row d-md-flex justify-content-end">
     			<div class="col-md-10 col-lg-6 half p-4 py-7 pl-lg-8">
     				<h2 class="mb-4">Delete Operating Hours</h2>
@@ -175,27 +176,44 @@
 			    					<div class="form-field">
 	          					<div class="select-wrap">
 	                      <div class="icon"><span class="fa fa-chevron-down"></span></div>
-	                      <select name="" id="" class="form-control">
-	                      	<option value="">Available Operating Hours</option>  <!-- link to available op hours backend-->
+	                      <select name="" id="" v-model= "dayOfWeek" class="form-control">
+
+	                      	<option value="">Select Day</option> <!-- fix later -->
+	                      	<option value="Monday">Monday</option>
+	                        <option value="Tuesday">Tuesday</option>
+	                        <option value="Wednesday">Wednesday</option>
+	                        <option value="Thursday">Thursday</option>
+	                        <option value="Friday">Friday</option>
+	                        <option value="Saturday">Saturday</option>
+                          <option value="Sunday">Sunday</option>
 	                      </select>
 	                    </div>
 			              </div>
 			    				</div>
 								</div>
-		
+	  
+	  		</div>
 						
 							
-						
-								<div class="col-md-10">
-									<div class="form-group">
-			              <input type="submit" value="Delete Operating hours" class="btn btn-dark py-3 px-4">
+
+	 <div class="col-md-10">
+                <div class="form-group">
+                  <button
+                    type="button"
+                    class="btn btn-dark py-3 px-4"
+
+                  v-bind:disabled="!dayOfWeek"
+                    @click="deleteOpHours(dayOfWeek)">
+					 Delete Operating Hours</button>
 			            </div>
-								</div>
-    					</div>
-	          </form>
     			</div>
+
+	          </form>
     		</div>
     	</div>
+    	</div>
+
+
   </section>
     
 
@@ -330,7 +348,7 @@
 </section>
   </div>
   </template>
-  		<script src="./js/AddOpHours.js"></script>
-		 <script src="./js/deleteOpHours.js"></script>
+  		<script src="./js/OpHours.js"></script>
+
 
 

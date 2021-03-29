@@ -1,3 +1,5 @@
+
+  
 import axios from 'axios'
 import JQuery from 'jquery'
 let $ = JQuery
@@ -57,5 +59,20 @@ var AXIOS = axios.create({
                 })
 
             }
+            ,deleteOpHours: function (dayOfWeek){
+                this.errorOpHours=''
+                AXIOS.post('/delete_business_hours/', {}, {
+                    params:{
+                        dayOfWeek: dayOfWeek            
+                }})
+                .then(response => {
+                    this.errorOpHours=''
+            })
+                .catch(e => {
+                    this.errorOpHours = e.response.data
+                })
+
+            }
         }
+
     }

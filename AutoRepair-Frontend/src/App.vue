@@ -48,9 +48,9 @@
                 <h2 class="logo"><a href="#">Autorepair<span>.</span></a></h2>
                 <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
                 <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-4">
-                  <li class="ftco-animate"><a href="#"><span class="fa fa-twitter"></span></a></li>
-                  <li class="ftco-animate"><a href="#"><span class="fa fa-facebook"></span></a></li>
-                  <li class="ftco-animate"><a href="#"><span class="fa fa-instagram"></span></a></li>
+                  <li><a href="#"><span class="fa fa-twitter"></span></a></li>
+                  <li><a href="#"><span class="fa fa-facebook"></span></a></li>
+                  <li><a href="#"><span class="fa fa-instagram"></span></a></li>
                 </ul>
               </div>
             </div>
@@ -84,7 +84,7 @@
                 <div class="opening-hours">
                   <h4>Opening Days:</h4>
                   <p class="pl-3">
-                    <span>Monday – Friday : 9am to 20 pm</span>
+                    <span>Monday-Friday : 9am to 20 pm</span>
                     <span>Saturday : 9am to 17 pm</span>
                   </p>
                   <h4>Vacations:</h4>

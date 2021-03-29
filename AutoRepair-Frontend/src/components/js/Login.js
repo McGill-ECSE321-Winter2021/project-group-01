@@ -60,6 +60,7 @@ export default {
 					}
 					else {
 						this.errorLogin=this.user.error
+						console.log(this.errorLogin)
 					}
 					
 				}
@@ -67,6 +68,7 @@ export default {
 			.catch(e => {
 				
 				this.errorLogin = "Incorrect username or password"
+				console.log(this.errorLogin)
 				
 			})
 		}

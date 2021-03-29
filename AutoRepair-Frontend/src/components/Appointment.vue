@@ -53,7 +53,7 @@
             <div class="col-md-12 col-lg-6 half p-3 py-5 pl-lg-5">
               <div class="form-group" style="background-color:rgba(255,165,0,0.7); height:350px; width: 600px; text-align: center; border-radius:25px; padding:20px">
                 <h2 >Book An Appointment!</h2>
-                <form action="#" class="appointment">
+                <form action="#/appointments" class="appointment">
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
@@ -73,26 +73,27 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <div class="input-wrap">
-                          <input type="date" class="form-control appointment_date" placeholder="Date">
+                          <input type="date" class="form-control appointment_date" placeholder="Date" v-model="startDate">
                         </div>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <div class="input-wrap">
-                          <input type="time" class="form-control appointment_time" placeholder="Time">
+                          <input type="time" class="form-control appointment_time" placeholder="Time" v-model="startTime">
                         </div>
                       </div>
                     </div>
                     <div class="col-md-12">
                       <div class="form-group">
-                        <input type="submit" value="Book" class="btn btn-dark py-3 px-4">
+                        <button type="button"
+                          class="btn btn-dark py-3 px-4"
+                          @click="makeAppointment(tamara,startDate,startTime,selectedService)">Book
+                        </button>
                       </div>
                     </div>
-                    <div class="error-message">
-                      <p>
-                         <span v-if="errorAppointment" style="color:red; padding-left: 25px;"> Error: {{errorAppointment}} </span>
-                      </p>
+                    <div class="form-group">
+                        <h5 v-if="errorMakeAppointment" style="color:red; padding-left: 25px;"> Error: {{errorMakeAppointment}} </h5>
                     </div>
                   </div>
                 </form>
@@ -112,7 +113,7 @@
         <div class="container">
             <div class="form-group" style="background-color:rgba(255,165,0,0.7); height:450px; width: 600px; text-align: center; border-radius:25px; padding:20px; margin:center;">
               <h2 class="mb-4">Update Your Appointment!</h2>
-              <form action="#" class="appointment">
+              <form action="#/appointments" class="appointment">
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
@@ -183,7 +184,7 @@
         <div class="container">
             <div class="form-group" style="background-color:rgba(255,165,0,0.7); height:280px; width: 600px; text-align: center; border-radius:25px; padding:20px; ">
               <h2>Cancel Your Appointment!</h2>
-              <form action="#" class="appointment">
+              <form action="#/appointments" class="appointment">
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
@@ -246,9 +247,6 @@
           <table style="width:30% ;margin-left:auto;margin-right:auto; border:3px solid green; border-collapse:collapse; text-align:center;">
             <tr>
               <th style="border:3px solid green; background-color: rgba(0,128,0,0.4);"> Available Time Slots </th>
-            </tr>
-            <tr style="background-color: rgba(0,128,0,0.2);">
-              <td style="border:1px solid green;"> 12:00-1:00 </td>
             </tr>
             <tr v-for="availableTimeSlot in availableTimeSlots" style="background-color: rgba(0,128,0,0.2);">
               <td style="border:1px solid green;">{{ availableTimeSlot.startTime}} - {{ availableTimeSlot.endTime}}</td>

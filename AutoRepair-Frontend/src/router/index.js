@@ -6,6 +6,8 @@ import Owner from '@/components/Owner'
 import Assistant from '@/components/Assistant'
 import Customer from '@/components/Customer'
 import Services from '@/components/Services'
+import Signup from '@/components/Signup'
+import Appointment from '@/components/Appointment'
 
 
 Vue.use(Router)
@@ -15,7 +17,7 @@ export default new Router({
       path: '/',
       name: 'Hello',
       component: Hello
-    }, 
+    },
     {
       path: '/login',
       name: 'Login',
@@ -40,6 +42,16 @@ export default new Router({
       path: '/services',
       name: 'Services',
       component: Services
+    },
+    {
+      path: '/signup',
+      name: 'Signup',
+      component: Signup
+    },
+    {
+      path: '/appointments',
+      name: 'Appointments',
+      component: Appointment
     }
   ]
 })

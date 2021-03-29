@@ -1,20 +1,33 @@
 import axios from 'axios'
-var config = require('../../../config')
+import JQuery from 'jquery'
+let $ = JQuery
+var config = require ('../../../config')
 
 var backendConfigurer = function(){
-  switch(process.env.NODE_ENV){
+	switch(process.env.NODE_ENV){
       case 'development':
           return 'http://' + config.dev.backendHost + ':' + config.dev.backendPort;
       case 'production':
           return 'https://' + config.build.backendHost + ':' + config.build.backendPort ;
-  }
+	}
+};
+
+var frontendConfigurer = function(){
+	switch(process.env.NODE_ENV){
+      case 'development':
+          return 'http://' + config.dev.host + ':' + config.dev.port;
+      case 'production':
+          return 'https://' + config.build.host + ':' + config.build.port ;
+	}
 };
 
 var backendUrl = backendConfigurer();
+//var frontendUrl = frontendConfigurer();
+var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
 
 var AXIOS = axios.create({
   baseURL: backendUrl,
-  //headers: { 'Access-Control-Allow-Origin': frontendUrl }
+  headers: { 'Access-Control-Allow-Origin': frontendUrl }
 })
 
 export default {
@@ -25,17 +38,16 @@ export default {
       services: [],
       availableTimeSlots: [],
       unavailableTimeSlots: [],
-      newAppointment: {
-        serviceName: '',
-        appointmentDate: '',
-        appointmentTime: ''
-      },
+      appointment: '',
+      serviceName: '',
+      appointmentDate: '',
+      appointmentTime: '',
       errorService: '',
       errorMakeAppointment: '',
       response: []
     }
   },
-  created: function () {
+      created() {
       // Initializing services from backend
       AXIOS.get('/view_all_services')
       .then(response => {
@@ -48,27 +60,51 @@ export default {
   },
 
   methods: {
-     makeAppointment: function (username, date, time, service) {
-        AXIOS.post('/make_appointment/'.concat(username), {}, {
-        params: {
-          serviceName: service,
-          appointmentTime: time.toTimeString(),
-          appointmentDate: date.toDateString()
-        }})
-        .then(response => {
-        // JSON responses are automatically parsed.
-          this.appointments.push(response.data)
-          this.errorMakeAppointment = ''
-          this.newAppointment.serviceName = ''
-          this.newAppointment.appointmentDate = ''
-          this.newAppointment.appointmentTime = ''
-        })
-        .catch(e => {
-          var errorMsg = e.response.data.message
-          console.log(errorMsg)
-          this.errorMakeAppointment = errorMsg
-        })
-     },
+  makeAppointment (username, date, time, service) {
+  			AXIOS.post('/make_appointment/'.concat(username),$.param({serviceName: service, appointmentDate:date , appointmentTime:appointmentTime}))
+  			.then(response => {
+  			var d1 = new Date(date);
+  			if(date.getTime()== d1.getTime()){
+          this.errorMakeAppointment = "Incorrect username or password"
+          console.log(this.errorMakeAppointment)
+  			}
+  				this.appointment = response.data
+  				appointments.push(response.data)
+  				window.location.href = "/appointments"
+  			})
+  			.catch(e => {
+
+  				this.errorMakeAppointment = "Incorrect username or password"
+  				console.log(this.errorMakeAppointment)
+
+  			})
+  		},
+//     makeAppointment: function (username, date, time, service) {
+//        AXIOS.post('/make_appointment/'.concat(username), {}, {
+//        params: {
+//          serviceName: service,
+//          appointmentTime: time.toTimeString(),
+//          appointmentDate: date.toDateString()
+//        }})
+//        .then(response => {
+//        // JSON responses are automatically parsed.
+//        if(service!="a") {
+//          this.errorMakeAppointment="Not a"
+//        }
+//
+//          this.appointments.push(response.data)
+//          this.errorMakeAppointment = ''
+//          this.newAppointment.serviceName = ''
+//          this.newAppointment.appointmentDate = ''
+//          this.newAppointment.appointmentTime = ''
+//          window.location.href = "/appointments"
+//        })
+//        .catch(e => {
+//          var errorMsg = e.response.data.message
+//          console.log(errorMsg)
+//          this.errorMakeAppointment = errorMsg
+//        })
+//     },
 
      getAvailableTimeSlots: function (date) {
         AXIOS.get('/availableTimeSlots/'.concat(date), {}, {})

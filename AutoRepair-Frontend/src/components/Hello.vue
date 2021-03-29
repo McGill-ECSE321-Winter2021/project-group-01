@@ -2,10 +2,10 @@
   <div id="hello">
     <div class="hero-wrap">
 	    <div class="hero-image">
-	      <div class="item" style="height:800px; width: 100%; background-image:url(../static/images/bg_2.jpg);" >
+	      <div class="item" style="height:800px; width: 100%; background-image:url(../static/images/bg_2.jpg); background-size:cover;" >
 	      	<div class="overlay"></div>
 	        <div class="container">
-	          <div class="row no-gutters slider-text align-items-center justify-content-start">
+	          <div class="form-group">
 		          <div class="col-md-6">
 		          	<div class="text w-100">
 		          		<h2>We are best car repair services</h2>
@@ -18,8 +18,6 @@
 	      </div>
 	    </div>
 	  </div>
-
-
 
 		<section class="intro">
 			<div class="container intro-wrap" >

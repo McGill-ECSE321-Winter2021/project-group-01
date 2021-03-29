@@ -42,7 +42,6 @@ var AXIOS = axios.create({
         }
     },
     methods: {
-
         addOpHours: function (dayOfWeek, startTime, endTime){
                 this.errorOpHours=''
                 AXIOS.post('/add_business_hours/', {}, {
@@ -59,6 +58,9 @@ var AXIOS = axios.create({
                 })
 
             }
+
+
+            
             ,deleteOpHours: function (dayOfWeek){
                 this.errorOpHours=''
                 AXIOS.post('/delete_business_hours/', {}, {
@@ -71,8 +73,25 @@ var AXIOS = axios.create({
                 .catch(e => {
                     this.errorOpHours = e.response.data
                 })
-
+            }
+            ,editOpHours: function (dayOfWeek,startTime1,endTime1){
+                this.errorOpHours=''
+                AXIOS.post('/edit_business_hours/', {}, {
+                    params:{
+                        dayOfWeek: dayOfWeek,   
+                        startTime1: startTime1,
+                        endTime1: endTime1,            
+                }})
+                .then(response => {
+                    this.errorOpHours=''
+            })
+                .catch(e => {
+                    this.errorOpHours = e.response.data
+                })
             }
         }
-
     }
+
+        
+
+    

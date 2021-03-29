@@ -121,22 +121,31 @@
 			    					<div class="form-field">
 	          					<div class="select-wrap">
 	                      <div class="icon"><span class="fa fa-chevron-down"></span></div>
-	                      <select name="" id="" class="form-control">
-	                      	<option value="">Available Operating Hours</option>  <!-- link to available op hours backend-->
+	                      <select name="" id="" v-model= "dayOfWeek" class="form-control">
+	                      	<option value="">Operating Hour to Edit</option> 
+	                      	<option value="Monday">Monday</option>
+	                        <option value="Tuesday">Tuesday</option>
+	                        <option value="Wednesday">Wednesday</option>
+	                        <option value="Thursday">Thursday</option>
+	                        <option value="Friday">Friday</option>
+	                        <option value="Saturday">Saturday</option>
+                          <option value="Sunday">Sunday</option>
 	                      </select>
 	                    </div>
 			              </div>
 			    				</div>
-								</div>
+	  
+	  		</div>
 
 								
 		
 								<div class="col-md-5">
 									<div class="form-group">
 			    					<div class="input-wrap">
-                       <h5> Start Time </h5>
+                       <h5>New Start Time </h5>
 
-			            		<input type="time" class="form-control appointment_time" placeholder="HH:mm">
+			            		<input type="time" class="form-control appointment_time"
+								 v-model= "startTime1"  placeholder="HH:mm">
 		            		</div>
 			    				</div>
 								</div>
@@ -145,18 +154,27 @@
 								<div class="col-md-5">
 									<div class="form-group">
 			    					<div class="input-wrap">
-                       <h5> End Time </h5>
-			            		<input type="time" class="form-control appointment_time" placeholder="HH:mm">
+                       <h5>New End Time </h5>
+			            		<input type="time" class="form-control appointment_time" 
+								 v-model= "endTime1" placeholder="HH:mm">
 		            		</div>
 			    				</div>
 								</div>
 						
-								<div class="col-md-10">
-									<div class="form-group">
-			              <input type="submit" value="Edit Operating hours" class="btn btn-dark py-3 px-4">
+							
+	 <div class="col-md-10">
+                <div class="form-group">
+                  <button
+                    type="button"
+                    class="btn btn-dark py-3 px-4"
+
+                  v-bind:disabled="!dayOfWeek||!startTime1||!endTime1"
+                    @click="editOpHours(dayOfWeek,startTime1,endTime1)">
+					 Edit Operating Hours</button>
 			            </div>
-								</div>
-    					</div>
+    			</div>
+				    			</div>
+
 	          </form>
     			</div>
     		</div>
@@ -177,8 +195,7 @@
 	          					<div class="select-wrap">
 	                      <div class="icon"><span class="fa fa-chevron-down"></span></div>
 	                      <select name="" id="" v-model= "dayOfWeek" class="form-control">
-
-	                      	<option value="">Select Day</option> <!-- fix later -->
+	                      	<option value="">Select Day</option> 
 	                      	<option value="Monday">Monday</option>
 	                        <option value="Tuesday">Tuesday</option>
 	                        <option value="Wednesday">Wednesday</option>

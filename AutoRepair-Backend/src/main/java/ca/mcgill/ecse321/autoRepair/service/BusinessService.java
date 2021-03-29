@@ -40,7 +40,10 @@ public class BusinessService {
 		if(phoneNumber==null || phoneNumber=="") throw new IllegalArgumentException("Phone number cannot be blank");
 		if ((email.indexOf('@') == -1) || (email.indexOf('.') == -1) || (email.indexOf('.') < email.indexOf('@')) || (email.indexOf('@') == email.length()-1) || (email.indexOf('.') == email.length()-1)){
 			throw new IllegalArgumentException("Invalid email");
-		}	
+		}
+		if(toList(businessRepository.findAll()).size()==1) {
+			throw new IllegalArgumentException("Business already exists");
+		}
 		Business business = new Business();
 		business.setName(name);
 		business.setEmail(email);
@@ -88,8 +91,8 @@ public class BusinessService {
 	 * @return business
 	 */
 	@Transactional
-	public Business getBusiness(String name) {
-		return businessRepository.findBusinessByName(name);
+	public Business getBusiness() {
+		return toList(businessRepository.findAll()).get(0);
 	}
 
 	/**

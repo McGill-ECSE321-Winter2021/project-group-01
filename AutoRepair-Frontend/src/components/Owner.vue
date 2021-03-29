@@ -1,7 +1,80 @@
 <template>
 	<div id="Owner">
-	
-	<h1> Hello </h1>
+       <section class="ftco-appointment ftco-section ftco-no-pt ftco-no-pb img" style="background-image: url(../static/images/image_4.jpg);">
+			<div class="overlay"></div>
+    	<div class="container">
+    		<div class="row d-md-flex justify-content-end">
+    			<div class="col-md-12 col-lg-6 half p-3 py-5 pl-lg-5">
+    				<h2 class="mb-4">Business Information</h2>
+    				<form action="#" class="appointment">
+    					<div class="row">
+    						<div class="col-md-12">
+									<div class="form-group">
+			    					<div class="form-field">
+	          					<div class="select-wrap">
+	                    </div>
+			              </div>
+			    				</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+			              <input type="text" class="form-control" v-model="name" placeholder="Business Name">
+			            </div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+			              <input type="text" class="form-control" v-model="email" placeholder="E-mail">
+			            </div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+			              <input type="text" class="form-control" v-model="address" placeholder="Address">
+			            </div>			            
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+			              <input type="text" class="form-control" v-model="phoneNumber" placeholder="Phone Number">
+			            </div>			            
+								</div>
+                <div class="col-md-12">
+									<div class="form-group">
+                    <h5 v-if="errorLogin" style="color:red; padding-top:20px">Error: {{errorLogin}}</h5> 
+                  </div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+                    <button 
+                      type="button" 
+                      class="btn btn-dark py-3 px-4"
+                      v-bind:disabled="!name || !email || !address|| !phoneNumber"
+                      @click="login(username, password)">Confirm</button>
+                  </div>
+								</div>
+    					</div>
+	          </form>
+            <br>
+    				<form action="#" class="appointment">
+    					<div class="row">
+    						<div class="col-md-12">
+									<div class="form-group">
+			    					<div class="form-field">
+	          					<div class="select-wrap">
+	                    </div>
+			              </div>
+			    				</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+                  
+                  </div>
+								</div>
+    					</div>
+	          </form>
+    			</div>
+    		</div>
+    	</div>
+    </section>
+        </form>	
 	<section class="ftco-section testimony-section bg-light">
       <div class="container">
         <div class="row justify-content-center pb-5 mb-3">

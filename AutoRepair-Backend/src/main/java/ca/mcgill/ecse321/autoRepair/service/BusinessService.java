@@ -108,8 +108,10 @@ public class BusinessService {
 	public OperatingHour createOperatingHour(String businessName, DayOfWeek dayOfWeek, Time startTime, Time endTime) {
 		if(dayOfWeek==null) throw new IllegalArgumentException("Day of week cannot be blank");
 		if(startTime==null) throw new IllegalArgumentException("Start time cannot be blank");
-		if(endTime==null) throw new IllegalArgumentException("End time cannot be blank");
-		if(startTime.after(endTime)) throw new IllegalArgumentException("Start time cannot be before end time");
+		if(endTime==null) throw new IllegalArgumentException
+		("End time cannot be blank");
+		if(startTime.after(endTime)) throw new IllegalArgumentException
+		("Start time cannot be after end time");
 		if(operatingHourRepository.findByDayOfWeek(dayOfWeek)!=null) throw new IllegalArgumentException("Operating hour already exists");
 		OperatingHour operatingHour = new OperatingHour();
 		operatingHour.setDayOfWeek(dayOfWeek);

@@ -91,6 +91,14 @@
 								</div>
 	 	 </div>
 
+
+	  <div class="col-md-12">
+				<div class="form-group">
+                    <h5 v-if="errorAddOpHours" style="color:red; padding-top:20px">
+						Error: {{errorAddOpHours}}</h5> 
+                  </div>
+				</div>
+
 						
 						 <div class="col-md-10">
                 <div class="form-group">
@@ -121,7 +129,7 @@
 			    					<div class="form-field">
 	          					<div class="select-wrap">
 	                      <div class="icon"><span class="fa fa-chevron-down"></span></div>
-	                      <select name="" id="" v-model= "dayOfWeek" class="form-control">
+	                      <select name="new" id="" v-model= "dayOfWeek" class="form-control">
 	                      	<option value="">Operating Hour to Edit</option> 
 	                      	<option value="Monday">Monday</option>
 	                        <option value="Tuesday">Tuesday</option>
@@ -160,20 +168,28 @@
 		            		</div>
 			    				</div>
 								</div>
-						
+
+
+							  <div class="col-md-12">
+				<div class="form-group">
+                    <h5 v-if="errorEditOpHours" style="color:red; padding-top:20px">
+						Error: {{errorEditOpHours}}</h5> 
+                  </div>
+				</div>
 							
 	 <div class="col-md-10">
                 <div class="form-group">
                   <button
                     type="button"
                     class="btn btn-dark py-3 px-4"
-
-                  v-bind:disabled="!dayOfWeek||!startTime1||!endTime1"
+					
+                  v-bind:disabled="!dayOfWeek"
                     @click="editOpHours(dayOfWeek,startTime1,endTime1)">
 					 Edit Operating Hours</button>
-			            </div>
     			</div>
 				    			</div>
+	   </div>
+
 
 	          </form>
     			</div>
@@ -211,7 +227,12 @@
 	  
 	  		</div>
 						
-							
+									  <div class="col-md-12">
+				<div class="form-group">
+                    <h5 v-if="errorDeleteOpHours" style="color:red; padding-top:20px">
+						Error: {{errorDeleteOpHours}}</h5> 
+                  </div>
+				</div>	
 
 	 <div class="col-md-10">
                 <div class="form-group">

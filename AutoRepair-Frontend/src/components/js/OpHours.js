@@ -35,16 +35,18 @@ var AXIOS = axios.create({
     data () {
         return {
             dayOfWeek:'',
-            startTime:'',
+            startTime:'',   
             endTime:'',
-            errorOpHours:'',
+            errorAddOpHours:'',
+            errorEditOpHours:'',
+            errorDeleteOpHours:'',
             response:[]
         }
     },
 
     methods: {
         addOpHours: function (dayOfWeek, startTime, endTime){
-                this.errorOpHours=''
+                this.errorAddOpHours=''
                 AXIOS.post('/add_business_hours/', {}, {
                     params:{
                         dayOfWeek: dayOfWeek,
@@ -52,32 +54,33 @@ var AXIOS = axios.create({
                         endTime: endTime,                
                 }})
                 .then(response => {
-                    this.errorOpHours=''
-
+                    this.errorAddOpHours=''
+   
             })
                 .catch(e => {
-                    this.errorOpHours = e.response.data
+                   // this.errorAddOpHours = e.response.data
+
+                    this.errorAddOpHours = "error"
                 })
 
             }
-
-
+    
             
             ,deleteOpHours: function (dayOfWeek){
-                this.errorOpHours=''
+                this.errorDeleteOpHours=''
                 AXIOS.post('/delete_business_hours/', {}, {
                     params:{
                         dayOfWeek: dayOfWeek            
                 }})
                 .then(response => {
-                    this.errorOpHours=''
+                    this.errorDeleteOpHours=''
             })
                 .catch(e => {
-                    this.errorOpHours = e.response.data
+                    this.errorDeleteOpHours =  "Unavailable Operating Hour to Delete"
                 })
             }
             ,editOpHours: function (dayOfWeek,startTime1,endTime1){
-                this.errorOpHours=''
+                this.errorEditOpHours=''
                 AXIOS.post('/edit_business_hours/', {}, {
                     params:{
                         dayOfWeek: dayOfWeek,   
@@ -85,10 +88,10 @@ var AXIOS = axios.create({
                         endTime1: endTime1,            
                 }})
                 .then(response => {
-                    this.errorOpHours=''
+                    this.errorEditOpHours=''
             })
                 .catch(e => {
-                    this.errorOpHours = e.response.data
+                    this.errorEditOpHours = "error"
                 })
             }
         }

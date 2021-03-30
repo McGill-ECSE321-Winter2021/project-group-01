@@ -86,10 +86,15 @@ public class BusinessController {
 	@PostMapping(value = {"/add_business_hours"})
 	public OperatingHourDTO addBusinessHours(@RequestParam String dayOfWeek, @RequestParam String startTime, @RequestParam String endTime) {
 		String businessName = businessService.getBusiness().getName();
-		return convertToDTO(businessService.createOperatingHour(businessName, DayOfWeek.valueOf(dayOfWeek), Time.valueOf(startTime+":00"), Time.valueOf(endTime+":00")));
-
+		OperatingHour opHour = null;
+		try {
+		opHour =businessService.createOperatingHour(businessName, DayOfWeek.valueOf(dayOfWeek), Time.valueOf(startTime+":00"), Time.valueOf(endTime+":00")));
+		}		
+			catch(IllegalArgumentException e) {
+      	return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		return new ResponseEntity<>(convertToDTO(opHour), HttpStatus.CREATED);
 	}
-
 	/**
 	 * @author Fadi Tawfik Beshay
 	 * Edits the business hours of a business
@@ -102,9 +107,15 @@ public class BusinessController {
 	@PostMapping(value = {"/edit_business_hours"})
 	public OperatingHourDTO editBusinessHours(@RequestParam String dayOfWeek,@RequestParam String startTime1, @RequestParam String endTime1) {
 		String dayOfWeek1 = dayOfWeek;
-		OperatingHour operatingHour = businessService.editOperatingHour(DayOfWeek.valueOf(dayOfWeek), DayOfWeek.valueOf(dayOfWeek1), Time.valueOf(startTime1+":00"), Time.valueOf(endTime1+":00"));
+		OperatingHour opHourToEdit = null;
+		try{
+			opHourToEdit =businessService.EditOperatingHour(DayOfWeek.valueOf(dayOfWeek), DayOfWeek.valueOf(dayOfWeek1), Time.valueOf(startTime1+":00"), Time.valueOf(endTime1+":00"));
+		}
+		catch(IllegalArgumentException e) {
+      	return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
 
-		return convertToDTO(operatingHour);
+		return new ResponseEntity<>(convertToDTO(opHourToEdit), HttpStatus.CREATED);
 
 	}
 	
@@ -118,7 +129,14 @@ public class BusinessController {
 	@PostMapping(value = {"/delete_business_hours"})
 	public boolean deleteBusinessHours( @RequestParam String dayOfWeek) {
 		String businessName = businessService.getBusiness().getName();
-		return businessService.deleteOperatingHour(businessName, DayOfWeek.valueOf(dayOfWeek));
+		OperatingHour opHourToDelete = null;
+		try {
+opHourToDelete = businessService.deleteOperatingHour(businessName, DayOfWeek.valueOf(dayOfWeek));
+		}
+		catch(IllegalArgumentException e) {
+      	return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+				return new ResponseEntity<>(convertToDTO(opHourToDelete), HttpStatus.CREATED);
 
 	}
 	

@@ -49,8 +49,8 @@ public class ChosenServiceController {
 	 */
 	@PostMapping(value = { "/create_service","/create_service/" })
 	public ChosenServiceDTO createChosenService
-	(@RequestParam String name,@RequestParam int duration,@RequestParam Double price) {
-		ChosenService service = chosenService.createChosenService(name, duration, price);
+	(@RequestParam String serviceName,@RequestParam int duration,@RequestParam Double price) {
+		ChosenService service = chosenService.createChosenService(serviceName, duration, price);
 		return convertToDTO(service);
 	}
 
@@ -64,8 +64,8 @@ public class ChosenServiceController {
 	 */
 	@PostMapping(value = { "/update_service","/update_service/" })
 	public ChosenServiceDTO updateChosenService
-	(@RequestParam String name,@RequestParam int duration,@RequestParam Double price) {
-		ChosenService service = chosenService.editChosenService(name, duration, price);
+	(@RequestParam String serviceName,@RequestParam int duration,@RequestParam Double price) {
+		ChosenService service = chosenService.editChosenService(serviceName, duration, price);
 		return convertToDTO(service);
 	}
 
@@ -77,8 +77,8 @@ public class ChosenServiceController {
 	 */
 	@PostMapping(value = { "/delete_service","/delete_service/" })
 	public boolean deleteChosenService
-	(@RequestParam String name) {
-		return chosenService.deleteChosenService(name);
+	(@RequestParam String serviceName) {
+		return chosenService.deleteChosenService(serviceName);
 	}
 
 	private ChosenServiceDTO convertToDTO(ChosenService service) {

@@ -25,7 +25,7 @@
               <li class="nav-item">
                 <router-link class="nav-link" to="/login">Login</router-link></li>
               <li class="nav-item">
-				<router-link class="nav-link" to="/login">Contact</router-link></li>
+				<router-link class="nav-link" to="/customer">Customer</router-link></li>
             </ul>
           </div>
         </div>

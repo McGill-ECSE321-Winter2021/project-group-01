@@ -40,11 +40,17 @@ export default {
       unavailableTimeSlots: [],
       username: '',
       appointment: '',
+      selectedAppointment:'',
       serviceName: '',
       appointmentDate: '',
       appointmentTime: '',
+      newAppointmentDate:'',
+      newAppointmentTime:'',
+      newServiceName:'',
       errorService: '',
       errorMakeAppointment: '',
+      errorUpdateAppointment:'',
+      errorCancelAppointment:'',
       response: []
     }
   },
@@ -59,20 +65,60 @@ export default {
         this.errorService = e
       })
 
-      AXIOS.get('/availableTimeSlots/',$.param({appointmentDate:appointmentDate}))
-      .then(response => {
-      // JSON responses are automatically parsed.
-        this.availableTimeSlots = response.data
+      AXIOS.get('/appointmentsOf/',$.param({username:'bob'}))
+        .then(response => {
+         // JSON responses are automatically parsed.
+         this.appointments = response.data
+       })
+       .catch(e => {
+         this.errorService = e
       })
+
 
   },
 
   methods: {
+  updateAppointment(username, selectedAppointment, newAppointmentTime, newAppointmentDate, newServiceName) {
+
+      if(selectedAppointment!=""){
+            var splitAppointment = selectedAppointment.split("; ");
+            this.serviceName = splitAppointment[0];
+            this.appointmentDate = splitAppointment[1];
+            this.appointmentTime = splitAppointment[2];
+      }
+
+      AXIOS.post('/update_appointment/',{},{
+        params:{
+          username: 'bob',
+          appointmentDate: this.appointmentDate,
+          appointmentTime: this.appointmentTime,
+          newAppointmentDate: newAppointmentDate,
+          serviceName: this.serviceName,
+          newAppointmentTime: newAppointmentTime,
+          newServiceName: newServiceName
+      }})
+        			.then(response => {
+        				this.appointment = response.data
+        				appointments.push(response.data)
+        				serviceName=''
+        				appointmentTime=''
+        				appointmentDate=''
+        				window.location.href = "/appointments"
+        			})
+        			.catch(e => {
+        			  this.errorUpdateAppointment = e.response.data
+
+              })
+    },
+
   makeAppointment (username, appointmentDate, appointmentTime, serviceName) {
-  			AXIOS.post('/make_appointment/',$.param({username: username, serviceName: serviceName, appointmentDate:appointmentDate , appointmentTime:appointmentTime}))
+  			AXIOS.post('/make_appointment/',$.param({username: 'bob', serviceName: serviceName, appointmentDate:appointmentDate , appointmentTime:appointmentTime}))
   			.then(response => {
   				this.appointment = response.data
-  				appointments.push(response.data)
+  				serviceName=''
+  				appointmentTime=''
+  				appointmentDate=''
+  				errorMakeAppointment=''
   				window.location.href = "/appointments"
   			})
   			.catch(e => {
@@ -80,71 +126,71 @@ export default {
 
   			})
   },
-//     makeAppointment: function (username, date, time, service) {
-//        AXIOS.post('/make_appointment/'.concat(username), {}, {
-//        params: {
-//          serviceName: service,
-//          appointmentTime: time.toTimeString(),
-//          appointmentDate: date.toDateString()
-//        }})
-//        .then(response => {
-//        // JSON responses are automatically parsed.
-//        if(service!="a") {
-//          this.errorMakeAppointment="Not a"
-//        }
-//
-//          this.appointments.push(response.data)
-//          this.errorMakeAppointment = ''
-//          this.newAppointment.serviceName = ''
-//          this.newAppointment.appointmentDate = ''
-//          this.newAppointment.appointmentTime = ''
-//          window.location.href = "/appointments"
-//        })
-//        .catch(e => {
-//          var errorMsg = e.response.data.message
-//          console.log(errorMsg)
-//          this.errorMakeAppointment = errorMsg
-//        })
-//     },
 
-     getAvailableTimeSlots: function(appointmentDate) {
-        AXIOS.get('/availableTimeSlots/',$.param({appointmentDate:appointmentDate}))
-        .then(response => {
-        if(status==201){
-          this.errorMakeAppointment="ttre"
-          // JSON responses are automatically parsed.
-            this.availableTimeSlots = response.data
+  cancelAppointment(username, selectedAppointment){
+    if(selectedAppointment!=""){
+      var splitAppointment = selectedAppointment.split("; ");
+      this.serviceName = splitAppointment[0];
+      this.appointmentDate = splitAppointment[1];
+      this.appointmentTime = splitAppointment[2];
+    }
+
+        AXIOS.delete('/cancel_appointment/',{
+          params:{
+            username: 'bob',
+            appointmentDate: this.appointmentDate,
+            appointmentTime: this.appointmentTime,
+            serviceName: this.serviceName
         }})
+        .then(response => {
+          serviceName=''
+          appointmentTime=''
+          appointmentDate=''
+          window.location.href = "/appointments"
+        })
         .catch(e => {
-           this.errorMakeAppointment=e.response.data
+          this.errorCancelAppointment = e.response.data
+
         })
 
-     },
+  },
 
-     getUnavailableTimeSlots: function (date) {
-         AXIOS.get('/unavailableTimeSlots/'.concat(date), {}, {})
-         .then(response => {
-         // JSON responses are automatically parsed.
-           this.unavailableTimeSlots = response.data
-         })
-         .catch(e => {
-           var errorMsg = e.response.data.message
-           console.log(errorMsg)
-           this.errorMakeAppointment = errorMsg
-         })
-     },
-     getAppointmentsOfCustomer: function (username) {
-         AXIOS.get('/appointments/'.concat(username), {}, {})
-         .then(response => {
-         // JSON responses are automatically parsed.
-           this.appointments=response.data
-         })
-         .catch(e => {
-           var errorMsg = e.response.data.message
-           console.log(errorMsg)
-           this.errorMakeAppointment = errorMsg
-         })
-     },
+
+   getAvailableTimeSlots: function(appointmentDate) {
+
+      AXIOS.get('/availableTimeSlots/',{
+      params:{
+        appointmentDate:appointmentDate,
+      }})
+      .then(response => {
+
+        // JSON responses are automatically parsed.
+          this.availableTimeSlots = response.data
+      })
+      .catch(e => {
+         this.errorMakeAppointment=e.response.data
+      })
+
+   },
+
+   getAppointmentsOfCustomer: function(username) {
+
+      this.username='bob'
+
+       AXIOS.get('/appointmentsOf/',{
+       params:{
+         username:this.username,
+       }})
+       .then(response => {
+              this.errorCancelAppointment="help"
+       // JSON responses are automatically parsed.
+         this.appointments = response.data
+       })
+       .catch(e => {
+       this.errorCancelAppointment="trying"
+         this.errorMakeAppointment  = e.response.data
+       })
+   },
 //     convertDate(d) {
 //       var p = d.split("-");
 //       return +(p[0]+p[1]+p[2]);

@@ -79,11 +79,6 @@
                       </div>
                     </div>
                     <div class="col-md-6">
-                       <div class="form-group">
-                            <h1> {{availableTimeSlots}} </h1>
-                       </div>
-                    </div>
-                    <div class="col-md-6">
                       <div class="form-group">
                         <div class="input-wrap">
                           <input type="time" class="form-control appointment_time" placeholder="Time" v-model="appointmentTime" name="appointmentTime">
@@ -94,7 +89,8 @@
                       <div class="form-group">
                         <button type="button"
                           class="btn btn-dark py-3 px-4"
-                          @click="makeAppointment(tamara,appointmentDate.toString(),appointmentTime.toString(),serviceName)">Book
+                          @click="makeAppointment(tamara,appointmentDate.toString(),appointmentTime.toString(),serviceName), getAvailableTimeSlots(appointmentDate.toString()),
+                          getAppointmentsOfCustomer(bob)">Book
                         </button>
                       </div>
                     </div>
@@ -126,8 +122,8 @@
                       <div class="form-field">
                         <div class="select-wrap">
                           <div class="icon"><span class="fa fa-chevron-down"></span></div>
-                           <select name="appointmentSelect" id="appointmentSelect" class="form-control" v-model="selectedAppointment">
-                             <option value="" disabled selected>Select An Appointment</option>
+                           <select name="selectedAppointment" id="" class="form-control" v-model="selectedAppointment">
+                             <option value="">Select An Appointment</option>
                               <option v-for="appointment in appointments" >
                                 {{ appointment.toString() }}
                               </option>
@@ -141,8 +137,8 @@
                       <div class="form-field">
                         <div class="select-wrap">
                           <div class="icon"><span class="fa fa-chevron-down"></span></div>
-                          <select name="" id="" class="form-control" v-model="selectedService">
-                               <option value="" disabled selected>Select A New Service</option>
+                          <select name="newServiceName" id="" class="form-control" v-model="newServiceName">
+                               <option value="">Select A New Service</option>
                                 <option v-for="service in services" >
                                   {{ service.name }}
                                 </option>
@@ -154,26 +150,28 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <div class="input-wrap">
-                        <input type="date" class="form-control appointment_date" placeholder="Date">
+                        <input type="date" class="form-control appointment_date" placeholder="Date" v-model="newAppointmentDate" name="newAppointmentDate"
+                        @change="getAvailableTimeSlots(newAppointmentDate.toString())">
                       </div>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <div class="input-wrap">
-                        <input type="time" class="form-control appointment_time" placeholder="Time">
+                        <input type="time" class="form-control appointment_time" placeholder="Time" v-model="newAppointmentTime" name="newAppointmentTime">
                       </div>
                     </div>
                   </div>
                   <div class="col-md-12">
                     <div class="form-group">
-                      <input type="submit" value="Update" class="btn btn-dark py-3 px-4">
+                      <button type="button"
+                        class="btn btn-dark py-3 px-4"
+                        @click="updateAppointment(tamara,selectedAppointment,newAppointmentTime.toString(),newAppointmentDate.toString(), newServiceName)">Update
+                      </button>
                     </div>
                   </div>
-                  <div class="error-message">
-                    <p>
-                       <span v-if="errorUpdateAppointment" style="color:red; padding-left: 25px;">Error: {{errorUpdateAppointment}} </span>
-                    </p>
+                  <div class="form-group">
+                    <h5 v-if="errorUpdateAppointment" style="color:red; padding-left: 25px;"> Error: {{errorUpdateAppointment}} </h5>
                   </div>
                 </div>
               </form>
@@ -197,8 +195,8 @@
                       <div class="form-field">
                         <div class="select-wrap">
                           <div class="icon"><span class="fa fa-chevron-down"></span></div>
-                           <select name="appointmentSelect" id="appointmentSelect" class="form-control" v-model="selectedAppointment">
-                             <option value="" disabled selected>Select An Appointment</option>
+                           <select name="selectedAppointment" id="" class="form-control" v-model="selectedAppointment">
+                             <option value="">Select An Appointment</option>
                               <option v-for="appointment in appointments" >
                                 {{ appointment.toString() }}
                               </option>
@@ -209,13 +207,14 @@
                   </div>
                   <div class="col-md-12">
                     <div class="form-group">
-                      <input type="submit" value="Cancel" class="btn btn-dark py-3 px-4">
+                      <button type="button"
+                        class="btn btn-dark py-3 px-4"
+                        @click="getAppointmentsOfCustomer(username),cancelAppointment(tamara,selectedAppointment)">Cancel
+                      </button>
                     </div>
                   </div>
-                  <div class="error-message">
-                    <p>
-                       <span v-if="errorCancelAppointment" style="color:red; padding-left: 25px;">Error: {{errorCancelAppointment}} </span>
-                    </p>
+                  <div class="form-group">
+                     <h5 v-if="errorCancelAppointment" style="color:red; padding-left: 25px;"> Error: {{errorCancelAppointment}} </h5>
                   </div>
                 </div>
               </form>
@@ -259,6 +258,9 @@
             </tr>
           </table>
         </div>
+       </div>
+       <div>
+        <h2> {{appointments}} </h2>
        </div>
       <br>
       <br>

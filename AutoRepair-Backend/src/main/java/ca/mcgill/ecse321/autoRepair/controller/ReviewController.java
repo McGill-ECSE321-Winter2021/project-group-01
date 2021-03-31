@@ -31,7 +31,9 @@ import ca.mcgill.ecse321.autoRepair.model.TimeSlot;
 import ca.mcgill.ecse321.autoRepair.dao.AppointmentRepository;
 import ca.mcgill.ecse321.autoRepair.dao.ChosenServiceRepository;
 import ca.mcgill.ecse321.autoRepair.dao.CustomerRepository;
+import ca.mcgill.ecse321.autoRepair.service.AppointmentService;
 import ca.mcgill.ecse321.autoRepair.service.ReviewService;
+import ca.mcgill.ecse321.autoRepair.service.TimeSlotService;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -39,6 +41,12 @@ public class ReviewController {
 
 	@Autowired
 	private ReviewService reviewService;
+	
+	@Autowired
+	private TimeSlotService timeSlotService;
+	
+	@Autowired
+	private AppointmentService appointmentService;
 
 	@Autowired
 	private AppointmentRepository appointmentRepository; 
@@ -64,20 +72,20 @@ public class ReviewController {
 	 * @return reviewDTO
 	 */
 	@PostMapping(value = {"/create_review/"})
-	public ReviewDTO createReview(@RequestParam("startDate") String startDate, @RequestParam("startTime") String startTime, @RequestParam("serviceName")
-	String serviceName, @RequestParam("customerName") String customerName, @RequestParam("description")
-	String description, @RequestParam("serviceRating") int serviceRating) {
+	public ReviewDTO createReview(@RequestParam("startDate") String startDate, @RequestParam("startTime") String startTime,
+			@RequestParam("description") String description, @RequestParam("serviceRating") int serviceRating) {
 
 		Date date = Date.valueOf(startDate);
 		Time time = Time.valueOf(startTime);
-		TimeSlot timeSlot = timeSlotRepoisoty.findTimeSlotByStartDateAndStartTime(date, time);
-		Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
+		TimeSlot timeSlot = timeSlotService.getTimeSlot(date, time);
+        Appointment appointment = appointmentService.getAppointment(timeSlot);
 
-		Review review = reviewService.createReview(appointment, serviceName,
-				customerName, description, serviceRating);
+		Review review = reviewService.createReview(appointment, appointment.getChosenService().getName(),
+				appointment.getCustomer().getUsername(), description, serviceRating);
 
 		return convertToDTO(review);
 	}
+
 
 	/**
 	 * @author Mohammad Saeid Nafar

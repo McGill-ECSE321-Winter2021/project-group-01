@@ -223,31 +223,36 @@
       </section>
       <br>
 
-      <div class="form-group">
-        <div>
-          <h2 style="text-align:center;"> My Appointments </h2>
-          <table style="width:60% ;margin-left:auto;margin-right:auto; border:1px solid black; border-collapse:collapse; table-layout:fixed; text-align:center">
-            <thead>
-              <tr style="background-color: rgba(255,165,0,0.8);">
-                <th style="border:3px solid orange;">Service</th>
-                <th style="border:3px solid orange;">Date </th>
-                <th style="border:3px solid orange;">Time </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="appointment in appointments" style="background-color: rgba(255,165,0,0.5);">
-                <td style="border:1px solid orange; background-color: rgba(255,165,0,0.2);">{{ appointment.chosenService.toString()}}</td>
-                <td style="border:1px solid orange; background-color: rgba(255,165,0,0.2);">{{ appointment.timeSlot.startDate.toString()}}</td>
-                <td style="border:1px solid orange; background-color: rgba(255,165,0,0.2);">{{ appointment.timeSlot.startTime.toString()}} - {{ appointment.timeSlot.endTime.toString()}}</td>
-              </tr>
-            </tbody>
-          </table>
+      <div class="split left">
+        <div class="centered">
+            <div>
+              <h2 style="text-align:center;"> My Appointments </h2>
+              <table style="width:60% ;margin-left:auto;margin-right:auto; border:1px solid black; border-collapse:collapse; table-layout:fixed; text-align:center">
+                <thead>
+                  <tr style="background-color: rgba(255,165,0,0.8);">
+                    <th style="border:3px solid orange;">Service</th>
+                    <th style="border:3px solid orange;">Date </th>
+                    <th style="border:3px solid orange;">Time </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="appointment in appointments" style="background-color: rgba(255,165,0,0.5);">
+                    <td style="border:1px solid orange; background-color: rgba(255,165,0,0.2);">{{ appointment.chosenService.toString()}}</td>
+                    <td style="border:1px solid orange; background-color: rgba(255,165,0,0.2);">{{ appointment.timeSlot.startDate.toString()}}</td>
+                    <td style="border:1px solid orange; background-color: rgba(255,165,0,0.2);">{{ appointment.timeSlot.startTime.toString()}} - {{ appointment.timeSlot.endTime.toString()}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
         </div>
-        <br>
-        <br>
-        <br>
+      </div>
+      <br>
+      <br>
+      <br>
 
-        <div>
+
+      <div class="split right">
+        <div class="centered">
           <h2 style="text-align:center;">Time Slots </h2>
           <table style="width:30% ;margin-left:auto;margin-right:auto; border:3px solid green; border-collapse:collapse; text-align:center;">
             <tr>
@@ -258,7 +263,9 @@
             </tr>
           </table>
         </div>
-       </div>
+      </div>
+
+
        <div>
         <h2> {{appointments}} </h2>
        </div>
@@ -269,3 +276,5 @@
   </template>
 
   <script src="./js/appointment.js"></script>
+
+

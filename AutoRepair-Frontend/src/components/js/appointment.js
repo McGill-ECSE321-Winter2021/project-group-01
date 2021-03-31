@@ -175,23 +175,39 @@ export default {
 
    getAppointmentsOfCustomer: function(username) {
 
-      this.username='bob'
-
-       AXIOS.get('/appointmentsOf/',{
-       params:{
-         username:this.username,
-       }})
-       .then(response => {
-              this.errorCancelAppointment="help"
-       // JSON responses are automatically parsed.
-         this.appointments = response.data
-       })
-       .catch(e => {
-       this.errorCancelAppointment="trying"
-         this.errorMakeAppointment  = e.response.data
-       })
+         AXIOS.get('/appointmentsOf/',{
+         params:{
+           username:'bob',
+         }})
+         .then(response => {
+           // JSON responses are automatically parsed.
+             this.appointments = response.data
+         })
+         .catch(e => {
+         this.errorUpdateAppointment="trying"
+            this.errorMakeAppointment=e.response.data
+         })
+        this.errorUpdateAppointment=this.appointments
    },
-//     convertDate(d) {
+
+
+
+//   getAppointmentsOfCustomer(username) {
+//       AXIOS.get('/appointmentsOf/',{
+//       params: {
+//         username:'bob',
+//       }})
+//       .then(response => {
+//              this.errorUpdateAppointment="help"
+//        // JSON responses are automatically parsed.
+//         this.appointments = response.data
+//       })
+//       .catch(e => {
+//       this.errorUpdateAppointment="trying"
+//         this.errorMakeAppointment  = e.response.data
+//       })
+//   },
+////     convertDate(d) {
 //       var p = d.split("-");
 //       return +(p[0]+p[1]+p[2]);
 //     },

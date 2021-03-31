@@ -211,14 +211,19 @@ public class AppointmentController {
      * @return list of all the appointments for a specific customer
      */
     @GetMapping(value = {"/appointmentsOf/"})
-    public ResponseEntity<?> getAppointmentsOfCustomer(@RequestParam String username) {
-        Customer customer = customerService.getCustomer(username);
-        List<Appointment> appointmentsForCustomer = appointmentService.getAppointmentsOfCustomer(customer);
-        List<AppointmentDTO> appointments = new ArrayList<>();
-        for (Appointment appointment : appointmentsForCustomer) {
-            appointments.add(convertToDTO(appointment));
+    public ResponseEntity<?> getAppointmentsOfCustomer(@RequestParam("username") String username) {
+        try {
+            Customer customer = customerService.getCustomer(username);
+            List<Appointment> appointmentsForCustomer = appointmentService.getAppointmentsOfCustomer(customer);
+            List<AppointmentDTO> appointments = new ArrayList<>();
+            for (Appointment appointment : appointmentsForCustomer) {
+                appointments.add(convertToDTO(appointment));
+            }
+            return new ResponseEntity<>(appointments, HttpStatus.CREATED);
+        }catch (IllegalArgumentException e){
+            return new ResponseEntity<>("The customer does not exist", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(appointments, HttpStatus.OK);
+
     }
 
     /**

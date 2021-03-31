@@ -5,6 +5,7 @@ import ca.mcgill.ecse321.autoRepair.model.*;
 import ca.mcgill.ecse321.autoRepair.service.AppointmentService;
 import ca.mcgill.ecse321.autoRepair.service.ChosenServiceService;
 import ca.mcgill.ecse321.autoRepair.service.CustomerService;
+import ca.mcgill.ecse321.autoRepair.service.ReviewService;
 import ca.mcgill.ecse321.autoRepair.service.TimeSlotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,8 @@ import java.util.List;
 public class AppointmentController {
     @Autowired
     AppointmentService appointmentService;
+    @Autowired
+    ReviewService reviewService;
 
     @Autowired
     CustomerService customerService;
@@ -286,10 +289,19 @@ public class AppointmentController {
         return timeSlotDTO;
     }
 
-    private ChosenServiceDTO convertToDTO(ChosenService service) {
-        if(service==null) throw new IllegalArgumentException("Service not found.");
-        return new ChosenServiceDTO(service.getName(), service.getDuration(), service.getPayment());
-    }
+	private ChosenServiceDTO convertToDTO(ChosenService service) {
+		if(service==null) throw new IllegalArgumentException("Service not found.");
+		 Double avRating = null;
+		try {
+			avRating = reviewService.getAverageServiceReview(service.getName());
+		}
+		catch (Exception e){
+			
+		}
+	
+		return new ChosenServiceDTO(service.getName(), service.getDuration(), service.getPayment(), avRating);
+	}
+	
     private CustomerDTO convertToDTO(Customer customer) {
         if(customer==null) throw new IllegalArgumentException("Customer not found.");
         List<CarDTO> cars = new ArrayList<CarDTO>();

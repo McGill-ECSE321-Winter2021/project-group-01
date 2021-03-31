@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.autoRepair.service;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -182,7 +183,8 @@ public class ReviewService {
 			totalServiceRating = totalServiceRating + review.getServiceRating();
 		}
 		double averageServiceRating = (double)totalServiceRating/(double)reviewsForAService.size();
-		return averageServiceRating;
+		DecimalFormat numberFormat = new DecimalFormat("#.00");
+		return Double.parseDouble(numberFormat.format(averageServiceRating));
 	}
 
 	/**

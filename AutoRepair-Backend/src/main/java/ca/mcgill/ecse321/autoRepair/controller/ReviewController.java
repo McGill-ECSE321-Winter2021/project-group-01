@@ -221,9 +221,18 @@ public class ReviewController {
 	}
 
 	private ChosenServiceDTO convertToDTO(ChosenService service) {
-		if(service == null) throw new IllegalArgumentException("Service not found");
-		return new ChosenServiceDTO(service.getName(), service.getDuration(), service.getPayment());
+		if(service==null) throw new IllegalArgumentException("Service not found.");
+		 Double avRating = null;
+		try {
+			avRating = reviewService.getAverageServiceReview(service.getName());
+		}
+		catch (Exception e){
+			
+		}
+	
+		return new ChosenServiceDTO(service.getName(), service.getDuration(), service.getPayment(), avRating);
 	}
+
 
 	private AppointmentDTO convertToDTO(Appointment appointment){
 		if(appointment==null)throw new IllegalArgumentException("There is no such appointment");

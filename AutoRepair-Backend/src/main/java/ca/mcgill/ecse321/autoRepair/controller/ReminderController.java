@@ -1,15 +1,15 @@
 package ca.mcgill.ecse321.autoRepair.controller;
 
-import ca.mcgill.ecse321.autoRepair.dao.ChosenServiceRepository;
-import ca.mcgill.ecse321.autoRepair.dao.CustomerRepository;
-import ca.mcgill.ecse321.autoRepair.dao.ReminderRepository;
 import ca.mcgill.ecse321.autoRepair.dto.ReminderDTO;
 import ca.mcgill.ecse321.autoRepair.dto.CarDTO;
 import ca.mcgill.ecse321.autoRepair.dto.ChosenServiceDTO;
 import ca.mcgill.ecse321.autoRepair.dto.CustomerDTO;
 import ca.mcgill.ecse321.autoRepair.dto.ProfileDTO;
 import ca.mcgill.ecse321.autoRepair.model.*;
+import ca.mcgill.ecse321.autoRepair.service.ChosenServiceService;
+import ca.mcgill.ecse321.autoRepair.service.CustomerService;
 import ca.mcgill.ecse321.autoRepair.service.ReminderService;
+import ca.mcgill.ecse321.autoRepair.service.ReviewService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,14 +26,15 @@ import java.util.stream.Collectors;
 @RestController
 public class ReminderController {
 
-	@Autowired
-	ChosenServiceRepository chosenServiceRepository;
-	@Autowired
-	ReminderRepository reminderRepository;
-	@Autowired
-	CustomerRepository customerRepository;
+
 	@Autowired
 	ReminderService reminderService;
+	@Autowired
+	ReviewService reviewService;
+	@Autowired
+	CustomerService cusService;
+	@Autowired
+	ChosenServiceService csService;
 	
 	/**
 	 * @author Robert Aprahamian
@@ -43,7 +44,8 @@ public class ReminderController {
 	 */
 	@GetMapping(value = { "/view_reminders_for_customer","/view_reminders_for_customer/" })
 	public List<ReminderDTO> getAllRemindersForCustomer(@RequestParam String username) {
-		Customer customer = customerRepository.findCustomerByUsername(username);
+		Customer customer = cusService.getCustomer(username);
+		
 		if (customer == null)
 			throw new IllegalArgumentException("The following user does not exist: " + username);
 		return reminderService.getCustomerReminders(customer).stream().map(reminder -> convertToDTO(reminder)).collect(Collectors.toList());
@@ -58,13 +60,13 @@ public class ReminderController {
 	 */
 	@GetMapping(value = { "/get_reminder","/get_reminder/" })
 	public ReminderDTO getReminder(@RequestParam String username, @RequestParam String serviceName) {
-		Customer customer = customerRepository.findCustomerByUsername(username);
+		Customer customer = cusService.getCustomer(username);
 		if (customer == null)
 			throw new IllegalArgumentException("The following user does not exist: " + username);
-		ChosenService chosenService = chosenServiceRepository.findChosenServiceByName(serviceName);
+		ChosenService chosenService = csService.getChosenService(serviceName);
 		if (chosenService == null)
 			throw new IllegalArgumentException("The following service does not exist: " + serviceName);
-		return convertToDTO(reminderService.getReminder(customer,chosenService ));//.stream().map(service -> convertToDTO(service)).collect(Collectors.toList());
+		return convertToDTO(reminderService.getReminder(customer,chosenService ));
 	}
 
 	/**
@@ -154,7 +156,16 @@ public class ReminderController {
 
 	private ChosenServiceDTO convertToDTO(ChosenService service) {
 		if(service==null) throw new IllegalArgumentException("Service not found.");
-		return new ChosenServiceDTO(service.getName(), service.getDuration(), service.getPayment());
+		 Double avRating = null;
+		try {
+			avRating = reviewService.getAverageServiceReview(service.getName());
+		}
+		catch (Exception e){
+			
+		}
+	
+		return new ChosenServiceDTO(service.getName(), service.getDuration(), service.getPayment(), avRating);
 	}
+
 
 }

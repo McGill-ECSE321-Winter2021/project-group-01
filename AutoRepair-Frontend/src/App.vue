@@ -5,14 +5,14 @@
         <div class="container">
           <div class="row justify-content-between">
             <div class="col-md-3 d-flex align-items-center">
-              <a class="navbar-brand" href="index.html">Autorepair<span>.</span></a>
+              <!-- <a class="navbar-brand" href="index.html">{{businessName}}<span>.</span></a> -->
             </div>
             <div class="col-md-7">
               <div class="row">
                 <div class="col">
                   <div class="top-wrap d-flex">
                     <div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-location-arrow"></span></div>
-                    <div class="text"><span style= "color:white;">Address</span><span>{{address}}</span></div>
+                    <!-- <div class="text"><span style= "color:white;">Address</span><span>{{address}}</span></div> -->
                   </div>
                 </div>
                 <div class="col">
@@ -83,10 +83,10 @@
                 <h2 class="ftco-heading-2">Business Hours</h2>
                 <div class="opening-hours">
                   <h4>Opening Days:</h4>
-                  <p class="pl-3">
-                    <span>Monday-Friday : 9am to 20 pm</span>
-                    <span>Saturday : 9am to 17 pm</span>
-                  </p>
+                  <!-- <p class="pl-3" v-for="hour in businessHours" :key=hour.dayOfWeek>
+                    <span>{{hour.dayOfWeek}}: {{hour.startTime}} to {{hour.endTime}}</span> -->
+                    <!-- <span>Saturday : 9am to 17 pm</span> -->
+                  <!-- </p> -->
                   <h4>Vacations:</h4>
                   <p class="pl-3">
                     <span>All Sunday Days</span>
@@ -107,5 +107,5 @@
 </template>
 
 
-<script src="./main.js"></script>
+<script></script>
 

@@ -47,30 +47,37 @@ export default {
 	name:'main',
 	data () {
 		return {
-			name: '',
+			name: 'tstst',
 			email:'',
 			address: '',
 			phoneNumber: '',
-			businessHours: '',
-			holidays: '',
+			businessHours: [],
+			holidays: [],
 			errorBusiness: '',
 			response: []
 		}
 	},
 	created: function () {
-    AXIOS.get('/view_business_info')
+    AXIOS.get('/view_operating_hours')
     .then(response => {
-      this.name = response.data.name
-      this.email = response.data.email
-      this.address = response.data.address
-      this.phoneNumber = response.data.phoneNumber
+      this.businessHours = response.data
     })
     .catch(e => {
-      this.name = ''
-      this.email = ''
-      this.address = ''
-      this.phoneNumber = ''
+      this.businessHours=[]
     })
+    // AXIOS.get('/view_business_info')
+    // .then(response => {
+    //   this.name = response.data
+    //   this.email = response.data.email
+    //   this.address = response.data.address
+    //   this.phoneNumber = response.data.phoneNumber
+    // })
+    // .catch(e => {
+    //   this.name = 'test'
+    //   this.email = ''
+    //   this.address = ''
+    //   this.phoneNumber = ''
+    // })
   }
 
 }

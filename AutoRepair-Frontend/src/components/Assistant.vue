@@ -73,7 +73,8 @@
 									<div class="form-group">
 			    					<div class="input-wrap">
                        <h5> Start Time </h5>
-			    	<input type="time" class="form-control appointment_time" v-model= "startTime" placeholder="HH:mm">
+			    	<input type="time" class="form-control appointment_time" v-model= "startTime"
+					 placeholder="HH:mm">
 		            		</div>
 			    		</div>
 					</div>
@@ -122,7 +123,6 @@
 
 
 
-
     	<div class="container">
     		<div class="row d-md-flex justify-content-end">
     			<div class="col-md-10 col-lg-6 half p-4 py-7 pl-lg-8">
@@ -134,7 +134,7 @@
 			    					<div class="form-field">
 	          					<div class="select-wrap">
 	                      <div class="icon"><span class="fa fa-chevron-down"></span></div>
-	                      <select name="new" id="" v-model= "dayOfWeek" class="form-control">
+	                      <select name="new" id="" v-model= "dayOfWeek1" class="form-control">
 	                      	<option value="">Operating Hour to Edit</option> 
 	                      	<option value="Monday">Monday</option>
 	                        <option value="Tuesday">Tuesday</option>
@@ -150,8 +150,6 @@
 	  
 	  		</div>
 
-								
-		
 								<div class="col-md-5">
 									<div class="form-group">
 			    					<div class="input-wrap">
@@ -188,8 +186,8 @@
                     type="button"
                     class="btn btn-dark py-3 px-4"
 					
-                  v-bind:disabled="!dayOfWeek"
-                    @click="editOpHours(dayOfWeek,startTime1,endTime1)">
+                  v-bind:disabled="!dayOfWeek1||!startTime1||!endTime1"
+                    @click="editOpHours(dayOfWeek1,startTime1,endTime1)">
 					 Edit Operating Hours</button>
     			</div>
 				    			</div>
@@ -215,7 +213,7 @@
 			    					<div class="form-field">
 	          					<div class="select-wrap">
 	                      <div class="icon"><span class="fa fa-chevron-down"></span></div>
-	                      <select name="" id="" v-model= "dayOfWeek" class="form-control">
+	                      <select name="" id="" v-model= "dayOfWeek2" class="form-control">
 	                      	<option value="">Select Day</option> 
 	                      	<option value="Monday">Monday</option>
 	                        <option value="Tuesday">Tuesday</option>
@@ -245,8 +243,8 @@
                     type="button"
                     class="btn btn-dark py-3 px-4"
 
-                  v-bind:disabled="!dayOfWeek"
-                    @click="deleteOpHours(dayOfWeek)">
+                  v-bind:disabled="!dayOfWeek2"
+                    @click="deleteOpHours(dayOfWeek2)">
 					 Delete Operating Hours</button>
 			            </div>
     			</div>

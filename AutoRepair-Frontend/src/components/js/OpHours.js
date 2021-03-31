@@ -58,9 +58,7 @@ var AXIOS = axios.create({
    
             })
                 .catch(e => {
-                   // this.errorAddOpHours = e.response.data
-
-                    this.errorAddOpHours = "error"
+                    this.errorAddOpHours = e.response.data
                 })
 
             }
@@ -76,7 +74,7 @@ var AXIOS = axios.create({
                     this.errorDeleteOpHours=''
             })
                 .catch(e => {
-                    this.errorDeleteOpHours =  "Unavailable Operating Hour to Delete"
+                    this.errorDeleteOpHours =  "Operating Hour to delete does not exist"
                 })
             }
             ,editOpHours: function (dayOfWeek,startTime1,endTime1){
@@ -91,7 +89,7 @@ var AXIOS = axios.create({
                     this.errorEditOpHours=''
             })
                 .catch(e => {
-                    this.errorEditOpHours = "error"
+                    this.errorEditOpHours = e.response.data
                 })
             }
         }

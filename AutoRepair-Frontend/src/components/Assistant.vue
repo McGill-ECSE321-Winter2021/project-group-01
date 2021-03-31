@@ -107,14 +107,19 @@
                     class="btn btn-dark py-3 px-4"
 
                   v-bind:disabled="!dayOfWeek||!startTime||!endTime"
+				  
                     @click="addOpHours(dayOfWeek, startTime, endTime)">
+	
 					 Add Operating Hours</button>
 			            </div>
+
     					</div>
 	          </form>
     			</div>
-    		</div>
+    		</div>	
     	</div>
+
+
 
 
 

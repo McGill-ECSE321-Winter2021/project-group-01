@@ -34,15 +34,15 @@ public class BusinessService {
 	 */
 	@Transactional
 	public Business createBusiness(String name, String email, String address, String phoneNumber) {
+		if(toList(businessRepository.findAll()).size()==1) {
+			throw new IllegalArgumentException("Business already exists");
+		}
 		if(name==null || name=="") throw new IllegalArgumentException("Name cannot be blank");
 		if(email==null || email=="") throw new IllegalArgumentException("Email cannot be blank");
 		if(address==null || address=="") throw new IllegalArgumentException("Address cannot be blank");
 		if(phoneNumber==null || phoneNumber=="") throw new IllegalArgumentException("Phone number cannot be blank");
 		if ((email.indexOf('@') == -1) || (email.indexOf('.') == -1) || (email.indexOf('.') < email.indexOf('@')) || (email.indexOf('@') == email.length()-1) || (email.indexOf('.') == email.length()-1)){
 			throw new IllegalArgumentException("Invalid email");
-		}
-		if(toList(businessRepository.findAll()).size()==1) {
-			throw new IllegalArgumentException("Business already exists");
 		}
 		Business business = new Business();
 		business.setName(name);

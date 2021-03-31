@@ -30,22 +30,39 @@ var AXIOS = axios.create({
   headers: { 'Access-Control-Allow-Origin': frontendUrl }
 })
 
+
 export default {
-	name:'owner',
-	data () {
-		return {
-			name: '',
+    name: 'Owner',
+    data () {
+        return {
+            name: '',
 			email:'',
 			address: '',
 			phoneNumber: '',
 			businessHours: '',
 			holidays: '',
 			errorBusiness: '',
-			response: []
-		}
-	},
-	methods: {
-		registerBusiness (name, email, address, phoneNumber) {
+            serviceName: '',
+            duration: 0,
+            price: 0,
+            errorCreateService: '',
+            errorDeleteService: '',
+            services: [],
+            response: [],
+            errorService: ''
+        }
+    },
+    created: function () {
+        AXIOS.get('/view_all_services')
+        .then(response => {
+          this.services = response.data
+        })
+        .catch(e => {
+          this.errorService = e
+        })
+    },
+    methods: {
+        registerBusiness (name, email, address, phoneNumber) {
 			AXIOS.post('/register_business/',$.param({name: name, email: email, address: address, phoneNumber: phoneNumber}))
 			.then(response => {
 				this.errorBusiness = ''
@@ -65,7 +82,46 @@ export default {
 				}
 				
 			})
-		}
-	}
+		},
 
+        addservice(serviceName, duration, price){
+            AXIOS.post('/create_service/',$.param({serviceName: serviceName, duration: duration, price:price}))
+ 			.then(response => {
+                
+                this.services.push(response.data)
+                this.errorCreateService = 'cr7';
+
+             })
+             .catch(e => {
+                 				this.errorCreateService = e.response.data
+                 				console.log(this.errorCreateService)
+                 			})
+        },
+        updateservice(serviceName, duration, price){
+                AXIOS.post('/update_service/',$.param({serviceName: serviceName, duration: duration, price:price}))
+                .then(response => {
+            
+                    this.services.push(response.data)
+                    this.errorCreateService = 'cr7';
+
+         })
+         .catch(e => {
+                    this.errorCreateService = e.response.data
+                    console.log(this.errorCreateService)
+        })
+    },
+        deleteservice(serviceName){
+            this.errorDeleteService= 'testito'
+            AXIOS.post('/delete_service/',$.param({serviceName: serviceName}))
+             .then(response => {
+                this.errorDeleteService = 'cr7';
+             })
+             .catch(e => {
+                this.errorDeleteService = e.response.data
+                console.log(this.errorDeleteService)
+            })
+        }
+    }
+    
+   
 }

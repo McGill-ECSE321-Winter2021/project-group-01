@@ -1,5 +1,4 @@
 import axios from 'axios'
-//import { response } from 'express';
 import JQuery from 'jquery'
 let $ = JQuery
 var config = require ('../../../config')
@@ -36,6 +35,13 @@ export default {
     name: 'Owner',
     data () {
         return {
+            name: '',
+			email:'',
+			address: '',
+			phoneNumber: '',
+			businessHours: '',
+			holidays: '',
+			errorBusiness: '',
             serviceName: '',
             duration: 0,
             price: 0,
@@ -47,10 +53,8 @@ export default {
         }
     },
     created: function () {
-        // Initializing persons from backend
         AXIOS.get('/view_all_services')
         .then(response => {
-          // JSON responses are automatically parsed.
           this.services = response.data
         })
         .catch(e => {
@@ -58,6 +62,27 @@ export default {
         })
     },
     methods: {
+        registerBusiness (name, email, address, phoneNumber) {
+			AXIOS.post('/register_business/',$.param({name: name, email: email, address: address, phoneNumber: phoneNumber}))
+			.then(response => {
+				this.errorBusiness = ''
+			})
+			.catch(e => {
+				if(e.response.data=="Business already exists"){
+					AXIOS.post('/edit_business/',$.param({email: email, address: address, phoneNumber: phoneNumber}))
+					.then(response => {
+						this.errorBusiness = ''
+					})
+					.catch(error => {
+					this.errorBusiness = error.response.data
+					})
+				}
+				else{
+					this.errorBusiness = e.response.data
+				}
+				
+			})
+		},
 
         addservice(serviceName, duration, price){
             AXIOS.post('/create_service/',$.param({serviceName: serviceName, duration: duration, price:price}))
@@ -89,7 +114,6 @@ export default {
             this.errorDeleteService= 'testito'
             AXIOS.post('/delete_service/',$.param({serviceName: serviceName}))
              .then(response => {
-                //this.services.pop(response.data)
                 this.errorDeleteService = 'cr7';
              })
              .catch(e => {
@@ -101,79 +125,3 @@ export default {
     
    
 }
-
-
-// import axios from 'axios'
-// import JQuery from 'jquery'
-// let $ = JQuery
-// var config = require ('../../../config')
-
-// var backendConfigurer = function(){
-// 	switch(process.env.NODE_ENV){
-//       case 'development':
-//           return 'http://' + config.dev.backendHost + ':' + config.dev.backendPort;
-//       case 'production':
-//           return 'https://' + config.build.backendHost + ':' + config.build.backendPort ;
-// 	}
-// };
-
-// var frontendConfigurer = function(){
-// 	switch(process.env.NODE_ENV){
-//       case 'development':
-//           return 'http://' + config.dev.host + ':' + config.dev.port;
-//       case 'production':
-//           return 'https://' + config.build.host + ':' + config.build.port ;
-// 	}
-// };
-
-// var backendUrl = backendConfigurer();
-// //var frontendUrl = frontendConfigurer();
-// var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
-
-// var AXIOS = axios.create({
-//   baseURL: backendUrl,
-//   headers: { 'Access-Control-Allow-Origin': frontendUrl }
-// })
-
-// export default {
-// 	name:'login',
-// 	data () {
-// 		return {
-// 			user: '',
-// 			type:'',
-// 			username: '',
-// 			password: '',
-// 			errorLogin: '',
-// 			response: []
-// 		}
-// 	},
-// 	methods: {
-// 		login (username, password) {
-// 			AXIOS.post('/login/',$.param({username: username, password: password}))
-// 			.then(response => {
-// 				this.user = response.data
-// 				if (response.status===200) {
-// 					this.type = this.user.userType
-					
-// 					if(this.type.localeCompare("customer")==0){
-// 						window.location.href = "/customer"
-// 					}
-// 					else if(this.type.localeCompare("assistant")==0){
-// 						window.location.href = "/assistant"
-// 					}
-// 					else {
-// 						window.location.href = "/owner"
-// 					}
-					
-// 				}
-// 			})
-// 			.catch(e => {
-				
-// 				this.errorLogin = e.response.data
-// 				console.log(this.errorLogin)
-				
-// 			})
-// 		}
-// 	}
-
-// } 

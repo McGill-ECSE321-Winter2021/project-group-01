@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import ca.mcgill.ecse321.autoRepair.dao.AssistantRepository;
 import ca.mcgill.ecse321.autoRepair.dto.AssistantDTO;
 import ca.mcgill.ecse321.autoRepair.model.Assistant;
 import ca.mcgill.ecse321.autoRepair.service.AssistantService;
@@ -20,8 +19,6 @@ import ca.mcgill.ecse321.autoRepair.service.AssistantService;
 @CrossOrigin(origins = "*")
 @RestController
 public class AssistantController {
-	@Autowired
-	AssistantRepository assisRepository;
 	@Autowired
 	private AssistantService assisService;
 

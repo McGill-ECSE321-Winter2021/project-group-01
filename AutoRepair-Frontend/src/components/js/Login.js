@@ -20,10 +20,9 @@ var frontendConfigurer = function(){
           return 'https://' + config.build.host + ':' + config.build.port ;
 	}
 };
-
 var backendUrl = backendConfigurer();
-//var frontendUrl = frontendConfigurer();
-var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
+var frontendUrl = frontendConfigurer();
+//var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
 
 var AXIOS = axios.create({
   baseURL: backendUrl,
@@ -31,7 +30,7 @@ var AXIOS = axios.create({
 })
 
 export default {
-	name:'login',
+	name:'Login',
 	data () {
 		return {
 			user: '',

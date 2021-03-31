@@ -53,5 +53,5 @@ export default new Router({
       name: 'Appointments',
       component: Appointment
     }
-  ]
+  ]   
 })

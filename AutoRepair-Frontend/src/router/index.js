@@ -8,6 +8,7 @@ import Customer from '@/components/Customer'
 import Services from '@/components/Services'
 import Signup from '@/components/Signup'
 import Appointment from '@/components/Appointment'
+import Test from '@/components/Test'
 
 
 Vue.use(Router)
@@ -52,6 +53,11 @@ export default new Router({
       path: '/appointments',
       name: 'Appointments',
       component: Appointment
+    },
+    {
+      path: '/test',
+      name: 'Test',
+      component: Test
     }
   ]   
 })

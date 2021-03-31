@@ -65,9 +65,11 @@ export default {
         this.errorService = e
       })
 
-      AXIOS.get('/appointmentsOf/',$.param({username:'bob'}))
+      AXIOS.get('/upcoming_appointmentsOf/', {
+        params:{
+        username:'bob'
+        }})
         .then(response => {
-         // JSON responses are automatically parsed.
          this.appointments = response.data
        })
        .catch(e => {
@@ -127,20 +129,14 @@ export default {
   			})
   },
 
-  cancelAppointment(username, selectedAppointment){
-    if(selectedAppointment!=""){
-      var splitAppointment = selectedAppointment.split("; ");
-      this.serviceName = splitAppointment[0];
-      this.appointmentDate = splitAppointment[1];
-      this.appointmentTime = splitAppointment[2];
-    }
-
+  cancelAppointment(serviceName, startDate, startTime){
+       
         AXIOS.delete('/cancel_appointment/',{
           params:{
-            username: 'bob',
-            appointmentDate: this.appointmentDate,
-            appointmentTime: this.appointmentTime,
-            serviceName: this.serviceName
+            username:'bob',
+            appointmentDate:startDate,
+            appointmentTime:startTime,
+            serviceName:serviceName
         }})
         .then(response => {
           serviceName=''
@@ -171,24 +167,9 @@ export default {
          this.errorMakeAppointment=e.response.data
       })
 
-   },
+   }
 
-   getAppointmentsOfCustomer: function(username) {
-
-         AXIOS.get('/appointmentsOf/',{
-         params:{
-           username:'bob',
-         }})
-         .then(response => {
-           // JSON responses are automatically parsed.
-             this.appointments = response.data
-         })
-         .catch(e => {
-         this.errorUpdateAppointment="trying"
-            this.errorMakeAppointment=e.response.data
-         })
-        this.errorUpdateAppointment=this.appointments
-   },
+   
 
 
 

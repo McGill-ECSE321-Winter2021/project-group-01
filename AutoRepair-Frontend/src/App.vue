@@ -81,10 +81,6 @@
                   <p class="pl-3"  v-for="hour in businessHours" :key=hour.dayOfWeek>
                     <span>{{hour.dayOfWeek}}: {{hour.startTime}} to {{hour.endTime}}</span>
                   </p>
-                  <h4>Vacations:</h4>
-                  <p class="pl-3" v-for="holiday in holidays" :key=holiday.id>
-                    <span>{{holiday.startDate}} to {{holiday.endDate}}</span>
-                  </p>
                 </div>
               </div>
             </div>

@@ -19,7 +19,7 @@
               <li class="nav-item">
                 <router-link class="nav-link" to="/owner">Owner</router-link></li>
               <li class="nav-item">
-                <router-link class="nav-link" to="/services">Services</router-link></li>
+                <router-link class="nav-link" to="/test">Services</router-link></li>
               <li class="nav-item">
 				<router-link class="nav-link" to="/assistant">Assistant</router-link></li>
               <li class="nav-item">
@@ -33,10 +33,10 @@
       <!-- END nav -->
     <div class="hero-wrap">
 	    <div class="hero-image">
-	      <div class="item" style="height:800px; width: 100%; background-image:url(../static/images/bg_2.jpg); background-size:cover;" >
+	      <div class="item" style="height:800px; width: 100%; object-fit:cover; background-image:url(../static/images/bg_2.jpg);" >
 	      	<div class="overlay"></div>
 	        <div class="container">
-	          <div class="form-group">
+	          <div class="row no-gutters slider-text align-items-center justify-content-start">
 		          <div class="col-md-6">
 		          	<div class="text w-100">
 		          		<h2>We are best car repair services</h2>
@@ -50,17 +50,19 @@
 	    </div>
 	  </div>
 
+		
+  
 		<section class="intro">
-			<div class="container intro-wrap" >
+			<div class="container intro-wrap">
 				<div class="row no-gutters">
-					<div class="col-md-12 col-lg-9 bg-intro d-sm-flex align-items-center align-items-stretch" >
+					<div class="col-md-12 col-lg-9 bg-intro d-sm-flex align-items-center align-items-stretch">
 						<div class="intro-box d-flex align-items-center">
-							<div class="icon d-flex align-items-center justify-content-center" style="background-color:orange;">
+							<div class="icon d-flex align-items-center justify-content-center">
 								<i class="flaticon-repair"></i>
 							</div>
 							<h2 class="mb-0">Are you ready? <span>Let's repair it now!</span></h2>
 						</div>
-						<a href="#" class="bg-primary btn-custom d-flex align-items-center"><span style="color:orange;">Book an Appointment</span></a>
+						<a href="#" class="bg-primary btn-custom d-flex align-items-center"><span>Book an Appointment</span></a>
 					</div>
 				</div>
 			</div>
@@ -147,7 +149,7 @@
     	</div>
     </section>
 
-
+   
 
     <section class="ftco-counter" id="section-counter">
     	<div class="container">
@@ -265,7 +267,6 @@
     	</div>
     </section>
 
-
     <section class="ftco-section testimony-section bg-light">
       <div class="container">
         <div class="row justify-content-center pb-5 mb-3">
@@ -281,7 +282,7 @@
                 <div class="testimony-wrap py-4">
                 	<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></span></div>
                   <div class="text">
-                    <p class="mb-4">Far far away, in the land of Valhalla, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
                     <div class="d-flex align-items-center">
                     	<div class="user-img" style="background-image: url(../static/images/person_1.jpg)"></div>
                     	<div class="pl-3">
@@ -358,7 +359,7 @@
       </div>
     </section>
 
-
+		
     <section class="ftco-section bg-light">
     	<div class="container">
     		<div class="row justify-content-center pb-5 mb-3">
@@ -440,8 +441,7 @@
 			<div class="container-fluid px-md-0">
 				<div class="row no-gutters">
           <div class="col-md-3 ">
-            <div class="work img d-flex align-items-end"
-			 style="background-image: url(../static/images/work-1.jpg);">
+            <div class="work img d-flex align-items-end" style="background-image: url(../static/images/work-1.jpg);">
             	<a href="../static/images/work-1.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
 	    					<span class="fa fa-expand"></span>
 	    				</a>
@@ -500,7 +500,16 @@
 </template>
 
 
-<script></script>
+<script>
+export default {
+  name: 'hello',
+  data () {
+    return {
+      msg: 'Welcome to Your Vue.js App'
+    }
+  }
+}
+</script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>

@@ -2,11 +2,15 @@ package ca.mcgill.ecse321.autoRepair.controller;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -72,18 +76,28 @@ public class ReviewController {
 	 * @return reviewDTO
 	 */
 	@PostMapping(value = {"/create_review/"})
-	public ReviewDTO createReview(@RequestParam("startDate") String startDate, @RequestParam("startTime") String startTime,
+	public ResponseEntity<?> createReview(@RequestParam("startDate") String startDate, @RequestParam("startTime") String startTime,
 			@RequestParam("description") String description, @RequestParam("serviceRating") int serviceRating) {
 
 		Date date = Date.valueOf(startDate);
 		Time time = Time.valueOf(startTime);
+		if(date.toLocalDate().isAfter(LocalDate.now()) || 
+			(date.toLocalDate().isEqual(LocalDate.now()) && 
+					time.toLocalTime().isAfter(LocalTime.now()))) {
+			return new ResponseEntity<>("Cannot create  a review for a future appointment.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 		TimeSlot timeSlot = timeSlotService.getTimeSlot(date, time);
         Appointment appointment = appointmentService.getAppointment(timeSlot);
-
-		Review review = reviewService.createReview(appointment, appointment.getChosenService().getName(),
+        
+        Review review = null;
+        try {
+        	review = reviewService.createReview(appointment, appointment.getChosenService().getName(),
 				appointment.getCustomer().getUsername(), description, serviceRating);
+        }catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
-		return convertToDTO(review);
+		return new ResponseEntity<>(convertToDTO(review), HttpStatus.CREATED);
 	}
 
 

@@ -262,6 +262,8 @@
                 <h3 class="heading">{{service.name}}</h3>
                 <p>Duration: {{service.duration}} minutes</p>
                 <p>Price: {{service.price}} $</p>
+                <p v-if="service.rating === -1.0" > Rating: N/A </p>
+                <p v-else> Rating: {{service.rating}} </p>
                 <!-- <p><a href="#" class="btn-custom">Read more</a></p> -->
               </div>
             </div>

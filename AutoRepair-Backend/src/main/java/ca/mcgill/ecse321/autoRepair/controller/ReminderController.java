@@ -1,6 +1,5 @@
 package ca.mcgill.ecse321.autoRepair.controller;
 
-import ca.mcgill.ecse321.autoRepair.dao.ReminderRepository;
 import ca.mcgill.ecse321.autoRepair.dto.ReminderDTO;
 import ca.mcgill.ecse321.autoRepair.dto.CarDTO;
 import ca.mcgill.ecse321.autoRepair.dto.ChosenServiceDTO;
@@ -10,6 +9,7 @@ import ca.mcgill.ecse321.autoRepair.model.*;
 import ca.mcgill.ecse321.autoRepair.service.ChosenServiceService;
 import ca.mcgill.ecse321.autoRepair.service.CustomerService;
 import ca.mcgill.ecse321.autoRepair.service.ReminderService;
+import ca.mcgill.ecse321.autoRepair.service.ReviewService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,10 +26,11 @@ import java.util.stream.Collectors;
 @RestController
 public class ReminderController {
 
-	@Autowired
-	ReminderRepository reminderRepository;
+
 	@Autowired
 	ReminderService reminderService;
+	@Autowired
+	ReviewService reviewService;
 	@Autowired
 	CustomerService cusService;
 	@Autowired
@@ -155,7 +156,16 @@ public class ReminderController {
 
 	private ChosenServiceDTO convertToDTO(ChosenService service) {
 		if(service==null) throw new IllegalArgumentException("Service not found.");
-		return new ChosenServiceDTO(service.getName(), service.getDuration(), service.getPayment());
+		 Double avRating = null;
+		try {
+			avRating = reviewService.getAverageServiceReview(service.getName());
+		}
+		catch (Exception e){
+			
+		}
+	
+		return new ChosenServiceDTO(service.getName(), service.getDuration(), service.getPayment(), avRating);
 	}
+
 
 }

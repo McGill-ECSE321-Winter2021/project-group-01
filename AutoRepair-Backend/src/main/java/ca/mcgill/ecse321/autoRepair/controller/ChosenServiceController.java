@@ -3,6 +3,7 @@ package ca.mcgill.ecse321.autoRepair.controller;
 import ca.mcgill.ecse321.autoRepair.dto.ChosenServiceDTO;
 import ca.mcgill.ecse321.autoRepair.model.*;
 import ca.mcgill.ecse321.autoRepair.service.ChosenServiceService;
+import ca.mcgill.ecse321.autoRepair.service.ReviewService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,11 @@ public class ChosenServiceController {
 	
 	@Autowired
 	private ChosenServiceService chosenService;
+	@Autowired
+	private ReviewService reviewService;
 
+	
+	
 	/**
 	 * @author Robert Aprahamian
 	 * Gets a list of all the chosen services
@@ -83,7 +88,15 @@ public class ChosenServiceController {
 
 	private ChosenServiceDTO convertToDTO(ChosenService service) {
 		if(service==null) throw new IllegalArgumentException("Service not found.");
-		return new ChosenServiceDTO(service.getName(), service.getDuration(), service.getPayment());
+		 Double avRating = null;
+		try {
+			avRating = reviewService.getAverageServiceReview(service.getName());
+		}
+		catch (Exception e){
+			avRating = -1.0;
+		}
+	
+		return new ChosenServiceDTO(service.getName(), service.getDuration(), service.getPayment(), avRating);
 	}
 
 }

@@ -9,6 +9,7 @@ import Services from '@/components/Services'
 import Signup from '@/components/Signup'
 import Appointment from '@/components/Appointment'
 import Account from '@/components/Account'
+import Review from '@/components/Review'
 
 
 Vue.use(Router)
@@ -58,6 +59,12 @@ export default new Router({
       path: '/account',
       name: 'Account',
       component: Account
+    },
+
+    {
+      path: '/review',
+      name: 'Review',
+      component: Review
     }
   ]   
 })

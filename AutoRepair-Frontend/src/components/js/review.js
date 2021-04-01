@@ -1,3 +1,4 @@
+import swal from 'sweetalert'
 import axios from 'axios'
 import JQuery from 'jquery'
 let $ = JQuery
@@ -38,7 +39,13 @@ export default {
 			startTime: '',
 			description: '',
 			serviceRating: '',
+			selected: '',
+			descriptionEdit: '',
+			editReviewRating: '',
+			selectedEdit: '',
+			selectedDelete: '',
 			errorReview: '',
+			customerReviews: '',
 			reviews: [],
 			appointments: [],
 			response: []
@@ -54,6 +61,20 @@ export default {
 			.catch(e => {
 				this.errorReview = e
 			})
+
+		AXIOS.get('/view_reviews_of_customer', {
+			params: {
+				username: 'bob'
+			}
+		})
+			.then(response => {
+				this.customerReviews = response.data
+			})
+			.catch(e => {
+				this.this.customerReviews = []
+				
+			})
+
 		// Initializing services from backend
 		AXIOS.get('/past_appointmentsOf/', {
 			params: {
@@ -68,25 +89,61 @@ export default {
 			})
 	},
 	methods: {
-        createReview: function (description, serviceRating, appointmentDate, appointmentTime) {
-                this.errorSignup=''
-                AXIOS.post('/create_review/', {}, {
-                    params:{
-                        startDate: appointmentDate,
-                        startTime: appointmentTime,
-                        description: description,
-                        serviceRating: serviceRating,
-                }})
-                .then(response => {
-                    this.errorSignup=''
-                    if(response.status===201){
-                        window.location.href = "/customer"
-                     }})
-                .catch(e => {
-                   this.errorSignup = e.response.data
-                })
+		createReview: function (description, serviceRating, appointmentDate, appointmentTime) {
 
-            }
+			AXIOS.post('/create_review/', {}, {
+				params: {
+					startDate: appointmentDate,
+					startTime: appointmentTime,
+					description: description,
+					serviceRating: serviceRating,
+				}
+			})
+				.then(response => {
+					swal("Success", "Thank you for your feedback!", "success");
 
-        }
-    }
+				})
+				.catch(e => {
+					swal("ERROR", e.response.data, "error");
+				})
+
+		},
+		editReview: function (description, serviceRating, appointmentDate, appointmentTime) {
+
+			AXIOS.post('/edit_review/', {}, {
+				params: {
+					startDate: appointmentDate,
+					startTime: appointmentTime,
+					newDescription: description,
+					newRating: serviceRating,
+				}
+			})
+				.then(response => {
+					swal("Success", "Review edit successfully!", "success");
+
+				})
+				.catch(e => {
+					swal("ERROR", e.response.data, "error");
+				})
+
+		},
+		deleteReview: function (appointmentDate, appointmentTime) {
+
+			AXIOS.post('/delete_review/', {}, {
+				params: {
+					startDate: appointmentDate,
+					startTime: appointmentTime
+				}
+			})
+				.then(response => {
+					swal("Success", "Review deleted successfully!", "success");
+
+				})
+				.catch(e => {
+					swal("ERROR", e.response.data, "error");
+				})
+
+		}
+
+	}
+}

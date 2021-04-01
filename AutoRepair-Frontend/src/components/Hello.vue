@@ -19,7 +19,7 @@
               <li class="nav-item">
                 <router-link class="nav-link" to="/owner">Owner</router-link></li>
               <li class="nav-item">
-                <router-link class="nav-link" to="/test">Services</router-link></li>
+                <router-link class="nav-link" to="/account">Account</router-link></li>
               <li class="nav-item">
 				<router-link class="nav-link" to="/assistant">Assistant</router-link></li>
               <li class="nav-item">

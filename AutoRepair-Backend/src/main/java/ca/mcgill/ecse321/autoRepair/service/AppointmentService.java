@@ -55,9 +55,10 @@ public class AppointmentService {
         } else if (startDate.toLocalDate().isEqual(SystemTime.getSysDate().toLocalDate())) {
             if (startTime.toLocalTime().isBefore(SystemTime.getSysTime().toLocalTime())) {
                 throw new IllegalArgumentException("The time has already passed.");
-            } else if ((startTime.toLocalTime().minusHours(SystemTime.getSysTime().toLocalTime().getHour()).compareTo(toCompare)) < 0) {
-                throw new IllegalArgumentException("Booking an appointment on the same day has to be at least 2 hours before the appointment.");
-            }
+            } 
+//            else if ((startTime.toLocalTime().minusHours(SystemTime.getSysTime().toLocalTime().getHour()).compareTo(toCompare)) < 0) {
+//                throw new IllegalArgumentException("Booking an appointment on the same day has to be at least 2 hours before the appointment.");
+//            }
 
         }
 

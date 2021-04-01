@@ -68,14 +68,23 @@
                         <div class="icon">
                           <span class="fa fa-chevron-down"></span>
                         </div>
-                        <select name="" id="" class="form-control">
-                          <option value="">Select an Appointment</option>
-                          <option value="">Change Oil</option>
-                          <option value="">Engine Repair</option>
-                          <option value="">Battery Replace</option>
-                          <option value="">Change Tire</option>
-                          <option value="">Tow Truck</option>
-                        </select>
+                        <select
+                        name="selectedAppointment"
+                        id=""
+                        class="form-control"
+                        v-model="selected"
+                      >
+                        <option value="">Select An Appointment</option>
+                        <option
+                          v-for="appointment in appointments"
+                          v-bind:value="{ serviceName: appointment.service.name, 
+                          appointmentDate: appointment.timeSlot.startDate, 
+                          appointmentTime: appointment.timeSlot.startTime}"
+                          :key="appointment.id"
+                        >
+                           {{ appointment.service.name}}; {{ appointment.timeSlot.startDate}}; {{ appointment.timeSlot.startTime}} 
+                        </option>
+                      </select>
                       </div>
                     </div>
                   </div>
@@ -90,12 +99,12 @@
                         </div>
                         <select name="" id="" class="form-control">
                           <option value="">Select a Rating</option>
-                          <option value="">0</option>
-                          <option value="">1</option>
-                          <option value="">2</option>
-                          <option value="">3</option>
-                          <option value="">4</option>
-                          <option value="">5</option>
+                          <option value="0">0</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
                         </select>
                       </div>
                     </div>
@@ -126,7 +135,8 @@
                   <button
                     type="button"
                     class="btn btn-dark py-3 px-4"
-                    @click="created()"
+                    v-bind:disabled="!description || !serviceRating || !selected"
+                    @click="createReview(description, serviceRating, selected.appointmentDate, selected.appointmentTime)"
                   >
                     Submit
                   </button>

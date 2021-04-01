@@ -31,23 +31,62 @@ var AXIOS = axios.create({
 })
 
 export default {
-    name: 'review',
-    data() {
-        return {
+	name: 'review',
+	data() {
+		return {
+			startDate: '',
+			startTime: '',
+			description: '',
+			serviceRating: '',
 			errorReview: '',
-            reviews: [],
+			reviews: [],
+			appointments: [],
 			response: []
 		}
-    },
-    created: function () {
-        // Initializing persons from backend
-        AXIOS.get('/view_all_reviews')
-        .then(response => {
-          // JSON responses are automatically parsed.
-          this.reviews = response.data
-        })
-        .catch(e => {
-          this.errorReview = e
-        })
+	},
+	created: function () {
+		// Initializing persons from backend
+		AXIOS.get('/view_all_reviews')
+			.then(response => {
+				// JSON responses are automatically parsed.
+				this.reviews = response.data
+			})
+			.catch(e => {
+				this.errorReview = e
+			})
+		// Initializing services from backend
+		AXIOS.get('/past_appointmentsOf/', {
+			params: {
+				username: 'bob'
+			}
+		})
+			.then(response => {
+				this.appointments = response.data
+			})
+			.catch(e => {
+				this.appointments = []
+			})
+	},
+	methods: {
+        createReview: function (description, serviceRating, appointmentDate, appointmentTime) {
+                this.errorSignup=''
+                AXIOS.post('/create_review/', {}, {
+                    params:{
+                        startDate: appointmentDate,
+                        startTime: appointmentTime,
+                        description: description,
+                        serviceRating: serviceRating,
+                }})
+                .then(response => {
+                    this.errorSignup=''
+                    if(response.status===201){
+                        window.location.href = "/customer"
+                     }})
+                .catch(e => {
+                   this.errorSignup = e.response.data
+                })
+
+            }
+
+        }
     }
-}

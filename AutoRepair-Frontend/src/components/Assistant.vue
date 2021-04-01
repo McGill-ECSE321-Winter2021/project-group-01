@@ -668,14 +668,15 @@
                         <div class="icon">
                           <span class="fa fa-chevron-down"></span>
                         </div>
-                        <select name="" id="" class="form-control" v-model="username4">
+                        <input type="text" class="form-control" v-model="username4" placeholder="Customer Name">
+                        <!-- <select name="" id="" class="form-control" v-model="username4">
                             <option disabled value="">Please select one</option>
                             <option v-for="customer in customers"
                              
                              :key=customer.username>
                                 {{ customer.username }}
                             </option>
-                          </select>
+                          </select> -->
                       </div>
                     </div>
                   </div>

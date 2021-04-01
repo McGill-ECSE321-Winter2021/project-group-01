@@ -1,3 +1,4 @@
+import swal from 'sweetalert';
 import axios from 'axios'
 import JQuery from 'jquery'
 let $ = JQuery
@@ -37,20 +38,13 @@ export default {
       appointments: [],
       services: [],
       availableTimeSlots: [],
-      unavailableTimeSlots: [],
       username: '',
-      appointment: '',
-      selectedAppointment:'',
       serviceName: '',
       appointmentDate: '',
       appointmentTime: '',
       newAppointmentDate:'',
       newAppointmentTime:'',
       newServiceName:'',
-      errorService: '',
-      errorMakeAppointment: '',
-      errorUpdateAppointment:'',
-      errorCancelAppointment:'',
       response: []
     }
   },
@@ -62,7 +56,7 @@ export default {
         this.services = response.data
       })
       .catch(e => {
-        this.errorService = e
+        swal("ERROR", e.response.data, "error");
       })
 
       AXIOS.get('/upcoming_appointmentsOf/', {
@@ -74,7 +68,7 @@ export default {
          this.appointments.sort((a, b) => ((a.timeSlot.startDate + a.timeSlot.startTime) > (b.timeSlot.startDate + b.timeSlot.startTime)) ? 1 : -1)
        })
        .catch(e => {
-         this.errorService = e
+         swal("ERROR", e.response.data, "error");
       })
 
 
@@ -96,22 +90,27 @@ export default {
       }})
         			.then(response => {
         				this.appointment = response.data
-        				appointments.push(response.data)
+        				swal("Success", "You updated your appointment on " + appointmentDate + " at " + appointmentTime +" for " + serviceName
+        				+" to " + newAppointmentDate + " at " + newAppointmentTime +" for " + newServiceName, "success");
         				serviceName=''
         				appointmentTime=''
         				appointmentDate=''
+        				errorMakeAppointment=''
+        				errorCancelAppointment=''
+        				errorUpdateAppointment=''
         				window.location.href = "/appointments"
-        			})
+        				})
         			.catch(e => {
-        			  this.errorUpdateAppointment = e.response.data
+        			  swal("ERROR", e.response.data, "error");
 
               })
     },
 
   makeAppointment (username, appointmentDate, appointmentTime, serviceName) {
-  			AXIOS.post('/make_appointment/',$.param({username: this.$cookie.get('username'), serviceName: serviceName, appointmentDate:appointmentDate , appointmentTime:appointmentTime}))
+  			AXIOS.post('/make_appointment/',$.param({username: 'bob', serviceName: serviceName, appointmentDate:appointmentDate , appointmentTime:appointmentTime}))
   			.then(response => {
   				this.appointment = response.data
+  				swal("Success", "You booked an appointment on " + appointmentDate + " at " + appointmentTime +" for " + serviceName, "success");
   				serviceName=''
   				appointmentTime=''
   				appointmentDate=''
@@ -119,29 +118,30 @@ export default {
   				window.location.href = "/appointments"
   			})
   			.catch(e => {
-  			  this.errorMakeAppointment = e.response.data
+  			  swal("ERROR", e.response.data, "error");
 
   			})
+
   },
 
   cancelAppointment(serviceName, startDate, startTime){
 
         AXIOS.delete('/cancel_appointment/',{
           params:{
-            username:this.$cookie.get('username'),
+            username:'bob',
             appointmentDate:startDate,
             appointmentTime:startTime,
             serviceName:serviceName
         }})
         .then(response => {
+          swal("Success", "You cancelled your appointment on " + startDate + " at " + startTime +" for " + serviceName, "success");
           serviceName=''
           appointmentTime=''
           appointmentDate=''
           window.location.href = "/appointments"
         })
         .catch(e => {
-          this.errorCancelAppointment = e.response.data
-
+         swal("ERROR", e.response.data, "error");
         })
 
   },
@@ -160,49 +160,10 @@ export default {
           this.availableTimeSlots.sort((a, b) => ((a.startDate + a.startTime) > (b.startDate + b.startTime)) ? 1 : -1)
       })
       .catch(e => {
-         this.errorMakeAppointment=e.response.data
+         swal("ERROR", e.response.data, "error");
       })
 
    }
-
-
-
-
-
-//   getAppointmentsOfCustomer(username) {
-//       AXIOS.get('/appointmentsOf/',{
-//       params: {
-//         username:'bob',
-//       }})
-//       .then(response => {
-//              this.errorUpdateAppointment="help"
-//        // JSON responses are automatically parsed.
-//         this.appointments = response.data
-//       })
-//       .catch(e => {
-//       this.errorUpdateAppointment="trying"
-//         this.errorMakeAppointment  = e.response.data
-//       })
-//   },
-////     convertDate(d) {
-//       var p = d.split("-");
-//       return +(p[0]+p[1]+p[2]);
-//     },
-//     sortByDate(){
-//     var tbody = document.querySelector("#results tbody");
-//       // get trs as array for ease of use
-//       var rows = [].slice.call(tbody.querySelectorAll("tr"));
-//
-//       rows.sort(function(a,b) {
-//         return convertDate(a.cells[0].innerHTML) - convertDate(b.cells[0].innerHTML);
-//       });
-//
-//       rows.forEach(function(v) {
-//         tbody.appendChild(v); // note that .appendChild() *moves* elements
-//       });
-//     }
-
-
   }
 }
 

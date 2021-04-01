@@ -66,7 +66,7 @@
               class="form-group"
               style="
                 background-color: rgba(255, 165, 0, 0.7);
-                height: 350px;
+                height: 330px;
                 width: 600px;
                 text-align: center;
                 border-radius: 25px;
@@ -139,20 +139,12 @@
                             appointmentTime.toString(),
                             serviceName
                           ),
-                            getAvailableTimeSlots(appointmentDate.toString())
+                            getAppointmentsOfCustomer()
                         "
                       >
                         Book
                       </button>
                     </div>
-                  </div>
-                  <div class="form-group">
-                    <h5
-                      v-if="errorMakeAppointment"
-                      style="color: red; padding-left: 25px"
-                    >
-                      Error: {{ errorMakeAppointment }}
-                    </h5>
                   </div>
                 </div>
               </form>
@@ -181,7 +173,7 @@
           class="form-group"
           style="
             background-color: rgba(255, 165, 0, 0.7);
-            height: 450px;
+            height: 420px;
             width: 600px;
             text-align: center;
             border-radius: 25px;
@@ -289,14 +281,6 @@
                   </button>
                 </div>
               </div>
-              <div class="form-group">
-                <h5
-                  v-if="errorUpdateAppointment"
-                  style="color: red; padding-left: 25px"
-                >
-                  Error: {{ errorUpdateAppointment }}
-                </h5>
-              </div>
             </div>
           </form>
         </div>
@@ -321,7 +305,7 @@
           class="form-group"
           style="
             background-color: rgba(255, 165, 0, 0.7);
-            height: 280px;
+            height: 260px;
             width: 600px;
             text-align: center;
             border-radius: 25px;
@@ -369,14 +353,6 @@
                     Cancel
                   </button>
                 </div>
-              </div>
-              <div class="form-group">
-                <h5
-                  v-if="errorCancelAppointment"
-                  style="color: red; padding-left: 25px"
-                >
-                  Error: {{ errorCancelAppointment }}
-                </h5>
               </div>
             </div>
           </form>

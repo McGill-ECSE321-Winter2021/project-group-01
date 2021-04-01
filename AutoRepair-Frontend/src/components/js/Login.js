@@ -48,7 +48,9 @@ export default {
 				this.user = response.data
 				if (response.status===200) {
 					this.type = this.user.userType
-					
+					 localStorage.setItem('loggedIn', 'User')
+           this.$cookie.set('username', this.response['username'], { expires: '1h'})
+
 					if(this.type.localeCompare("customer")==0){
 						window.location.href = "/customer"
 					}
@@ -58,14 +60,14 @@ export default {
 					else {
 						window.location.href = "/owner"
 					}
-					
+
 				}
 			})
 			.catch(e => {
-				
+
 				this.errorLogin = e.response.data
 				console.log(this.errorLogin)
-				
+
 			})
 		}
 	}

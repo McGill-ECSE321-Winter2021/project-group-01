@@ -203,11 +203,15 @@
                         name="selectedAppointment"
                         id=""
                         class="form-control"
-                        v-model="selectedAppointment"
+                        v-model="selected"
                       >
                         <option value="">Select An Appointment</option>
-                        <option v-for="appointment in appointments" :key=appointment.id>
-                          {{ appointment.service.name}}; {{ appointment.timeSlot.startDate}}; {{ appointment.timeSlot.startTime}} 
+                        <option v-for="appointment in appointments"
+                          v-bind:value="{ serviceName: appointment.service.name,
+                          appointmentDate: appointment.timeSlot.startDate,
+                          appointmentTime: appointment.timeSlot.startTime}"
+                          :key=appointment.id>
+                          {{ appointment.service.name}}; {{ appointment.timeSlot.startDate}}; {{ appointment.timeSlot.startTime}}
                         </option>
                       </select>
                     </div>
@@ -272,8 +276,9 @@
                     class="btn btn-dark py-3 px-4"
                     @click="
                       updateAppointment(
-                        tamara,
-                        selectedAppointment,
+                        selected.serviceName,
+                        selected.appointmentDate,
+                        selected.appointmentTime,
                         newAppointmentTime.toString(),
                         newAppointmentDate.toString(),
                         newServiceName
@@ -342,12 +347,12 @@
                         <option value="">Select An Appointment</option>
                         <option
                           v-for="appointment in appointments"
-                          v-bind:value="{ serviceName: appointment.service.name, 
-                          appointmentDate: appointment.timeSlot.startDate, 
+                          v-bind:value="{ serviceName: appointment.service.name,
+                          appointmentDate: appointment.timeSlot.startDate,
                           appointmentTime: appointment.timeSlot.startTime}"
                           :key="appointment.id"
                         >
-                           {{ appointment.service.name}}; {{ appointment.timeSlot.startDate}}; {{ appointment.timeSlot.startTime}} 
+                           {{ appointment.service.name}}; {{ appointment.timeSlot.startDate}}; {{ appointment.timeSlot.startTime}}
                         </option>
                       </select>
                     </div>
@@ -480,7 +485,7 @@
     </div>
     <br />
     <br />
-    <br /> 
+    <br />
   </div>
 </template>
 

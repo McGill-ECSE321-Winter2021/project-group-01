@@ -67,10 +67,11 @@ export default {
 
       AXIOS.get('/upcoming_appointmentsOf/', {
         params:{
-        username:'bob'
+        username:'bob',
         }})
         .then(response => {
          this.appointments = response.data
+         this.appointments.sort((a, b) => ((a.timeSlot.startDate + a.timeSlot.startTime) > (b.timeSlot.startDate + b.timeSlot.startTime)) ? 1 : -1)
        })
        .catch(e => {
          this.errorService = e
@@ -80,22 +81,16 @@ export default {
   },
 
   methods: {
-  updateAppointment(username, selectedAppointment, newAppointmentTime, newAppointmentDate, newServiceName) {
-
-      if(selectedAppointment!=""){
-            var splitAppointment = selectedAppointment.split("; ");
-            this.serviceName = splitAppointment[0];
-            this.appointmentDate = splitAppointment[1];
-            this.appointmentTime = splitAppointment[2];
-      }
-
+  updateAppointment(serviceName, appointmentDate, appointmentTime, newAppointmentTime, newAppointmentDate, newServiceName) {
+      this.errorCancelAppointment=serviceName
+      this.errorMakeAppointment=appointmentTime
       AXIOS.post('/update_appointment/',{},{
         params:{
           username: 'bob',
-          appointmentDate: this.appointmentDate,
-          appointmentTime: this.appointmentTime,
+          appointmentDate: appointmentDate,
+          appointmentTime: appointmentTime,
           newAppointmentDate: newAppointmentDate,
-          serviceName: this.serviceName,
+          serviceName: serviceName,
           newAppointmentTime: newAppointmentTime,
           newServiceName: newServiceName
       }})
@@ -114,7 +109,7 @@ export default {
     },
 
   makeAppointment (username, appointmentDate, appointmentTime, serviceName) {
-  			AXIOS.post('/make_appointment/',$.param({username: 'bob', serviceName: serviceName, appointmentDate:appointmentDate , appointmentTime:appointmentTime}))
+  			AXIOS.post('/make_appointment/',$.param({username: this.$cookie.get('username'), serviceName: serviceName, appointmentDate:appointmentDate , appointmentTime:appointmentTime}))
   			.then(response => {
   				this.appointment = response.data
   				serviceName=''
@@ -130,10 +125,10 @@ export default {
   },
 
   cancelAppointment(serviceName, startDate, startTime){
-       
+
         AXIOS.delete('/cancel_appointment/',{
           params:{
-            username:'bob',
+            username:this.$cookie.get('username'),
             appointmentDate:startDate,
             appointmentTime:startTime,
             serviceName:serviceName
@@ -162,6 +157,7 @@ export default {
 
         // JSON responses are automatically parsed.
           this.availableTimeSlots = response.data
+          this.availableTimeSlots.sort((a, b) => ((a.startDate + a.startTime) > (b.startDate + b.startTime)) ? 1 : -1)
       })
       .catch(e => {
          this.errorMakeAppointment=e.response.data
@@ -169,7 +165,7 @@ export default {
 
    }
 
-   
+
 
 
 

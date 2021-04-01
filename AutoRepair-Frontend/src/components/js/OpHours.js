@@ -1,7 +1,7 @@
-
-  
+import swal from 'sweetalert';
 import axios from 'axios'
 import JQuery from 'jquery'
+
 let $ = JQuery
 var config = require ('../../../config')
 
@@ -35,8 +35,12 @@ var AXIOS = axios.create({
     data () {
         return {
             dayOfWeek:'',
-            startTime:'',   
+            dayOfWeek1:'',
+            dayOfWeek2:'',
+            startTime:'',  
+            startTime1:'',  
             endTime:'',
+            endTime1:'',
             errorAddOpHours:'',
             errorEditOpHours:'',
             errorDeleteOpHours:'',
@@ -55,41 +59,46 @@ var AXIOS = axios.create({
                 }})
                 .then(response => {
                     this.errorAddOpHours=''
-   
+       swal("Success", "Operating Hour for " + dayOfWeek + " Added Successfully", "success");
+
             })
                 .catch(e => {
-                    this.errorAddOpHours = e.response.data
+     swal("ERROR", e.response.data, "error");  
                 })
 
             }
     
             
-            ,deleteOpHours: function (dayOfWeek){
+            ,deleteOpHours: function (dayOfWeek2){
                 this.errorDeleteOpHours=''
                 AXIOS.post('/delete_business_hours/', {}, {
                     params:{
-                        dayOfWeek: dayOfWeek            
+                        dayOfWeek: dayOfWeek2            
                 }})
                 .then(response => {
                     this.errorDeleteOpHours=''
+    swal("Success", "Operating Hour for " + dayOfWeek2 + " Deleted Successfully", "success");
             })
                 .catch(e => {
-                    this.errorDeleteOpHours =  "Operating Hour to delete does not exist"
+     swal("ERROR","Operating Hour to delete does not exist", "error");  
                 })
             }
-            ,editOpHours: function (dayOfWeek,startTime1,endTime1){
+
+            ,editOpHours: function (dayOfWeek1,startTime1,endTime1){
                 this.errorEditOpHours=''
                 AXIOS.post('/edit_business_hours/', {}, {
                     params:{
-                        dayOfWeek: dayOfWeek,   
+                        dayOfWeek: dayOfWeek1,   
                         startTime1: startTime1,
                         endTime1: endTime1,            
                 }})
                 .then(response => {
                     this.errorEditOpHours=''
+    swal("Success", "Operating Hour for " + dayOfWeek1 + " Edited Successfully", "success"); 
             })
                 .catch(e => {
-                    this.errorEditOpHours = e.response.data
+      swal("ERROR", e.response.data, "error"); 
+
                 })
             }
         }

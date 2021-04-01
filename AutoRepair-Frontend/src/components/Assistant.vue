@@ -136,7 +136,7 @@
                         type="time"
                         class="form-control appointment_time"
                         placeholder="HH:mm"
-                      />
+                      >
                     </div>
                   </div>
                 </div>
@@ -150,7 +150,7 @@
                         type="time"
                         class="form-control appointment_time"
                         placeholder="HH:mm"
-                      />
+                      >
                     </div>
                   </div>
                 </div>
@@ -161,7 +161,7 @@
                       type="submit"
                       value="Add Operating hours"
                       class="btn btn-dark py-3 px-4"
-                    />
+                    >
                   </div>
                 </div>
               </div>
@@ -201,7 +201,7 @@
                         type="time"
                         class="form-control appointment_time"
                         placeholder="HH:mm"
-                      />
+                      >
                     </div>
                   </div>
                 </div>
@@ -214,7 +214,7 @@
                         type="time"
                         class="form-control appointment_time"
                         placeholder="HH:mm"
-                      />
+                      >
                     </div>
                   </div>
                 </div>
@@ -225,7 +225,7 @@
                       type="submit"
                       value="Edit Operating hours"
                       class="btn btn-dark py-3 px-4"
-                    />
+                    >
                   </div>
                 </div>
               </div>
@@ -262,7 +262,7 @@
                       type="submit"
                       value="Delete Operating hours"
                       class="btn btn-dark py-3 px-4"
-                    />
+                    >
                   </div>
                 </div>
               </div>
@@ -277,9 +277,9 @@
       style="background-image: url(../static/images/bg_2.jpg)"
     >
       <div style="background-color: #262626">
-        <br />
-        <br />
-        <br />
+        <br>
+        <br>
+        <br>
       </div>
 
       <div class="overlay"></div>
@@ -295,7 +295,7 @@
                   type="date"
                   class="form-control appointment_date"
                   placeholder="Date"
-                />
+                >
               </div>
             </div>
           </div>
@@ -308,7 +308,7 @@
                   type="time"
                   class="form-control appointment_time"
                   placeholder="HH:mm"
-                />
+                >
               </div>
             </div>
           </div>
@@ -322,7 +322,7 @@
                   type="time"
                   class="form-control appointment_time"
                   placeholder="HH:mm"
-                />
+                >
               </div>
             </div>
           </div>
@@ -333,7 +333,7 @@
               type="submit"
               value="Add Holiday"
               class="btn btn-dark py-3 px-5"
-            />
+            >
           </div>
         </div>
       </div>
@@ -380,7 +380,7 @@
                         min="0"
                         class="form-control"
                         placeholder="New duration in minutes"
-                      />
+                      >
                     </div>
                   </div>
                 </div>
@@ -394,7 +394,7 @@
                         step="0.01"
                         class="form-control"
                         placeholder="New price"
-                      />
+                      >
                     </div>
                   </div>
                 </div>
@@ -405,7 +405,7 @@
                       type="submit"
                       value="Update the Service"
                       class="btn btn-dark py-3 px-4"
-                    />
+                    >
                   </div>
                 </div>
               </div>
@@ -415,7 +415,7 @@
       </div>
     </section>
 
-    <br />
+    <br>
 
     <section
       class="ftco-appointment ftco-section ftco-no-pt ftco-no-pb img"
@@ -436,14 +436,14 @@
                         <div class="icon">
                           <span class="fa fa-chevron-down"></span>
                         </div>
-                        <select name="" id="" class="form-control">
-                          <option value="">Select Customer</option>
-                          <option value="">C1</option>
-                          <option value="">C2</option>
-                          <option value="">C3</option>
-                          <option value="">C4</option>
-                          <option value="">C5</option>
-                        </select>
+                         <select name="" id="" class="form-control" v-model="username">
+                            <option disabled value="">Please select one</option>
+                            <option v-for="customer in customers"
+                             
+                             :key=customer.username>
+                                {{ customer.username }}
+                          </option>
+                          </select>
                       </div>
                     </div>
                   </div>
@@ -456,38 +456,28 @@
                         <div class="icon">
                           <span class="fa fa-chevron-down"></span>
                         </div>
-                        <select name="" id="" class="form-control">
-                          <option value="">Select service</option>
-                          <option value="">Change Oil</option>
-                          <option value="">Engine Repair</option>
-                          <option value="">Battery Replace</option>
-                          <option value="">Change Tire</option>
-                          <option value="">Tow Truck</option>
-                        </select>
+                          <select name="" id="" class="form-control" v-model="serviceName">
+                            <option disabled value="">Please select one</option>
+                            <option v-for="service in services"
+                             
+                             :key=service.serviceName>
+                                {{ service.name }}
+                          </option>
+                          </select>
                       </div>
                     </div>
                   </div>
                 </div>
-                <!--<div class="col-md-12">
-                    <div class="form-group">
-                      <input type="text" class="form-control" placeholder="New Service Name">
-                    </div>
-                  </div> -->
-                <!--	<div class="col-md-6">
-                    <div class="form-group">
-                      <input type="text" class="form-control" placeholder="Vehicle number">
-                    </div>
-                  </div> -->
 
                 <div class="col-md-6">
                   <div class="form-group">
                     <div class="input-wrap">
-                      <!-- <div class="icon"><span class="fa fa-calendar"></span></div> -->
                       <input
                         type="Date"
                         class="form-control appointment_date"
+                        v-model="datestring"
                         placeholder="Date"
-                      />
+                      >
                     </div>
                   </div>
                 </div>
@@ -495,25 +485,16 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <div class="input-wrap">
-                      <!-- <div class="icon"><span class="fa fa-calendar"></span></div> -->
-                      <!--	<input type="text" class="form-control appointment_date" placeholder="Date"> -->
                       <input
                         type="time"
                         class="form-control"
+                        v-model="timestring"
                         placeholder="New duration in minutes"
-                      />
+                      >
                     </div>
                   </div>
                 </div>
 
-                <!-- <div class="col-md-6">
-                    <div class="form-group">
-                      <div class="input-wrap"> -->
-                <!-- <div class="icon"><span class="fa fa-clock-o"></span></div> -->
-                <!-- <input type="number" min="0" step="0.01" class="form-control" placeholder="New price">
-                      </div>
-                    </div>
-                  </div> -->
                 <div class="col-md-12">
                   <div class="form-group">
                     <textarea
@@ -522,17 +503,18 @@
                       cols="30"
                       rows="7"
                       class="form-control"
+                      v-model="description"
                       placeholder="Description"
                     ></textarea>
                   </div>
                 </div>
                 <div class="col-md-12">
                   <div class="form-group">
-                    <input
-                      type="submit"
-                      value="Add the reminder"
+
+                    <button 
+                      type="button" 
                       class="btn btn-dark py-3 px-4"
-                    />
+                      v-on:click="addreminder(username, serviceName, datestring , description, timestring)">Add the reminder</button>
                   </div>
                 </div>
               </div>
@@ -557,14 +539,14 @@
                         <div class="icon">
                           <span class="fa fa-chevron-down"></span>
                         </div>
-                        <select name="" id="" class="form-control">
-                          <option value="">Select Customer</option>
-                          <option value="">C1</option>
-                          <option value="">C2</option>
-                          <option value="">C3</option>
-                          <option value="">C4</option>
-                          <option value="">C5</option>
-                        </select>
+                          <select name="" id="" class="form-control" v-model="username">
+                            <option disabled value="">Please select one</option>
+                            <option v-for="customer in customers"
+                             
+                             :key=customer.username>
+                                {{ customer.username }}
+                            </option>
+                          </select>
                       </div>
                     </div>
                   </div>
@@ -577,16 +559,14 @@
                         <div class="icon">
                           <span class="fa fa-chevron-down"></span>
                         </div>
-                        <select name="" id="" class="form-control">
-                          <option value="">
-                            Current service of the reminder
+                          <select name="" id="" class="form-control" v-model="oldServiceName">
+                            <option disabled value="">Please select one</option>
+                            <option v-for="service in services"
+                             
+                             :key=service.serviceName>
+                                {{ service.name }}
                           </option>
-                          <option value="">Change Oil</option>
-                          <option value="">Engine Repair</option>
-                          <option value="">Battery Replace</option>
-                          <option value="">Change Tire</option>
-                          <option value="">Tow Truck</option>
-                        </select>
+                          </select>
                       </div>
                     </div>
                   </div>
@@ -599,38 +579,28 @@
                         <div class="icon">
                           <span class="fa fa-chevron-down"></span>
                         </div>
-                        <select name="" id="" class="form-control">
-                          <option value="">New service of the reminder</option>
-                          <option value="">Change Oil</option>
-                          <option value="">Engine Repair</option>
-                          <option value="">Battery Replace</option>
-                          <option value="">Change Tire</option>
-                          <option value="">Tow Truck</option>
-                        </select>
+                          <select name="" id="" class="form-control" v-model="newServiceName">
+                            <option disabled value="">Please select one</option>
+                            <option v-for="service in services"
+                             
+                             :key=service.serviceName>
+                                {{ service.name }}
+                          </option>
+                          </select>
                       </div>
                     </div>
                   </div>
                 </div>
-                <!--<div class="col-md-12">
-                    <div class="form-group">
-                      <input type="text" class="form-control" placeholder="New Service Name">
-                    </div>
-                  </div> -->
-                <!--	<div class="col-md-6">
-                    <div class="form-group">
-                      <input type="text" class="form-control" placeholder="Vehicle number">
-                    </div>
-                  </div> -->
 
                 <div class="col-md-6">
                   <div class="form-group">
                     <div class="input-wrap">
-                      <!-- <div class="icon"><span class="fa fa-calendar"></span></div> -->
                       <input
                         type="Date"
                         class="form-control appointment_date"
+                        v-model="datestring"
                         placeholder="Date"
-                      />
+                      >
                     </div>
                   </div>
                 </div>
@@ -638,25 +608,16 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <div class="input-wrap">
-                      <!-- <div class="icon"><span class="fa fa-calendar"></span></div> -->
-                      <!--	<input type="text" class="form-control appointment_date" placeholder="Date"> -->
                       <input
                         type="time"
                         class="form-control"
+                        v-model="timestring"
                         placeholder="New duration in minutes"
-                      />
+                      >
                     </div>
                   </div>
                 </div>
 
-                <!-- <div class="col-md-6">
-                    <div class="form-group">
-                      <div class="input-wrap"> -->
-                <!-- <div class="icon"><span class="fa fa-clock-o"></span></div> -->
-                <!-- <input type="number" min="0" step="0.01" class="form-control" placeholder="New price">
-                      </div>
-                    </div>
-                  </div> -->
                 <div class="col-md-12">
                   <div class="form-group">
                     <textarea
@@ -671,11 +632,10 @@
                 </div>
                 <div class="col-md-12">
                   <div class="form-group">
-                    <input
-                      type="submit"
-                      value="update the reminder"
+                    <button 
+                      type="button" 
                       class="btn btn-dark py-3 px-4"
-                    />
+                      @click="updatereminder(username, oldServiceName, newServiceName, datestring, description, timestring)">Update the reminder</button>
                   </div>
                 </div>
               </div>
@@ -700,14 +660,14 @@
                         <div class="icon">
                           <span class="fa fa-chevron-down"></span>
                         </div>
-                        <select name="" id="" class="form-control">
-                          <option value="">Select Customer</option>
-                          <option value="">C1</option>
-                          <option value="">C2</option>
-                          <option value="">C3</option>
-                          <option value="">C4</option>
-                          <option value="">C5</option>
-                        </select>
+                        <select name="" id="" class="form-control" v-model="username4">
+                            <option disabled value="">Please select one</option>
+                            <option v-for="customer in customers"
+                             
+                             :key=customer.username>
+                                {{ customer.username }}
+                            </option>
+                          </select>
                       </div>
                     </div>
                   </div>
@@ -720,84 +680,34 @@
                         <div class="icon">
                           <span class="fa fa-chevron-down"></span>
                         </div>
-                        <select name="" id="" class="form-control">
-                          <option value="">Service of the reminder</option>
-                          <option value="">Change Oil</option>
-                          <option value="">Engine Repair</option>
-                          <option value="">Battery Replace</option>
-                          <option value="">Change Tire</option>
-                          <option value="">Tow Truck</option>
-                        </select>
+                          <select name="" id="" class="form-control" v-model="serviceName4">
+                            <option disabled value="">Please select one</option>
+                            <option v-for="service in services"
+                             
+                             :key=service.serviceName>
+                                {{ service.name }}
+                          </option>
+                          </select>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <!--  <div class="col-md-12">
-                    <div class="form-group">
-                      <div class="form-field">
-                        <div class="select-wrap">
-                          <div class="icon"><span class="fa fa-chevron-down"></span></div>
-                          <select name="" id="" class="form-control">
-                            <option value="">New service of the reminder</option>
-                            <option value="">Change Oil</option>
-                            <option value="">Engine Repair</option>
-                            <option value="">Battery Replace</option>
-                            <option value="">Change Tire</option>
-                            <option value="">Tow Truck</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div> -->
-                <!--<div class="col-md-12">
-                    <div class="form-group">
-                      <input type="text" class="form-control" placeholder="New Service Name">
-                    </div>
-                  </div> -->
-                <!--	<div class="col-md-6">
-                    <div class="form-group">
-                      <input type="text" class="form-control" placeholder="Vehicle number">
-                    </div>
-                  </div> -->
-
-                <!--<div class="col-md-6">
-                    <div class="form-group">
-                      <div class="input-wrap"> -->
-                <!-- <div class="icon"><span class="fa fa-calendar"></span></div> -->
-                <!-- <input type="Date" class="form-control appointment_date" placeholder="Date">
-                      </div>
-                    </div>
-                  </div> -->
-
-                <!-- <div class="col-md-6">
-                    <div class="form-group">
-                      <div class="input-wrap"> -->
-                <!-- <div class="icon"><span class="fa fa-calendar"></span></div> -->
-                <!--	<input type="text" class="form-control appointment_date" placeholder="Date"> -->
-                <!--    <input type="time" class="form-control" placeholder="New duration in minutes">
-                      </div>
-                    </div>
-                  </div> -->
-
-                <!-- <div class="col-md-6">
-                    <div class="form-group">
-                      <div class="input-wrap"> -->
-                <!-- <div class="icon"><span class="fa fa-clock-o"></span></div> -->
-                <!-- <input type="number" min="0" step="0.01" class="form-control" placeholder="New price">
-                      </div>
-                    </div>
-                  </div> -->
-                <!-- <div class="col-md-12">
-                    <div class="form-group">
-                      <textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="Description"></textarea>
-                    </div>
-                  </div> -->
                   <div class="col-md-12">
                     <div class="form-group">
-                      <input type="submit" value="Delete the reminder" class="btn btn-dark py-3 px-4">
+                      <button 
+                      type="button" 
+                      class="btn btn-dark py-3 px-4" 
+                      v-on:click="deletereminder(username4, serviceName4)">delete the reminder</button>
                     </div>
                   </div> 
+
+                  <div class="col-md-12">
+									<div class="form-group">
+                    <h5 v-if="errorDeleteReminder" style="color:red; padding-top:20px">Error: {{errorUpdateService}}</h5> 
+                  </div>
+								  </div>
+
               </div>
             </form>
           </div>
@@ -807,3 +717,4 @@
   </div>
 </template>
   
+<script src="./js/assistant.js"></script>

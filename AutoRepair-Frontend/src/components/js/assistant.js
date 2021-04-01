@@ -38,11 +38,14 @@ export default {
         return {
             username: '',
             username4: '',
+            username5: '',
             serviceName: '',
             serviceName4: '',
+            serviceName5: '',
             datestring: '',
             description: '',
             timestring: '',
+
             //duration: 0,
             //price: 0,
 
@@ -79,9 +82,9 @@ export default {
 
 
     methods: {
-        addreminder(username, serviceName, datestring, description, timestring){
+        addreminder(username5, serviceName5, datestring, description, timestring){
             this.errorCreateReminder = 'test';
-            AXIOS.post('/create_reminder/',$.param({username: username, serviceName: serviceName, datestring: datestring, description:description, timestring:timestring }))
+            AXIOS.post('/create_reminder/',$.param({username: username5, serviceName: serviceName5, datestring: datestring, description:description, timestring:timestring }))
  			.then(response => {
                 
                 //this.services.push(response.data)

@@ -436,7 +436,7 @@
                         <div class="icon">
                           <span class="fa fa-chevron-down"></span>
                         </div>
-                         <select name="" id="" class="form-control" v-model="username">
+                         <select name="" id="" class="form-control" v-model="username5">
                             <option disabled value="">Please select one</option>
                             <option v-for="customer in customers"
                              
@@ -456,7 +456,7 @@
                         <div class="icon">
                           <span class="fa fa-chevron-down"></span>
                         </div>
-                          <select name="" id="" class="form-control" v-model="serviceName">
+                          <select name="" id="" class="form-control" v-model="serviceName5">
                             <option disabled value="">Please select one</option>
                             <option v-for="service in services"
                              
@@ -508,15 +508,23 @@
                     ></textarea>
                   </div>
                 </div>
+
                 <div class="col-md-12">
                   <div class="form-group">
 
                     <button 
                       type="button" 
                       class="btn btn-dark py-3 px-4"
-                      v-on:click="addreminder(username, serviceName, datestring , description, timestring)">Add the reminder</button>
+                      v-on:click="addreminder(username5, serviceName5, datestring , description, timestring)">Add the reminder</button>
                   </div>
                 </div>
+
+                  <div class="col-md-12">
+									<div class="form-group">
+                    <h5 v-if="errorCreateReminder" style="color:red; padding-top:20px">Error: {{errorCreateReminder}}</h5> 
+                  </div>
+								  </div>
+
               </div>
             </form>
           </div>
@@ -704,7 +712,7 @@
 
                   <div class="col-md-12">
 									<div class="form-group">
-                    <h5 v-if="errorDeleteReminder" style="color:red; padding-top:20px">Error: {{errorUpdateService}}</h5> 
+                    <h5 v-if="errorDeleteReminder" style="color:red; padding-top:20px">Error: {{errorDeleteReminder}}</h5> 
                   </div>
 								  </div>
 

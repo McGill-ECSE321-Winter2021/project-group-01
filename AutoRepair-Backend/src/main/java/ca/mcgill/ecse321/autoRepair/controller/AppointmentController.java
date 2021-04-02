@@ -85,7 +85,7 @@ public class AppointmentController {
 	 * @param newServiceName
 	 * @return
 	 */
-	@PostMapping(value = {"/update_appointment/"})
+	@PatchMapping(value = {"/update_appointment/"})
 	public ResponseEntity<?> updateAppointment(@RequestParam String username, @RequestParam String appointmentDate, @RequestParam String appointmentTime,
 			@RequestParam String newAppointmentDate, @RequestParam String serviceName, @RequestParam
 			String newAppointmentTime, @RequestParam String newServiceName){

@@ -66,7 +66,7 @@
               class="form-group"
               style="
                 background-color: rgba(255, 165, 0, 0.7);
-                height: 350px;
+                height: 330px;
                 width: 600px;
                 text-align: center;
                 border-radius: 25px;
@@ -139,20 +139,12 @@
                             appointmentTime.toString(),
                             serviceName
                           ),
-                            getAvailableTimeSlots(appointmentDate.toString())
+                            getAppointmentsOfCustomer()
                         "
                       >
                         Book
                       </button>
                     </div>
-                  </div>
-                  <div class="form-group">
-                    <h5
-                      v-if="errorMakeAppointment"
-                      style="color: red; padding-left: 25px"
-                    >
-                      Error: {{ errorMakeAppointment }}
-                    </h5>
                   </div>
                 </div>
               </form>
@@ -181,7 +173,7 @@
           class="form-group"
           style="
             background-color: rgba(255, 165, 0, 0.7);
-            height: 450px;
+            height: 420px;
             width: 600px;
             text-align: center;
             border-radius: 25px;
@@ -203,11 +195,15 @@
                         name="selectedAppointment"
                         id=""
                         class="form-control"
-                        v-model="selectedAppointment"
+                        v-model="selected"
                       >
                         <option value="">Select An Appointment</option>
-                        <option v-for="appointment in appointments" :key=appointment.id>
-                          {{ appointment.service.name}}; {{ appointment.timeSlot.startDate}}; {{ appointment.timeSlot.startTime}} 
+                        <option v-for="appointment in appointments"
+                          v-bind:value="{ serviceName: appointment.service.name,
+                          appointmentDate: appointment.timeSlot.startDate,
+                          appointmentTime: appointment.timeSlot.startTime}"
+                          :key=appointment.id>
+                          {{ appointment.service.name}}; {{ appointment.timeSlot.startDate}}; {{ appointment.timeSlot.startTime}}
                         </option>
                       </select>
                     </div>
@@ -272,8 +268,9 @@
                     class="btn btn-dark py-3 px-4"
                     @click="
                       updateAppointment(
-                        tamara,
-                        selectedAppointment,
+                        selected.serviceName,
+                        selected.appointmentDate,
+                        selected.appointmentTime,
                         newAppointmentTime.toString(),
                         newAppointmentDate.toString(),
                         newServiceName
@@ -283,14 +280,6 @@
                     Update
                   </button>
                 </div>
-              </div>
-              <div class="form-group">
-                <h5
-                  v-if="errorUpdateAppointment"
-                  style="color: red; padding-left: 25px"
-                >
-                  Error: {{ errorUpdateAppointment }}
-                </h5>
               </div>
             </div>
           </form>
@@ -316,7 +305,7 @@
           class="form-group"
           style="
             background-color: rgba(255, 165, 0, 0.7);
-            height: 280px;
+            height: 260px;
             width: 600px;
             text-align: center;
             border-radius: 25px;
@@ -342,12 +331,12 @@
                         <option value="">Select An Appointment</option>
                         <option
                           v-for="appointment in appointments"
-                          v-bind:value="{ serviceName: appointment.service.name, 
-                          appointmentDate: appointment.timeSlot.startDate, 
+                          v-bind:value="{ serviceName: appointment.service.name,
+                          appointmentDate: appointment.timeSlot.startDate,
                           appointmentTime: appointment.timeSlot.startTime}"
                           :key="appointment.id"
                         >
-                           {{ appointment.service.name}}; {{ appointment.timeSlot.startDate}}; {{ appointment.timeSlot.startTime}} 
+                           {{ appointment.service.name}}; {{ appointment.timeSlot.startDate}}; {{ appointment.timeSlot.startTime}}
                         </option>
                       </select>
                     </div>
@@ -364,14 +353,6 @@
                     Cancel
                   </button>
                 </div>
-              </div>
-              <div class="form-group">
-                <h5
-                  v-if="errorCancelAppointment"
-                  style="color: red; padding-left: 25px"
-                >
-                  Error: {{ errorCancelAppointment }}
-                </h5>
               </div>
             </div>
           </form>
@@ -480,7 +461,7 @@
     </div>
     <br />
     <br />
-    <br /> 
+    <br />
   </div>
 </template>
 

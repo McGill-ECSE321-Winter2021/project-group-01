@@ -61,13 +61,7 @@ export default {
                     this.errorSignup=''
                     if(response.status===201){
                         swal("Success", "Owner " + name + " created Successfully, Please Login Below",
-                         "success");  
-
-                        // .then(okay => {
-                        //   if (okay) {
-                        //    window.location.href = "/owner";
-                        //  }    
-                        // })         
+                         "success");         
                  }})
                      
                 .catch(e => {

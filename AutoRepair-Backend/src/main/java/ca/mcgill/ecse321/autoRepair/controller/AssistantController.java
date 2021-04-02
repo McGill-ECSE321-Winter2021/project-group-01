@@ -60,16 +60,16 @@ public class AssistantController {
 		if (!authentificationCode.equals("5678")) {
 			throw new IllegalArgumentException ("Wrong Authentification Code");
 		}
-Assistant assistant =null;	
+		Assistant assistant =null;	
 		try {
-	 assistant = assisService.createAssistant(username,password);
+			assistant = assisService.createAssistant(username,password);
 		}catch(IllegalArgumentException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(convertToDTO(assistant), HttpStatus.CREATED);
 
 	}
-		
+
 
 	/**
 	 * @author Marc Saber

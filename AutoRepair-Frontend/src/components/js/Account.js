@@ -54,10 +54,6 @@ export default {
         }
     },
 
-    computed: {
-        ...mapGetters(['user'])
-    },
-
     created: function () {
         // Initializing persons from backend
         AXIOS.get('/view_customer/'.concat(localStorage.getItem('username')))

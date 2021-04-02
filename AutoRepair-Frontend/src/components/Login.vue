@@ -60,29 +60,6 @@
             </div>
           </form>
           <br />
-          <h3 class="mb-4">Don't have an account?</h3>
-          <form action="#" class="appointment">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <div class="form-field">
-                    <div class="select-wrap"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-12">
-                <div class="form-group">
-                  <button
-                    type="button"
-                    class="btn btn-dark py-3 px-4"
-                    onClick="location.href='/#/signup'"
-                  >
-                    Sign up now!
-                  </button>
-                </div>
-              </div>
-            </div>
-          </form>
         </div>
       </div>
     </div>

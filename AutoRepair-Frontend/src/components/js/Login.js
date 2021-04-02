@@ -54,22 +54,21 @@ export default {
 					
 					if(this.type.localeCompare("customer")==0){
 						
-						window.location.href = "/customer"
+						window.location.href = "/#/customer"
 					}
 					else if(this.type.localeCompare("assistant")==0){
-						window.location.href = "/assistant"
+						window.location.href = "/#/assistant"
 					}
 					else {
-						window.location.href = "/owner"
+						window.location.href = "/#/owner"
 					} 
 
-					
+					location.reload();
 				}
 			})
 			.catch(e => {
 				
-				this.errorLogin = e
-				console.log(this.errorLogin)
+				swal("ERROR", e.response.data, "error");
 				
 			})
 		}

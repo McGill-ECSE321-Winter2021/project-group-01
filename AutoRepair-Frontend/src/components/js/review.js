@@ -64,7 +64,7 @@ export default {
 
 		AXIOS.get('/view_reviews_of_customer', {
 			params: {
-				username: 'bob'
+				username: localStorage.getItem('username')
 			}
 		})
 			.then(response => {
@@ -78,7 +78,7 @@ export default {
 		// Initializing services from backend
 		AXIOS.get('/past_appointmentsOf/', {
 			params: {
-				username: 'bob'
+				username: localStorage.getItem('username')
 			}
 		})
 			.then(response => {

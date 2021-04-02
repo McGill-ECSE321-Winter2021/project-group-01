@@ -34,6 +34,7 @@ export default {
   name: 'app',
   data() {
     return {
+      activeItem: 'home',
       username:'',
       type:'',
       businessName: '',
@@ -80,10 +81,18 @@ export default {
   },
 
   methods: {
+
+    isActive: function (menuItem) {
+      return this.activeItem === menuItem
+    },
+    setActive: function (menuItem) {
+      this.activeItem = menuItem 
+    },
 		
     logout () {
-      window.localStorage.removeItem('username');
-      window.localStorage.removeItem('type');
+      this.activeItem = 'home'
+      window.localStorage.removeItem('username')
+      window.localStorage.removeItem('type')
       window.location.href = "/"
       
 		}

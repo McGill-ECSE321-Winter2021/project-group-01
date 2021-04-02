@@ -36,6 +36,8 @@ export default {
   data () {
     return {
       appointments: [],
+      selectedUpdate: '',
+      selectedCancel: '',
       services: [],
       availableTimeSlots: [],
       username: '',
@@ -61,7 +63,7 @@ export default {
 
       AXIOS.get('/upcoming_appointmentsOf/', {
         params:{
-        username:'bob',
+        username: localStorage.getItem('username'),
         }})
         .then(response => {
          this.appointments = response.data
@@ -80,7 +82,7 @@ export default {
       this.errorMakeAppointment=appointmentTime
       AXIOS.patch('/update_appointment/',{},{
         params:{
-          username: 'bob',
+          username: localStorage.getItem('username'),
           appointmentDate: appointmentDate,
           appointmentTime: appointmentTime,
           newAppointmentDate: newAppointmentDate,
@@ -107,7 +109,7 @@ export default {
     },
 
   makeAppointment (username, appointmentDate, appointmentTime, serviceName) {
-  			AXIOS.post('/make_appointment/',$.param({username: 'bob', serviceName: serviceName, appointmentDate:appointmentDate , appointmentTime:appointmentTime}))
+  			AXIOS.post('/make_appointment/',$.param({username: localStorage.getItem('username'), serviceName: serviceName, appointmentDate:appointmentDate , appointmentTime:appointmentTime}))
   			.then(response => {
   				this.appointment = response.data
   				swal("Success", "You booked an appointment on " + appointmentDate + " at " + appointmentTime +" for " + serviceName, "success");
@@ -128,7 +130,7 @@ export default {
 
         AXIOS.delete('/cancel_appointment/',{
           params:{
-            username:'bob',
+            username:localStorage.getItem('username'),
             appointmentDate:startDate,
             appointmentTime:startTime,
             serviceName:serviceName

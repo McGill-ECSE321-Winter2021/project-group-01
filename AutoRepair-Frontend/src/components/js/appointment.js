@@ -78,7 +78,7 @@ export default {
   updateAppointment(serviceName, appointmentDate, appointmentTime, newAppointmentTime, newAppointmentDate, newServiceName) {
       this.errorCancelAppointment=serviceName
       this.errorMakeAppointment=appointmentTime
-      AXIOS.post('/update_appointment/',{},{
+      AXIOS.patch('/update_appointment/',{},{
         params:{
           username: 'bob',
           appointmentDate: appointmentDate,

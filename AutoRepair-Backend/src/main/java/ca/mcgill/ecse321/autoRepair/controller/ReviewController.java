@@ -111,7 +111,7 @@ public class ReviewController {
 	 * @return reviewDTO
 	 */
 	@PostMapping(value = {"/edit_review/"})
-	public ReviewDTO editReview(@RequestParam("startDate") String startDate, @RequestParam("startTime")
+	public ResponseEntity<?> editReview(@RequestParam("startDate") String startDate, @RequestParam("startTime")
 	String startTime, @RequestParam("newDescription") String newDescription,
 	@RequestParam("newRating") int newRating) {
 
@@ -119,10 +119,14 @@ public class ReviewController {
 		Time time = Time.valueOf(startTime);
 		TimeSlot timeSlot = timeSlotRepoisoty.findTimeSlotByStartDateAndStartTime(date, time);
 		Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
+		Review review = null;
+		try {
+			 review = reviewService.editReview(appointment, newDescription, newRating);
+		}catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 
-		Review review = reviewService.editReview(appointment, newDescription, newRating);
-
-		return convertToDTO(review);
+		return new ResponseEntity<>(convertToDTO(review), HttpStatus.OK);
 	}
 
 	/**

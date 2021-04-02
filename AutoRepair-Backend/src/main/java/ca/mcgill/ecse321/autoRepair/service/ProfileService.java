@@ -108,44 +108,44 @@ public class ProfileService {
 		
 		Profile profile = customer.getProfile();
 
-		if(profile.getEmail()!=email && email!=null && email!="") {
+		if(!profile.getEmail().equals(email) && email!=null && email!="") {
 			if(!emailIsValid(email)) 
 				throw new IllegalArgumentException("Invalid email.");
 
 		}
 
-		if(profile.getPhoneNumber()!=phoneNumber && phoneNumber!=null && phoneNumber!="") {
+		if(!profile.getPhoneNumber().equals(phoneNumber) && phoneNumber!=null && phoneNumber!="") {
 			if(!isNumeric(phoneNumber))
 				throw new IllegalArgumentException("Invalid phone number.");
 		}
 
 		
-		if(profile.getEmail()!=email && email != null && email !="") {
+		if(!profile.getEmail().equals(email) && email != null && email !="") {
 			if(getProfile(email)!=null)
 				throw new IllegalArgumentException("Customer with email entered already exists.");
 
 		}
 
-		if(profile.getFirstName() != firstName && firstName!=null && firstName!="") {
+		if(!profile.getFirstName().equals(firstName) && firstName!=null && firstName!="") {
 			profile.setFirstName(firstName);
 		}
-		if(profile.getLastName() != lastName && lastName!=null && lastName!="") {
+		if(!profile.getLastName().equals(lastName) && lastName!=null && lastName!="") {
 			profile.setLastName(lastName);
 		}
 
-		if(profile.getEmail()!=email && email!=null && email!="") {
+		if(!profile.getEmail().equals(email) && email!=null && email!="") {
 			profile.setEmail(email);
 		}
 
-		if(profile.getPhoneNumber()!=phoneNumber && phoneNumber!=null && phoneNumber!="") {
+		if(!profile.getPhoneNumber().equals(phoneNumber) && phoneNumber!=null && phoneNumber!="") {
 			profile.setPhoneNumber(phoneNumber);
 		}
 
-		if(profile.getZipCode()!=zipCode && zipCode!=null && zipCode!="") {
+		if(!profile.getZipCode().equals(zipCode) && zipCode!=null && zipCode!="") {
 			profile.setZipCode(zipCode);
 		}
 
-		if(profile.getAddress()!=address && address!=null && address!="") {
+		if(!profile.getAddress().equals(address) && address!=null && address!="") {
 			profile.setAddress(address);
 		}
 

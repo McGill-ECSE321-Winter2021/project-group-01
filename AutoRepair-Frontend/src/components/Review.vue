@@ -199,7 +199,7 @@
                             :key="review.id"
                           >
                             {{ review.appointment.service.name }};
-							{{ review.serviceRating }};
+							              {{ review.serviceRating }};
                             {{ review.appointment.timeSlot.startDate }};
                             {{ review.appointment.timeSlot.startTime }}
                           </option>

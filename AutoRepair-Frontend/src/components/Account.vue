@@ -1,5 +1,131 @@
 <template>
   <div id="Owner">
+    <section class="ftco-section testimony-section bg-light">
+      <div class="container">
+        <div class="row justify-content-center pb-5 mb-3">
+          <div
+            class="col-md-7 heading-section heading-section-white text-center"
+          >
+            <h2>Profile</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="carousel-testimony">
+              <div class="item">
+                <div class="testimony-wrap py-4">
+                  <div
+                    class="icon d-flex align-items-center justify-content-center"
+                  >
+                    <span class="fa fa-user"></span>
+                  </div>
+                  <div class="text">
+                    <div class="d-flex align-items-center">
+                      <div
+                        class="user-img"
+                        style="
+                          background-image: url(../static/images/person_1.jpg);
+                        "
+                      ></div>
+                      <div class="pl-3">
+                        <p class="name">
+                          {{ profile.firstName }} {{ profile.lastName }}
+                        </p>
+                        <span class="email">{{ profile.email }}</span>
+                        <br />
+                        <span class="position">{{ profile.address }}</span>
+                        <br />
+                        <span class="position">{{ profile.phoneNumber }}</span>
+                        <br />
+                        <span class="position">{{ profile.zipCode }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+<!-- 
+    <section class="ftco-section testimony-section bg-light">
+      <div class="container">
+        <div class="row justify-content-center pb-5 mb-3">
+          <div
+            class="col-md-7 heading-section heading-section-white text-center"
+          >
+            <h2>Cars</h2>
+          </div>
+        </div>
+        <div class="carousel-testimony">
+        <div class="row">
+         
+            
+              <div
+                class="col-md-4 services"
+                v-for="car in cars"
+                :key="car.plateNumber"
+              >
+                <div class="d-block d-flex">
+                  <div
+                    class="icon d-flex justify-content-center align-items-center"
+                  >
+                    <span class="fa fa-car"></span>
+                  </div>
+
+                  <div class="media-body pl-3">
+                    <h3 class="heading">{{ car.model }}</h3>
+                    <p>Transmission: {{ car.transmission }}</p>
+                    <p>PlateNumber: {{ car.plateNumber }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+    </section> -->
+
+    <section class="service">
+      <div class="container">
+        <div class="row justify-content-center pb-5 mb-3">
+          <div class="col-md-7 heading-section text-center">
+            <h2>Cars</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div
+            class="col-md-4 services"
+            v-for="car in cars"
+            :key="car.plateNumber"
+          >
+            <div class="d-block d-flex">
+              <div
+                class="icon d-flex justify-content-center align-items-center"
+              >
+                <span class="fa fa-car"></span>
+              </div>
+
+              <div class="media-body pl-3">
+                <h3 class="heading">{{ car.model }}</h3>
+                <p>Transmission: {{ car.transmission }}</p>
+                <p>PlateNumber: {{ car.plateNumber }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div style="background-color: #f8f9fd">
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+    </div>
+
     <section
       class="ftco-appointment ftco-section ftco-no-pt ftco-no-pb img"
       style="background-image: url(../static/images/image_6.jpg)"
@@ -82,16 +208,6 @@
 
                 <div class="col-md-12">
                   <div class="form-group">
-                    <h5
-                      v-if="errorEditProfile"
-                      style="color: red; padding-top: 20px"
-                    >
-                      Error: {{ errorEditProfile }}
-                    </h5>
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
                     <button
                       type="button"
                       class="btn btn-dark py-3 px-4"
@@ -165,16 +281,6 @@
                         v-model="confirmPassword"
                         placeholder="Confirm Password"
                       />
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <h5
-                        v-if="errorPassword"
-                        style="color: red; padding-top: 20px"
-                      >
-                        Error: {{ errorPassword }}
-                      </h5>
                     </div>
                   </div>
                   <div class="col-md-12">
@@ -269,40 +375,18 @@
 
                 <div class="col-md-12">
                   <div class="form-group">
-                    <h5
-                      v-if="errorAddCar"
-                      style="color: red; padding-top: 20px"
-                    >
-                      Error: {{ errorAddCar }}
-                    </h5>
-                  </div>
-                </div>
-
-                <div class="col-md-12">
-                  <div class="form-group">
                     <button
                       type="button"
                       class="btn btn-dark py-3 px-4"
                       v-bind:disabled="
-                        !modelAdd ||
-                        !plateNumberAdd ||
-                        !carTransmissionAdd 
+                        !modelAdd || !plateNumberAdd || !carTransmissionAdd
                       "
-                      @click="addCar(modelAdd, plateNumberAdd, carTransmissionAdd)"
+                      @click="
+                        addCar(modelAdd, plateNumberAdd, carTransmissionAdd)
+                      "
                     >
                       Add Car
                     </button>
-                  </div>
-                </div>
-
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <h5
-                      v-if="errorAddCar"
-                      style="color: red; padding-top: 20px"
-                    >
-                      Error: {{ errorAddCar }}
-                    </h5>
                   </div>
                 </div>
               </div>
@@ -326,13 +410,23 @@
                         <div class="icon">
                           <span class="fa fa-chevron-down"></span>
                         </div>
-                        <select name="" id="" class="form-control" v-model="plateNumberRemove">
-                          <option value="">Select car</option>
-                          <option value="">Change Oil</option>
-                          <option value="">Engine Repair</option>
-                          <option value="">Battery Replace</option>
-                          <option value="">Change Tire</option>
-                          <option value="">Tow Truck</option>
+                        <select
+                          name="selectedCar"
+                          id=""
+                          class="form-control"
+                          v-model="selectedCar"
+                        >
+                          <option value="">Select A Car</option>
+                          <option
+                            v-for="car in cars"
+                            v-bind:value="{
+                              plateNumber: car.plateNumber,
+                            }"
+                            :key="car.id"
+                          >
+                            {{ car.model }}; {{ car.transmission }};
+                            {{ car.plateNumber }}
+                          </option>
                         </select>
                       </div>
                     </div>
@@ -344,22 +438,11 @@
                     <button
                       type="button"
                       class="btn btn-dark py-3 px-4"
-                       v-bind:disabled="!plateNumberRemove"
-                      @click="removeCar(plateNumberRemove)"
+                      v-bind:disabled="!selectedCar"
+                      @click="removeCar(selectedCar.plateNumber)"
                     >
                       Remove Car
                     </button>
-                  </div>
-                </div>
-
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <h5
-                      v-if="errorRemoveCar"
-                      style="color: red; padding-top: 20px"
-                    >
-                      Error: {{ errorRemoveCar }}
-                    </h5>
                   </div>
                 </div>
               </div>

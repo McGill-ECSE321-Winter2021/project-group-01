@@ -6,6 +6,9 @@ import Owner from '@/components/Owner'
 import Assistant from '@/components/Assistant'
 import Customer from '@/components/Customer'
 import Signup from '@/components/Signup'
+import OwnerSignUp from '@/components/OwnerSignUp'
+import AssistantSignUp from '@/components/AssistantSignUp'
+
 
 
 Vue.use(Router)
@@ -40,6 +43,16 @@ export default new Router({
       path: '/signup',
       name: 'Signup',
       component: Signup
+    },
+    {
+      path: '/ownersignup',
+      name: 'OwnerSignup',
+      component: OwnerSignUp
+    },
+    {
+      path: '/assistantsignup',
+      name: 'AssistantSignup',
+      component: AssistantSignUp
     }
   ]   
 })

@@ -222,7 +222,7 @@
                           class="form-control"
                           v-model="editReviewRating"
                         >
-                          <option value="">Select a Rating</option>
+                          <option value="">Select a New Rating</option>
                           <option value="0">0</option>
                           <option value="1">1</option>
                           <option value="2">2</option>
@@ -243,7 +243,7 @@
                       cols="30"
                       rows="7"
                       class="form-control"
-                      placeholder="Provide a description"
+                      placeholder="Provide a new description"
                       v-model="descriptionEdit"
                     ></textarea>
                   </div>
@@ -356,8 +356,8 @@
           <div
             class="col-md-7 heading-section heading-section-white text-center"
           >
-            <span class="subheading">Testimonies</span>
-            <h2>Happy Clients &amp; Feedbacks</h2>
+            <span class="subheading">Client Feedbacks</span>
+            <h2>Reviews</h2>
           </div>
         </div>
         <div class="row">

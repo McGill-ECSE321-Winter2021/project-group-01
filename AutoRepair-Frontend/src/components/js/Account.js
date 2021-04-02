@@ -1,5 +1,6 @@
 import axios from 'axios'
 import JQuery from 'jquery'
+import { mapGetters } from 'vuex';
 let $ = JQuery
 var config = require('../../../config')
 
@@ -53,9 +54,13 @@ export default {
         }
     },
 
+    computed: {
+        ...mapGetters(['user'])
+    },
+
     created: function () {
         // Initializing persons from backend
-        AXIOS.get('/view_customer/'.concat('bob'))
+        AXIOS.get('/view_customer/'.concat(localStorage.getItem('username')))
             .then(response => {
                 // JSON responses are automatically parsed.
                 this.profile = response.data.profile
@@ -70,7 +75,7 @@ export default {
     methods: {
         editProfile: function (firstName, lastName, address, zipCode, email, phoneNumber) {
 
-            AXIOS.patch('/edit_profile/'.concat('bob'), {}, {
+            AXIOS.patch('/edit_profile/'.concat(localStorage.getItem('username')), {}, {
                 params: {
                     firstName: firstName,
                     lastName: lastName,
@@ -96,7 +101,7 @@ export default {
             if (newPassword != confirmPassword) {
                 swal("ERROR", "Passwords do not match.", "error");
             } else {
-                AXIOS.patch('/change_password/'.concat('bob'), {}, {
+                AXIOS.patch('/change_password/'.concat(localStorage.getItem('username')), {}, {
                     params: {
                         oldPassword: oldPassword,
                         newPassword: newPassword
@@ -118,7 +123,7 @@ export default {
 
         addCar: function (modelAdd, plateNumberAdd, carTransmissionAdd) {
 
-            AXIOS.post('/add_car/'.concat('bob'), {}, {
+            AXIOS.post('/add_car/'.concat(localStorage.getItem('username')), {}, {
                 params: {
                     model: modelAdd,
                     plateNumber: plateNumberAdd,
@@ -137,26 +142,26 @@ export default {
                 })
 
         },
-       
-        removeCar: function ( plateNumber ) {
-            
-            AXIOS.delete('/remove_car/'.concat('bob'), {
+
+        removeCar: function (plateNumber) {
+
+            AXIOS.delete('/remove_car/'.concat(localStorage.getItem('username')), {
                 params: {
-                    plateNumber:plateNumber,
+                    plateNumber: plateNumber,
                 }
             })
                 .then(response => {
-                    this.selectedCar='',
-                    this.cars=response.data.cars
+                    this.selectedCar = '',
+                        this.cars = response.data.cars
                     swal("Success", "Car removed successfully!", "success");
                 })
                 .catch(e => {
                     swal("ERROR", e.response.data, "error");
                 })
 
-            }
+        }
 
-      
+
 
 
     }

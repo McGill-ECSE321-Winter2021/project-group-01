@@ -47,10 +47,10 @@ export default {
 			.then(response => {
 				this.user = response.data
 				if (response.status===200) {
+					
 					this.type = this.user.userType
-					localStorage.setItem('loggedIn', this.type)
-                    document.cookie = "username=John Doe";
-					console.log(document.cookie)
+					window.localStorage.setItem('username', this.user.username)
+					window.localStorage.setItem('type', this.type)
 					
 					if(this.type.localeCompare("customer")==0){
 						
@@ -61,7 +61,8 @@ export default {
 					}
 					else {
 						window.location.href = "/owner"
-					}
+					} 
+
 					
 				}
 			})

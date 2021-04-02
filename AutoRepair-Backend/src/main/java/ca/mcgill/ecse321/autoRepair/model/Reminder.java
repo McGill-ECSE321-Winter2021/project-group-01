@@ -63,7 +63,7 @@ public class Reminder
   }
 
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   public ChosenService getChosenService()
   {
     return this.chosenService;

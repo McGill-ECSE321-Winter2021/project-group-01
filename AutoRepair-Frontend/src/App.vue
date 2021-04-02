@@ -36,10 +36,96 @@
           </div>
         </div>
       </div>
-      
-      
-      <router-view></router-view>
-      
+
+      <nav
+      class="navbar navbar-expand-lg navbar-light ftco_navbar bg-light ftco-navbar-light"
+      id="ftco-navbar"
+    >
+      <div class="container">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#ftco-nav"
+          aria-controls="ftco-nav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="fa fa-bars"></span> Menu
+        </button>
+        <form action="#" class="searchform order-lg-last">
+          <div class="form-group d-flex">
+            <input type="text" class="form-control pl-3" placeholder="Search" />
+            <button type="submit" placeholder="" class="form-control search">
+              <span class="fa fa-search"></span>
+            </button>
+          </div>
+        </form>
+        <div class="collapse navbar-collapse" id="ftco-nav">
+          <ul v-if="!username" class="navbar-nav mr-auto" >
+            <li class="nav-item active">
+              <router-link class="nav-link" to="/">Home</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/login">Login</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/signup"
+                >Signup</router-link
+              >
+            </li>
+
+          </ul>
+           
+           <ul v-else-if="type=='customer'" class="navbar-nav mr-auto" >
+            <li class="nav-item active">
+              <router-link class="nav-link" to="/customer">Home</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/appointments">Appointment</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/review"
+                >Review</router-link
+              >
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/account"
+                >Account</router-link
+              >
+            </li>
+
+            <li class="nav-item">
+              <router-link class="nav-link" to="/" v-on:click.native="logout()">Logout</router-link>
+            </li>
+            
+          </ul>
+
+           <ul v-else-if="type=='assistant'" class="navbar-nav mr-auto" >
+            <li class="nav-item active">
+              <router-link class="nav-link" to="/assistant">Home</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/owner">Logout</router-link>
+            </li>
+            
+          </ul>
+
+          <ul v-else-if="type=='owner'" class="navbar-nav mr-auto" >
+            <li class="nav-item active">
+              <router-link class="nav-link" to="/owner">Home</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/owner">Logout</router-link>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </nav>
+    
+    <router-view></router-view>
+  
       <footer class="footer ftco-section">
         <div class="container">
           <div class="row mb-5">

@@ -15,14 +15,14 @@ This project consists on building a system for an Auto-repair car shop. Customer
 
 ## Roles and Hours spent
 
-| Name                    | Roles/Tasks                                | Sprint 1           | Sprint 2 | Sprint 3| Sprint 4|
-| ------------------------| -------------------------------------------|--------------------|----------|---------|---------|
-| Robert Aprahamian       | Software Developer, Testing, Documentation |                35  | 40       | -       | -       |
-| Fadi Tawfik Beshay      | Software Developer, Testing, Documentation |                35  | 40       | -       | -       |
-| Eric Chehata            | Software Developer, Testing, Documentation |                35  | 40       | -       | -       |  
-| Mohammad Saeid Nafar    | Software Developer, Testing, Documentation |                35  | 40       | -       | -       |
-| Marc Saber              | Software Developer, Testing, Documentation |                35  | 40       | -       | -       |
-| Tamara Zard Aboujaoudeh | Software Developer, Testing, Documentation |                35  | 40       | -       | -       |
+| Name                    | Roles/Tasks                                | Sprint 1           | Sprint 2 | Sprint 3 | Sprint 4|
+| ------------------------| -------------------------------------------|--------------------|----------|----------|---------|
+| Robert Aprahamian       | Software Developer, Testing, Documentation |                35  | 40       | 45       | -       |
+| Fadi Tawfik Beshay      | Software Developer, Testing, Documentation |                35  | 40       | 45       | -       |
+| Eric Chehata            | Software Developer, Testing, Documentation |                35  | 40       | 45       | -       |  
+| Mohammad Saeid Nafar    | Software Developer, Testing, Documentation |                35  | 40       | 45       | -       |
+| Marc Saber              | Software Developer, Testing, Documentation |                35  | 40       | 45       | -       |
+| Tamara Zard Aboujaoudeh | Software Developer, Testing, Documentation |                35  | 40       | 45       | -       |
 
 
 ## Sprint 1 

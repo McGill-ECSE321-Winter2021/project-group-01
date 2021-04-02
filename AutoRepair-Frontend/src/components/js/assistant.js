@@ -1,3 +1,4 @@
+import swal from 'sweetalert';
 import axios from 'axios'
 //import { response } from 'express';
 import JQuery from 'jquery'
@@ -45,9 +46,16 @@ export default {
             datestring: '',
             description: '',
             timestring: '',
+            oldServiceName:'',
+            newServiceName:'',
+            datestring2:'',
+            timestring2:'',
+            description2:'',
+            errorUpdateService2:'',
 
-            //duration: 0,
-            //price: 0,
+            serviceName7:'',
+            duration7: 0,
+            price7: 0,
 
             errorCreateReminder: '',
             errorUpdateReminder: '',
@@ -85,43 +93,61 @@ export default {
         addreminder(username5, serviceName5, datestring, description, timestring){
             this.errorCreateReminder = 'test';
             AXIOS.post('/create_reminder/',$.param({username: username5, serviceName: serviceName5, datestring: datestring, description:description, timestring:timestring }))
- 			.then(response => {
-                
+ 			  .then(response => {
+                swal("Success", "Reminder Added Successfully", "success");
                 //this.services.push(response.data)
-                this.errorCreateReminder = 'cr7';
+                //this.errorCreateReminder = 'cr7';
 
              })
              .catch(e => {
-                 				this.errorCreateReminder = e.response.data
-                 				console.log(this.errorCreateReminder)
+                        swal("ERROR", e.response.data, "error");  
+                 				//this.errorCreateReminder = e.response.data
+                 				//console.log(this.errorCreateReminder)
                  			})
         },
-        // updatereminder(customerName, oldServiceName, newServiceName, datestring, description, timestring){
-        //     AXIOS.post('/update_reminder/',$.param({customerName: customerName, oldServiceName: oldServiceName, newServiceName:newServiceName,  datestring:datestring, description:description, timestring:timestring }))
- 		// 	.then(response => {
-                
-        //         //this.services.push(response.data)
-        //         this.errorUpdateReminder = 'cr7';
-
-        //      })
-        //      .catch(e => {
-        //          				this.errorUpdateReminder = e.response.data
-        //          				console.log(this.errorUpdateReminder)
-        //          			})
-        // },
-        deletereminder(username4, serviceName4){
-            AXIOS.post('/delete_reminder/',$.param({username4: username4, serviceName4: serviceName4}))
- 			.then(response => {
-                
+        updatereminder(oldServiceName, newServiceName, username6, datestring2, description2, timestring2){
+            AXIOS.post('/update_reminder/',$.param({oldServiceName: oldServiceName, newServiceName:newServiceName, username: username6, datestring:datestring2, description:description2, timestring:timestring2 }))
+ 			  .then(response => {
+                swal("Success", "Reminder Updated Successfully", "success");
                 //this.services.push(response.data)
-                this.errorDeleteReminder = 'cr7';
+                //this.errorUpdateReminder = 'cr7';
 
              })
              .catch(e => {
-                 				this.errorDeleteReminder = e.response.data
-                 				console.log(this.errorDeleteReminder)
+                        swal("ERROR", e.response.data, "error"); 
+                 				//this.errorUpdateReminder = e.response.data
+                 				//console.log(this.errorUpdateReminder)
                  			})
-        }
+        },
+        deletereminder(username4, serviceName4){
+            AXIOS.post('/delete_reminder/',$.param({username: username4, serviceName: serviceName4}))
+ 			  .then(response => {
+                swal("Success", "Reminder Deleted Successfully", "success");
+                //this.services.push(response.data)
+                //this.errorDeleteReminder = 'cr7';
+
+             })
+             .catch(e => {
+                        swal("ERROR", e.response.data, "error"); 
+                 				// this.errorDeleteReminder = e.response.data
+                 				// console.log(this.errorDeleteReminder)
+                 			})
+        },
+
+        updateservice(serviceName7, duration7, price7){
+          AXIOS.post('/update_service/',$.param({serviceName: serviceName7, duration: duration7, price:price7}))
+          .then(response => {
+              swal("Success", "Service " + serviceName7 + " Updated Successfully", "success");
+              //this.services.push(response.data)
+              //this.errorUpdateService2 = 'cr7';
+
+        })
+        .catch(e => {
+              swal("ERROR", e.response.data, "error");
+              //this.errorUpdateService2 = e.response.data
+              //console.log(this.errorUpdateService2)
+  })
+},
 
     }
     

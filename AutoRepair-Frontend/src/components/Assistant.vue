@@ -359,14 +359,12 @@
                         <div class="icon">
                           <span class="fa fa-chevron-down"></span>
                         </div>
-                        <select name="" id="" class="form-control">
-                          <option value="">Select service</option>
-                          <option value="">Change Oil</option>
-                          <option value="">Engine Repair</option>
-                          <option value="">Battery Replace</option>
-                          <option value="">Change Tire</option>
-                          <option value="">Tow Truck</option>
-                        </select>
+                        <select name="" id="" class="form-control" v-model="serviceName7">
+                            <option disabled value="">Please select one</option>
+                            <option v-for="service in services" :key=service.serviceName>
+                                {{ service.name }}
+                          </option>
+                          </select>
                       </div>
                     </div>
                   </div>
@@ -379,6 +377,7 @@
                         type="number"
                         min="0"
                         class="form-control"
+                        v-model="duration7"
                         placeholder="New duration in minutes"
                       >
                     </div>
@@ -393,6 +392,7 @@
                         min="0"
                         step="0.01"
                         class="form-control"
+                        v-model="price7"
                         placeholder="New price"
                       >
                     </div>
@@ -401,13 +401,19 @@
 
                 <div class="col-md-12">
                   <div class="form-group">
-                    <input
-                      type="submit"
-                      value="Update the Service"
+                  <button 
+                      type="button" 
                       class="btn btn-dark py-3 px-4"
-                    >
+                      @click="updateservice(serviceName7, duration7, price7)">Update the Service</button>
                   </div>
                 </div>
+
+                  <div class="col-md-12">
+									<div class="form-group">
+                    <h5 v-if="errorUpdateService2" style="color:red; padding-top:20px">Error: {{errorUpdateService2}}</h5> 
+                  </div>
+								  </div>
+
               </div>
             </form>
           </div>
@@ -547,7 +553,7 @@
                         <div class="icon">
                           <span class="fa fa-chevron-down"></span>
                         </div>
-                          <select name="" id="" class="form-control" v-model="username">
+                          <select name="" id="" class="form-control" v-model="username6">
                             <option disabled value="">Please select one</option>
                             <option v-for="customer in customers"
                              
@@ -606,7 +612,7 @@
                       <input
                         type="Date"
                         class="form-control appointment_date"
-                        v-model="datestring"
+                        v-model="datestring2"
                         placeholder="Date"
                       >
                     </div>
@@ -619,7 +625,7 @@
                       <input
                         type="time"
                         class="form-control"
-                        v-model="timestring"
+                        v-model="timestring2"
                         placeholder="New duration in minutes"
                       >
                     </div>
@@ -634,6 +640,7 @@
                       cols="30"
                       rows="7"
                       class="form-control"
+                      v-model="description2"
                       placeholder="Description"
                     ></textarea>
                   </div>
@@ -643,9 +650,16 @@
                     <button 
                       type="button" 
                       class="btn btn-dark py-3 px-4"
-                      @click="updatereminder(username, oldServiceName, newServiceName, datestring, description, timestring)">Update the reminder</button>
+                      @click="updatereminder(oldServiceName, newServiceName,username6, datestring2, description2, timestring2)">Update the reminder</button>
                   </div>
                 </div>
+
+                  <div class="col-md-12">
+									<div class="form-group">
+                    <h5 v-if="errorUpdateReminder" style="color:red; padding-top:20px">Error: {{errorUpdateReminder}}</h5> 
+                  </div>
+								  </div>
+
               </div>
             </form>
           </div>
@@ -668,15 +682,15 @@
                         <div class="icon">
                           <span class="fa fa-chevron-down"></span>
                         </div>
-                        <input type="text" class="form-control" v-model="username4" placeholder="Customer Name">
-                        <!-- <select name="" id="" class="form-control" v-model="username4">
+                        <!-- <input type="text" class="form-control" v-model="username4" placeholder="Customer Name"> -->
+                        <select name="" id="" class="form-control" v-model="username4">
                             <option disabled value="">Please select one</option>
                             <option v-for="customer in customers"
                              
                              :key=customer.username>
                                 {{ customer.username }}
                             </option>
-                          </select> -->
+                          </select>
                       </div>
                     </div>
                   </div>
@@ -706,7 +720,8 @@
                     <div class="form-group">
                       <button 
                       type="button" 
-                      class="btn btn-dark py-3 px-4" 
+                      class="btn btn-dark py-3 px-4"
+                      v-bind:disabled="!serviceName4 || !username4" 
                       v-on:click="deletereminder(username4, serviceName4)">delete the reminder</button>
                     </div>
                   </div> 

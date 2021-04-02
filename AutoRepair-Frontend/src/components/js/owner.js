@@ -1,3 +1,4 @@
+import swal from 'sweetalert';
 import axios from 'axios'
 //import { response } from 'express';
 import JQuery from 'jquery'
@@ -64,39 +65,43 @@ export default {
         addservice(serviceName, duration, price){
             AXIOS.post('/create_service/',$.param({serviceName: serviceName, duration: duration, price:price}))
  			.then(response => {
-                
+                swal("Success", "Service " + serviceName + " Added Successfully", "success");
                 //this.services.push(response.data)
-                this.errorCreateService = 'cr7';
+               // this.errorCreateService = 'cr7';
 
              })
              .catch(e => {
-                 				this.errorCreateService = e.response.data
-                 				console.log(this.errorCreateService)
+                swal("ERROR", e.response.data, "error");  
+                 				// this.errorCreateService = e.response.data
+                 				// console.log(this.errorCreateService)
                  			})
         },
         updateservice(serviceName2, duration2, price2){
                 AXIOS.post('/update_service/',$.param({serviceName: serviceName2, duration: duration2, price:price2}))
                 .then(response => {
-            
+                    swal("Success", "Service " + serviceName2 + " Updated Successfully", "success");
                     //this.services.push(response.data)
-                    this.errorUpdateService = 'cr7';
+                    //this.errorUpdateService = 'cr7';
 
          })
          .catch(e => {
-                    this.errorUpdateService = e.response.data
-                    console.log(this.errorUpdateService)
+            swal("ERROR", e.response.data, "error");  
+                    // this.errorUpdateService = e.response.data
+                    // console.log(this.errorUpdateService)
         })
     },
         deleteservice(serviceName3){
            // this.errorDeleteService= 'testito'
             AXIOS.post('/delete_service/',$.param({serviceName: serviceName3}))
              .then(response => {
+                swal("Success", "Service " + serviceName3 + " Deleted Successfully", "success");
                 //this.services.pop(response.data)
-                this.errorDeleteService = 'cr7';
+                //this.errorDeleteService = 'cr7';
              })
              .catch(e => {
-                this.errorDeleteService = e.response.data
-                console.log(this.errorDeleteService)
+                swal("ERROR", e.response.data, "error"); 
+                // this.errorDeleteService = e.response.data
+                // console.log(this.errorDeleteService)
             })
         }
     }

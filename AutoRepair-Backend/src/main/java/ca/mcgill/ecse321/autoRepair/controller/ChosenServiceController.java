@@ -6,6 +6,8 @@ import ca.mcgill.ecse321.autoRepair.service.ChosenServiceService;
 import ca.mcgill.ecse321.autoRepair.service.ReviewService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,10 +55,16 @@ public class ChosenServiceController {
 	 * @return chosenServiceDTO
 	 */
 	@PostMapping(value = { "/create_service","/create_service/" })
-	public ChosenServiceDTO createChosenService
+	public ResponseEntity<?> createChosenService
 	(@RequestParam String serviceName,@RequestParam int duration,@RequestParam Double price) {
-		ChosenService service = chosenService.createChosenService(serviceName, duration, price);
-		return convertToDTO(service);
+		ChosenService service = null;
+		try {
+		service = chosenService.createChosenService(serviceName, duration, price);
+		}catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(convertToDTO(service), HttpStatus.CREATED);
+		//return convertToDTO(service);
 	}
 
 	/**
@@ -68,10 +76,15 @@ public class ChosenServiceController {
 	 * @return chosenServiceDTO
 	 */
 	@PostMapping(value = { "/update_service","/update_service/" })
-	public ChosenServiceDTO updateChosenService
+	public ResponseEntity<?> updateChosenService
 	(@RequestParam String serviceName,@RequestParam int duration,@RequestParam Double price) {
-		ChosenService service = chosenService.editChosenService(serviceName, duration, price);
-		return convertToDTO(service);
+		ChosenService service = null;
+		try {
+		service = chosenService.editChosenService(serviceName, duration, price);
+		}catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(convertToDTO(service), HttpStatus.OK);
 	}
 
 	/**

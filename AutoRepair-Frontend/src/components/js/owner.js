@@ -43,9 +43,11 @@ export default {
 			holidays: '',
 			errorBusiness: '',
             serviceName: '',
+            serviceName3: '',
             duration: 0,
             price: 0,
             errorCreateService: '',
+            errorUpdateService: '',
             errorDeleteService: '',
             services: [],
             response: [],
@@ -88,7 +90,7 @@ export default {
             AXIOS.post('/create_service/',$.param({serviceName: serviceName, duration: duration, price:price}))
  			.then(response => {
                 
-                this.services.push(response.data)
+                //this.services.push(response.data)
                 this.errorCreateService = 'cr7';
 
              })
@@ -97,22 +99,22 @@ export default {
                  				console.log(this.errorCreateService)
                  			})
         },
-        updateservice(serviceName, duration, price){
-                AXIOS.post('/update_service/',$.param({serviceName: serviceName, duration: duration, price:price}))
+        updateservice(serviceName2, duration2, price2){
+                AXIOS.post('/update_service/',$.param({serviceName: serviceName2, duration: duration2, price:price2}))
                 .then(response => {
             
-                    this.services.push(response.data)
-                    this.errorCreateService = 'cr7';
+                    //this.services.push(response.data)
+                    this.errorUpdateService = 'cr7';
 
          })
          .catch(e => {
-                    this.errorCreateService = e.response.data
-                    console.log(this.errorCreateService)
+                    this.errorUpdateService = e.response.data
+                    console.log(this.errorUpdateService)
         })
     },
-        deleteservice(serviceName){
-            this.errorDeleteService= 'testito'
-            AXIOS.post('/delete_service/',$.param({serviceName: serviceName}))
+        deleteservice(serviceName3){
+           // this.errorDeleteService= 'testito'
+            AXIOS.post('/delete_service/',$.param({serviceName: serviceName3}))
              .then(response => {
                 this.errorDeleteService = 'cr7';
              })

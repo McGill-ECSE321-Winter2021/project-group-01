@@ -141,7 +141,7 @@
 									<div class="form-group">
 			    					<div class="input-wrap">
 			            		<!-- <div class="icon"><span class="fa fa-clock-o"></span></div> -->
-			            		<input type="number" min="0" step="0.01" class="form-control" v-model="price" placeholder="Price">
+			            		<input type="number" min="0" step="0.1" class="form-control" v-model="price" placeholder="Price">
 		            		</div>
 			    				</div>
 								</div>
@@ -183,13 +183,11 @@
                       <div class="form-field">
                         <div class="select-wrap">
                           <div class="icon"><span class="fa fa-chevron-down"></span></div>
-                          <select name="" id="" class="form-control">
-                            <option value="">Select service</option>
-                            <option value="">Change Oil</option>
-                            <option value="">Engine Repair</option>
-                            <option value="">Battery Replace</option>
-                            <option value="">Change Tire</option>
-                            <option value="">Tow Truck</option>
+                           <select name="" id="" class="form-control" v-model="serviceName2">
+                            <option disabled value="">Please select one</option>
+                            <option v-for="service in services" :key=service.serviceName>
+                                {{ service.name }}
+                          </option>
                           </select>
                         </div>
                       </div>
@@ -201,7 +199,7 @@
                       <div class="input-wrap">
                         <!-- <div class="icon"><span class="fa fa-calendar"></span></div> -->
                       <!--	<input type="text" class="form-control appointment_date" placeholder="Date"> -->
-                        <input type="number" min="0" class="form-control" placeholder="New duration in minutes">
+                        <input type="number" min="0" class="form-control" v-model="duration2" placeholder="New duration in minutes">
                       </div>
                     </div>
                   </div>
@@ -209,16 +207,25 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <div class="input-wrap">
-                        <input type="number" min="0" step="0.01" class="form-control" placeholder="New price">
+                        <input type="number" min="0" step="0.1" class="form-control" v-model="price2" placeholder="New price">
                       </div>
                     </div>
                   </div>
                   
-                  <div class="col-md-12">
+                  <!-- <div class="col-md-12">
                     <div class="form-group">
                       <input type="submit" value="Update the Service" class="btn btn-dark py-3 px-4">
                     </div>
+                  </div> -->
+
+                  <div class="col-md-12">
+									<div class="form-group">
+                    <button 
+                      type="button" 
+                      class="btn btn-dark py-3 px-4"
+                      @click="updateservice(serviceName2, duration2, price2)">Update the Service</button>
                   </div>
+								</div>
 
                   <div class="col-md-12">
 									<div class="form-group">
@@ -246,14 +253,17 @@
                       <div class="form-field">
                         <div class="select-wrap">
                           <div class="icon"><span class="fa fa-chevron-down"></span></div>
-                          <select name="" id="" class="form-control" v-model="serviceName">
+                          <select name="" id="" class="form-control" v-model="serviceName3">
                             <option disabled value="">Please select one</option>
-                            <option v-for="service in services" :key=service.serviceName>
+                            <option v-for="service in services"
+                             
+                             :key=service.serviceName>
                                 {{ service.name }}
                           </option>
                           </select>
 
-                  
+                   <!-- v-bind:value="{ name:service.name }" -->
+               
 
                           <!-- <select name="" id="" class="form-control">
                             <option value="">Select service</option>
@@ -268,20 +278,22 @@
                     </div>
                   </div>
               
-                  <div class="col-md-12">
+                  <!-- <div class="col-md-12">
                     <div class="form-group">
                       <h2> {{errorDeleteService}} </h2>
 
                     </div>
-                  </div>
+                  </div> -->
+
+ <!-- v-bind:disabled="!serviceName3" -->
 
                   <div class="col-md-12">
                     <div class="form-group">
                       <button 
                       type="button" 
                       class="btn btn-dark py-3 px-4"
-                      v-bind:disabled="!serviceName"
-                      @click="deleteservice(serviceName)">Delete the Service</button>
+                      v-bind:disabled="!serviceName3"
+                      @click="deleteservice(serviceName3)">Delete the Service</button>
                       <!-- <input type="submit" value="Delete the Service" class="btn btn-dark py-3 px-4"> -->
                     </div>
                   </div>

@@ -73,7 +73,7 @@
                 <strong class="number" data-number="45">4</strong>
               </div>
               <div class="text">
-              	<span>Years of Experienced</span>
+              	<span>Years of Experience</span>
               </div>
             </div>
           </div>

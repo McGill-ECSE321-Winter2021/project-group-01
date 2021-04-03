@@ -65,6 +65,10 @@ export default {
                 .then(response => {
                     this.errorAssistantSignup=''
                     if(response.status===201){
+                        this.username=''
+                        this.password=''
+                        this.confirmPassword=''
+                        this.authentificationCode=''
                         swal("Success", "Assistant " + username + 
                         " created Successfully, Please Login Below",
                         "success");  

@@ -48,10 +48,12 @@ export default {
 				this.user = response.data
 				if (response.status===200) {
 					this.type = this.user.userType
-					 localStorage.setItem('loggedIn', 'User')
-           this.$cookie.set('username', this.response['username'], { expires: '1h'})
-
+					localStorage.setItem('loggedIn', this.type)
+                    document.cookie = "username=John Doe";
+					console.log(document.cookie)
+					
 					if(this.type.localeCompare("customer")==0){
+						
 						window.location.href = "/customer"
 					}
 					else if(this.type.localeCompare("assistant")==0){
@@ -60,14 +62,14 @@ export default {
 					else {
 						window.location.href = "/owner"
 					}
-
+					
 				}
 			})
 			.catch(e => {
-
-				this.errorLogin = e.response.data
+				
+				this.errorLogin = e
 				console.log(this.errorLogin)
-
+				
 			})
 		}
 	}

@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,16 +50,20 @@ public class CarController {
 	 * @return customerDTO
 	 */
 	@PostMapping(value = {"/add_car/{username}"})
-	public CustomerDTO addCar (@PathVariable("username") String username, @RequestParam String model, 
+	public ResponseEntity<?> addCar (@PathVariable("username") String username, @RequestParam String model, 
 			@RequestParam String plateNumber, @RequestParam String carTransmission) {
 
 		CarTransmission transmission = null;
 		if(carTransmission.equals("Automatic")) transmission = CarTransmission.Automatic;
 		else if(carTransmission.equals("Manual")) transmission = CarTransmission.Manual;
-		else throw new IllegalArgumentException("Invalid car transmission");
-		Car car = carService.createCar(plateNumber, model, transmission);
-		carService.addCar(username, car);
-		return convertToDTO(customerService.getCustomer(username));
+		else return new ResponseEntity<>("Invalid car transmission", HttpStatus.INTERNAL_SERVER_ERROR);
+		try {
+			Car car = carService.createCar(plateNumber, model, transmission);
+			carService.addCar(username, car);
+		}catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(convertToDTO(customerService.getCustomer(username)), HttpStatus.CREATED);
 	}
 
 	/**
@@ -66,10 +73,15 @@ public class CarController {
 	 * @param plateNumber
 	 * @return customerDTO
 	 */
-	@PostMapping(value = {"/remove_car/{username}"})
-	public CustomerDTO removeCar(@PathVariable("username") String username, @RequestParam String plateNumber) {
-		carService.removeCar(username, plateNumber);
-		return convertToDTO(customerService.getCustomer(username));
+	@DeleteMapping(value = {"/remove_car/{username}"})
+	public ResponseEntity<?> removeCar(@PathVariable("username") String username, @RequestParam String plateNumber) {
+		try {
+			carService.removeCar(username, plateNumber);
+		}catch (IllegalArgumentException e){
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
+		return new ResponseEntity<>(convertToDTO(customerService.getCustomer(username)), HttpStatus.OK);
 	}
 
 	/**

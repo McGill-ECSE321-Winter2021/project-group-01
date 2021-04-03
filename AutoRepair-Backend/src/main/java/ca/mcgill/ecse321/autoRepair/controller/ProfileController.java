@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,11 +44,18 @@ public class ProfileController {
 	 * @param zipCode
 	 * @return customerDTO
 	 */
-	@PostMapping(value = {"/edit_profile/{username}"})
-	public CustomerDTO editProfile (@PathVariable("username") String username, @RequestParam String firstName, @RequestParam String lastName, @RequestParam String phoneNumber,
+	@PatchMapping(value = {"/edit_profile/{username}"})
+	public ResponseEntity<?> editProfile (@PathVariable("username") String username, @RequestParam String firstName, @RequestParam String lastName, @RequestParam String phoneNumber,
 			@RequestParam String email, @RequestParam String address, @RequestParam String zipCode) {
 
-		return convertToDTO(profileService.updateProfile(username, firstName, lastName, address, zipCode, phoneNumber, email));
+		Customer customer = null;
+		try {
+			customer=profileService.updateProfile(username, firstName, lastName, address, zipCode, phoneNumber, email);
+		}catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<>(convertToDTO(customer), HttpStatus.OK);
 	}
 	
 	/**

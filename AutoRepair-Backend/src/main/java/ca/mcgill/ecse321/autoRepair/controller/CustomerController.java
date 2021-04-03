@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -104,7 +106,7 @@ public class CustomerController {
 	 * @param username
 	 * @return true if customer is successfully deleted
 	 */
-	@PostMapping(value = {"/delete_customer/{username}"})
+	@DeleteMapping(value = {"/delete_customer/{username}"})
 	public boolean deleteCustomer(@PathVariable("username") String username) {
 		return customerService.deleteCustomer(username);
 	}
@@ -140,9 +142,24 @@ public class CustomerController {
 	 * @param password
 	 * @return customerDTO
 	 */
-	@PostMapping(value = {"/change_password/{username}"})
-	public CustomerDTO changePassword(@PathVariable("username") String username, @RequestParam String password) {
-		return convertToDTO(customerService.editCustomerPassword(username, password));
+	@PatchMapping(value = {"/change_password/{username}"})
+	public ResponseEntity<?> changePassword(@PathVariable("username") String username,@RequestParam String oldPassword, @RequestParam String newPassword) {
+		Customer customer = customerService.getCustomer(username);
+		if(customer==null) {
+			return new ResponseEntity<>("Customer not found", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		if(!oldPassword.equals(customer.getPassword())) {
+			return new ResponseEntity<>("Current password entered is incorrect", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		try {
+			customer=customerService.editCustomerPassword(username, newPassword);
+		}catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<>(convertToDTO(customer), HttpStatus.OK);
 	}
 
 	private CustomerDTO convertToDTO(Customer customer) {

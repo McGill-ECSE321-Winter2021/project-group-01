@@ -1,55 +1,6 @@
   <template>
   <div id="appointment">
-    <nav
-      class="navbar navbar-expand-lg navbar-light ftco_navbar bg-light ftco-navbar-light"
-      id="ftco-navbar"
-    >
-      <div class="container">
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#ftco-nav"
-          aria-controls="ftco-nav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="fa fa-bars"></span> Menu
-        </button>
-        <form action="#" class="searchform order-lg-last">
-          <div class="form-group d-flex">
-            <input type="text" class="form-control pl-3" placeholder="Search" />
-            <button type="submit" placeholder="" class="form-control search">
-              <span class="fa fa-search"></span>
-            </button>
-          </div>
-        </form>
-        <div class="collapse navbar-collapse" id="ftco-nav">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <router-link class="nav-link" to="/">Home</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/services"
-                >Services</router-link
-              >
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/appointments"
-                >Appointments</router-link
-              >
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/account">Account</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/logout">Logout</router-link>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
+    
     <section
       class="ftco-section"
       style="
@@ -195,7 +146,7 @@
                         name="selectedAppointment"
                         id=""
                         class="form-control"
-                        v-model="selected"
+                        v-model="selectedUpdate"
                       >
                         <option value="">Select An Appointment</option>
                         <option v-for="appointment in appointments"
@@ -268,9 +219,9 @@
                     class="btn btn-dark py-3 px-4"
                     @click="
                       updateAppointment(
-                        selected.serviceName,
-                        selected.appointmentDate,
-                        selected.appointmentTime,
+                        selectedUpdate.serviceName,
+                        selectedUpdate.appointmentDate,
+                        selectedUpdate.appointmentTime,
                         newAppointmentTime.toString(),
                         newAppointmentDate.toString(),
                         newServiceName
@@ -326,7 +277,7 @@
                         name="selectedAppointment"
                         id=""
                         class="form-control"
-                        v-model="selected"
+                        v-model="selectedCancel"
                       >
                         <option value="">Select An Appointment</option>
                         <option
@@ -348,7 +299,7 @@
                   <button
                     type="button"
                     class="btn btn-dark py-3 px-4"
-                    @click="cancelAppointment(selected.serviceName, selected.appointmentDate, selected.appointmentTime)"
+                    @click="cancelAppointment(selectedCancel.serviceName, selectedCancel.appointmentDate, selectedCancel.appointmentTime)"
                   >
                     Cancel
                   </button>

@@ -1,38 +1,6 @@
 <template>
   <div id="hello">
-    <nav class="navbar navbar-expand-lg navbar-light ftco_navbar bg-light ftco-navbar-light" id="ftco-navbar">
-        <div class="container">
-
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="fa fa-bars"></span> Menu
-          </button>
-          <form action="#" class="searchform order-lg-last">
-            <div class="form-group d-flex">
-              <input type="text" class="form-control pl-3" placeholder="Search">
-              <button type="submit" placeholder="" class="form-control search"><span class="fa fa-search"></span></button>
-            </div>
-          </form>
-          <div class="collapse navbar-collapse" id="ftco-nav">
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item active">
-                <router-link class="nav-link" to="/">Home</router-link></li>
-              <li class="nav-item">
-                <router-link class="nav-link" to="/owner">Owner</router-link></li>
-              <li class="nav-item">
-                <router-link class="nav-link" to="/account">Account</router-link></li>
-              <li class="nav-item">
-				<router-link class="nav-link" to="/assistant">Assistant</router-link></li>
-              <li class="nav-item">
-                <router-link class="nav-link" to="/login">Login</router-link></li>
-              <li class="nav-item">
-				<router-link class="nav-link" to="/customer">Customer</router-link></li>
-			  <li class="nav-item">
-				<router-link class="nav-link" to="/review">Review</router-link></li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-      <!-- END nav -->
+    
     <div class="hero-wrap">
 	    <div class="hero-image">
 	      <div class="item" style="height:600px; width: 100%; background-size:cover; background-image:url(../static/images/work-4.jpg);" >
@@ -62,7 +30,7 @@
 		<br>
 		<br>
 
-    <section class="service">
+   <section class="service">
     	<div class="container">
     		<div class="row justify-content-center pb-5 mb-3">
           <div class="col-md-7 heading-section text-center">
@@ -71,77 +39,28 @@
           </div>
         </div>
     		<div class="row">
-          <div class="col-md-4 services">
-            <div class="d-block d-flex">
+          <div class="col-md-4 services" v-for="service in services" :key=service.serviceName>
+            <div class="d-block d-flex" >
+              
               <div class="icon d-flex justify-content-center align-items-center">
-            		<span class="flaticon-car-service"></span>
+                <span class="flaticon-repair"></span>
               </div>
-              <div class="media-body pl-3">
-                <h3 class="heading">Oil change</h3>
-                <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
-                <p><a href="#" class="btn-custom">Read more</a></p>
-              </div>
-            </div>
-            <div class="d-block d-flex">
-              <div class="icon d-flex justify-content-center align-items-center">
-            		<span class="flaticon-tyre"></span>
-              </div>
-              <div class="media-body pl-3">
-                <h3 class="heading">Tire Change</h3>
-                <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
-                <p><a href="#" class="btn-custom">Read more</a></p>
-              </div>
-            </div>
 
-          </div>
-          <div class="col-md-4 services">
-            <div class="d-block d-flex">
-              <div class="icon d-flex justify-content-center align-items-center">
-            		<span class="flaticon-battery"></span>
-              </div>
-              <div class="media-body pl-3">
-                <h3 class="heading">Batteries</h3>
-                <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
-                <p><a href="#" class="btn-custom">Read more</a></p>
-              </div>
-            </div>
-            <div class="d-block d-flex">
-              <div class="icon d-flex justify-content-center align-items-center">
-            		<span class="flaticon-car-engine"></span>
-              </div>
-              <div class="media-body pl-3">
-                <h3 class="heading">Engine Repair</h3>
-                <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
-                <p><a href="#" class="btn-custom">Read more</a></p>
-              </div>
-            </div>
-          </div>
+              <div class="media-body pl-3" >
 
-          <div class="col-md-4 services">
-            <div class="d-block d-flex">
-              <div class="icon d-flex justify-content-center align-items-center">
-            		<span class="flaticon-tow-truck"></span>
-              </div>
-              <div class="media-body pl-3">
-                <h3 class="heading">Tow Truck</h3>
-                <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
-                <p><a href="#" class="btn-custom">Read more</a></p>
-              </div>
-            </div>
-            <div class="d-block d-flex">
-              <div class="icon d-flex justify-content-center align-items-center">
-            		<span class="flaticon-repair"></span>
-              </div>
-              <div class="media-body pl-3">
-                <h3 class="heading">Car Maintenance</h3>
-                <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
-                <p><a href="#" class="btn-custom">Read more</a></p>
+                <h3 class="heading">{{service.name}}</h3>
+                <p>Duration: {{service.duration}} minutes</p>
+                <p>Price: {{service.price}} $</p>
+                <p v-if="service.rating === -1.0" > Rating: N/A </p>
+                <p v-else> Rating: {{service.rating}} </p>
+                <!-- <p><a href="#" class="btn-custom">Read more</a></p> -->
               </div>
             </div>
           </div>
         </div>
     	</div>
     </section>
+
 
 
 
@@ -195,86 +114,48 @@
     <section class="ftco-section testimony-section bg-light">
       <div class="container">
         <div class="row justify-content-center pb-5 mb-3">
-          <div class="col-md-7 heading-section heading-section-white text-center">
-          	<span class="subheading">Testimonies</span>
-            <h2>Happy Clients &amp; Feedbacks</h2>
+          <div
+            class="col-md-7 heading-section heading-section-white text-center"
+          >
+            <span class="subheading">Client Feedbacks</span>
+            <h2>Reviews</h2>
           </div>
         </div>
         <div class="row">
           <div class="col-md-12">
             <div class="carousel-testimony">
-              <div class="item">
+              <div class="item" v-for="review in reviews" :key="review.id">
                 <div class="testimony-wrap py-4">
-                	<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></span></div>
-                  <div class="text">
-                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <div class="d-flex align-items-center">
-                    	<div class="user-img" style="background-image: url(../static/images/person_1.jpg)"></div>
-                    	<div class="pl-3">
-		                    <p class="name">Roger Scott</p>
-		                    <span class="position">Marketing Manager</span>
-		                  </div>
-	                  </div>
+                  <div
+                    class="icon d-flex align-items-center justify-content-center"
+                  >
+                    <span class="fa fa-quote-left"></span>
                   </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="testimony-wrap py-4">
-                	<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></span></div>
                   <div class="text">
-                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                    <p class="mb-4">{{ review.description }}</p>
                     <div class="d-flex align-items-center">
-                    	<div class="user-img" style="background-image: url(../static/images/person_2.jpg)"></div>
-                    	<div class="pl-3">
-		                    <p class="name">Roger Scott</p>
-		                    <span class="position">Marketing Manager</span>
-		                  </div>
-	                  </div>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="testimony-wrap py-4">
-                	<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></span></div>
-                  <div class="text">
-                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <div class="d-flex align-items-center">
-                    	<div class="user-img" style="background-image: url(../static/images/person_3.jpg)"></div>
-                    	<div class="pl-3">
-		                    <p class="name">Roger Scott</p>
-		                    <span class="position">Marketing Manager</span>
-		                  </div>
-	                  </div>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="testimony-wrap py-4">
-                	<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></span></div>
-                  <div class="text">
-                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <div class="d-flex align-items-center">
-                    	<div class="user-img" style="background-image: url(../static/images/person_1.jpg)"></div>
-                    	<div class="pl-3">
-		                    <p class="name">Roger Scott</p>
-		                    <span class="position">Marketing Manager</span>
-		                  </div>
-	                  </div>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="testimony-wrap py-4">
-                	<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></span></div>
-                  <div class="text">
-                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <div class="d-flex align-items-center">
-                    	<div class="user-img" style="background-image: url(../static/images/person_2.jpg)"></div>
-                    	<div class="pl-3">
-		                    <p class="name">Roger Scott</p>
-		                    <span class="position">Marketing Manager</span>
-		                  </div>
-	                  </div>
+                      <div
+                        class="user-img"
+                        style="
+                          background-image: url(../static/images/person_1.jpg);
+                        "
+                      ></div>
+                      <div class="pl-3">
+                        <p class="name">{{ review.service.name }}</p>
+                        <span class="position"
+                          >{{ review.customer.profile.firstName }}
+                          {{ review.customer.profile.lastName }}</span
+                        >
+                        <br />
+                        <span class="position"
+                          >Rating: {{ review.serviceRating }}</span
+                        >
+                        <br />
+                        <span class="position">{{
+                          review.appointment.timeSlot.startDate
+                        }}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -425,34 +306,4 @@
 </template>
 
 
-<script>
-export default {
-  name: 'hello',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
-  }
-}
-</script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
-</style>
+<script src="./js/Hello.js"></script>

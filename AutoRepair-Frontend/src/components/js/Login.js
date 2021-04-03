@@ -47,28 +47,28 @@ export default {
 			.then(response => {
 				this.user = response.data
 				if (response.status===200) {
+					
 					this.type = this.user.userType
-					localStorage.setItem('loggedIn', this.type)
-                    document.cookie = "username=John Doe";
-					console.log(document.cookie)
+					window.localStorage.setItem('username', this.user.username)
+					window.localStorage.setItem('type', this.type)
 					
 					if(this.type.localeCompare("customer")==0){
 						
-						window.location.href = "/customer"
+						window.location.href = "/#/customer"
 					}
 					else if(this.type.localeCompare("assistant")==0){
-						window.location.href = "/assistant"
+						window.location.href = "/#/assistant"
 					}
 					else {
-						window.location.href = "/owner"
-					}
-					
+						window.location.href = "/#/owner"
+					} 
+
+					location.reload();
 				}
 			})
 			.catch(e => {
 				
-				this.errorLogin = e
-				console.log(this.errorLogin)
+				swal("ERROR", e.response.data, "error");
 				
 			})
 		}

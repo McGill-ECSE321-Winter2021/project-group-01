@@ -1,54 +1,6 @@
 <template>
   <div id="customer">
-    <nav
-      class="navbar navbar-expand-lg navbar-light ftco_navbar bg-light ftco-navbar-light"
-      id="ftco-navbar"
-    >
-      <div class="container">
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#ftco-nav"
-          aria-controls="ftco-nav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="fa fa-bars"></span> Menu
-        </button>
-        <form action="#" class="searchform order-lg-last">
-          <div class="form-group d-flex">
-            <input type="text" class="form-control pl-3" placeholder="Search" />
-            <button type="submit" placeholder="" class="form-control search">
-              <span class="fa fa-search"></span>
-            </button>
-          </div>
-        </form>
-        <div class="collapse navbar-collapse" id="ftco-nav">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <router-link class="nav-link" to="/">Home</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/services"
-                >Services</router-link
-              >
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/appointments"
-                >Appointments</router-link
-              >
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/account">Account</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/logout">Logout</router-link>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    
     <section
       class="ftco-appointment ftco-section ftco-no-pt ftco-no-pb img"
       style="background-image: url(../static/images/image_4.jpg)"
@@ -222,7 +174,7 @@
                           class="form-control"
                           v-model="editReviewRating"
                         >
-                          <option value="">Select a Rating</option>
+                          <option value="">Select a New Rating</option>
                           <option value="0">0</option>
                           <option value="1">1</option>
                           <option value="2">2</option>
@@ -243,7 +195,7 @@
                       cols="30"
                       rows="7"
                       class="form-control"
-                      placeholder="Provide a description"
+                      placeholder="Provide a new description"
                       v-model="descriptionEdit"
                     ></textarea>
                   </div>
@@ -356,8 +308,8 @@
           <div
             class="col-md-7 heading-section heading-section-white text-center"
           >
-            <span class="subheading">Testimonies</span>
-            <h2>Happy Clients &amp; Feedbacks</h2>
+            <span class="subheading">Client Feedbacks</span>
+            <h2>Reviews</h2>
           </div>
         </div>
         <div class="row">

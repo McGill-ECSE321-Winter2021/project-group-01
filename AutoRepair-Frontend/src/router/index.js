@@ -5,11 +5,13 @@ import Login from '@/components/Login'
 import Owner from '@/components/Owner'
 import Assistant from '@/components/Assistant'
 import Customer from '@/components/Customer'
-import Services from '@/components/Services'
 import Signup from '@/components/Signup'
+import OwnerSignUp from '@/components/OwnerSignUp'
+import AssistantSignUp from '@/components/AssistantSignUp'
 import Appointment from '@/components/Appointment'
 import Account from '@/components/Account'
 import Review from '@/components/Review'
+import AssistantManagement from '@/components/AssistantManagement'
 
 
 Vue.use(Router)
@@ -19,7 +21,7 @@ export default new Router({
       path: '/',
       name: 'Hello',
       component: Hello
-    },
+    }, 
     {
       path: '/login',
       name: 'Login',
@@ -41,14 +43,19 @@ export default new Router({
       component: Customer
     },
     {
-      path: '/services',
-      name: 'Services',
-      component: Services
-    },
-    {
       path: '/signup',
       name: 'Signup',
       component: Signup
+    },
+    {
+      path: '/ownersignup',
+      name: 'OwnerSignup',
+      component: OwnerSignUp
+    },
+    {
+      path: '/assistantsignup',
+      name: 'AssistantSignup',
+      component: AssistantSignUp
     },
     {
       path: '/appointments',
@@ -60,11 +67,16 @@ export default new Router({
       name: 'Account',
       component: Account
     },
-
     {
       path: '/review',
       name: 'Review',
       component: Review
+    },
+    {
+      path: '/assistantmanagement',
+      name: 'AssistantManagement',
+      component: AssistantManagement
     }
+
   ]   
 })

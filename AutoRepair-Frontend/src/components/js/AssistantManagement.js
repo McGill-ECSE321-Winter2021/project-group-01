@@ -47,9 +47,11 @@ export default {
       errorAddOpHours: '',
       errorEditOpHours: '',
       errorDeleteOpHours: '',
+      selected: '',
+      selected2:'',
 
       username: '',
-      username4: '',
+      //username4: '',
       username5: '',
       serviceName: '',
       serviceName4: '',
@@ -63,10 +65,13 @@ export default {
       timestring2: '',
       description2: '',
       errorUpdateService2: '',
+      datestring10: '',
+      timestring10: '',
+      description10: '',
 
       serviceName7: '',
-      duration7: 0,
-      price7: 0,
+      duration7: '',
+      price7: '',
 
       errorCreateReminder: '',
       errorUpdateReminder: '',
@@ -75,7 +80,8 @@ export default {
       services: [],
       response: [],
       customers: [],
-      errorCustomer: ''
+      errorCustomer: '',
+      errorReminder: ''
     }
   },
   created: function () {
@@ -96,6 +102,15 @@ export default {
       })
       .catch(e => {
         this.errorCustomer = e
+      })
+
+    AXIOS.get('/view_reminders')
+      .then(response => {
+        // JSON responses are automatically parsed.
+        this.reminders = response.data
+      })
+      .catch(e => {
+        this.errorReminder = e
       })
   },
 

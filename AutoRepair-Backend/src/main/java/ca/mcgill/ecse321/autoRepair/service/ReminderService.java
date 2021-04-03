@@ -177,17 +177,6 @@ public class ReminderService {
        
 					Reminder reminder = getReminder(oldCustomer,oldChosenService);
 					
-//					Date oldDate = reminder.getDate();
-//					LocalDate localOldDate = oldDate.toLocalDate();
-//					Time oldTime = reminder.getTime();
-//					LocalTime localOldTime = oldTime.toLocalTime();
-					
-//					if(localOldDate.isBefore(newDate.toLocalDate()))
-//						throw new IllegalArgumentException("Reminder already sent, cannot be modified");
-//					
-//					if(localOldDate.isEqual(newDate.toLocalDate()) && newTime.toLocalTime().isAfter(localOldTime))
-//						throw new IllegalArgumentException("Reminder already sent today, cannot be modified");
-//					
 					reminder.setChosenService(newChosenService);
 					reminder.setCustomer(oldCustomer);
 					reminder.setDate(newDate);

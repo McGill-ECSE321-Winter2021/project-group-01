@@ -37,8 +37,13 @@ public class ReminderController {
 	CustomerService cusService;
 	@Autowired
 	ChosenServiceService csService;
-	
 
+	/**
+	 * @author Robert Aprahamian
+	 * Gets all reminders associated with a given customer
+	 * @param username
+	 * @return list of reminder DTO
+	 */
 	@GetMapping(value = { "/view_reminders_for_customer","/view_reminders_for_customer/" })
 	public ResponseEntity<?> getAllRemindersForCustomer(@RequestParam String username) {
 		try {
@@ -61,7 +66,6 @@ public class ReminderController {
 	/**
 	 * @author Robert Aprahamian
 	 * Gets all reminders associated with a given customer
-	 * @param username
 	 * @return list of reminder DTO
 	 */
 	@GetMapping(value = { "/view_reminders","/view_reminders/" })
@@ -131,7 +135,7 @@ public class ReminderController {
 	 * @param timestring
 	 * @return reminderDTO
 	 */
-	@PostMapping(value = { "/update_reminder","/update_reminder/" })
+	@PatchMapping(value = { "/update_reminder","/update_reminder/" })
 	public ResponseEntity<?> updateReminder
 	(@RequestParam String username,@RequestParam String oldServiceName, @RequestParam String newServiceName ,@RequestParam String datestring,@RequestParam String description, @RequestParam String timestring ) {
 		if(username == "")  return new ResponseEntity<>("The customer name cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -160,7 +164,7 @@ public class ReminderController {
 	 * @param serviceName
 	 * @return true if reminder is successfully deleted
 	 */
-	@PostMapping(value = { "/delete_reminder","/delete_reminder/" })
+	@DeleteMapping(value = { "/delete_reminder","/delete_reminder/" })
 	public ResponseEntity<?> deleteReminder
 	(@RequestParam String username,@RequestParam String serviceName) {	
 		if(username == "")  return new ResponseEntity<>("The customer name cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);

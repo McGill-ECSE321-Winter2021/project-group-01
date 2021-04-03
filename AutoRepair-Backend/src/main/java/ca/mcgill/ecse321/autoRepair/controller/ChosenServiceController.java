@@ -49,7 +49,6 @@ public class ChosenServiceController {
 	/**
 	 * @author Robert Aprahamian
 	 * Creates a chosen service
-	 * @param name
 	 * @param duration
 	 * @param price
 	 * @return chosenServiceDTO
@@ -75,12 +74,11 @@ public class ChosenServiceController {
 	/**
 	 * @author Robert Aprahamian
 	 * Updates a chosen service
-	 * @param name
 	 * @param duration
 	 * @param price
 	 * @return chosenServiceDTO
 	 */
-	@PostMapping(value = { "/update_service","/update_service/" })
+	@PatchMapping(value = { "/update_service","/update_service/" })
 	public ResponseEntity<?> updateChosenService
 	(@RequestParam String serviceName,@RequestParam String duration,@RequestParam String price) {
 		if(serviceName == "")  return new ResponseEntity<>("The service name cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -100,10 +98,9 @@ public class ChosenServiceController {
 	/**
 	 * @author Robert Aprahamian
 	 * Deletes a chosen service given a service name
-	 * @param name
 	 * @return true if chosen service is successfully deleted
 	 */
-	@PostMapping(value = { "/delete_service","/delete_service/" })
+	@DeleteMapping(value = { "/delete_service","/delete_service/" })
 	public ResponseEntity<?> deleteChosenService
 	(@RequestParam String serviceName) {
 		if(serviceName == "")  return new ResponseEntity<>("The service name cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);

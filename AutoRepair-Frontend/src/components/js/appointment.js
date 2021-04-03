@@ -92,6 +92,7 @@ export default {
       }})
         			.then(response => {
         				this.appointment = response.data
+        				this.appointments.sort((a, b) => ((a.timeSlot.startDate + a.timeSlot.startTime) > (b.timeSlot.startDate + b.timeSlot.startTime)) ? 1 : -1)
         				swal("Success", "You updated your appointment on " + appointmentDate + " at " + appointmentTime +" for " + serviceName
         				+" to " + newAppointmentDate + " at " + newAppointmentTime +" for " + newServiceName, "success");
         				serviceName=''

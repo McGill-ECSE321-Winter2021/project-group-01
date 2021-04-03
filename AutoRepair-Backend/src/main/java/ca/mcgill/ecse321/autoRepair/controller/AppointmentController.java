@@ -312,7 +312,7 @@ public class AppointmentController {
 	 * @author Tamara Zard Aboujaoudeh
 	 * Gets a list of all the upcoming appointments for a specific customer
 	 * @param username
-	 * @return list of all the upcoming appointments for a specific customer
+	 * @return list of all the past appointments for a specific customer
 	 */
 	@GetMapping(value = {"/past_appointmentsOf/"})
 	public ResponseEntity<?> getPastAppointmentsOfCustomer(@RequestParam("username") String username) {
@@ -367,15 +367,6 @@ public class AppointmentController {
 			unavailableTimeSlots.add(convertToDTO(timeSlot));
 		}
 		return new ResponseEntity<>(unavailableTimeSlots, HttpStatus.OK);
-	}
-	private List<AppointmentDTO> createAppointmentDtosForCustomer(String username) {
-		Customer customer = customerService.getCustomer(username);
-		List<Appointment> appointmentsForCustomer = appointmentService.getAppointmentsOfCustomer(customer);
-		List<AppointmentDTO> appointments = new ArrayList<>();
-		for (Appointment appointment : appointmentsForCustomer) {
-			appointments.add(convertToDTO(appointment));
-		}
-		return appointments;
 	}
 
 	private AppointmentDTO convertToDTO(Appointment appointment){

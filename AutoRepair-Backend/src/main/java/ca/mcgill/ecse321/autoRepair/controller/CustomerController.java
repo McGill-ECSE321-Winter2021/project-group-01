@@ -139,7 +139,8 @@ public class CustomerController {
 	 * @author Eric Chehata
 	 * Edits the password of a customer
 	 * @param username
-	 * @param password
+	 * @param oldPassword
+	 * @param newPassword
 	 * @return customerDTO
 	 */
 	@PatchMapping(value = {"/change_password/{username}"})

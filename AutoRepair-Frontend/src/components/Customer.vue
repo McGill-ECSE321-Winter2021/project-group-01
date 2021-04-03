@@ -1,6 +1,6 @@
 <template>
   <div id="hello">
-    
+
     <div class="hero-wrap">
 	    <div class="hero-image">
 	      <div class="item" style="height:600px; width: 100%; background-size:cover; background-image:url(../static/images/work-4.jpg);" >
@@ -21,7 +21,7 @@
 							</div>
 							<h2 class="mb-0">Are you ready? <span>Let's repair it now!</span></h2>
 						</div>
-						<a href="#/login" class="bg-primary btn-custom d-flex align-items-center"><span>Book an Appointment</span></a>
+						<a href="#/appointments" class="bg-primary btn-custom d-flex align-items-center"><span>Book an Appointment</span></a>
 					</div>
 				</div>
 			</div>
@@ -29,6 +29,44 @@
 		<br>
 		<br>
 		<br>
+
+		<section class="ftco-section testimony-section bg-light">
+      <div class="container">
+        <div class="row justify-content-center pb-5 mb-3">
+          <div
+            class="col-md-7 heading-section heading-section-white text-center"
+          >
+            <h2>Reminders</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="carousel-testimony">
+              <div class="item" v-for="reminder in reminders" :key="reminder.id">
+                <div class="testimony-wrap py-4">
+                  <div
+                    class="icon d-flex align-items-center justify-content-center"
+                  >
+                    <span class="fa fa-bell"></span>
+                  </div>
+                  <div class="text">
+
+                    <div class="d-flex align-items-center">
+                      <div class="pl-3">
+                        <p class="name">{{ reminder.chosenService.name }}</p>
+                        <p class="mb-4">{{ reminder.description }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
 
    <section class="service">
     	<div class="container">
@@ -41,7 +79,7 @@
     		<div class="row">
           <div class="col-md-4 services" v-for="service in services" :key=service.serviceName>
             <div class="d-block d-flex" >
-              
+
               <div class="icon d-flex justify-content-center align-items-center">
                 <span class="flaticon-repair"></span>
               </div>

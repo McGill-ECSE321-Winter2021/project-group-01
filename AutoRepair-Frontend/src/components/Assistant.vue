@@ -1,6 +1,6 @@
 <template>
   <div id="hello">
-    
+
     <div class="hero-wrap">
 	    <div class="hero-image">
 	      <div class="item" style="height:600px; width: 100%; background-size:cover; background-image:url(../static/images/work-4.jpg);" >
@@ -10,22 +10,6 @@
 	  </div>
 
 
-
-		<section class="intro">
-			<div class="container intro-wrap">
-				<div class="row no-gutters">
-					<div class="col-md-12 col-lg-9 bg-intro d-sm-flex align-items-center align-items-stretch">
-						<div class="intro-box d-flex align-items-center">
-							<div class="icon d-flex align-items-center justify-content-center">
-								<i class="flaticon-repair"></i>
-							</div>
-							<h2 class="mb-0">Are you ready? <span>Let's repair it now!</span></h2>
-						</div>
-						<a href="#/login" class="bg-primary btn-custom d-flex align-items-center"><span>Book an Appointment</span></a>
-					</div>
-				</div>
-			</div>
-		</section>
 		<br>
 		<br>
 		<br>
@@ -41,7 +25,7 @@
     		<div class="row">
           <div class="col-md-4 services" v-for="service in services" :key=service.serviceName>
             <div class="d-block d-flex" >
-              
+
               <div class="icon d-flex justify-content-center align-items-center">
                 <span class="flaticon-repair"></span>
               </div>

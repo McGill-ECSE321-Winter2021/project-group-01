@@ -838,32 +838,7 @@ public class ReminderServiceTests {
 	
 	}
 
-	@Test
-	public void testEditReminderLateDate() {
-		assertEquals(0, reminderService.getAllReminders().size()); 
-		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
-		
-		String customerName = CUSTOMER_USERNAME;
-		String oldServiceName = CSName;
-		String chosenServiceName = CSName2;
-	    String newDescription = "Hi";
-		Date dBefore = Date.valueOf("2021-12-14");
-		Time tBefore = Time.valueOf("08:00:00");
-	    
-		Reminder r = null;
-		String error = null;
-
-		try {
-			r = reminderService.editReminder(oldServiceName, chosenServiceName, customerName, dBefore, newDescription, tBefore);
-		}catch (IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-		
-		assertNull(r);
-		assertEquals("Reminder already sent, cannot be modified",error);
-	}
+	
 	
 	@Test
 	public void testEditReminderEarlyDate() {
@@ -918,33 +893,7 @@ public class ReminderServiceTests {
 		assertNull(r);
 		assertEquals("Time has passed",error);
 	}
-	
-	@Test
-	public void testEditReminderSameDateLateTime() {
-		assertEquals(0, reminderService.getAllReminders().size()); 
-		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
-		
-		String customerName = CUSTOMER_USERNAME;
-		String oldServiceName = CSName;
-		String chosenServiceName = CSName2;
-	    String newDescription = "Hi";
-		Date dBefore = Date.valueOf("2021-12-12");
-		Time tBefore = Time.valueOf("10:00:00");
-	    
-		Reminder r = null;
-		String error = null;
-		
-		try {
-			r = reminderService.editReminder(oldServiceName, chosenServiceName, customerName, dBefore, newDescription, tBefore);
-		}catch (IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-		
-		assertNull(r);
-		assertEquals("Reminder already sent today, cannot be modified",error);
-	}
+
 	
 	@Test
 	public void testEditReminderNullCustomer() {

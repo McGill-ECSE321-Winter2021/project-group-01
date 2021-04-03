@@ -51,13 +51,23 @@ public class Appointment {
         this.timeSlot=aTimeSlot;
     }
 
-    public String toString()
-    {
-        return super.toString() + "["+
-                "id" + ":" + getId()+ "]" + System.getProperties().getProperty("line.separator") +
-                "  " + "customer = "+(getCustomer()!=null?Integer.toHexString(System.identityHashCode(getCustomer())):"null") + System.getProperties().getProperty("line.separator") +
-                "  " + "bookableService = "+(getChosenService()!=null?Integer.toHexString(System.identityHashCode(getChosenService())):"null") + System.getProperties().getProperty("line.separator") +
-                "  " + "timeSlot = "+(getTimeSlot()!=null?Integer.toHexString(System.identityHashCode(getTimeSlot())):"null") + System.getProperties().getProperty("line.separator");
+//    public String toString()
+//    {
+//        return super.toString() + "["+
+//                "id" + ":" + getId()+ "]" + System.getProperties().getProperty("line.separator") +
+//                "  " + "customer = "+(getCustomer()!=null?Integer.toHexString(System.identityHashCode(getCustomer())):"null") + System.getProperties().getProperty("line.separator") +
+//                "  " + "bookableService = "+(getChosenService()!=null?Integer.toHexString(System.identityHashCode(getChosenService())):"null") + System.getProperties().getProperty("line.separator") +
+//                "  " + "timeSlot = "+(getTimeSlot()!=null?Integer.toHexString(System.identityHashCode(getTimeSlot())):"null") + System.getProperties().getProperty("line.separator");
+//    }
+//    public String toString()
+//    {
+//        return super.toString() + "["+
+//                "  " + "bookableService = "+(getChosenService()!=null?Integer.toHexString(System.identityHashCode(getChosenService())):"null") + System.getProperties().getProperty("line.separator") +
+//                "  " + "timeSlot = "+(getTimeSlot()!=null?Integer.toHexString(System.identityHashCode(getTimeSlot())):"null") + System.getProperties().getProperty("line.separator");
+//    }
+
+    public String toString(){
+        return this.chosenService.getName() + "; " + this.timeSlot.getStartDate().toString() + "; " + this.timeSlot.getStartTime().toString();
     }
 
 }

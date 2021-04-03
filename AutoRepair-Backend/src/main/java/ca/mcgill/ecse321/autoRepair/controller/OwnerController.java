@@ -5,14 +5,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import ca.mcgill.ecse321.autoRepair.dao.OwnerRepository;
 import ca.mcgill.ecse321.autoRepair.dto.OwnerDTO;
 import ca.mcgill.ecse321.autoRepair.model.Owner;
 import ca.mcgill.ecse321.autoRepair.service.OwnerService;
@@ -20,8 +16,6 @@ import ca.mcgill.ecse321.autoRepair.service.OwnerService;
 @CrossOrigin(origins = "*")
 @RestController
 public class OwnerController {
-	@Autowired
-	OwnerRepository ownerRepository;
 	@Autowired
 	private OwnerService ownerService;
 	
@@ -55,11 +49,18 @@ public class OwnerController {
 	 * @return ownerDTO
 	 */
 	@PostMapping(value = {"/create_owner"})
-	public OwnerDTO createOwner(@RequestParam("name") String name,@RequestParam("password") String password
+	public ResponseEntity<?> createOwner(@RequestParam("name") String name,@RequestParam("password") String password
 			,@RequestParam("authentification") String authentificationCode) {
 		
-		Owner owner = ownerService.createOwner(name,password,authentificationCode);
-		return convertToDTO(owner); 
+		Owner owner =null;
+		
+		try {
+		 owner = ownerService.createOwner(name,password,authentificationCode);
+		}catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(convertToDTO(owner), HttpStatus.CREATED);
+
 	}
 	
 	/**
@@ -69,7 +70,7 @@ public class OwnerController {
 	 * @param newPassword
 	 * @return ownerDTO
 	 */
-	@PostMapping(value = { "/update_owner/{oldUsername}"})
+	@PatchMapping(value = { "/update_owner/{oldUsername}"})
 	public OwnerDTO updateOwner(@PathVariable("oldUsername") String oldUsername,
 			@RequestParam("newPassword") String newPassword) {
         Owner owner = ownerService.updateOwner(oldUsername, newPassword);
@@ -81,14 +82,5 @@ public class OwnerController {
 		return new OwnerDTO(owner.getUsername(),owner.getPassword());
 	}
 
-//	private Owner convertToDomainObject(OwnerDTO ownerDto) {      //unused.
-//	List<Owner> allOwners = ownerService.getAllOwners();
-//	for (Owner owner : allOwners) {
-//		if (owner.getUsername().equals(ownerDto.getUsername())) {
-//			return owner;
-//		}
-//	}
-//	return null;
-//	}
 
 }

@@ -1,15 +1,15 @@
 package ca.mcgill.ecse321.autoRepair.controller;
 
-import ca.mcgill.ecse321.autoRepair.dao.AppointmentRepository;
-import ca.mcgill.ecse321.autoRepair.dao.CustomerRepository;
-import ca.mcgill.ecse321.autoRepair.dao.ChosenServiceRepository;
-import ca.mcgill.ecse321.autoRepair.dao.TimeSlotRepository;
 import ca.mcgill.ecse321.autoRepair.dto.*;
 import ca.mcgill.ecse321.autoRepair.model.*;
 import ca.mcgill.ecse321.autoRepair.service.AppointmentService;
 import ca.mcgill.ecse321.autoRepair.service.ChosenServiceService;
+import ca.mcgill.ecse321.autoRepair.service.CustomerService;
+import ca.mcgill.ecse321.autoRepair.service.ReviewService;
 import ca.mcgill.ecse321.autoRepair.service.TimeSlotService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
@@ -22,285 +22,408 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RestController
 public class AppointmentController {
-    @Autowired
-    AppointmentService appointmentService;
+	@Autowired
+	AppointmentService appointmentService;
+	@Autowired
+	ReviewService reviewService;
 
-    @Autowired
-    AppointmentRepository appointmentRepository;
+	@Autowired
+	CustomerService customerService;
 
-    @Autowired
-    CustomerRepository customerRepository;
+	@Autowired
+	TimeSlotService timeSlotService;
 
-    @Autowired
-    ChosenServiceRepository chosenServiceRepository;
+	@Autowired
+	ChosenServiceService chosenServiceService;
 
-    @Autowired
-    TimeSlotService timeSlotService;
+	/**
+	 * @author Tamara Zard Aboujaoudeh
+	 * 
+	 * Makes an appointment
+	 * 
+	 * @param username
+	 * @param appointmentDate
+	 * @param appointmentTime
+	 * @param serviceName
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	@PostMapping(value = { "/make_appointment/" })
+	public ResponseEntity<?> makeAppointment(@RequestParam String username, @RequestParam String appointmentDate,
+			@RequestParam String appointmentTime,
+			@RequestParam String serviceName) throws IllegalArgumentException {
+		if(appointmentDate=="") {
+			return new ResponseEntity<>("The date cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		if(appointmentTime=="") {
+			return new ResponseEntity<>("The time cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		try {
+			SystemTime.setSysTime(Time.valueOf(LocalTime.now()));
+			SystemTime.setSysDate(Date.valueOf(LocalDate.now()));
+			Date date = Date.valueOf(appointmentDate);
+			Time startTime = Time.valueOf(appointmentTime + ":00");
 
-    @Autowired
-    ChosenServiceService chosenServiceService;
+			Appointment appointment = appointmentService.makeAppointment(username, serviceName, date, startTime);
+			return new ResponseEntity<>(convertToDTO(appointment), HttpStatus.CREATED);
+		}catch (IllegalArgumentException e){
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
-    @Autowired
-    TimeSlotRepository timeSlotRepository;
+	/**
+	 * @author Tamara Zard Aboujaoudeh
+	 * 
+	 * Updates an appointment
+	 * 
+	 * @param username
+	 * @param appointmentDate
+	 * @param appointmentTime
+	 * @param newAppointmentDate
+	 * @param serviceName
+	 * @param newAppointmentTime
+	 * @param newServiceName
+	 * @return
+	 */
+	@PatchMapping(value = {"/update_appointment/"})
+	public ResponseEntity<?> updateAppointment(@RequestParam String username, @RequestParam String appointmentDate, @RequestParam String appointmentTime,
+			@RequestParam String newAppointmentDate, @RequestParam String serviceName, @RequestParam
+			String newAppointmentTime, @RequestParam String newServiceName){
+		if(appointmentTime == "") return new ResponseEntity<>("The old start time cannot be null", HttpStatus.INTERNAL_SERVER_ERROR) ;
+		if(appointmentDate == "")  return new ResponseEntity<>("The old start date cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
+		if(newAppointmentTime == "") return new ResponseEntity<>("The new start time cannot be null", HttpStatus.INTERNAL_SERVER_ERROR) ;
+		if(newAppointmentDate == "")  return new ResponseEntity<>("The new start date cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
+		SystemTime.setSysTime(Time.valueOf(LocalTime.now()));
+		SystemTime.setSysDate(Date.valueOf(LocalDate.now()));
+		Customer customer = customerService.getCustomer(username);
+		Date oldDate = Date.valueOf(appointmentDate);
+		Time oldTime = Time.valueOf(appointmentTime);
+		ChosenService oldService = chosenServiceService.getChosenService(serviceName);
 
-    /**
-     * @author Tamara Zard Aboujaoudeh
-     * 
-     * Makes an appointment
-     * 
-     * @param username
-     * @param dateString
-     * @param startTimeString
-     * @param serviceName
-     * @return
-     * @throws IllegalArgumentException
-     */
-    @PostMapping(value = { "/make_appointment/{username}" })
-    public AppointmentDTO makeAppointment(@PathVariable("username") String username, @RequestParam String dateString,
-                                          @RequestParam String startTimeString,
-                                          @RequestParam String serviceName) throws IllegalArgumentException {
-        SystemTime.setSysTime(Time.valueOf(LocalTime.now()));
-        SystemTime.setSysDate(Date.valueOf(LocalDate.now()));
-        Date date = Date.valueOf(dateString);
-        Time startTime = Time.valueOf(startTimeString);
-        Appointment appointment = appointmentService.makeAppointment(username,serviceName,date, startTime);
-        return convertToDTO(appointment);
-    }
+		TimeSlot timeSlot = timeSlotService.getTimeSlot(oldDate, oldTime);
 
-    /**
-     * @author Tamara Zard Aboujaoudeh
-     * 
-     * Updates an appointment
-     * 
-     * @param username
-     * @param oldDateString
-     * @param oldTimeString
-     * @param newDateString
-     * @param oldServiceString
-     * @param newStartTimeString
-     * @param newServiceString
-     * @return
-     */
-    @PostMapping(value = {"/update_appointment/{username}"})
-    public AppointmentDTO updateAppointment(@PathVariable("username") String username, @RequestParam String oldDateString, @RequestParam String oldTimeString,
-                                            @RequestParam String newDateString, @RequestParam String oldServiceString, @RequestParam
-                                                    String newStartTimeString, @RequestParam String newServiceString){
-        SystemTime.setSysTime(Time.valueOf(LocalTime.now()));
-        SystemTime.setSysDate(Date.valueOf(LocalDate.now()));
-        Customer customer = customerRepository.findCustomerByUsername(username);
-        Date oldDate = Date.valueOf(oldDateString);
-        Time oldTime = Time.valueOf(oldTimeString);
-        ChosenService oldService = chosenServiceRepository.findChosenServiceByName(oldServiceString);
-        Time endOldTime = findEndTimeOfApp(oldService, oldTime.toLocalTime());
+		Appointment appointment = appointmentService.getAppointment(timeSlot);
+		List<Appointment> appointmentLists = appointmentService.getAppointmentsOfCustomer(customer);
+		boolean exists = false;
+		for(int i=0; i<appointmentLists.size(); i++){
+			if(appointment.equals(appointmentLists.get(i))) exists=true;
+		}
+		if(exists==false) return new ResponseEntity<>("The appointment does not exist for the customer", HttpStatus.INTERNAL_SERVER_ERROR);
 
-        TimeSlot timeSlot = timeSlotRepository.findTimeSlotByStartDateAndStartTimeAndEndTime(oldDate,oldTime,endOldTime);
+		Date newDate = null;
+		Time newStartTime = null;
 
-        Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
-        List<Appointment> appointmentLists = appointmentRepository.findAppointmentsByCustomer(customer);
-        boolean exists = false;
-        for(int i=0; i<appointmentLists.size(); i++){
-            if(appointment.equals(appointmentLists.get(i))) exists=true;
-        }
-        if(exists==false) throw new IllegalArgumentException("The appointment does not exist for the customer");
+		ChosenService newService = chosenServiceService.getChosenService(newServiceName);
+		if(newAppointmentDate!=null && containsCharacter(newAppointmentDate)) {
+			newDate = Date.valueOf(newAppointmentDate);
+		}
+		if(newAppointmentTime!=null && containsCharacter(newAppointmentTime)) {
+			newStartTime = Time.valueOf(newAppointmentTime + ":00");
+		}
+		try {
+			if (newService != null) {
+				if (newDate == null && newStartTime == null) {
+					appointmentService.updateAppointment(timeSlot.getStartDate(), timeSlot.getStartTime(), oldService.getName(), timeSlot.getStartDate(), timeSlot.getStartTime(), newService.getName());
+				} else if (newDate != null && newStartTime == null) {
+					appointmentService.updateAppointment(timeSlot.getStartDate(), timeSlot.getStartTime(), oldService.getName(), newDate, timeSlot.getStartTime(), newService.getName());
+				} else if (newDate == null && newStartTime != null) {
+					appointmentService.updateAppointment(timeSlot.getStartDate(), timeSlot.getStartTime(), oldService.getName(), timeSlot.getStartDate(), newStartTime, newService.getName());
+				} else if (newDate != null && newStartTime != null) {
+					appointmentService.updateAppointment(timeSlot.getStartDate(), timeSlot.getStartTime(), oldService.getName(), newDate, newStartTime, newService.getName());
+				}
+			} else {
+				if (newDate != null && newStartTime == null) {
+					appointmentService.updateAppointment(timeSlot.getStartDate(), timeSlot.getStartTime(), oldService.getName(), newDate, timeSlot.getStartTime(), oldService.getName());
+				} else if (newDate == null && newStartTime != null) {
+					appointmentService.updateAppointment(timeSlot.getStartDate(), timeSlot.getStartTime(), oldService.getName(), timeSlot.getStartDate(), newStartTime, oldService.getName());
+				} else if (newDate != null && newStartTime != null) {
+					appointmentService.updateAppointment(timeSlot.getStartDate(), timeSlot.getStartTime(), oldService.getName(), newDate, newStartTime, oldService.getName());
+				}
+			}
+			return new ResponseEntity<>(convertToDTO(appointment), HttpStatus.OK);
+		}catch (IllegalArgumentException e){
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
-        @SuppressWarnings("unused")
-		Appointment updatedAppointment = new Appointment();
-        Date newDate = null;
-        Time newStartTime = null;
+	/**
+	 * @author Tamara Zard Aboujaoudeh
+	 * 
+	 * Deletes an appointment
+	 * 
+	 * @param username
+	 * @param appointmentDate
+	 * @param appointmentTime
+	 * @param serviceName
+	 * @return true when successfully deleted
+	 */
+	@DeleteMapping(value = {"/cancel_appointment/"})
+	public ResponseEntity<?> cancelAppointment(@RequestParam("username") String username, @RequestParam String appointmentDate, @RequestParam String appointmentTime, @RequestParam String serviceName){
+		if(appointmentTime == "" || appointmentDate=="" || serviceName=="") return new ResponseEntity<>("Please choose an appointment", HttpStatus.INTERNAL_SERVER_ERROR) ;
+		SystemTime.setSysTime(Time.valueOf(LocalTime.now()));
+		SystemTime.setSysDate(Date.valueOf(LocalDate.now()));
+		Date date = Date.valueOf(appointmentDate);
+		Time startTime = Time.valueOf(appointmentTime);
 
-        ChosenService newService = chosenServiceService.getChosenService(newServiceString);
-        if(newDateString!=null && containsCharacter(newDateString)) {
-            newDate = Date.valueOf(newDateString);
-        }
-        if(newStartTimeString!=null && containsCharacter(newStartTimeString)) {
-            newStartTime = Time.valueOf(newStartTimeString);
-        }
+		Customer customer = customerService.getCustomer(username);
 
-        if(newService!=null){
-            if(newDate==null && newStartTime==null){
-                appointmentService.updateAppointment(timeSlot.getStartDate(),timeSlot.getStartTime(),oldService.getName(), timeSlot.getStartDate(), timeSlot.getStartTime(),newService.getName());
-            }else if (newDate!=null && newStartTime==null){
-                updatedAppointment=appointmentService.updateAppointment(timeSlot.getStartDate(),timeSlot.getStartTime(),oldService.getName(), newDate, timeSlot.getStartTime(),newService.getName());
-            }else if (newDate==null && newStartTime!=null){
-                updatedAppointment=appointmentService.updateAppointment(timeSlot.getStartDate(),timeSlot.getStartTime(),oldService.getName(), timeSlot.getStartDate(), newStartTime,newService.getName());
-            }else if(newDate!=null && newStartTime!=null){
-                updatedAppointment=appointmentService.updateAppointment(timeSlot.getStartDate(),timeSlot.getStartTime(),oldService.getName(), newDate, newStartTime,newService.getName());
-            }
-        }else{
-            if (newDate!=null && newStartTime==null){
-                updatedAppointment=appointmentService.updateAppointment(timeSlot.getStartDate(),timeSlot.getStartTime(),oldService.getName(), newDate, timeSlot.getStartTime(),oldService.getName());
-            }else if (newDate==null && newStartTime!=null){
-                updatedAppointment=appointmentService.updateAppointment(timeSlot.getStartDate(),timeSlot.getStartTime(),oldService.getName(), timeSlot.getStartDate(), newStartTime,oldService.getName());
-            }else if(newDate!=null && newStartTime!=null){
-                appointmentService.updateAppointment(timeSlot.getStartDate(),timeSlot.getStartTime(),oldService.getName(), newDate, newStartTime,oldService.getName());
-            }
-        }
-        return convertToDTO(appointment);
-    }
+		TimeSlot timeSlot = timeSlotService.getTimeSlot(date, startTime);
 
-    /**
-     * @author Tamara Zard Aboujaoudeh
-     * 
-     * Deletes an appointment
-     * 
-     * @param username
-     * @param dateString
-     * @param startTimeString
-     * @param serviceName
-     * @return true when successfully deleted
-     */
-    @PostMapping(value = {"/cancel_appointment/{username}/{date}/{time}/{service}"})
-    public boolean cancelAppointment(@PathVariable("username") String username, @PathVariable("date") String dateString, @PathVariable("time") String startTimeString, @PathVariable("service") String serviceName){
-        SystemTime.setSysTime(Time.valueOf(LocalTime.now()));
-        SystemTime.setSysDate(Date.valueOf(LocalDate.now()));
-        Date date = Date.valueOf(dateString);
-        Time startTime = Time.valueOf(startTimeString);
+		Appointment appointment = appointmentService.getAppointment(timeSlot);
+		List<Appointment> appointmentLists = appointmentService.getAppointmentsOfCustomer(customer);
+		boolean exists = false;
+		for(int i=0; i<appointmentLists.size(); i++){
+			if(appointment.equals(appointmentLists.get(i))) exists=true;
+		}
+		if(exists==false) return new ResponseEntity<>("The appointment does not exist for the customer", HttpStatus.INTERNAL_SERVER_ERROR);
+		try {
+			appointmentService.cancelAppointment(serviceName, date, startTime);
+			return new ResponseEntity<>(true, HttpStatus.OK);
+		}catch (IllegalArgumentException e){
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
-        Customer customer = customerRepository.findCustomerByUsername(username);
-        Time oldTime = Time.valueOf(startTimeString);
-        ChosenService oldService = chosenServiceRepository.findChosenServiceByName(serviceName);
-        Time endOldTime = findEndTimeOfApp(oldService, oldTime.toLocalTime());
+	
 
-        TimeSlot timeSlot = timeSlotRepository.findTimeSlotByStartDateAndStartTimeAndEndTime(date,startTime,endOldTime);
+	/**
+	 * @author Tamara Zard Aboujaoudeh
+	 * Gets a list of all the appointments
+	 * @return list of all appointments 
+	 */
+	@GetMapping(value = { "/appointments" })
+	public List<AppointmentDTO> getAllAppointments() {
+		List<AppointmentDTO> appDtos = new ArrayList<>();
+		for (Appointment appointment: appointmentService.getAllAppointments()) {
+			appDtos.add(convertToDTO(appointment));
+		}
+		return appDtos;
+	}
+	
+	/**
+	 * @author Tamara Zard Aboujaoudeh
+	 * Gets a list of all the upcoming appointments for a specific customer
+	 * @param username
+	 * @return list of all the upcoming appointments for a specific customer
+	 */
+	@GetMapping(value = {"/upcoming_appointments"})
+	public ResponseEntity<?> getUpcomingAppointments() {
+		try {
+			List<Appointment> allAppointments = appointmentService.getAllAppointments();
+			List<AppointmentDTO> appointments = new ArrayList<>();
+			for (Appointment appointment : allAppointments) {
+				if(appointment.getTimeSlot().getStartDate().toLocalDate().isAfter(LocalDate.now()) ||
+						(appointment.getTimeSlot().getStartDate().toLocalDate().isEqual(LocalDate.now()) && 
+								appointment.getTimeSlot().getEndTime().toLocalTime().isAfter(LocalTime.now()))) {
+					appointments.add(convertToDTO(appointment));
 
-        Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
-        List<Appointment> appointmentLists = appointmentRepository.findAppointmentsByCustomer(customer);
-        boolean exists = false;
-        for(int i=0; i<appointmentLists.size(); i++){
-            if(appointment.equals(appointmentLists.get(i))) exists=true;
-        }
-        if(exists==false) throw new IllegalArgumentException("The appointment does not exist for the customer");
+				}
+			}
+			return new ResponseEntity<>(appointments, HttpStatus.CREATED);
+		}catch (IllegalArgumentException e){
+			return new ResponseEntity<>("The customer does not exist", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 
-        appointmentService.cancelAppointment(serviceName,date,startTime);
-        return true;
-    }
+	}
+	
+	/**
+	 * @author Tamara Zard Aboujaoudeh
+	 * Gets a list of all the upcoming appointments for a specific customer
+	 * @param username
+	 * @return list of all the upcoming appointments for a specific customer
+	 */
+	@GetMapping(value = {"/past_appointments"})
+	public ResponseEntity<?> getPastAppointments() {
+		try {
+			List<Appointment> allAppointments = appointmentService.getAllAppointments();
+			List<AppointmentDTO> appointments = new ArrayList<>();
+			for (Appointment appointment : allAppointments) {
+				if(appointment.getTimeSlot().getStartDate().toLocalDate().isBefore(LocalDate.now()) ||
+						(appointment.getTimeSlot().getStartDate().toLocalDate().isEqual(LocalDate.now()) && 
+								appointment.getTimeSlot().getEndTime().toLocalTime().isBefore(LocalTime.now()))) {
+					appointments.add(convertToDTO(appointment));
 
-    private Time findEndTimeOfApp(ChosenService service, LocalTime startTime){
-        LocalTime localEndTime = startTime.plusMinutes(service.getDuration());
-        return Time.valueOf(localEndTime);
-    }
+				}
+			}
+			return new ResponseEntity<>(appointments, HttpStatus.CREATED);
+		}catch (IllegalArgumentException e){
+			return new ResponseEntity<>("The customer does not exist", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 
-    /**
-     * @author Tamara Zard Aboujaoudeh
-     * Gets a list of all the appointments
-     * @return list of all appointments 
-     */
-    @GetMapping(value = { "/appointments" })
-    public List<AppointmentDTO> getAllAppointments() {
-        List<AppointmentDTO> appDtos = new ArrayList<>();
-        for (Appointment appointment: appointmentService.getAllAppointments()) {
-            appDtos.add(convertToDTO(appointment));
-        }
-        return appDtos;
-    }
+	}
 
-    /**
-     * @author Tamara Zard Aboujaoudeh
-     * Gets a list of all the appointments for a specific customer
-     * @param username
-     * @return list of all the appointments for a specific customer
-     */
-    @GetMapping(value = { "/appointments/{name}" })
-    public List<AppointmentDTO> getAppointmentsOfCustomer(@PathVariable("name") String username) {
-        return createAppointmentDtosForCustomer(username);
-    }
+	/**
+	 * @author Tamara Zard Aboujaoudeh
+	 * Gets a list of all the appointments for a specific customer
+	 * @param username
+	 * @return list of all the appointments for a specific customer
+	 */
+	@GetMapping(value = {"/appointmentsOf/"})
+	public ResponseEntity<?> getAppointmentsOfCustomer(@RequestParam("username") String username) {
+		try {
+			Customer customer = customerService.getCustomer(username);
+			List<Appointment> appointmentsForCustomer = appointmentService.getAppointmentsOfCustomer(customer);
+			List<AppointmentDTO> appointments = new ArrayList<>();
+			for (Appointment appointment : appointmentsForCustomer) {
+				appointments.add(convertToDTO(appointment));
+			}
+			return new ResponseEntity<>(appointments, HttpStatus.CREATED);
+		}catch (IllegalArgumentException e){
+			return new ResponseEntity<>("The customer does not exist", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 
-    /**
-     * @author Tamara Zard Aboujaoudeh
-     * Gets all the available time slots
-     * @param stringDate
-     * @return list containing all the available time slots
-     */
-    @GetMapping(value = {"/availableTimeSlots/{date}"})
-    public List<TimeSlotDTO> getAvailableTimeSlotsForDay(@PathVariable("date") String stringDate){
-        Date date = Date.valueOf(stringDate);
-        List<TimeSlot> timeSlotsList = timeSlotService.getAvailableTimeSlots(date);
-        List<TimeSlotDTO> availableTimeSlots = new ArrayList<>();
-        for(TimeSlot timeSlot : timeSlotsList ){
-            availableTimeSlots.add(convertToDTO(timeSlot));
-        }
-        return availableTimeSlots;
-    }
+	}
 
-    /**
-     * @author Tamara Zard Aboujaoudeh
-     * Gets a list of all the unavailable time slots
-     * @param stringDate
-     * @return list of all the unavailable time slots
-     */
-    @GetMapping(value = {"/unavailableTimeSlots/{date}"})
-    public List<TimeSlotDTO> getUnavailableTimeSlotsForDay(@PathVariable("date") String stringDate){
-        Date date = Date.valueOf(stringDate);
-        List<TimeSlot> timeSlotsList = timeSlotService.getUnavailableTimeSlots(date);
-        List<TimeSlotDTO> unavailableTimeSlots = new ArrayList<>();
-        for(TimeSlot timeSlot : timeSlotsList ){
-            unavailableTimeSlots.add(convertToDTO(timeSlot));
-        }
-        return unavailableTimeSlots;
-    }
-    private List<AppointmentDTO> createAppointmentDtosForCustomer(String username) {
-        Customer customer = customerRepository.findCustomerByUsername(username);
-        List<Appointment> appointmentsForCustomer = appointmentRepository.findAppointmentsByCustomer(customer);
-        List<AppointmentDTO> appointments = new ArrayList<>();
-        for (Appointment appointment : appointmentsForCustomer) {
-            appointments.add(convertToDTO(appointment));
-        }
-        return appointments;
-    }
+	/**
+	 * @author Tamara Zard Aboujaoudeh
+	 * Gets a list of all the upcoming appointments for a specific customer
+	 * @param username
+	 * @return list of all the upcoming appointments for a specific customer
+	 */
+	@GetMapping(value = {"/upcoming_appointmentsOf/"})
+	public ResponseEntity<?> getUpcomingAppointmentsOfCustomer(@RequestParam("username") String username) {
+		try {
+			Customer customer = customerService.getCustomer(username);
+			List<Appointment> appointmentsForCustomer = appointmentService.getAppointmentsOfCustomer(customer);
+			List<AppointmentDTO> appointments = new ArrayList<>();
+			for (Appointment appointment : appointmentsForCustomer) {
+				if(appointment.getTimeSlot().getStartDate().toLocalDate().isAfter(LocalDate.now()) ||
+						(appointment.getTimeSlot().getStartDate().toLocalDate().isEqual(LocalDate.now()) && 
+								appointment.getTimeSlot().getEndTime().toLocalTime().isAfter(LocalTime.now()))) {
+					appointments.add(convertToDTO(appointment));
 
-    private AppointmentDTO convertToDTO(Appointment appointment){
-        if(appointment==null)throw new IllegalArgumentException("There is no such appointment");
-        AppointmentDTO appointmentDTO= new AppointmentDTO();
-        appointmentDTO.setService(convertToDTO(appointment.getChosenService()));
-        appointmentDTO.setTimeSlot(convertToDTO(appointment.getTimeSlot()));
-        appointmentDTO.setCustomer(convertToDTO(appointment.getCustomer()));
-        return appointmentDTO;
-    }
+				}
+			}
+			return new ResponseEntity<>(appointments, HttpStatus.CREATED);
+		}catch (IllegalArgumentException e){
+			return new ResponseEntity<>("The customer does not exist", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 
-    private TimeSlotDTO convertToDTO(TimeSlot timeSlot){
-        if(timeSlot==null) throw new IllegalArgumentException("There is no such time slot");
-        TimeSlotDTO timeSlotDTO = new TimeSlotDTO(timeSlot.getStartTime(), timeSlot.getEndTime()
-                ,timeSlot.getStartDate(), timeSlot.getEndDate());
+	}
+	
+	/**
+	 * @author Tamara Zard Aboujaoudeh
+	 * Gets a list of all the upcoming appointments for a specific customer
+	 * @param username
+	 * @return list of all the past appointments for a specific customer
+	 */
+	@GetMapping(value = {"/past_appointmentsOf/"})
+	public ResponseEntity<?> getPastAppointmentsOfCustomer(@RequestParam("username") String username) {
+		try {
+			Customer customer = customerService.getCustomer(username);
+			List<Appointment> appointmentsForCustomer = appointmentService.getAppointmentsOfCustomer(customer);
+			List<AppointmentDTO> appointments = new ArrayList<>();
+			for (Appointment appointment : appointmentsForCustomer) {
+				if(appointment.getTimeSlot().getStartDate().toLocalDate().isBefore(LocalDate.now()) ||
+						(appointment.getTimeSlot().getStartDate().toLocalDate().isEqual(LocalDate.now()) && 
+								appointment.getTimeSlot().getEndTime().toLocalTime().isBefore(LocalTime.now()))) {
+					appointments.add(convertToDTO(appointment));
 
-        return timeSlotDTO;
-    }
+				}
+			}
+			return new ResponseEntity<>(appointments, HttpStatus.CREATED);
+		}catch (IllegalArgumentException e){
+			return new ResponseEntity<>("The customer does not exist", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 
-    private ChosenServiceDTO convertToDTO(ChosenService service) {
-        if(service==null) throw new IllegalArgumentException("Service not found.");
-        return new ChosenServiceDTO(service.getName(), service.getDuration(), service.getPayment());
-    }
-    private CustomerDTO convertToDTO(Customer customer) {
-        if(customer==null) throw new IllegalArgumentException("Customer not found.");
-        List<CarDTO> cars = new ArrayList<CarDTO>();
+	}
 
-        for (Car car : customer.getCars()) {
-            cars.add(convertToDTO(car));
-        }
+	/**
+	 * @author Tamara Zard Aboujaoudeh
+	 * Gets all the available time slots
+	 * @param appointmentDate
+	 * @return list containing all the available time slots
+	 */
+	@GetMapping(value = {"/availableTimeSlots/"})
+	public ResponseEntity<?> getAvailableTimeSlotsForDay(@RequestParam("appointmentDate") String appointmentDate){
+		Date date1 = Date.valueOf(appointmentDate);
+		List<TimeSlot> timeSlotsList = timeSlotService.getAvailableTimeSlots(date1);
+		List<TimeSlotDTO> availableTimeSlots = new ArrayList<>();
+		for(TimeSlot timeSlot : timeSlotsList ){
+			availableTimeSlots.add(convertToDTO(timeSlot));
+		}
+		return new ResponseEntity<>(availableTimeSlots, HttpStatus.OK);
+	}
 
-        return new CustomerDTO(customer.getUsername(), customer.getPassword(), customer.getNoShow(),
-                customer.getShow(), cars, convertToDTO(customer.getProfile()));
+	/**
+	 * @author Tamara Zard Aboujaoudeh
+	 * Gets a list of all the unavailable time slots
+	 * @param stringDate
+	 * @return list of all the unavailable time slots
+	 */
+	@GetMapping(value = {"/unavailableTimeSlots/{date}"})
+	public ResponseEntity<?> getUnavailableTimeSlotsForDay(@PathVariable("date") String stringDate){
+		Date date = Date.valueOf(stringDate);
+		List<TimeSlot> timeSlotsList = timeSlotService.getUnavailableTimeSlots(date);
+		List<TimeSlotDTO> unavailableTimeSlots = new ArrayList<>();
+		for(TimeSlot timeSlot : timeSlotsList ){
+			unavailableTimeSlots.add(convertToDTO(timeSlot));
+		}
+		return new ResponseEntity<>(unavailableTimeSlots, HttpStatus.OK);
+	}
 
-    }
+	private AppointmentDTO convertToDTO(Appointment appointment){
+		if(appointment==null)throw new IllegalArgumentException("There is no such appointment");
+		AppointmentDTO appointmentDTO= new AppointmentDTO();
+		appointmentDTO.setService(convertToDTO(appointment.getChosenService()));
+		appointmentDTO.setTimeSlot(convertToDTO(appointment.getTimeSlot()));
+		appointmentDTO.setCustomer(convertToDTO(appointment.getCustomer()));
+		return appointmentDTO;
+	}
 
-    private CarDTO convertToDTO(Car car) {
-        if(car==null) throw new IllegalArgumentException("Car not found.");
-        return new CarDTO(car.getModel(), car.getTransmission(), car.getPlateNumber());
-    }
+	private TimeSlotDTO convertToDTO(TimeSlot timeSlot){
+		if(timeSlot==null) throw new IllegalArgumentException("There is no such time slot");
+		TimeSlotDTO timeSlotDTO = new TimeSlotDTO(timeSlot.getStartTime(), timeSlot.getEndTime()
+				,timeSlot.getStartDate(), timeSlot.getEndDate());
 
-    private ProfileDTO convertToDTO(Profile profile) {
-        if(profile == null) throw new IllegalArgumentException("Profile not found.");
-        return new ProfileDTO(profile.getFirstName(), profile.getLastName(), profile.getAddress(),
-                profile.getZipCode(), profile.getPhoneNumber(), profile.getEmail());
-    }
+		return timeSlotDTO;
+	}
 
-    private static boolean containsCharacter(String input){
-        for(int i = 0; i < input.length(); i++){
-            if(!(Character.isWhitespace(input.charAt(i)))){
-                return true;
-            }
-        }
-        return false;
-    }
+	private ChosenServiceDTO convertToDTO(ChosenService service) {
+		if(service==null) throw new IllegalArgumentException("Service not found.");
+		Double avRating = null;
+		try {
+			avRating = reviewService.getAverageServiceReview(service.getName());
+		}
+		catch (Exception e){
+
+		}
+
+		return new ChosenServiceDTO(service.getName(), service.getDuration(), service.getPayment(), avRating);
+	}
+
+	private CustomerDTO convertToDTO(Customer customer) {
+		if(customer==null) throw new IllegalArgumentException("Customer not found.");
+		List<CarDTO> cars = new ArrayList<CarDTO>();
+
+		for (Car car : customer.getCars()) {
+			cars.add(convertToDTO(car));
+		}
+
+		return new CustomerDTO(customer.getUsername(), customer.getPassword(), customer.getNoShow(),
+				customer.getShow(), cars, convertToDTO(customer.getProfile()));
+
+	}
+
+	private CarDTO convertToDTO(Car car) {
+		if(car==null) throw new IllegalArgumentException("Car not found.");
+		return new CarDTO(car.getModel(), car.getTransmission(), car.getPlateNumber());
+	}
+
+	private ProfileDTO convertToDTO(Profile profile) {
+		if(profile == null) throw new IllegalArgumentException("Profile not found.");
+		return new ProfileDTO(profile.getFirstName(), profile.getLastName(), profile.getAddress(),
+				profile.getZipCode(), profile.getPhoneNumber(), profile.getEmail());
+	}
+
+	private static boolean containsCharacter(String input){
+		for(int i = 0; i < input.length(); i++){
+			if(!(Character.isWhitespace(input.charAt(i)))){
+				return true;
+			}
+		}
+		return false;
+	}
 
 
 }

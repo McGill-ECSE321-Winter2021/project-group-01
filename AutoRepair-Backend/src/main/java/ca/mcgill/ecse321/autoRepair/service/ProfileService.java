@@ -36,6 +36,7 @@ public class ProfileService {
 	 */
 	@Transactional
 	public Profile createProfile(String firstName, String lastName, String address, String zipCode, String phoneNumber, String email) {
+
 		if(firstName ==null || firstName =="") 
 			throw new IllegalArgumentException("First name cannot be blank.");
 
@@ -57,9 +58,10 @@ public class ProfileService {
 		if(!emailIsValid(email)) 
 			throw new IllegalArgumentException("Invalid email.");
 		
-		if(profileRepository.findByEmail(email)!=null)
+		if(profileRepository.findByEmail(email)!=null) {
+			profileRepository.delete(profileRepository.findByEmail(email));
 			throw new IllegalArgumentException("Customer with email entered already exists.");
-
+		}
 		
 		Profile profile = new Profile();
 		profile.setFirstName(firstName);
@@ -106,44 +108,44 @@ public class ProfileService {
 		
 		Profile profile = customer.getProfile();
 
-		if(profile.getEmail()!=email && email!=null && email!="") {
+		if(!profile.getEmail().equals(email) && email!=null && email!="") {
 			if(!emailIsValid(email)) 
 				throw new IllegalArgumentException("Invalid email.");
 
 		}
 
-		if(profile.getPhoneNumber()!=phoneNumber && phoneNumber!=null && phoneNumber!="") {
+		if(!profile.getPhoneNumber().equals(phoneNumber) && phoneNumber!=null && phoneNumber!="") {
 			if(!isNumeric(phoneNumber))
 				throw new IllegalArgumentException("Invalid phone number.");
 		}
 
 		
-		if(profile.getEmail()!=email && email != null && email !="") {
+		if(!profile.getEmail().equals(email) && email != null && email !="") {
 			if(getProfile(email)!=null)
 				throw new IllegalArgumentException("Customer with email entered already exists.");
 
 		}
 
-		if(profile.getFirstName() != firstName && firstName!=null && firstName!="") {
+		if(!profile.getFirstName().equals(firstName) && firstName!=null && firstName!="") {
 			profile.setFirstName(firstName);
 		}
-		if(profile.getLastName() != lastName && lastName!=null && lastName!="") {
+		if(!profile.getLastName().equals(lastName) && lastName!=null && lastName!="") {
 			profile.setLastName(lastName);
 		}
 
-		if(profile.getEmail()!=email && email!=null && email!="") {
+		if(!profile.getEmail().equals(email) && email!=null && email!="") {
 			profile.setEmail(email);
 		}
 
-		if(profile.getPhoneNumber()!=phoneNumber && phoneNumber!=null && phoneNumber!="") {
+		if(!profile.getPhoneNumber().equals(phoneNumber) && phoneNumber!=null && phoneNumber!="") {
 			profile.setPhoneNumber(phoneNumber);
 		}
 
-		if(profile.getZipCode()!=zipCode && zipCode!=null && zipCode!="") {
+		if(!profile.getZipCode().equals(zipCode) && zipCode!=null && zipCode!="") {
 			profile.setZipCode(zipCode);
 		}
 
-		if(profile.getAddress()!=address && address!=null && address!="") {
+		if(!profile.getAddress().equals(address) && address!=null && address!="") {
 			profile.setAddress(address);
 		}
 
@@ -152,6 +154,15 @@ public class ProfileService {
 		profileRepository.save(profile);
 
 		return customer;
+	}
+	@Transactional
+	public boolean deleteByEmail(String email) {
+		Profile profile = profileRepository.findByEmail(email);
+		if(profile!=null) { 
+			profileRepository.delete(profile);
+			return true;
+		}
+		return false;
 	}
 
 

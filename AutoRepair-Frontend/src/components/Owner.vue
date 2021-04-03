@@ -97,8 +97,6 @@
                 <div class="col-md-6">
 									<div class="form-group">
 			    					<div class="input-wrap">
-			            		<!-- <div class="icon"><span class="fa fa-calendar"></span></div> -->
-			            	<!--	<input type="text" class="form-control appointment_date" placeholder="Date"> -->
                       <input type="number" min="0" class="form-control" v-model="duration" placeholder="Duration in minutes">
 		            		</div>
 			    				</div>
@@ -107,7 +105,6 @@
 								<div class="col-md-6">
 									<div class="form-group">
 			    					<div class="input-wrap">
-			            		<!-- <div class="icon"><span class="fa fa-clock-o"></span></div> -->
 			            		<input type="number" min="0" step="0.1" class="form-control" v-model="price" placeholder="Price">
 		            		</div>
 			    				</div>
@@ -137,7 +134,6 @@
 
 <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
-        <!-- <div class="overlay"></div> -->
         <div class="container">
           <div class="row d-md-flex justify-content-end">
             <div class="col-md-12 col-lg-6 half p-3 py-5 pl-lg-5">
@@ -164,8 +160,6 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <div class="input-wrap">
-                        <!-- <div class="icon"><span class="fa fa-calendar"></span></div> -->
-                      <!--	<input type="text" class="form-control appointment_date" placeholder="Date"> -->
                         <input type="number" min="0" class="form-control" v-model="duration2" placeholder="New duration in minutes">
                       </div>
                     </div>
@@ -178,13 +172,7 @@
                       </div>
                     </div>
                   </div>
-                  
-                  <!-- <div class="col-md-12">
-                    <div class="form-group">
-                      <input type="submit" value="Update the Service" class="btn btn-dark py-3 px-4">
-                    </div>
-                  </div> -->
-
+         
                   <div class="col-md-12">
 									<div class="form-group">
                     <button 
@@ -229,27 +217,10 @@
                           </option>
                           </select>
 
-                   <!-- v-bind:value="{ name:service.name }" -->
-               
-
-                          <!-- <select name="" id="" class="form-control">
-                            <option value="">Select service</option>
-                            <option value="">Change Oil</option>
-                            <option value="">Engine Repair</option>
-                            <option value="">Battery Replace</option>
-                            <option value="">Change Tire</option>
-                            <option value="">Tow Truck</option>
-                          </select> -->
                         </div>
                       </div>
                     </div>
                   </div>
-              
-                  <!-- <div class="col-md-12">
-                    <div class="form-group">
-                      <h2> {{errorDeleteService}} </h2>
-                    </div>
-                  </div> -->
 
  <!-- v-bind:disabled="!serviceName3" -->
 
@@ -260,18 +231,8 @@
                       class="btn btn-dark py-3 px-4"
                       v-bind:disabled="!serviceName3"
                       @click="deleteservice(serviceName3)">Delete the Service</button>
-                      <!-- <input type="submit" value="Delete the Service" class="btn btn-dark py-3 px-4"> -->
                     </div>
                   </div>
-
-                <!-- <div class="col-md-12">
-									<div class="form-group">
-                    <button 
-                      type="button" 
-                      class="btn btn-dark py-3 px-4"
-                      @click="addservice(serviceName, duration, price)">Add the Service</button>
-                  </div>
-								</div> -->
 
                   <div class="col-md-12">
 									<div class="form-group">
@@ -279,7 +240,6 @@
                   </div>
 								  </div>
 
-                  
                 </div>
               </form>
             </div>

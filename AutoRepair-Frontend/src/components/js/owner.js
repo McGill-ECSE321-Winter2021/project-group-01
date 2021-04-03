@@ -64,15 +64,15 @@ export default {
                 this.errorService = e
             })
 
-            AXIOS.get('/view_all_reviews')
-			.then(response => {
-				// JSON responses are automatically parsed.
-				this.reviews = response.data
-			})
-			.catch(e => {
-				this.errorReview = e
-			})
-            
+        AXIOS.get('/view_all_reviews')
+            .then(response => {
+                // JSON responses are automatically parsed.
+                this.reviews = response.data
+            })
+            .catch(e => {
+                this.errorReview = e
+            })
+
 
     },
     methods: {
@@ -101,38 +101,30 @@ export default {
         addservice(serviceName, duration, price) {
             AXIOS.post('/create_service/', $.param({ serviceName: serviceName, duration: duration, price: price }))
                 .then(response => {
-
-                    //this.services.push(response.data)
-                    this.errorCreateService = 'cr7';
+                    swal("Success", "Service " + serviceName + " Added Successfully", "success");
 
                 })
                 .catch(e => {
-                    this.errorCreateService = e.response.data
-                    console.log(this.errorCreateService)
+                    swal("ERROR", e.response.data, "error");
                 })
         },
         updateservice(serviceName2, duration2, price2) {
             AXIOS.post('/update_service/', $.param({ serviceName: serviceName2, duration: duration2, price: price2 }))
                 .then(response => {
-
-                    //this.services.push(response.data)
-                    this.errorUpdateService = 'cr7';
+                    swal("Success", "Service " + serviceName2 + " Updated Successfully", "success");
 
                 })
                 .catch(e => {
-                    this.errorUpdateService = e.response.data
-                    console.log(this.errorUpdateService)
+                    swal("ERROR", e.response.data, "error");
                 })
         },
         deleteservice(serviceName3) {
-            // this.errorDeleteService= 'testito'
             AXIOS.post('/delete_service/', $.param({ serviceName: serviceName3 }))
                 .then(response => {
-                    this.errorDeleteService = 'cr7';
+                    swal("Success", "Service " + serviceName3 + " Deleted Successfully", "success");
                 })
                 .catch(e => {
-                    this.errorDeleteService = e.response.data
-                    console.log(this.errorDeleteService)
+                    swal("ERROR", e.response.data, "error");
                 })
         }
     }

@@ -38,6 +38,21 @@ public class ReminderController {
 	@Autowired
 	ChosenServiceService csService;
 	
+//	/**
+//	 * @author Robert Aprahamian
+//	 * Gets all reminders associated with a given customer
+//	 * @param username
+//	 * @return list of reminder DTO
+//	 */
+//	@GetMapping(value = { "/view_reminders_for_customer","/view_reminders_for_customer/" })
+//	public List<ReminderDTO> getAllRemindersForCustomer(@RequestParam String username) {
+//		Customer customer = cusService.getCustomer(username);
+//		
+//		if (customer == null)
+//			throw new IllegalArgumentException("The following user does not exist: " + username);
+//		return reminderService.getCustomerReminders(customer).stream().map(reminder -> convertToDTO(reminder)).collect(Collectors.toList());
+//	}
+	
 	/**
 	 * @author Robert Aprahamian
 	 * Gets all reminders associated with a given customer
@@ -45,12 +60,35 @@ public class ReminderController {
 	 * @return list of reminder DTO
 	 */
 	@GetMapping(value = { "/view_reminders_for_customer","/view_reminders_for_customer/" })
-	public List<ReminderDTO> getAllRemindersForCustomer(@RequestParam String username) {
-		Customer customer = cusService.getCustomer(username);
+	public ResponseEntity<?> getAllRemindersForCustomer(@RequestParam String username) {
+		try {
+			Customer customer = cusService.getCustomer(username);
+			List<Reminder> remindersForCustomer = reminderService.getCustomerReminders(customer);
+			List<ReminderDTO> reminders = new ArrayList<>();
+			for (Reminder reminder : remindersForCustomer) {
+				if(reminder.getDate().toLocalDate().isBefore(LocalDate.now()) ||
+						(reminder.getDate().toLocalDate().isEqual(LocalDate.now()) && 
+								reminder.getTime().toLocalTime().isBefore(LocalTime.now()))) {
+					reminders.add(convertToDTO(reminder));
+
+				}
+			}
+			return new ResponseEntity<>(reminders, HttpStatus.CREATED);
+		}catch (IllegalArgumentException e){
+			return new ResponseEntity<>("The customer does not exist", HttpStatus.INTERNAL_SERVER_ERROR);
+		}}
+	
+	/**
+	 * @author Robert Aprahamian
+	 * Gets all reminders associated with a given customer
+	 * @param username
+	 * @return list of reminder DTO
+	 */
+	@GetMapping(value = { "/view_reminders","/view_reminders/" })
+	public List<ReminderDTO> getAllReminders() {
 		
-		if (customer == null)
-			throw new IllegalArgumentException("The following user does not exist: " + username);
-		return reminderService.getCustomerReminders(customer).stream().map(reminder -> convertToDTO(reminder)).collect(Collectors.toList());
+	
+		return reminderService.getAllReminders().stream().map(reminder -> convertToDTO(reminder)).collect(Collectors.toList());
 	}
 	
 	/**

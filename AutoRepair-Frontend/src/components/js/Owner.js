@@ -43,16 +43,24 @@ export default {
             holidays: '',
             errorBusiness: '',
             serviceName: '',
+            serviceName2: '',
             serviceName3: '',
-            duration: 0,
-            price: 0,
+            duration: '',
+            price: '',
+            duration2: '',
+            price2: '',
             errorCreateService: '',
             errorUpdateService: '',
             errorDeleteService: '',
             services: [],
             reviews: [],
+            appointmentsType: 'All Appointments',
+            appointments: [],
+            pastAppointments: [],
+            upcomingAppointments: [],
             response: [],
-            errorService: ''
+            errorService: '',
+            errorAppointment: ''
         }
     },
     created: function () {
@@ -71,6 +79,40 @@ export default {
             })
             .catch(e => {
                 this.errorReview = e
+            })
+
+
+        AXIOS.get('/appointments')
+            .then(response => {
+                // JSON responses are automatically parsed.
+                this.appointments = response.data
+                this.appointments.sort((a, b) => ((a.timeSlot.startDate + a.timeSlot.startTime) > (b.timeSlot.startDate + b.timeSlot.startTime)) ? 1 : -1)
+                console.log(this.appointments)
+            })
+            .catch(e => {
+                this.errorAppointment = e
+            })
+
+        AXIOS.get('/past_appointments')
+            .then(response => {
+                // JSON responses are automatically parsed.
+                this.pastAppointments = response.data
+                this.pastAppointments.sort((a, b) => ((a.timeSlot.startDate + a.timeSlot.startTime) > (b.timeSlot.startDate + b.timeSlot.startTime)) ? 1 : -1)
+                console.log(this.pastAppointments)
+            })
+            .catch(e => {
+                this.errorAppointment = e
+            })
+
+        AXIOS.get('/upcoming_appointments')
+            .then(response => {
+                // JSON responses are automatically parsed.
+                this.upcomingAppointments = response.data
+                this.upcomingAppointments.sort((a, b) => ((a.timeSlot.startDate + a.timeSlot.startTime) > (b.timeSlot.startDate + b.timeSlot.startTime)) ? 1 : -1)
+                console.log(this.upcomingAppointments)
+            })
+            .catch(e => {
+                this.errorAppointment = e
             })
 
 

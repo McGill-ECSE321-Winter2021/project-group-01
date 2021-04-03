@@ -206,6 +206,58 @@ public class AppointmentController {
 		}
 		return appDtos;
 	}
+	
+	/**
+	 * @author Tamara Zard Aboujaoudeh
+	 * Gets a list of all the upcoming appointments for a specific customer
+	 * @param username
+	 * @return list of all the upcoming appointments for a specific customer
+	 */
+	@GetMapping(value = {"/upcoming_appointments"})
+	public ResponseEntity<?> getUpcomingAppointments() {
+		try {
+			List<Appointment> allAppointments = appointmentService.getAllAppointments();
+			List<AppointmentDTO> appointments = new ArrayList<>();
+			for (Appointment appointment : allAppointments) {
+				if(appointment.getTimeSlot().getStartDate().toLocalDate().isAfter(LocalDate.now()) ||
+						(appointment.getTimeSlot().getStartDate().toLocalDate().isEqual(LocalDate.now()) && 
+								appointment.getTimeSlot().getEndTime().toLocalTime().isAfter(LocalTime.now()))) {
+					appointments.add(convertToDTO(appointment));
+
+				}
+			}
+			return new ResponseEntity<>(appointments, HttpStatus.CREATED);
+		}catch (IllegalArgumentException e){
+			return new ResponseEntity<>("The customer does not exist", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+	
+	/**
+	 * @author Tamara Zard Aboujaoudeh
+	 * Gets a list of all the upcoming appointments for a specific customer
+	 * @param username
+	 * @return list of all the upcoming appointments for a specific customer
+	 */
+	@GetMapping(value = {"/past_appointments"})
+	public ResponseEntity<?> getPastAppointments() {
+		try {
+			List<Appointment> allAppointments = appointmentService.getAllAppointments();
+			List<AppointmentDTO> appointments = new ArrayList<>();
+			for (Appointment appointment : allAppointments) {
+				if(appointment.getTimeSlot().getStartDate().toLocalDate().isBefore(LocalDate.now()) ||
+						(appointment.getTimeSlot().getStartDate().toLocalDate().isEqual(LocalDate.now()) && 
+								appointment.getTimeSlot().getEndTime().toLocalTime().isBefore(LocalTime.now()))) {
+					appointments.add(convertToDTO(appointment));
+
+				}
+			}
+			return new ResponseEntity<>(appointments, HttpStatus.CREATED);
+		}catch (IllegalArgumentException e){
+			return new ResponseEntity<>("The customer does not exist", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
 
 	/**
 	 * @author Tamara Zard Aboujaoudeh

@@ -1,6 +1,5 @@
 import axios from 'axios'
 import JQuery from 'jquery'
-import { mapGetters } from 'vuex';
 let $ = JQuery
 var config = require('../../../config')
 

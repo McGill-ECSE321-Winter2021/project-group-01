@@ -2,11 +2,15 @@ package ca.mcgill.ecse321.autoRepair.controller;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +35,9 @@ import ca.mcgill.ecse321.autoRepair.model.TimeSlot;
 import ca.mcgill.ecse321.autoRepair.dao.AppointmentRepository;
 import ca.mcgill.ecse321.autoRepair.dao.ChosenServiceRepository;
 import ca.mcgill.ecse321.autoRepair.dao.CustomerRepository;
+import ca.mcgill.ecse321.autoRepair.service.AppointmentService;
 import ca.mcgill.ecse321.autoRepair.service.ReviewService;
+import ca.mcgill.ecse321.autoRepair.service.TimeSlotService;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -39,6 +45,12 @@ public class ReviewController {
 
 	@Autowired
 	private ReviewService reviewService;
+	
+	@Autowired
+	private TimeSlotService timeSlotService;
+	
+	@Autowired
+	private AppointmentService appointmentService;
 
 	@Autowired
 	private AppointmentRepository appointmentRepository; 
@@ -64,20 +76,30 @@ public class ReviewController {
 	 * @return reviewDTO
 	 */
 	@PostMapping(value = {"/create_review/"})
-	public ReviewDTO createReview(@RequestParam("startDate") String startDate, @RequestParam("startTime") String startTime, @RequestParam("serviceName")
-	String serviceName, @RequestParam("customerName") String customerName, @RequestParam("description")
-	String description, @RequestParam("serviceRating") int serviceRating) {
+	public ResponseEntity<?> createReview(@RequestParam("startDate") String startDate, @RequestParam("startTime") String startTime,
+			@RequestParam("description") String description, @RequestParam("serviceRating") int serviceRating) {
 
 		Date date = Date.valueOf(startDate);
 		Time time = Time.valueOf(startTime);
-		TimeSlot timeSlot = timeSlotRepoisoty.findTimeSlotByStartDateAndStartTime(date, time);
-		Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
+		if(date.toLocalDate().isAfter(LocalDate.now()) || 
+			(date.toLocalDate().isEqual(LocalDate.now()) && 
+					time.toLocalTime().isAfter(LocalTime.now()))) {
+			return new ResponseEntity<>("Cannot create  a review for a future appointment.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		TimeSlot timeSlot = timeSlotService.getTimeSlot(date, time);
+        Appointment appointment = appointmentService.getAppointment(timeSlot);
+        
+        Review review = null;
+        try {
+        	review = reviewService.createReview(appointment, appointment.getChosenService().getName(),
+				appointment.getCustomer().getUsername(), description, serviceRating);
+        }catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
-		Review review = reviewService.createReview(appointment, serviceName,
-				customerName, description, serviceRating);
-
-		return convertToDTO(review);
+		return new ResponseEntity<>(convertToDTO(review), HttpStatus.CREATED);
 	}
+
 
 	/**
 	 * @author Mohammad Saeid Nafar
@@ -89,7 +111,7 @@ public class ReviewController {
 	 * @return reviewDTO
 	 */
 	@PostMapping(value = {"/edit_review/"})
-	public ReviewDTO editReview(@RequestParam("startDate") String startDate, @RequestParam("startTime")
+	public ResponseEntity<?> editReview(@RequestParam("startDate") String startDate, @RequestParam("startTime")
 	String startTime, @RequestParam("newDescription") String newDescription,
 	@RequestParam("newRating") int newRating) {
 
@@ -97,10 +119,14 @@ public class ReviewController {
 		Time time = Time.valueOf(startTime);
 		TimeSlot timeSlot = timeSlotRepoisoty.findTimeSlotByStartDateAndStartTime(date, time);
 		Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
+		Review review = null;
+		try {
+			 review = reviewService.editReview(appointment, newDescription, newRating);
+		}catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 
-		Review review = reviewService.editReview(appointment, newDescription, newRating);
-
-		return convertToDTO(review);
+		return new ResponseEntity<>(convertToDTO(review), HttpStatus.OK);
 	}
 
 	/**

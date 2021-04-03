@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +24,20 @@ import ca.mcgill.ecse321.autoRepair.model.OperatingHour;
 import ca.mcgill.ecse321.autoRepair.model.OperatingHour.DayOfWeek;
 import ca.mcgill.ecse321.autoRepair.model.TimeSlot;
 import ca.mcgill.ecse321.autoRepair.service.BusinessService;
+
+import ca.mcgill.ecse321.autoRepair.dto.CarDTO;
+import ca.mcgill.ecse321.autoRepair.dto.CustomerDTO;
+import ca.mcgill.ecse321.autoRepair.dto.ProfileDTO;
+import ca.mcgill.ecse321.autoRepair.model.Car;
+import ca.mcgill.ecse321.autoRepair.model.Profile;
+import ca.mcgill.ecse321.autoRepair.model.Car.CarTransmission;
+import ca.mcgill.ecse321.autoRepair.model.Customer;
+import ca.mcgill.ecse321.autoRepair.service.CarService;
+import ca.mcgill.ecse321.autoRepair.service.CustomerService;
+import ca.mcgill.ecse321.autoRepair.service.ProfileService;
+
+
+
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -44,12 +60,17 @@ public class BusinessController {
 	 * @return businessDTO
 	 */
 	@PostMapping(value = {"/register_business"})
-	public BusinessDTO registerBusiness(@RequestParam String name, @RequestParam String email, @RequestParam String address,
+	public ResponseEntity<?> registerBusiness(@RequestParam String name, @RequestParam String email, @RequestParam String address,
 			@RequestParam String phoneNumber) {
 		
-		Business business = businessService.createBusiness(name, email, address, phoneNumber);
-
-		return convertToDTO(business);
+		Business business=null;
+		try {
+			business = businessService.createBusiness(name, email, address, phoneNumber);
+		}
+		catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(convertToDTO(business), HttpStatus.CREATED);
 
 	}
 	
@@ -64,12 +85,18 @@ public class BusinessController {
 	 * @return businessDTO
 	 */
 	@PostMapping(value = {"/edit_business"})
-	public BusinessDTO editBusiness(@RequestParam String name, @RequestParam String name1, @RequestParam String email, @RequestParam String address,
+	public ResponseEntity<?> editBusiness(@RequestParam String email, @RequestParam String address,
 			@RequestParam String phoneNumber) {
 		
-		Business business = businessService.editBusiness(name, name1, email, address, phoneNumber);
-
-		return convertToDTO(business);
+		String businessName = businessService.getBusiness().getName();
+		Business business=null;
+		try {
+			business = businessService.editBusiness(businessName, businessName, email, address, phoneNumber);
+		}
+		catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(convertToDTO(business), HttpStatus.OK);
 
 	}
 	
@@ -83,12 +110,18 @@ public class BusinessController {
 	 * @return operatingHourDTO
 	 */
 	@PostMapping(value = {"/add_business_hours"})
-	public OperatingHourDTO addBusinessHours(@RequestParam String businessName, @RequestParam String dayOfWeek, @RequestParam String startTime, @RequestParam String endTime) {
-		
-		return convertToDTO(businessService.createOperatingHour(businessName, DayOfWeek.valueOf(dayOfWeek), Time.valueOf(startTime+":00"), Time.valueOf(endTime+":00")));
+	public  ResponseEntity<?> addBusinessHours(@RequestParam String dayOfWeek, @RequestParam String startTime, @RequestParam String endTime) {
+		String businessName = businessService.getBusiness().getName();
+		OperatingHour opHour = null;
+		try {
+		opHour =businessService.createOperatingHour(businessName, DayOfWeek.valueOf(dayOfWeek), Time.valueOf(startTime+":00"), Time.valueOf(endTime+":00"));
+		}		
+			catch(IllegalArgumentException e) {
+	return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 
+			}
+		return new ResponseEntity<>(convertToDTO(opHour), HttpStatus.CREATED);
 	}
-	
 	/**
 	 * @author Fadi Tawfik Beshay
 	 * Edits the business hours of a business
@@ -99,11 +132,18 @@ public class BusinessController {
 	 * @return operatingHourDTO
 	 */
 	@PostMapping(value = {"/edit_business_hours"})
-	public OperatingHourDTO editBusinessHours(@RequestParam String dayOfWeek, @RequestParam String dayOfWeek1, @RequestParam String startTime1, @RequestParam String endTime1) {
-		
-		OperatingHour operatingHour = businessService.editOperatingHour(DayOfWeek.valueOf(dayOfWeek), DayOfWeek.valueOf(dayOfWeek1), Time.valueOf(startTime1+":00"), Time.valueOf(endTime1+":00"));
+	public ResponseEntity<?> editBusinessHours(@RequestParam String dayOfWeek,@RequestParam String startTime1, @RequestParam String endTime1) {
+		String dayOfWeek1 = dayOfWeek;
+		OperatingHour opHourToEdit = null;
+		try{
+			opHourToEdit =businessService.editOperatingHour(DayOfWeek.valueOf(dayOfWeek), DayOfWeek.valueOf(dayOfWeek1), Time.valueOf(startTime1+":00"), Time.valueOf(endTime1+":00"));
+		}
+		catch(IllegalArgumentException e) {
+      	return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
 
-		return convertToDTO(operatingHour);
+		return new ResponseEntity<>(convertToDTO(opHourToEdit), HttpStatus.CREATED);
+		
 
 	}
 	
@@ -115,11 +155,23 @@ public class BusinessController {
 	 * @return true when successfully deleted
 	 */
 	@PostMapping(value = {"/delete_business_hours"})
-	public boolean deleteBusinessHours(@RequestParam String businessName, @RequestParam String dayOfWeek) {
-		
-		return businessService.deleteOperatingHour(businessName, DayOfWeek.valueOf(dayOfWeek));
+	public boolean deleteBusinessHours( @RequestParam String dayOfWeek) {
+		String businessName = businessService.getBusiness().getName();
+	return  businessService.deleteOperatingHour(businessName, DayOfWeek.valueOf(dayOfWeek));
 
 	}
+
+//	@PostMapping(value = {"/add_holiday"})
+//	public  ResponseEntity<?> addHoliday(
+//@RequestParam String dateString, @RequestParam String startTimeString,@RequestParam String endTimeString){
+//String businessName = businessService.getBusiness().getName();
+//Business holidayToAdd = null;
+//holidayToAdd =businessService.addHoliday(businessName,DayOfWeek.valueOf(dateString),Time.valueOf(startTimeString+":00"),
+//              Time.valueOf(endTimeString+":00"));
+//return new ResponseEntity<>(convertToDTO(holidayToAdd), HttpStatus.CREATED);
+//}
+//		  
+
 	
 	/**
 	 * @author Fadi Tawfik Beshay
@@ -128,9 +180,9 @@ public class BusinessController {
 	 * @return businessDTO
 	 */
 	@GetMapping(value = {"/view_business_info", "/view_business_info/"})
-	public BusinessDTO viewBusinessInfo(@RequestParam String businessName){
+	public BusinessDTO viewBusinessInfo(){
 
-		return convertToDTO(businessService.getBusiness(businessName));
+		return convertToDTO(businessService.getBusiness());
 	
 	}
 	

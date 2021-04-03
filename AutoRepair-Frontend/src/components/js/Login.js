@@ -20,10 +20,9 @@ var frontendConfigurer = function(){
           return 'https://' + config.build.host + ':' + config.build.port ;
 	}
 };
-
 var backendUrl = backendConfigurer();
-//var frontendUrl = frontendConfigurer();
-var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
+var frontendUrl = frontendConfigurer();
+//var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
 
 var AXIOS = axios.create({
   baseURL: backendUrl,
@@ -31,9 +30,11 @@ var AXIOS = axios.create({
 })
 
 export default {
-	name:'login',
+	name:'Login',
 	data () {
 		return {
+			user: '',
+			type:'',
 			username: '',
 			password: '',
 			errorLogin: '',
@@ -41,30 +42,36 @@ export default {
 		}
 	},
 	methods: {
-		login: function (username, password) {
-			AXIOS.post('/login/', {}, {
-				params: {
-					username: username,
-					password: password
-				}})
-				.then(response => {
-					this.response = response.data
-					this.errorLogin= ''
-					if (this.response != '') {
-                   
-                    window.location.href = "/"
-                }
-                else {
-                    this.errorLogin = 'Wrong email or password!'
-                    console.log(this.errorlogin)
-                }
-				})
-				.catch(e => {
-					var errorMSG = e.response.data.message
-					console.log(errorMSG)
-					this.errorLogin = errorMSG
-				})
-		},
+		login (username, password) {
+			AXIOS.post('/login/',$.param({username: username, password: password}))
+			.then(response => {
+				this.user = response.data
+				if (response.status===200) {
+					
+					this.type = this.user.userType
+					window.localStorage.setItem('username', this.user.username)
+					window.localStorage.setItem('type', this.type)
+					
+					if(this.type.localeCompare("customer")==0){
+						
+						window.location.href = "/#/customer"
+					}
+					else if(this.type.localeCompare("assistant")==0){
+						window.location.href = "/#/assistant"
+					}
+					else {
+						window.location.href = "/#/owner"
+					} 
+
+					location.reload();
+				}
+			})
+			.catch(e => {
+				
+				swal("ERROR", e.response.data, "error");
+				
+			})
+		}
 	}
 
 }

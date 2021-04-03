@@ -84,6 +84,11 @@ public class ReminderController {
 	@PostMapping(value = { "/create_reminder/","/create_reminder" })
 	public ResponseEntity<?> createReminder
 	(@RequestParam String username,@RequestParam String serviceName,@RequestParam String datestring,@RequestParam String description, @RequestParam String timestring ) {
+		if(username == "")  return new ResponseEntity<>("The customer name cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
+		if(serviceName == "")  return new ResponseEntity<>("The service name cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
+		if(datestring == "")  return new ResponseEntity<>("The date cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
+		if(description == "")  return new ResponseEntity<>("The description cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
+		if(timestring == "")  return new ResponseEntity<>("The time cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
 		Date date = Date.valueOf(datestring);
 		Time time = Time.valueOf(timestring + ":00");
 		SystemTime.setSysDate(Date.valueOf(LocalDate.now()));
@@ -111,6 +116,12 @@ public class ReminderController {
 	@PostMapping(value = { "/update_reminder","/update_reminder/" })
 	public ResponseEntity<?> updateReminder
 	(@RequestParam String username,@RequestParam String oldServiceName, @RequestParam String newServiceName ,@RequestParam String datestring,@RequestParam String description, @RequestParam String timestring ) {
+		if(username == "")  return new ResponseEntity<>("The customer name cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
+		if(oldServiceName == "")  return new ResponseEntity<>("The old service name cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
+		if(newServiceName == "")  return new ResponseEntity<>("The new service name cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
+		if(datestring == "")  return new ResponseEntity<>("The date cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
+		if(description == "")  return new ResponseEntity<>("The description cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
+		if(timestring == "")  return new ResponseEntity<>("The time cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
 		Date date = Date.valueOf(datestring);
 		Time time = Time.valueOf(timestring + ":00");
 		SystemTime.setSysDate(Date.valueOf(LocalDate.now()));
@@ -132,9 +143,17 @@ public class ReminderController {
 	 * @return true if reminder is successfully deleted
 	 */
 	@PostMapping(value = { "/delete_reminder","/delete_reminder/" })
-	public boolean deleteReminder
+	public ResponseEntity<?> deleteReminder
 	(@RequestParam String username,@RequestParam String serviceName) {	
-		return reminderService.deleteReminder(serviceName, username);
+		if(username == "")  return new ResponseEntity<>("The customer name cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
+		if(serviceName == "")  return new ResponseEntity<>("The service name cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
+		try {
+			reminderService.deleteReminder(serviceName, username);
+			return new ResponseEntity<>(true, HttpStatus.OK);
+		}catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
 	}
 
 	private ReminderDTO convertToDTO(Reminder reminder) {

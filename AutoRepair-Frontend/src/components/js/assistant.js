@@ -91,46 +91,30 @@ export default {
 
     methods: {
         addreminder(username5, serviceName5, datestring, description, timestring){
-            this.errorCreateReminder = 'test';
             AXIOS.post('/create_reminder/',$.param({username: username5, serviceName: serviceName5, datestring: datestring, description:description, timestring:timestring }))
  			  .then(response => {
                 swal("Success", "Reminder Added Successfully", "success");
-                //this.services.push(response.data)
-                //this.errorCreateReminder = 'cr7';
-
              })
              .catch(e => {
                         swal("ERROR", e.response.data, "error");  
-                 				//this.errorCreateReminder = e.response.data
-                 				//console.log(this.errorCreateReminder)
                  			})
         },
         updatereminder(oldServiceName, newServiceName, username6, datestring2, description2, timestring2){
             AXIOS.post('/update_reminder/',$.param({oldServiceName: oldServiceName, newServiceName:newServiceName, username: username6, datestring:datestring2, description:description2, timestring:timestring2 }))
  			  .then(response => {
                 swal("Success", "Reminder Updated Successfully", "success");
-                //this.services.push(response.data)
-                //this.errorUpdateReminder = 'cr7';
-
              })
              .catch(e => {
                         swal("ERROR", e.response.data, "error"); 
-                 				//this.errorUpdateReminder = e.response.data
-                 				//console.log(this.errorUpdateReminder)
                  			})
         },
         deletereminder(username4, serviceName4){
             AXIOS.post('/delete_reminder/',$.param({username: username4, serviceName: serviceName4}))
  			  .then(response => {
                 swal("Success", "Reminder Deleted Successfully", "success");
-                //this.services.push(response.data)
-                //this.errorDeleteReminder = 'cr7';
-
              })
              .catch(e => {
                         swal("ERROR", e.response.data, "error"); 
-                 				// this.errorDeleteReminder = e.response.data
-                 				// console.log(this.errorDeleteReminder)
                  			})
         },
 
@@ -138,14 +122,9 @@ export default {
           AXIOS.post('/update_service/',$.param({serviceName: serviceName7, duration: duration7, price:price7}))
           .then(response => {
               swal("Success", "Service " + serviceName7 + " Updated Successfully", "success");
-              //this.services.push(response.data)
-              //this.errorUpdateService2 = 'cr7';
-
         })
         .catch(e => {
               swal("ERROR", e.response.data, "error");
-              //this.errorUpdateService2 = e.response.data
-              //console.log(this.errorUpdateService2)
   })
 },
 

@@ -56,10 +56,15 @@ public class ChosenServiceController {
 	 */
 	@PostMapping(value = { "/create_service","/create_service/" })
 	public ResponseEntity<?> createChosenService
-	(@RequestParam String serviceName,@RequestParam int duration,@RequestParam Double price) {
+	(@RequestParam String serviceName,@RequestParam String duration,@RequestParam String price) {
+		if(serviceName == "")  return new ResponseEntity<>("The service name cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
+		if(duration == "")  return new ResponseEntity<>("The service duration cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
+		if(price == "")  return new ResponseEntity<>("The service price cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
+		int duration2 =  Integer.parseInt(duration);
+		Double d = Double.parseDouble(price);
 		ChosenService service = null;
 		try {
-		service = chosenService.createChosenService(serviceName, duration, price);
+		service = chosenService.createChosenService(serviceName, duration2, d);
 		}catch(IllegalArgumentException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -77,10 +82,15 @@ public class ChosenServiceController {
 	 */
 	@PostMapping(value = { "/update_service","/update_service/" })
 	public ResponseEntity<?> updateChosenService
-	(@RequestParam String serviceName,@RequestParam int duration,@RequestParam Double price) {
+	(@RequestParam String serviceName,@RequestParam String duration,@RequestParam String price) {
+		if(serviceName == "")  return new ResponseEntity<>("The service name cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
+		if(duration == "")  return new ResponseEntity<>("The service duration cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
+		if(price == "")  return new ResponseEntity<>("The service price cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
+		int duration2 =  Integer.parseInt(duration);
+		Double d = Double.parseDouble(price);
 		ChosenService service = null;
 		try {
-		service = chosenService.editChosenService(serviceName, duration, price);
+		service = chosenService.editChosenService(serviceName, duration2, d);
 		}catch(IllegalArgumentException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -94,9 +104,16 @@ public class ChosenServiceController {
 	 * @return true if chosen service is successfully deleted
 	 */
 	@PostMapping(value = { "/delete_service","/delete_service/" })
-	public boolean deleteChosenService
+	public ResponseEntity<?> deleteChosenService
 	(@RequestParam String serviceName) {
-		return chosenService.deleteChosenService(serviceName);
+		if(serviceName == "")  return new ResponseEntity<>("The service name cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
+		try {
+			chosenService.deleteChosenService(serviceName);
+			return new ResponseEntity<>(true, HttpStatus.OK);
+		}catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
 	}
 
 	private ChosenServiceDTO convertToDTO(ChosenService service) {

@@ -99,7 +99,6 @@ public class AppointmentController {
 		Date oldDate = Date.valueOf(appointmentDate);
 		Time oldTime = Time.valueOf(appointmentTime);
 		ChosenService oldService = chosenServiceService.getChosenService(serviceName);
-		Time endOldTime = findEndTimeOfApp(oldService, oldTime.toLocalTime());
 
 		TimeSlot timeSlot = timeSlotService.getTimeSlot(oldDate, oldTime);
 
@@ -167,9 +166,6 @@ public class AppointmentController {
 		Time startTime = Time.valueOf(appointmentTime);
 
 		Customer customer = customerService.getCustomer(username);
-		Time oldTime = Time.valueOf(appointmentTime);
-		ChosenService oldService = chosenServiceService.getChosenService(serviceName);
-		Time endOldTime = findEndTimeOfApp(oldService, oldTime.toLocalTime());
 
 		TimeSlot timeSlot = timeSlotService.getTimeSlot(date, startTime);
 
@@ -188,10 +184,7 @@ public class AppointmentController {
 		}
 	}
 
-	private Time findEndTimeOfApp(ChosenService service, LocalTime startTime){
-		LocalTime localEndTime = startTime.plusMinutes(service.getDuration());
-		return Time.valueOf(localEndTime);
-	}
+	
 
 	/**
 	 * @author Tamara Zard Aboujaoudeh

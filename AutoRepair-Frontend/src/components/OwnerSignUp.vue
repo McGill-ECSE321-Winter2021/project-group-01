@@ -70,12 +70,13 @@
                         Error: {{errorOwnerSignup}}</h5> 
                   </div>
 				</div>
+                            <!-- v-bind:disabled="!name || !password || !confirmPassword || !authentification" -->
+
               <div class="col-md-10">
                 <div class="form-group">
                   <button
                     type="button"
                     class="btn btn-dark py-3 px-4"
-                    v-bind:disabled="!name || !password || !confirmPassword || !authentification"
                     @click="ownersignup(name, password, confirmPassword, authentification)">
                         Owner Signup</button>
                 </div>

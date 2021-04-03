@@ -416,6 +416,6 @@
   </div>
 </template>
 
-<script src="./js/appointment.js"></script>
+<script src="./js/Appointment.js"></script>
 
 

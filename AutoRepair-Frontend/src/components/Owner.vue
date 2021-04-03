@@ -582,4 +582,4 @@
 	</div>
 </template>
 
-<script src="./js/owner.js"></script>
+<script src="./js/Owner.js"></script>

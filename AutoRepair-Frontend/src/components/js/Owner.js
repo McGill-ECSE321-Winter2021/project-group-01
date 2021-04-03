@@ -121,20 +121,40 @@ export default {
         registerBusiness(name, email, address, phoneNumber) {
             AXIOS.post('/register_business/', $.param({ name: name, email: email, address: address, phoneNumber: phoneNumber }))
                 .then(response => {
-                    this.errorBusiness = ''
+                    this.name = ''
+                    this.email = ''
+                    this.address = ''
+                    this.phoneNumber = ''
+                    
+                    swal("Success", "Business " + name + " created Successfully", "success")
+                    .then(okay => {
+                        if(okay){
+                            location.reload();
+                        }
+                    });
                 })
                 .catch(e => {
                     if (e.response.data == "Business already exists") {
                         AXIOS.patch('/edit_business/', $.param({ email: email, address: address, phoneNumber: phoneNumber }))
                             .then(response => {
-                                this.errorBusiness = ''
+                                this.name = ''
+                                this.email = ''
+                                this.address = ''
+                                this.phoneNumber = ''
+                                
+                                swal("Success", "Business Info Successfully Updated", "success")
+                                .then(okay => {
+                                    if(okay){
+                                        location.reload();
+                                    }
+                                });    
                             })
                             .catch(error => {
-                                this.errorBusiness = error.response.data
+                                swal("ERROR", e.response.data, "error");
                             })
                     }
                     else {
-                        this.errorBusiness = e.response.data
+                        swal("ERROR", e.response.data, "error");
                     }
 
                 })
@@ -143,6 +163,16 @@ export default {
         addservice(serviceName, duration, price) {
             AXIOS.post('/create_service/', $.param({ serviceName: serviceName, duration: duration, price: price }))
                 .then(response => {
+                    AXIOS.get('/view_all_services')
+                        .then(response => {
+                            this.serviceName=''
+                            this.duration=''
+                            this.price=''
+                            this.services = response.data
+                        })
+                        .catch(e => {
+                            this.errorService = e
+                        })
                     swal("Success", "Service " + serviceName + " Added Successfully", "success");
 
                 })
@@ -153,6 +183,16 @@ export default {
         updateservice(serviceName2, duration2, price2) {
             AXIOS.patch('/update_service/', $.param({ serviceName: serviceName2, duration: duration2, price: price2 }))
                 .then(response => {
+                    AXIOS.get('/view_all_services')
+                        .then(response => {
+                            this.serviceName2=''
+                            this.duration2=''
+                            this.price2=''
+                            this.services = response.data
+                        })
+                        .catch(e => {
+                            this.errorService = e
+                        })
                     swal("Success", "Service " + serviceName2 + " Updated Successfully", "success");
 
                 })
@@ -162,10 +202,19 @@ export default {
         },
         deleteservice(serviceName3) {
             AXIOS.delete('/delete_service/', {
-            params:{
-            serviceName: serviceName3
-            }})
+                params: {
+                    serviceName: serviceName3
+                }
+            })
                 .then(response => {
+                    AXIOS.get('/view_all_services')
+                        .then(response => {
+                            this.serviceName3=''
+                            this.services = response.data
+                        })
+                        .catch(e => {
+                            this.errorService = e
+                        })
                     swal("Success", "Service " + serviceName3 + " Deleted Successfully", "success");
                 })
                 .catch(e => {
@@ -173,6 +222,5 @@ export default {
                 })
         }
     }
-
 
 }

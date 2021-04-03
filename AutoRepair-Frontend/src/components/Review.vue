@@ -358,5 +358,5 @@
   </div>
 </template>
 
-<script src="./js/review.js">
+<script src="./js/Review.js">
 </script>

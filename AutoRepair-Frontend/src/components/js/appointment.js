@@ -91,6 +91,22 @@ export default {
           newServiceName: newServiceName
       }})
         			.then(response => {
+
+                this.selectedUpdate=''
+                this.newAppointmentDate=''
+                this.newAppointmentTime=''
+                this.newServiceName=''
+                AXIOS.get('/upcoming_appointmentsOf/', {
+                  params:{
+                  username: localStorage.getItem('username'),
+                  }})
+                  .then(response => {
+                   this.appointments = response.data
+                   this.appointments.sort((a, b) => ((a.timeSlot.startDate + a.timeSlot.startTime) > (b.timeSlot.startDate + b.timeSlot.startTime)) ? 1 : -1)
+                 })
+                 .catch(e => {
+                   swal("ERROR", e.response.data, "error");
+                })
         				this.appointment = response.data
         				this.appointments.sort((a, b) => ((a.timeSlot.startDate + a.timeSlot.startTime) > (b.timeSlot.startDate + b.timeSlot.startTime)) ? 1 : -1)
         				swal("Success", "You updated your appointment on " + appointmentDate + " at " + appointmentTime +" for " + serviceName
@@ -112,6 +128,22 @@ export default {
   makeAppointment (username, appointmentDate, appointmentTime, serviceName) {
   			AXIOS.post('/make_appointment/',$.param({username: localStorage.getItem('username'), serviceName: serviceName, appointmentDate:appointmentDate , appointmentTime:appointmentTime}))
   			.then(response => {
+
+          this.serviceName=''
+          this.appointmentDate=''
+          this.appointmentTime=''
+
+          AXIOS.get('/upcoming_appointmentsOf/', {
+            params:{
+            username: localStorage.getItem('username'),
+            }})
+            .then(response => {
+             this.appointments = response.data
+             this.appointments.sort((a, b) => ((a.timeSlot.startDate + a.timeSlot.startTime) > (b.timeSlot.startDate + b.timeSlot.startTime)) ? 1 : -1)
+           })
+           .catch(e => {
+             swal("ERROR", e.response.data, "error");
+          })
   				this.appointment = response.data
   				swal("Success", "You booked an appointment on " + appointmentDate + " at " + appointmentTime +" for " + serviceName, "success");
   				serviceName=''
@@ -137,6 +169,18 @@ export default {
             serviceName:serviceName
         }})
         .then(response => {
+          this.selectedCancel=''
+          AXIOS.get('/upcoming_appointmentsOf/', {
+            params:{
+            username: localStorage.getItem('username'),
+            }})
+            .then(response => {
+             this.appointments = response.data
+             this.appointments.sort((a, b) => ((a.timeSlot.startDate + a.timeSlot.startTime) > (b.timeSlot.startDate + b.timeSlot.startTime)) ? 1 : -1)
+           })
+           .catch(e => {
+             swal("ERROR", e.response.data, "error");
+          })
           swal("Success", "You cancelled your appointment on " + startDate + " at " + startTime +" for " + serviceName, "success");
           serviceName=''
           appointmentTime=''

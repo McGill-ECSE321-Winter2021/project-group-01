@@ -100,6 +100,30 @@ export default {
 				}
 			})
 				.then(response => {
+					this.selected=''
+					this.serviceRating=''
+					this.description=''
+					AXIOS.get('/view_reviews_of_customer', {
+						params: {
+							username: localStorage.getItem('username')
+						}
+					})
+						.then(response => {
+							this.customerReviews = response.data
+						})
+						.catch(e => {
+							this.this.customerReviews = []
+
+						})
+
+					AXIOS.get('/view_all_reviews')
+						.then(response => {
+							// JSON responses are automatically parsed.
+							this.reviews = response.data
+						})
+						.catch(e => {
+							this.errorReview = e
+						})
 					swal("Success", "Thank you for your feedback!", "success");
 
 				})
@@ -119,6 +143,30 @@ export default {
 				}
 			})
 				.then(response => {
+					this.selectedEdit=''
+					this.editReviewRating=''
+					this.descriptionEdit=''
+					AXIOS.get('/view_reviews_of_customer', {
+						params: {
+							username: localStorage.getItem('username')
+						}
+					})
+						.then(response => {
+							this.customerReviews = response.data
+						})
+						.catch(e => {
+							this.this.customerReviews = []
+
+						})
+
+					AXIOS.get('/view_all_reviews')
+						.then(response => {
+							// JSON responses are automatically parsed.
+							this.reviews = response.data
+						})
+						.catch(e => {
+							this.errorReview = e
+						})
 					swal("Success", "Review edit successfully!", "success");
 
 				})
@@ -136,6 +184,28 @@ export default {
 				}
 			})
 				.then(response => {
+					this.selectedDelete=''
+					AXIOS.get('/view_reviews_of_customer', {
+						params: {
+							username: localStorage.getItem('username')
+						}
+					})
+						.then(response => {
+							this.customerReviews = response.data
+						})
+						.catch(e => {
+							this.this.customerReviews = []
+
+						})
+
+					AXIOS.get('/view_all_reviews')
+						.then(response => {
+							// JSON responses are automatically parsed.
+							this.reviews = response.data
+						})
+						.catch(e => {
+							this.errorReview = e
+						})
 					swal("Success", "Review deleted successfully!", "success");
 
 				})

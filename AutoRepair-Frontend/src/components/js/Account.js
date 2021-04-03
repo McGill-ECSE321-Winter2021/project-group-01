@@ -82,6 +82,11 @@ export default {
                 }
             })
                 .then(response => {
+                    this.firstName=''
+                    this.lastName=''
+                    this.address=''
+                    this.phoneNumber=''
+                    this.zipCode=''
                     this.profile = response.data.profile
                     swal("Success", "Profile edited successfully!", "success");
                 })

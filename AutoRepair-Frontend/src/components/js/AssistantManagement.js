@@ -47,9 +47,10 @@ export default {
       errorAddOpHours: '',
       errorEditOpHours: '',
       errorDeleteOpHours: '',
+      selected: '',
+      selected2: '',
 
       username: '',
-      username4: '',
       username5: '',
       serviceName: '',
       serviceName4: '',
@@ -63,10 +64,13 @@ export default {
       timestring2: '',
       description2: '',
       errorUpdateService2: '',
+      datestring10: '',
+      timestring10: '',
+      description10: '',
 
       serviceName7: '',
-      duration7: 0,
-      price7: 0,
+      duration7: '',
+      price7: '',
 
       errorCreateReminder: '',
       errorUpdateReminder: '',
@@ -75,7 +79,8 @@ export default {
       services: [],
       response: [],
       customers: [],
-      errorCustomer: ''
+      errorCustomer: '',
+      errorReminder: ''
     }
   },
   created: function () {
@@ -106,7 +111,7 @@ export default {
       })
       .catch(e => {
         swal("ERROR", e.response.data, "error");
-    })
+      })
   },
 
 
@@ -122,8 +127,17 @@ export default {
         }
       })
         .then(response => {
+          this.dayOfWeek = ''
+          this.startTime = ''
+          this.endTime = ''
           this.errorAddOpHours = ''
-          swal("Success", "Operating Hour for " + dayOfWeek + " Added Successfully", "success");
+
+          swal("Success", "Operating Hour for " + dayOfWeek + " Added Successfully", "success")
+            .then(okay => {
+              if (okay) {
+                location.reload();
+              }
+            });
 
         })
         .catch(e => {
@@ -141,8 +155,15 @@ export default {
         }
       })
         .then(response => {
+          this.dayOfWeek2 = ''
           this.errorDeleteOpHours = ''
-          swal("Success", "Operating Hour for " + dayOfWeek2 + " Deleted Successfully", "success");
+          location.reload();
+          swal("Success", "Operating Hour for " + dayOfWeek2 + " Deleted Successfully", "success")
+            .then(okay => {
+              if (okay) {
+                location.reload();
+              }
+            });
         })
         .catch(e => {
           swal("ERROR", "Operating Hour to delete does not exist", "error");
@@ -159,8 +180,17 @@ export default {
         }
       })
         .then(response => {
+          this.dayOfWeek1 = ''
+          this.startTime1 = ''
+          this.endTime1 = ''
           this.errorEditOpHours = ''
-          swal("Success", "Operating Hour for " + dayOfWeek1 + " Edited Successfully", "success");
+          location.reload();
+          swal("Success", "Operating Hour for " + dayOfWeek1 + " Edited Successfully", "success")
+            .then(okay => {
+              if (okay) {
+                location.reload();
+              }
+            });
         })
         .catch(e => {
           swal("ERROR", e.response.data, "error");
@@ -172,6 +202,20 @@ export default {
     addreminder(username5, serviceName5, datestring, description, timestring) {
       AXIOS.post('/create_reminder/', $.param({ username: username5, serviceName: serviceName5, datestring: datestring, description: description, timestring: timestring }))
         .then(response => {
+          AXIOS.get('/view_reminders')
+            .then(response => {
+              this.username5 = ''
+              this.serviceName5 = ''
+              this.datestring = ''
+              this.description = ''
+              this.timestring = ''
+              // JSON responses are automatically parsed.
+              this.reminders = response.data
+              this.reminders.sort((a, b) => ((a.date + a.time) > (b.date + b.time)) ? 1 : -1)
+            })
+            .catch(e => {
+              swal("ERROR", e.response.data, "error");
+            })
           swal("Success", "Reminder Added Successfully", "success");
         })
         .catch(e => {
@@ -181,6 +225,20 @@ export default {
     updatereminder(oldServiceName, newServiceName, username6, datestring2, description2, timestring2) {
       AXIOS.patch('/update_reminder/', $.param({ oldServiceName: oldServiceName, newServiceName: newServiceName, username: username6, datestring: datestring2, description: description2, timestring: timestring2 }))
         .then(response => {
+          AXIOS.get('/view_reminders')
+            .then(response => {
+              this.selected2 = ''
+              this.newServiceName = ''
+              this.description2 = ''
+              this.datestring2 = ''
+              this.timestring2 = ''
+              // JSON responses are automatically parsed.
+              this.reminders = response.data
+              this.reminders.sort((a, b) => ((a.date + a.time) > (b.date + b.time)) ? 1 : -1)
+            })
+            .catch(e => {
+              swal("ERROR", e.response.data, "error");
+            })
           swal("Success", "Reminder Updated Successfully", "success");
         })
         .catch(e => {
@@ -189,10 +247,22 @@ export default {
     },
     deletereminder(username4, serviceName4) {
       AXIOS.delete('/delete_reminder/', {
-      params:{
-      username: username4,
-      serviceName: serviceName4 }})
+        params: {
+          username: username4,
+          serviceName: serviceName4
+        }
+      })
         .then(response => {
+          AXIOS.get('/view_reminders')
+            .then(response => {
+              this.selected = ''
+              // JSON responses are automatically parsed.
+              this.reminders = response.data
+              this.reminders.sort((a, b) => ((a.date + a.time) > (b.date + b.time)) ? 1 : -1)
+            })
+            .catch(e => {
+              swal("ERROR", e.response.data, "error");
+            })
           swal("Success", "Reminder Deleted Successfully", "success");
         })
         .catch(e => {
@@ -203,6 +273,9 @@ export default {
     updateservice(serviceName7, duration7, price7) {
       AXIOS.patch('/update_service/', $.param({ serviceName: serviceName7, duration: duration7, price: price7 }))
         .then(response => {
+          this.serviceName7 = ''
+          this.duration7 = ''
+          this.price7 = ''
           swal("Success", "Service " + serviceName7 + " Updated Successfully", "success");
         })
         .catch(e => {

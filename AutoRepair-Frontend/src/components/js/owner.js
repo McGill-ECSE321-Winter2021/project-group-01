@@ -83,7 +83,7 @@ export default {
                 })
                 .catch(e => {
                     if (e.response.data == "Business already exists") {
-                        AXIOS.post('/edit_business/', $.param({ email: email, address: address, phoneNumber: phoneNumber }))
+                        AXIOS.patch('/edit_business/', $.param({ email: email, address: address, phoneNumber: phoneNumber }))
                             .then(response => {
                                 this.errorBusiness = ''
                             })
@@ -109,7 +109,7 @@ export default {
                 })
         },
         updateservice(serviceName2, duration2, price2) {
-            AXIOS.post('/update_service/', $.param({ serviceName: serviceName2, duration: duration2, price: price2 }))
+            AXIOS.patch('/update_service/', $.param({ serviceName: serviceName2, duration: duration2, price: price2 }))
                 .then(response => {
                     swal("Success", "Service " + serviceName2 + " Updated Successfully", "success");
 
@@ -119,7 +119,10 @@ export default {
                 })
         },
         deleteservice(serviceName3) {
-            AXIOS.post('/delete_service/', $.param({ serviceName: serviceName3 }))
+            AXIOS.delete('/delete_service/', {
+            params:{
+            serviceName: serviceName3
+            }})
                 .then(response => {
                     swal("Success", "Service " + serviceName3 + " Deleted Successfully", "success");
                 })

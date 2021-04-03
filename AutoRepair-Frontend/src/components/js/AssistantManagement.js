@@ -97,11 +97,21 @@ export default {
       .catch(e => {
         this.errorCustomer = e
       })
+
+    AXIOS.get('/view_reminders')
+      .then(response => {
+        // JSON responses are automatically parsed.
+        this.reminders = response.data
+        this.reminders.sort((a, b) => ((a.date + a.time) > (b.date + b.time)) ? 1 : -1)
+      })
+      .catch(e => {
+        swal("ERROR", e.response.data, "error");
+    })
   },
 
 
   methods: {
-    
+
     addOpHours: function (dayOfWeek, startTime, endTime) {
       this.errorAddOpHours = ''
       AXIOS.post('/add_business_hours/', {}, {
@@ -125,7 +135,7 @@ export default {
 
     , deleteOpHours: function (dayOfWeek2) {
       this.errorDeleteOpHours = ''
-      AXIOS.post('/delete_business_hours/', {}, {
+      AXIOS.delete('/delete_business_hours/', {
         params: {
           dayOfWeek: dayOfWeek2
         }
@@ -141,7 +151,7 @@ export default {
 
     , editOpHours: function (dayOfWeek1, startTime1, endTime1) {
       this.errorEditOpHours = ''
-      AXIOS.post('/edit_business_hours/', {}, {
+      AXIOS.patch('/edit_business_hours/', {}, {
         params: {
           dayOfWeek: dayOfWeek1,
           startTime1: startTime1,
@@ -169,7 +179,7 @@ export default {
         })
     },
     updatereminder(oldServiceName, newServiceName, username6, datestring2, description2, timestring2) {
-      AXIOS.post('/update_reminder/', $.param({ oldServiceName: oldServiceName, newServiceName: newServiceName, username: username6, datestring: datestring2, description: description2, timestring: timestring2 }))
+      AXIOS.patch('/update_reminder/', $.param({ oldServiceName: oldServiceName, newServiceName: newServiceName, username: username6, datestring: datestring2, description: description2, timestring: timestring2 }))
         .then(response => {
           swal("Success", "Reminder Updated Successfully", "success");
         })
@@ -178,7 +188,10 @@ export default {
         })
     },
     deletereminder(username4, serviceName4) {
-      AXIOS.post('/delete_reminder/', $.param({ username: username4, serviceName: serviceName4 }))
+      AXIOS.delete('/delete_reminder/', {
+      params:{
+      username: username4,
+      serviceName: serviceName4 }})
         .then(response => {
           swal("Success", "Reminder Deleted Successfully", "success");
         })
@@ -188,7 +201,7 @@ export default {
     },
 
     updateservice(serviceName7, duration7, price7) {
-      AXIOS.post('/update_service/', $.param({ serviceName: serviceName7, duration: duration7, price: price7 }))
+      AXIOS.patch('/update_service/', $.param({ serviceName: serviceName7, duration: duration7, price: price7 }))
         .then(response => {
           swal("Success", "Service " + serviceName7 + " Updated Successfully", "success");
         })

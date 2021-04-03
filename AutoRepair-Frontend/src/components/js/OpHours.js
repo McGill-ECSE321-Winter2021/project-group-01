@@ -37,8 +37,8 @@ var AXIOS = axios.create({
             dayOfWeek:'',
             dayOfWeek1:'',
             dayOfWeek2:'',
-            startTime:'',  
-            startTime1:'',  
+            startTime:'',
+            startTime1:'',
             endTime:'',
             endTime1:'',
             errorAddOpHours:'',
@@ -55,7 +55,7 @@ var AXIOS = axios.create({
                     params:{
                         dayOfWeek: dayOfWeek,
                         startTime: startTime,
-                        endTime: endTime,                
+                        endTime: endTime,
                 }})
                 .then(response => {
                     this.errorAddOpHours=''
@@ -63,47 +63,47 @@ var AXIOS = axios.create({
 
             })
                 .catch(e => {
-     swal("ERROR", e.response.data, "error");  
+     swal("ERROR", e.response.data, "error");
                 })
 
             }
-    
-            
+
+
             ,deleteOpHours: function (dayOfWeek2){
                 this.errorDeleteOpHours=''
-                AXIOS.post('/delete_business_hours/', {}, {
+                AXIOS.delete('/delete_business_hours/', {
                     params:{
-                        dayOfWeek: dayOfWeek2            
+                        dayOfWeek: dayOfWeek2
                 }})
                 .then(response => {
                     this.errorDeleteOpHours=''
     swal("Success", "Operating Hour for " + dayOfWeek2 + " Deleted Successfully", "success");
             })
                 .catch(e => {
-     swal("ERROR","Operating Hour to delete does not exist", "error");  
+     swal("ERROR","Operating Hour to delete does not exist", "error");
                 })
             }
 
             ,editOpHours: function (dayOfWeek1,startTime1,endTime1){
                 this.errorEditOpHours=''
-                AXIOS.post('/edit_business_hours/', {}, {
+                AXIOS.patch('/edit_business_hours/', {}, {
                     params:{
-                        dayOfWeek: dayOfWeek1,   
+                        dayOfWeek: dayOfWeek1,
                         startTime1: startTime1,
-                        endTime1: endTime1,            
+                        endTime1: endTime1,
                 }})
                 .then(response => {
                     this.errorEditOpHours=''
-    swal("Success", "Operating Hour for " + dayOfWeek1 + " Edited Successfully", "success"); 
+    swal("Success", "Operating Hour for " + dayOfWeek1 + " Edited Successfully", "success");
             })
                 .catch(e => {
-      swal("ERROR", e.response.data, "error"); 
+      swal("ERROR", e.response.data, "error");
 
                 })
             }
         }
     }
 
-        
 
-    
+
+

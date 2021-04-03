@@ -256,7 +256,7 @@
         <br />
         <br />
       </div>
-      
+
    <section
       class="ftco-appointment ftco-section ftco-no-pt ftco-no-pb img"
       style="background-image: url(../static/images/work-2.jpg)"
@@ -319,8 +319,8 @@
 
                 <div class="col-md-12">
                   <div class="form-group">
-                  <button 
-                      type="button" 
+                  <button
+                      type="button"
                       class="btn btn-dark py-3 px-4"
                       v-bind:disabled="!serviceName7||!duration7||!price7"
                       @click="updateservice(serviceName7, duration7, price7)">Update the Service</button>
@@ -329,7 +329,7 @@
 
                   <div class="col-md-12">
 									<div class="form-group">
-                    <h5 v-if="errorUpdateService2" style="color:red; padding-top:20px">Error: {{errorUpdateService2}}</h5> 
+                    <h5 v-if="errorUpdateService2" style="color:red; padding-top:20px">Error: {{errorUpdateService2}}</h5>
                   </div>
 								  </div>
 
@@ -368,7 +368,7 @@
                          <select name="" id="" class="form-control" v-model="username5">
                             <option disabled value="">Please select one</option>
                             <option v-for="customer in customers"
-                             
+
                              :key=customer.username>
                                 {{ customer.username }}
                           </option>
@@ -388,7 +388,7 @@
                           <select name="" id="" class="form-control" v-model="serviceName5">
                             <option disabled value="">Please select one</option>
                             <option v-for="service in services"
-                             
+
                              :key=service.serviceName>
                                 {{ service.name }}
                           </option>
@@ -441,8 +441,8 @@
                 <div class="col-md-12">
                   <div class="form-group">
 
-                    <button 
-                      type="button" 
+                    <button
+                      type="button"
                       class="btn btn-dark py-3 px-4"
                       v-on:click="addreminder(username5, serviceName5, datestring , description, timestring)">Add the reminder</button>
                   </div>
@@ -450,7 +450,7 @@
 
                   <div class="col-md-12">
 									<div class="form-group">
-                    <h5 v-if="errorCreateReminder" style="color:red; padding-top:20px">Error: {{errorCreateReminder}}</h5> 
+                    <h5 v-if="errorCreateReminder" style="color:red; padding-top:20px">Error: {{errorCreateReminder}}</h5>
                   </div>
 								  </div>
 
@@ -479,7 +479,7 @@
                           <select name="" id="" class="form-control" v-model="username6">
                             <option disabled value="">Please select one</option>
                             <option v-for="customer in customers"
-                             
+
                              :key=customer.username>
                                 {{ customer.username }}
                             </option>
@@ -499,7 +499,7 @@
                           <select name="" id="" class="form-control" v-model="oldServiceName">
                             <option disabled value="">Please select one</option>
                             <option v-for="service in services"
-                             
+
                              :key=service.serviceName>
                                 {{ service.name }}
                           </option>
@@ -519,7 +519,7 @@
                           <select name="" id="" class="form-control" v-model="newServiceName">
                             <option disabled value="">Please select one</option>
                             <option v-for="service in services"
-                             
+
                              :key=service.serviceName>
                                 {{ service.name }}
                           </option>
@@ -570,8 +570,8 @@
                 </div>
                 <div class="col-md-12">
                   <div class="form-group">
-                    <button 
-                      type="button" 
+                    <button
+                      type="button"
                       class="btn btn-dark py-3 px-4"
                       @click="updatereminder(oldServiceName, newServiceName,username6, datestring2, description2, timestring2)">Update the reminder</button>
                   </div>
@@ -579,7 +579,7 @@
 
                   <div class="col-md-12">
 									<div class="form-group">
-                    <h5 v-if="errorUpdateReminder" style="color:red; padding-top:20px">Error: {{errorUpdateReminder}}</h5> 
+                    <h5 v-if="errorUpdateReminder" style="color:red; padding-top:20px">Error: {{errorUpdateReminder}}</h5>
                   </div>
 								  </div>
 
@@ -609,7 +609,7 @@
                         <select name="" id="" class="form-control" v-model="username4">
                             <option disabled value="">Please select one</option>
                             <option v-for="customer in customers"
-                             
+
                              :key=customer.username>
                                 {{ customer.username }}
                             </option>
@@ -629,7 +629,7 @@
                           <select name="" id="" class="form-control" v-model="serviceName4">
                             <option disabled value="">Please select one</option>
                             <option v-for="service in services"
-                             
+
                              :key=service.serviceName>
                                 {{ service.name }}
                           </option>
@@ -641,17 +641,17 @@
 
                   <div class="col-md-12">
                     <div class="form-group">
-                      <button 
-                      type="button" 
+                      <button
+                      type="button"
                       class="btn btn-dark py-3 px-4"
-                      v-bind:disabled="!serviceName4 || !username4" 
+                      v-bind:disabled="!serviceName4 || !username4"
                       v-on:click="deletereminder(username4, serviceName4)">delete the reminder</button>
                     </div>
-                  </div> 
+                  </div>
 
                   <div class="col-md-12">
 									<div class="form-group">
-                    <h5 v-if="errorDeleteReminder" style="color:red; padding-top:20px">Error: {{errorDeleteReminder}}</h5> 
+                    <h5 v-if="errorDeleteReminder" style="color:red; padding-top:20px">Error: {{errorDeleteReminder}}</h5>
                   </div>
 								  </div>
 
@@ -661,7 +661,91 @@
         </div>
       </div>
     </section>
+    <div style="background-color: #262626">
+      <br />
+      <br />
+      <br />
+    </div>
+    <br>
+    <br>
+
+    <div class="centered">
+      <div>
+        <h2 style="text-align: center">Reminders</h2>
+        <table
+          style="
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid black;
+            border-collapse: collapse;
+            table-layout: fixed;
+            text-align: center;
+          "
+        >
+          <thead>
+            <tr style="background-color: rgba(255, 165, 0, 0.8)">
+              <th style="border: 3px solid orange">Customer</th>
+              <th style="border: 3px solid orange">Service</th>
+              <th style="border: 3px solid orange">Date</th>
+              <th style="border: 3px solid orange">Time</th>
+              <th style="border: 3px solid orange">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="reminder in reminders" :key=reminder.id
+              style="background-color: rgba(255, 165, 0, 0.5)"
+            >
+              <td
+                style="
+                  border: 1px solid orange;
+                  background-color: rgba(255, 165, 0, 0.2);
+                "
+              >
+                {{ reminder.customer.username}}
+              </td>
+              <td
+                style="
+                  border: 1px solid orange;
+                  background-color: rgba(255, 165, 0, 0.2);
+                "
+              >
+                {{ reminder.chosenService.name}}
+              </td>
+              <td
+                style="
+                  border: 1px solid orange;
+                  background-color: rgba(255, 165, 0, 0.2);
+                "
+              >
+                {{ reminder.date}}
+              </td>
+              <td
+                style="
+                  border: 1px solid orange;
+                  background-color: rgba(255, 165, 0, 0.2);
+                "
+              >
+                {{ reminder.time}}
+              </td>
+              <td
+                style="
+                  border: 1px solid orange;
+                  background-color: rgba(255, 165, 0, 0.2);
+                "
+              >
+                {{ reminder.description}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <br>
+    <br>
+    <br>
   </div>
 </template>
-  
+
 <script src="./js/AssistantManagement.js"></script>

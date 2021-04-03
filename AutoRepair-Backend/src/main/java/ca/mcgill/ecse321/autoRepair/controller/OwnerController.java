@@ -7,16 +7,10 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import ca.mcgill.ecse321.autoRepair.dto.OwnerDTO;
 import ca.mcgill.ecse321.autoRepair.model.Owner;
-import ca.mcgill.ecse321.autoRepair.model.Profile;
 import ca.mcgill.ecse321.autoRepair.service.OwnerService;
 
 @CrossOrigin(origins = "*")
@@ -76,7 +70,7 @@ public class OwnerController {
 	 * @param newPassword
 	 * @return ownerDTO
 	 */
-	@PostMapping(value = { "/update_owner/{oldUsername}"})
+	@PatchMapping(value = { "/update_owner/{oldUsername}"})
 	public OwnerDTO updateOwner(@PathVariable("oldUsername") String oldUsername,
 			@RequestParam("newPassword") String newPassword) {
         Owner owner = ownerService.updateOwner(oldUsername, newPassword);

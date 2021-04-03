@@ -72,7 +72,7 @@ export default {
 			})
 			.catch(e => {
 				this.this.customerReviews = []
-				
+
 			})
 
 		// Initializing services from backend
@@ -110,7 +110,7 @@ export default {
 		},
 		editReview: function (description, serviceRating, appointmentDate, appointmentTime) {
 
-			AXIOS.post('/edit_review/', {}, {
+			AXIOS.patch('/edit_review/', {}, {
 				params: {
 					startDate: appointmentDate,
 					startTime: appointmentTime,
@@ -129,7 +129,7 @@ export default {
 		},
 		deleteReview: function (appointmentDate, appointmentTime) {
 
-			AXIOS.post('/delete_review/', {}, {
+			AXIOS.delete('/delete_review/', {
 				params: {
 					startDate: appointmentDate,
 					startTime: appointmentTime

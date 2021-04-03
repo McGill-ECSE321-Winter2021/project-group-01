@@ -35,29 +35,43 @@ export default {
     name: 'Owner',
     data() {
         return {
-            
+
             services: [],
+            reminders: [],
             reviews: []
-            
+
         }
     },
     created: function () {
         AXIOS.get('/view_all_services')
-            .then(response => {
-                this.services = response.data
-            })
-            .catch(e => {
-                this.errorService = e
-            })
+        .then(response => {
+            this.services = response.data
+        })
+        .catch(e => {
+            this.errorService = e
+        })
 
-            AXIOS.get('/view_all_reviews')
-			.then(response => {
-				// JSON responses are automatically parsed.
-				this.reviews = response.data
-			})
-			.catch(e => {
-				this.errorReview = e
-			})
+        AXIOS.get('/view_all_reviews')
+        .then(response => {
+          // JSON responses are automatically parsed.
+          this.reviews = response.data
+        })
+        .catch(e => {
+          this.errorReview = e
+        })
+
+        AXIOS.get('/view_reminders_for_customer', {
+         params:{
+         username: localStorage.getItem('username'),
+         }})
+        .then(response => {
+          // JSON responses are automatically parsed.
+          this.reminders = response.data
+          this.reminders.sort((a, b) => ((a.date + a.time) > (b.date + b.time)) ? 1 : -1)
+        })
+        .catch(e => {
+          this.errorReview = e
+        })
     }
 
 }

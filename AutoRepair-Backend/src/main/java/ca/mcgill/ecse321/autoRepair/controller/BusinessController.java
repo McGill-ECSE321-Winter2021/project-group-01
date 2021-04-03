@@ -9,13 +9,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import ca.mcgill.ecse321.autoRepair.dao.TimeSlotRepository;
 import ca.mcgill.ecse321.autoRepair.dto.BusinessDTO;
 import ca.mcgill.ecse321.autoRepair.dto.OperatingHourDTO;
 import ca.mcgill.ecse321.autoRepair.dto.TimeSlotDTO;
@@ -25,20 +20,6 @@ import ca.mcgill.ecse321.autoRepair.model.OperatingHour.DayOfWeek;
 import ca.mcgill.ecse321.autoRepair.model.TimeSlot;
 import ca.mcgill.ecse321.autoRepair.service.BusinessService;
 
-import ca.mcgill.ecse321.autoRepair.dto.CarDTO;
-import ca.mcgill.ecse321.autoRepair.dto.CustomerDTO;
-import ca.mcgill.ecse321.autoRepair.dto.ProfileDTO;
-import ca.mcgill.ecse321.autoRepair.model.Car;
-import ca.mcgill.ecse321.autoRepair.model.Profile;
-import ca.mcgill.ecse321.autoRepair.model.Car.CarTransmission;
-import ca.mcgill.ecse321.autoRepair.model.Customer;
-import ca.mcgill.ecse321.autoRepair.service.CarService;
-import ca.mcgill.ecse321.autoRepair.service.CustomerService;
-import ca.mcgill.ecse321.autoRepair.service.ProfileService;
-
-
-
-
 @CrossOrigin(origins = "*")
 @RestController
 
@@ -46,9 +27,7 @@ public class BusinessController {
 	
 	@Autowired
 	BusinessService businessService;
-	
-	@Autowired
-	TimeSlotRepository timeSlotRepository;
+
 	
 	/**
 	 * @author Fadi Tawfik Beshay
@@ -77,14 +56,12 @@ public class BusinessController {
 	/**
 	 * @author Fadi Tawfik Beshay
 	 * Edits the business information of a given business
-	 * @param name
-	 * @param name1
 	 * @param email
 	 * @param address
 	 * @param phoneNumber
 	 * @return businessDTO
 	 */
-	@PostMapping(value = {"/edit_business"})
+	@PatchMapping(value = {"/edit_business"})
 	public ResponseEntity<?> editBusiness(@RequestParam String email, @RequestParam String address,
 			@RequestParam String phoneNumber) {
 		
@@ -103,7 +80,6 @@ public class BusinessController {
 	/**
 	 * @author Fadi Tawfik Beshay
 	 * Adds the business hours of a business
-	 * @param businessName
 	 * @param dayOfWeek
 	 * @param startTime
 	 * @param endTime
@@ -126,12 +102,11 @@ public class BusinessController {
 	 * @author Fadi Tawfik Beshay
 	 * Edits the business hours of a business
 	 * @param dayOfWeek
-	 * @param dayOfWeek1
 	 * @param startTime1
 	 * @param endTime1
 	 * @return operatingHourDTO
 	 */
-	@PostMapping(value = {"/edit_business_hours"})
+	@PatchMapping(value = {"/edit_business_hours"})
 	public ResponseEntity<?> editBusinessHours(@RequestParam String dayOfWeek,@RequestParam String startTime1, @RequestParam String endTime1) {
 		String dayOfWeek1 = dayOfWeek;
 		OperatingHour opHourToEdit = null;
@@ -150,33 +125,19 @@ public class BusinessController {
 	/**
 	 * @author Fadi Tawfik Beshay
 	 * Deletes the business hours of a given business
-	 * @param businessName
 	 * @param dayOfWeek
 	 * @return true when successfully deleted
 	 */
-	@PostMapping(value = {"/delete_business_hours"})
+	@DeleteMapping(value = {"/delete_business_hours"})
 	public boolean deleteBusinessHours( @RequestParam String dayOfWeek) {
 		String businessName = businessService.getBusiness().getName();
 	return  businessService.deleteOperatingHour(businessName, DayOfWeek.valueOf(dayOfWeek));
 
 	}
-
-//	@PostMapping(value = {"/add_holiday"})
-//	public  ResponseEntity<?> addHoliday(
-//@RequestParam String dateString, @RequestParam String startTimeString,@RequestParam String endTimeString){
-//String businessName = businessService.getBusiness().getName();
-//Business holidayToAdd = null;
-//holidayToAdd =businessService.addHoliday(businessName,DayOfWeek.valueOf(dateString),Time.valueOf(startTimeString+":00"),
-//              Time.valueOf(endTimeString+":00"));
-//return new ResponseEntity<>(convertToDTO(holidayToAdd), HttpStatus.CREATED);
-//}
-//		  
-
 	
 	/**
 	 * @author Fadi Tawfik Beshay
 	 * Returns the business information of a business given a business name
-	 * @param businessName
 	 * @return businessDTO
 	 */
 	@GetMapping(value = {"/view_business_info", "/view_business_info/"})

@@ -8,16 +8,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import ca.mcgill.ecse321.autoRepair.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+<<<<<<< HEAD
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+=======
+import org.springframework.web.bind.annotation.*;
+>>>>>>> main
 
-import ca.mcgill.ecse321.autoRepair.dao.TimeSlotRepository;
 import ca.mcgill.ecse321.autoRepair.dto.AppointmentDTO;
 import ca.mcgill.ecse321.autoRepair.dto.CarDTO;
 import ca.mcgill.ecse321.autoRepair.dto.ChosenServiceDTO;
@@ -32,12 +36,15 @@ import ca.mcgill.ecse321.autoRepair.model.Customer;
 import ca.mcgill.ecse321.autoRepair.model.Profile;
 import ca.mcgill.ecse321.autoRepair.model.Review;
 import ca.mcgill.ecse321.autoRepair.model.TimeSlot;
+<<<<<<< HEAD
 import ca.mcgill.ecse321.autoRepair.dao.AppointmentRepository;
 import ca.mcgill.ecse321.autoRepair.dao.ChosenServiceRepository;
 import ca.mcgill.ecse321.autoRepair.dao.CustomerRepository;
 import ca.mcgill.ecse321.autoRepair.service.AppointmentService;
 import ca.mcgill.ecse321.autoRepair.service.ReviewService;
 import ca.mcgill.ecse321.autoRepair.service.TimeSlotService;
+=======
+>>>>>>> main
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -46,6 +53,15 @@ public class ReviewController {
 	@Autowired
 	private ReviewService reviewService;
 	
+<<<<<<< HEAD
+	@Autowired
+	private TimeSlotService timeSlotService;
+	
+	@Autowired
+	private AppointmentService appointmentService;
+
+=======
+>>>>>>> main
 	@Autowired
 	private TimeSlotService timeSlotService;
 	
@@ -53,24 +69,16 @@ public class ReviewController {
 	private AppointmentService appointmentService;
 
 	@Autowired
-	private AppointmentRepository appointmentRepository; 
+	private ChosenServiceService chosenServiceService;
 
 	@Autowired
-	private TimeSlotRepository timeSlotRepoisoty;
-
-	@Autowired
-	private ChosenServiceRepository serviceRepository;
-
-	@Autowired
-	private CustomerRepository customerRepository;
+	private CustomerService customerService;
 
 	/**
 	 * @author Mohammad Saeid Nafar
 	 * Creates a review
 	 * @param startDate
 	 * @param startTime
-	 * @param serviceName
-	 * @param customerName
 	 * @param description
 	 * @param serviceRating
 	 * @return reviewDTO
@@ -110,19 +118,23 @@ public class ReviewController {
 	 * @param newRating
 	 * @return reviewDTO
 	 */
-	@PostMapping(value = {"/edit_review/"})
-	public ReviewDTO editReview(@RequestParam("startDate") String startDate, @RequestParam("startTime")
+	@PatchMapping(value = {"/edit_review/"})
+	public ResponseEntity<?> editReview(@RequestParam("startDate") String startDate, @RequestParam("startTime")
 	String startTime, @RequestParam("newDescription") String newDescription,
 	@RequestParam("newRating") int newRating) {
 
 		Date date = Date.valueOf(startDate);
 		Time time = Time.valueOf(startTime);
-		TimeSlot timeSlot = timeSlotRepoisoty.findTimeSlotByStartDateAndStartTime(date, time);
-		Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
+		TimeSlot timeSlot = timeSlotService.getTimeSlot(date, time);
+		Appointment appointment = appointmentService.getAppointment(timeSlot);
+		Review review = null;
+		try {
+			 review = reviewService.editReview(appointment, newDescription, newRating);
+		}catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 
-		Review review = reviewService.editReview(appointment, newDescription, newRating);
-
-		return convertToDTO(review);
+		return new ResponseEntity<>(convertToDTO(review), HttpStatus.OK);
 	}
 
 	/**
@@ -132,14 +144,14 @@ public class ReviewController {
 	 * @param startTime
 	 * @return true if given review is successfully deleted
 	 */
-	@PostMapping(value = {"/delete_review/"})
+	@DeleteMapping(value = {"/delete_review/"})
 	public boolean deleteReview(@RequestParam("startDate") String startDate, @RequestParam("startTime")
 	String startTime) {
 
 		Date date = Date.valueOf(startDate);
 		Time time = Time.valueOf(startTime);
-		TimeSlot timeSlot = timeSlotRepoisoty.findTimeSlotByStartDateAndStartTime(date, time);
-		Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
+		TimeSlot timeSlot = timeSlotService.getTimeSlot(date, time);
+		Appointment appointment = appointmentService.getAppointment(timeSlot);
 
 		return reviewService.deleteReview(appointment);
 	}
@@ -163,7 +175,7 @@ public class ReviewController {
 	 */
 	@GetMapping(value = {"/view_reviews_for_service"})
 	public List<ReviewDTO> viewReviewsForService(@RequestParam("serviceName") String serviceName) {
-		ChosenService service = serviceRepository.findChosenServiceByName(serviceName);
+		ChosenService service = chosenServiceService.getChosenService(serviceName);
 		return reviewService.viewReviewsForService(service).stream().map(review -> 
 		convertToDTO(review)).collect(Collectors.toList());
 	}
@@ -176,7 +188,7 @@ public class ReviewController {
 	 */
 	@GetMapping(value = {"/view_reviews_of_customer"})
 	public List<ReviewDTO> viewReviewsOfCustomer(@RequestParam("username") String username) {
-		Customer customer = customerRepository.findCustomerByUsername(username);
+		Customer customer = customerService.getCustomer(username);
 		return reviewService.viewReviewsOfCustomer(customer).stream().map(review -> 
 		convertToDTO(review)).collect(Collectors.toList());
 	}
@@ -204,8 +216,8 @@ public class ReviewController {
 	String startTime) {
 		Date date = Date.valueOf(startDate);
 		Time time = Time.valueOf(startTime);
-		TimeSlot timeSlot = timeSlotRepoisoty.findTimeSlotByStartDateAndStartTime(date, time);
-		Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
+		TimeSlot timeSlot = timeSlotService.getTimeSlot(date, time);
+		Appointment appointment = appointmentService.getAppointment(timeSlot);
 		Review review = reviewService.getReview(appointment);
 		return convertToDTO(review);
 	}

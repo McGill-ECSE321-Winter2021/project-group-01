@@ -381,49 +381,8 @@ public class AppointmentServiceTest {
         assertNull(appointment);
         assertEquals(error, "The chosen service cannot be empty or null");
     }
-    @Test
-    public void testMakeAppointmentTimeNull() {
-        SystemTime.setSysTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
-
-        String serviceName = "TestService";
-        String customerName = "TestCustomer";
-        String error = null;
-        Date startDate = null;
-        Time startTime = null;
-
-        Appointment appointment = null;
-
-        try {
-            appointment = appointmentService.makeAppointment(customerName, serviceName, startDate, startTime);
-        } catch (IllegalArgumentException e) {
-            error = e.getMessage();
-        }
-        assertNull(appointment);
-        assertEquals(error,  "The start time cannot be null");
-    }
-    @Test
-    public void testMakeAppointmentDateNull() {
-        SystemTime.setSysTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
-
-        String serviceName = "TestService";
-        String customerName = "TestCustomer";
-        String error = null;
-        Date startDate = null;
-        Time startTime = Time.valueOf("08:00:00");
-
-        Appointment appointment = null;
-
-        try {
-            appointment = appointmentService.makeAppointment(customerName, serviceName, startDate, startTime);
-        } catch (IllegalArgumentException e) {
-            error = e.getMessage();
-        }
-        assertNull(appointment);
-        assertEquals(error,  "The start date cannot be null");
-    }
-
+    
+   
     @Test
     public void testMakeAppointmentCustomerEmpty() {
         SystemTime.setSysTime(Time.valueOf("08:00:00"));
@@ -647,29 +606,6 @@ public class AppointmentServiceTest {
 
         assertNull(appointment);
         assertEquals("The time has already passed.", error);
-    }
-
-    @Test
-    public void testMakeAppointmentSameDayNotTwoHoursDiffTime() {
-        SystemTime.setSysTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
-
-        String serviceName = "TestService";
-        String customerName = "TestCustomer";
-        Date startDate = Date.valueOf("2021-03-31");
-        Time startTime = Time.valueOf("09:00:00");
-        String error = null;
-
-        Appointment appointment = null;
-
-        try {
-            appointment = appointmentService.makeAppointment(customerName, serviceName, startDate, startTime);
-        } catch (IllegalArgumentException e) {
-            error = e.getMessage();
-        }
-
-        assertNull(appointment);
-        assertEquals("Booking an appointment on the same day has to be at least 2 hours before the appointment.", error);
     }
 
     @Test
@@ -917,104 +853,8 @@ public class AppointmentServiceTest {
         assertEquals("The chosen service cannot be empty or null",error);
     }
 
-    @Test
-    public void testUpdateAppointmentNullOldTime(){
-        SystemTime.setSysTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
-
-        Date oldStartDate = null;
-        Time oldStartTime =  null;
-        String oldServiceName = "Test Service 2";
-        Date newStartDate = null;
-        Time newStartTime =  null;
-        String newServiceName = "TestService";
-        String error = null;
-
-        Appointment updatedApp = null;
-
-        try{
-            updatedApp=appointmentService.updateAppointment(oldStartDate, oldStartTime, oldServiceName, newStartDate, newStartTime, newServiceName);
-        }catch (IllegalArgumentException e){
-            error = e.getMessage();
-        }
-
-        assertNull(updatedApp);
-        assertEquals("The old start time cannot be null",error);
-    }
-    @Test
-    public void testUpdateAppointmentNullOldDate(){
-        SystemTime.setSysTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
-
-        Date oldStartDate = null;
-        Time oldStartTime =  Time.valueOf("10:00:00");
-        String oldServiceName = "Test Service 2";
-        Date newStartDate = null;
-        Time newStartTime =  null;
-        String newServiceName = "TestService";
-        String error = null;
-
-        Appointment updatedApp = null;
-
-        try{
-            updatedApp=appointmentService.updateAppointment(oldStartDate, oldStartTime, oldServiceName, newStartDate, newStartTime, newServiceName);
-        }catch (IllegalArgumentException e){
-            error = e.getMessage();
-        }
-
-        assertNull(updatedApp);
-        assertEquals("The old start date cannot be null",error);
-    }
-    @Test
-    public void testUpdateAppointmentNullNewTime(){
-        SystemTime.setSysTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
-
-        Date oldStartDate = Date.valueOf("2021-04-30");
-        Time oldStartTime =  Time.valueOf("10:00:00");
-        String oldServiceName = "Test Service 2";
-        Date newStartDate = null;
-        Time newStartTime =  null;
-        String newServiceName = "TestService";
-        String error = null;
-
-        Appointment updatedApp = null;
-
-        try{
-            updatedApp=appointmentService.updateAppointment(oldStartDate, oldStartTime, oldServiceName, newStartDate, newStartTime, newServiceName);
-        }catch (IllegalArgumentException e){
-            error = e.getMessage();
-        }
-
-        assertNull(updatedApp);
-        assertEquals("The new start time cannot be null",error);
-    }
-    @Test
-    public void testUpdateAppointmentNullNewDate(){
-        SystemTime.setSysTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
-
-        Date oldStartDate = Date.valueOf("2021-04-30");
-        Time oldStartTime =  Time.valueOf("10:00:00");
-        String oldServiceName = "Test Service 2";
-        Date newStartDate = null;
-        Time newStartTime =  Time.valueOf("07:00:00");
-        String newServiceName = "TestService";
-        String error = null;
-
-        Appointment updatedApp = null;
-
-        try{
-            updatedApp=appointmentService.updateAppointment(oldStartDate, oldStartTime, oldServiceName, newStartDate, newStartTime, newServiceName);
-        }catch (IllegalArgumentException e){
-            error = e.getMessage();
-        }
-
-        assertNull(updatedApp);
-        assertEquals("The new start date cannot be null",error);
-    }
-
-
+    
+   
     @Test
     public void testUpdateAppointmentSpacesNewService(){
         SystemTime.setSysTime(Time.valueOf("08:00:00"));

@@ -1,5 +1,6 @@
   <template>
   <div id="appointment">
+<<<<<<< HEAD
     <nav
       class="navbar navbar-expand-lg navbar-light ftco_navbar bg-light ftco-navbar-light"
       id="ftco-navbar"
@@ -50,6 +51,9 @@
       </div>
     </nav>
 
+=======
+    
+>>>>>>> main
     <section
       class="ftco-section"
       style="
@@ -66,7 +70,11 @@
               class="form-group"
               style="
                 background-color: rgba(255, 165, 0, 0.7);
+<<<<<<< HEAD
                 height: 350px;
+=======
+                height: 330px;
+>>>>>>> main
                 width: 600px;
                 text-align: center;
                 border-radius: 25px;
@@ -139,13 +147,18 @@
                             appointmentTime.toString(),
                             serviceName
                           ),
+<<<<<<< HEAD
                             getAvailableTimeSlots(appointmentDate.toString())
+=======
+                            getAppointmentsOfCustomer()
+>>>>>>> main
                         "
                       >
                         Book
                       </button>
                     </div>
                   </div>
+<<<<<<< HEAD
                   <div class="form-group">
                     <h5
                       v-if="errorMakeAppointment"
@@ -154,6 +167,8 @@
                       Error: {{ errorMakeAppointment }}
                     </h5>
                   </div>
+=======
+>>>>>>> main
                 </div>
               </form>
             </div>
@@ -181,7 +196,11 @@
           class="form-group"
           style="
             background-color: rgba(255, 165, 0, 0.7);
+<<<<<<< HEAD
             height: 450px;
+=======
+            height: 420px;
+>>>>>>> main
             width: 600px;
             text-align: center;
             border-radius: 25px;
@@ -203,11 +222,23 @@
                         name="selectedAppointment"
                         id=""
                         class="form-control"
+<<<<<<< HEAD
                         v-model="selectedAppointment"
                       >
                         <option value="">Select An Appointment</option>
                         <option v-for="appointment in appointments" :key=appointment.id>
                           {{ appointment.service.name}}; {{ appointment.timeSlot.startDate}}; {{ appointment.timeSlot.startTime}} 
+=======
+                        v-model="selectedUpdate"
+                      >
+                        <option value="">Select An Appointment</option>
+                        <option v-for="appointment in appointments"
+                          v-bind:value="{ serviceName: appointment.service.name,
+                          appointmentDate: appointment.timeSlot.startDate,
+                          appointmentTime: appointment.timeSlot.startTime}"
+                          :key=appointment.id>
+                          {{ appointment.service.name}}; {{ appointment.timeSlot.startDate}}; {{ appointment.timeSlot.startTime}}
+>>>>>>> main
                         </option>
                       </select>
                     </div>
@@ -272,8 +303,14 @@
                     class="btn btn-dark py-3 px-4"
                     @click="
                       updateAppointment(
+<<<<<<< HEAD
                         tamara,
                         selectedAppointment,
+=======
+                        selectedUpdate.serviceName,
+                        selectedUpdate.appointmentDate,
+                        selectedUpdate.appointmentTime,
+>>>>>>> main
                         newAppointmentTime.toString(),
                         newAppointmentDate.toString(),
                         newServiceName
@@ -284,6 +321,7 @@
                   </button>
                 </div>
               </div>
+<<<<<<< HEAD
               <div class="form-group">
                 <h5
                   v-if="errorUpdateAppointment"
@@ -292,6 +330,8 @@
                   Error: {{ errorUpdateAppointment }}
                 </h5>
               </div>
+=======
+>>>>>>> main
             </div>
           </form>
         </div>
@@ -316,7 +356,11 @@
           class="form-group"
           style="
             background-color: rgba(255, 165, 0, 0.7);
+<<<<<<< HEAD
             height: 280px;
+=======
+            height: 260px;
+>>>>>>> main
             width: 600px;
             text-align: center;
             border-radius: 25px;
@@ -337,17 +381,30 @@
                         name="selectedAppointment"
                         id=""
                         class="form-control"
+<<<<<<< HEAD
                         v-model="selected"
+=======
+                        v-model="selectedCancel"
+>>>>>>> main
                       >
                         <option value="">Select An Appointment</option>
                         <option
                           v-for="appointment in appointments"
+<<<<<<< HEAD
                           v-bind:value="{ serviceName: appointment.service.name, 
                           appointmentDate: appointment.timeSlot.startDate, 
                           appointmentTime: appointment.timeSlot.startTime}"
                           :key="appointment.id"
                         >
                            {{ appointment.service.name}}; {{ appointment.timeSlot.startDate}}; {{ appointment.timeSlot.startTime}} 
+=======
+                          v-bind:value="{ serviceName: appointment.service.name,
+                          appointmentDate: appointment.timeSlot.startDate,
+                          appointmentTime: appointment.timeSlot.startTime}"
+                          :key="appointment.id"
+                        >
+                           {{ appointment.service.name}}; {{ appointment.timeSlot.startDate}}; {{ appointment.timeSlot.startTime}}
+>>>>>>> main
                         </option>
                       </select>
                     </div>
@@ -359,12 +416,17 @@
                   <button
                     type="button"
                     class="btn btn-dark py-3 px-4"
+<<<<<<< HEAD
                     @click="cancelAppointment(selected.serviceName, selected.appointmentDate, selected.appointmentTime)"
+=======
+                    @click="cancelAppointment(selectedCancel.serviceName, selectedCancel.appointmentDate, selectedCancel.appointmentTime)"
+>>>>>>> main
                   >
                     Cancel
                   </button>
                 </div>
               </div>
+<<<<<<< HEAD
               <div class="form-group">
                 <h5
                   v-if="errorCancelAppointment"
@@ -373,6 +435,8 @@
                   Error: {{ errorCancelAppointment }}
                 </h5>
               </div>
+=======
+>>>>>>> main
             </div>
           </form>
         </div>
@@ -480,10 +544,18 @@
     </div>
     <br />
     <br />
+<<<<<<< HEAD
     <br /> 
   </div>
 </template>
 
 <script src="./js/appointment.js"></script>
+=======
+    <br />
+  </div>
+</template>
+
+<script src="./js/Appointment.js"></script>
+>>>>>>> main
 
 

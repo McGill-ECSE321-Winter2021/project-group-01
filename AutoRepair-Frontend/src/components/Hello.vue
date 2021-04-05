@@ -1,5 +1,6 @@
 <template>
   <div id="hello">
+<<<<<<< HEAD
     <nav class="navbar navbar-expand-lg navbar-light ftco_navbar bg-light ftco-navbar-light" id="ftco-navbar">
         <div class="container">
         
@@ -46,12 +47,24 @@
 		          </div>
 		        </div>
 	        </div>
+=======
+    
+    <div class="hero-wrap">
+	    <div class="hero-image">
+	      <div class="item" style="height:600px; width: 100%; background-size:cover; background-image:url(../static/images/work-4.jpg);" >
+
+>>>>>>> main
 	      </div>
 	    </div>
 	  </div>
 
+<<<<<<< HEAD
 		
   
+=======
+
+
+>>>>>>> main
 		<section class="intro">
 			<div class="container intro-wrap">
 				<div class="row no-gutters">
@@ -62,13 +75,25 @@
 							</div>
 							<h2 class="mb-0">Are you ready? <span>Let's repair it now!</span></h2>
 						</div>
+<<<<<<< HEAD
 						<a href="#" class="bg-primary btn-custom d-flex align-items-center"><span>Book an Appointment</span></a>
+=======
+						<a href="#/login" class="bg-primary btn-custom d-flex align-items-center"><span>Book an Appointment</span></a>
+>>>>>>> main
 					</div>
 				</div>
 			</div>
 		</section>
+<<<<<<< HEAD
 
     <section class="service">
+=======
+		<br>
+		<br>
+		<br>
+
+   <section class="service">
+>>>>>>> main
     	<div class="container">
     		<div class="row justify-content-center pb-5 mb-3">
           <div class="col-md-7 heading-section text-center">
@@ -77,6 +102,7 @@
           </div>
         </div>
     		<div class="row">
+<<<<<<< HEAD
           <div class="col-md-4 services">
             <div class="d-block d-flex">
               <div class="icon d-flex justify-content-center align-items-center">
@@ -142,6 +168,23 @@
                 <h3 class="heading">Car Maintenance</h3>
                 <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
                 <p><a href="#" class="btn-custom">Read more</a></p>
+=======
+          <div class="col-md-4 services" v-for="service in services" :key=service.serviceName>
+            <div class="d-block d-flex" >
+              
+              <div class="icon d-flex justify-content-center align-items-center">
+                <span class="flaticon-repair"></span>
+              </div>
+
+              <div class="media-body pl-3" >
+
+                <h3 class="heading">{{service.name}}</h3>
+                <p>Duration: {{service.duration}} minutes</p>
+                <p>Price: {{service.price}} $</p>
+                <p v-if="service.rating === -1.0" > Rating: N/A </p>
+                <p v-else> Rating: {{service.rating}} </p>
+                <!-- <p><a href="#" class="btn-custom">Read more</a></p> -->
+>>>>>>> main
               </div>
             </div>
           </div>
@@ -149,7 +192,12 @@
     	</div>
     </section>
 
+<<<<<<< HEAD
    
+=======
+
+
+>>>>>>> main
 
     <section class="ftco-counter" id="section-counter">
     	<div class="container">
@@ -157,17 +205,28 @@
           <div class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ">
             <div class="block-18 text-center">
               <div class="text">
+<<<<<<< HEAD
                 <strong class="number" data-number="45">0</strong>
               </div>
               <div class="text">
               	<span>Years of Experienced</span>
+=======
+                <strong class="number" data-number="45">4</strong>
+              </div>
+              <div class="text">
+              	<span>Years of Experience</span>
+>>>>>>> main
               </div>
             </div>
           </div>
           <div class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ">
             <div class="block-18 text-center">
               <div class="text">
+<<<<<<< HEAD
                 <strong class="number" data-number="8500">8500</strong>
+=======
+                <strong class="number" data-number="8500">1043</strong>
+>>>>>>> main
               </div>
               <div class="text">
               	<span>Project completed</span>
@@ -177,7 +236,11 @@
           <div class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ">
             <div class="block-18 text-center">
               <div class="text">
+<<<<<<< HEAD
                 <strong class="number" data-number="2342">0</strong>
+=======
+                <strong class="number" data-number="2342">300</strong>
+>>>>>>> main
               </div>
               <div class="text">
               	<span>Happy Customers</span>
@@ -187,7 +250,11 @@
           <div class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ">
             <div class="block-18 text-center">
               <div class="text">
+<<<<<<< HEAD
                 <strong class="number" data-number="30">0</strong>
+=======
+                <strong class="number" data-number="30">6</strong>
+>>>>>>> main
               </div>
               <div class="text">
               	<span>Award Winning</span>
@@ -198,6 +265,7 @@
     	</div>
     </section>
 
+<<<<<<< HEAD
 		<section class="ftco-appointment ftco-section ftco-no-pt ftco-no-pb img" style="background-image: url(../static/images/bg_3.jpg);">
 			<div class="overlay"></div>
     	<div class="container">
@@ -273,11 +341,22 @@
           <div class="col-md-7 heading-section heading-section-white text-center">
           	<span class="subheading">Testimonies</span>
             <h2>Happy Clients &amp; Feedbacks</h2>
+=======
+    <section class="ftco-section testimony-section bg-light">
+      <div class="container">
+        <div class="row justify-content-center pb-5 mb-3">
+          <div
+            class="col-md-7 heading-section heading-section-white text-center"
+          >
+            <span class="subheading">Client Feedbacks</span>
+            <h2>Reviews</h2>
+>>>>>>> main
           </div>
         </div>
         <div class="row">
           <div class="col-md-12">
             <div class="carousel-testimony">
+<<<<<<< HEAD
               <div class="item">
                 <div class="testimony-wrap py-4">
                 	<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></span></div>
@@ -350,6 +429,40 @@
 		                    <span class="position">Marketing Manager</span>
 		                  </div>
 	                  </div>
+=======
+              <div class="item" v-for="review in reviews" :key="review.id">
+                <div class="testimony-wrap py-4">
+                  <div
+                    class="icon d-flex align-items-center justify-content-center"
+                  >
+                    <span class="fa fa-quote-left"></span>
+                  </div>
+                  <div class="text">
+                    <p class="mb-4">{{ review.description }}</p>
+                    <div class="d-flex align-items-center">
+                      <div
+                        class="user-img"
+                        style="
+                          background-image: url(../static/images/person_1.jpg);
+                        "
+                      ></div>
+                      <div class="pl-3">
+                        <p class="name">{{ review.service.name }}</p>
+                        <span class="position"
+                          >{{ review.customer.profile.firstName }}
+                          {{ review.customer.profile.lastName }}</span
+                        >
+                        <br />
+                        <span class="position"
+                          >Rating: {{ review.serviceRating }}</span
+                        >
+                        <br />
+                        <span class="position">{{
+                          review.appointment.timeSlot.startDate
+                        }}</span>
+                      </div>
+                    </div>
+>>>>>>> main
                   </div>
                 </div>
               </div>
@@ -359,7 +472,11 @@
       </div>
     </section>
 
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> main
     <section class="ftco-section bg-light">
     	<div class="container">
     		<div class="row justify-content-center pb-5 mb-3">
@@ -369,6 +486,7 @@
           </div>
         </div>
     		<div class="row">
+<<<<<<< HEAD
     			<div class="col-md-6 col-lg-3 ">
 	          <div class="block-7">
 	            <div class="text-center">
@@ -422,6 +540,15 @@
 	            </div>
 
 	            <a href="#" class="btn btn-secondary d-block px-2 py-3">Get Started</a>
+=======
+    			<div class="col-md-6 col-lg-3 " v-for="service in services" :key=service.serviceName>
+	          <div class="block-7">
+	            <div class="text-center">
+            	<span class="excerpt d-block">{{ service.name }}</span>
+	            <span class="price"><sup>$</sup> <span class="number">{{ service.price }}</span></span>
+
+	            <a href="#/login" class="btn btn-secondary d-block px-2 py-3">Get Started</a>
+>>>>>>> main
 	            </div>
 	          </div>
 	        </div>
@@ -500,6 +627,7 @@
 </template>
 
 
+<<<<<<< HEAD
 <script>
 export default {
   name: 'hello',
@@ -531,3 +659,6 @@ a {
   color: #42b983;
 }
 </style>
+=======
+<script src="./js/Hello.js"></script>
+>>>>>>> main

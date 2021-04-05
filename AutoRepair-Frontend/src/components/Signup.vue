@@ -154,11 +154,15 @@
                   </div>
                 </div>
               </div>
+<<<<<<< HEAD
                <div class="col-md-12">
                 <div class="form-group">
                     <h1> {{carTransmission}}</h1>
                 </div>
               </div>
+=======
+               
+>>>>>>> main
               <div class="col-md-12">
 				        <div class="form-group">
                     <h5 v-if="errorSignup" style="color:red; padding-top:20px">Error: {{errorSignup}}</h5>

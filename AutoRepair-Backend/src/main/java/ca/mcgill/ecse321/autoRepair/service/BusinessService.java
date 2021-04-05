@@ -92,7 +92,16 @@ public class BusinessService {
 	 */
 	@Transactional
 	public Business getBusiness() {
+<<<<<<< HEAD
 		return toList(businessRepository.findAll()).get(0);
+=======
+		try {
+			return toList(businessRepository.findAll()).get(0);
+		}catch (IndexOutOfBoundsException e) {
+			return null;
+		}
+		
+>>>>>>> main
 	}
 
 	/**

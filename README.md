@@ -15,14 +15,14 @@ This project consists on building a system for an Auto-repair car shop. Customer
 
 ## Roles and Hours spent
 
-| Name                    | Roles/Tasks                                | Sprint 1           | Sprint 2 | Sprint 3| Sprint 4|
-| ------------------------| -------------------------------------------|--------------------|----------|---------|---------|
-| Robert Aprahamian       | Software Developer, Testing, Documentation |                35  | 40       | -       | -       |
-| Fadi Tawfik Beshay      | Software Developer, Testing, Documentation |                35  | 40       | -       | -       |
-| Eric Chehata            | Software Developer, Testing, Documentation |                35  | 40       | -       | -       |  
-| Mohammad Saeid Nafar    | Software Developer, Testing, Documentation |                35  | 40       | -       | -       |
-| Marc Saber              | Software Developer, Testing, Documentation |                35  | 40       | -       | -       |
-| Tamara Zard Aboujaoudeh | Software Developer, Testing, Documentation |                35  | 40       | -       | -       |
+| Name                    | Roles/Tasks                                | Sprint 1           | Sprint 2 | Sprint 3 | Sprint 4|
+| ------------------------| -------------------------------------------|--------------------|----------|----------|---------|
+| Robert Aprahamian       | Software Developer, Testing, Documentation |                35  | 40       | 45       | -       |
+| Fadi Tawfik Beshay      | Software Developer, Testing, Documentation |                35  | 40       | 45       | -       |
+| Eric Chehata            | Software Developer, Testing, Documentation |                35  | 40       | 45       | -       |  
+| Mohammad Saeid Nafar    | Software Developer, Testing, Documentation |                35  | 40       | 45       | -       |
+| Marc Saber              | Software Developer, Testing, Documentation |                35  | 40       | 45       | -       |
+| Tamara Zard Aboujaoudeh | Software Developer, Testing, Documentation |                35  | 40       | 45       | -       |
 
 
 ## Sprint 1 
@@ -42,9 +42,23 @@ To access the wiki>>[Sprint 2](https://github.com/McGill-ECSE321-Winter2021/proj
 ### Roles and Tasks
 | Name                    | Roles/Tasks                                                                                                   | 
 | ------------------------| --------------------------------------------------------------------------------------------------------------|
-| Robert Aprahamian       | Backend Implementation, _ChosenService_ & _Reminder_ classes Unit Testing, Integration Testing, Documentation       |              
+| Robert Aprahamian       | Backend Implementation, _ChosenService_ & _Reminder_ classes Unit Testing, Integration Testing, Documentation |              
 | Fadi Tawfik Beshay      | Backend Implementation, _OperatingHour_ & _Business_ classes Unit Testing, Integration Testing, Documentation |                
 | Eric Chehata            | Backend Implementation, _Cutomer, Profile_ & _Car_ classes Unit Testing, Integration Testing, Documentation   |             
 | Mohammad Saeid Nafar    | Backend Implementation, _Review_ class Unit Testing, Integration Testing, Documentation                       |         
 | Marc Saber              | Backend Implementation, _Owner_ & _Assistant_ classes Unit Testing, Integration Testing, Documentation        | 
 | Tamara Zard Aboujaoudeh | Backend Implementation, _Appointment_ & _TimeSlot_ classes Unit Testing, Integration Testing, Documentation   |
+
+
+## Sprint 3
+To access the wiki>>[Sprint 3](https://github.com/McGill-ECSE321-Winter2021/project-group-01/wiki#sprint-3)
+### Roles and Time Spent
+| Name                    | Roles/Tasks                                                                                                              | 
+| ------------------------| -------------------------------------------------------------------------------------------------------------------------|
+| Robert Aprahamian       | Web Frontend Implementation and Integration with Backend Services of _ChosenService_ & _Reminder_ classes, Documentation |               
+| Fadi Tawfik Beshay      | Web Frontend Implementation and Integration with Backend Services of _Business_ class, Documentation                     |               
+| Eric Chehata            | Web Frontend Implementation and Integration with Backend Services of _User_ & _Customer_ class, Documentation            |                
+| Mohammad Saeid Nafar    | Web Frontend Implementation and Integration with Backend Services of _Review_ class, Documentation                       |             
+| Marc Saber              | Web Frontend Implementation and Integration with Backend Services of _OperatingHour_ class, Documentation                |            
+| Tamara Zard Aboujaoudeh | Web Frontend Implementation and Integration with Backend Services of _Appointment_ & _TimeSlot_ class, Documentation     | 
+

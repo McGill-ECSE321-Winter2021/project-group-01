@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+import swal from 'sweetalert';
+>>>>>>> main
 import axios from 'axios'
 import JQuery from 'jquery'
 let $ = JQuery
@@ -35,22 +39,33 @@ export default {
   data () {
     return {
       appointments: [],
+<<<<<<< HEAD
       services: [],
       availableTimeSlots: [],
       unavailableTimeSlots: [],
       username: '',
       appointment: '',
       selectedAppointment:'',
+=======
+      selectedUpdate: '',
+      selectedCancel: '',
+      services: [],
+      availableTimeSlots: [],
+      username: '',
+>>>>>>> main
       serviceName: '',
       appointmentDate: '',
       appointmentTime: '',
       newAppointmentDate:'',
       newAppointmentTime:'',
       newServiceName:'',
+<<<<<<< HEAD
       errorService: '',
       errorMakeAppointment: '',
       errorUpdateAppointment:'',
       errorCancelAppointment:'',
+=======
+>>>>>>> main
       response: []
     }
   },
@@ -62,11 +77,16 @@ export default {
         this.services = response.data
       })
       .catch(e => {
+<<<<<<< HEAD
         this.errorService = e
+=======
+        swal("ERROR", e.response.data, "error");
+>>>>>>> main
       })
 
       AXIOS.get('/upcoming_appointmentsOf/', {
         params:{
+<<<<<<< HEAD
         username:'bob'
         }})
         .then(response => {
@@ -74,12 +94,23 @@ export default {
        })
        .catch(e => {
          this.errorService = e
+=======
+        username: localStorage.getItem('username'),
+        }})
+        .then(response => {
+         this.appointments = response.data
+         this.appointments.sort((a, b) => ((a.timeSlot.startDate + a.timeSlot.startTime) > (b.timeSlot.startDate + b.timeSlot.startTime)) ? 1 : -1)
+       })
+       .catch(e => {
+         swal("ERROR", e.response.data, "error");
+>>>>>>> main
       })
 
 
   },
 
   methods: {
+<<<<<<< HEAD
   updateAppointment(username, selectedAppointment, newAppointmentTime, newAppointmentDate, newServiceName) {
 
       if(selectedAppointment!=""){
@@ -96,10 +127,23 @@ export default {
           appointmentTime: this.appointmentTime,
           newAppointmentDate: newAppointmentDate,
           serviceName: this.serviceName,
+=======
+  updateAppointment(serviceName, appointmentDate, appointmentTime, newAppointmentTime, newAppointmentDate, newServiceName) {
+      this.errorCancelAppointment=serviceName
+      this.errorMakeAppointment=appointmentTime
+      AXIOS.patch('/update_appointment/',{},{
+        params:{
+          username: localStorage.getItem('username'),
+          appointmentDate: appointmentDate,
+          appointmentTime: appointmentTime,
+          newAppointmentDate: newAppointmentDate,
+          serviceName: serviceName,
+>>>>>>> main
           newAppointmentTime: newAppointmentTime,
           newServiceName: newServiceName
       }})
         			.then(response => {
+<<<<<<< HEAD
         				this.appointment = response.data
         				appointments.push(response.data)
         				serviceName=''
@@ -109,14 +153,69 @@ export default {
         			})
         			.catch(e => {
         			  this.errorUpdateAppointment = e.response.data
+=======
+
+                this.selectedUpdate=''
+                this.newAppointmentDate=''
+                this.newAppointmentTime=''
+                this.newServiceName=''
+                AXIOS.get('/upcoming_appointmentsOf/', {
+                  params:{
+                  username: localStorage.getItem('username'),
+                  }})
+                  .then(response => {
+                   this.appointments = response.data
+                   this.appointments.sort((a, b) => ((a.timeSlot.startDate + a.timeSlot.startTime) > (b.timeSlot.startDate + b.timeSlot.startTime)) ? 1 : -1)
+                 })
+                 .catch(e => {
+                   swal("ERROR", e.response.data, "error");
+                })
+        				this.appointment = response.data
+        				this.appointments.sort((a, b) => ((a.timeSlot.startDate + a.timeSlot.startTime) > (b.timeSlot.startDate + b.timeSlot.startTime)) ? 1 : -1)
+        				swal("Success", "You updated your appointment on " + appointmentDate + " at " + appointmentTime +" for " + serviceName
+        				+" to " + newAppointmentDate + " at " + newAppointmentTime +" for " + newServiceName, "success");
+        				serviceName=''
+        				appointmentTime=''
+        				appointmentDate=''
+        				errorMakeAppointment=''
+        				errorCancelAppointment=''
+        				errorUpdateAppointment=''
+        				window.location.href = "/appointments"
+        				})
+        			.catch(e => {
+        			  swal("ERROR", e.response.data, "error");
+>>>>>>> main
 
               })
     },
 
   makeAppointment (username, appointmentDate, appointmentTime, serviceName) {
+<<<<<<< HEAD
   			AXIOS.post('/make_appointment/',$.param({username: 'bob', serviceName: serviceName, appointmentDate:appointmentDate , appointmentTime:appointmentTime}))
   			.then(response => {
   				this.appointment = response.data
+=======
+  			AXIOS.post('/make_appointment/',$.param({username: localStorage.getItem('username'), serviceName: serviceName, appointmentDate:appointmentDate , appointmentTime:appointmentTime}))
+  			.then(response => {
+
+          this.serviceName=''
+          this.appointmentDate=''
+          this.appointmentTime=''
+
+          AXIOS.get('/upcoming_appointmentsOf/', {
+            params:{
+            username: localStorage.getItem('username'),
+            }})
+            .then(response => {
+             this.appointments = response.data
+             this.appointments.sort((a, b) => ((a.timeSlot.startDate + a.timeSlot.startTime) > (b.timeSlot.startDate + b.timeSlot.startTime)) ? 1 : -1)
+           })
+           .catch(e => {
+             swal("ERROR", e.response.data, "error");
+          })
+  				this.appointment = response.data
+  				swal("Success", "You booked an appointment on " + appointmentDate + " at " + appointmentTime +" for " + serviceName, "success");
+>>>>>>> main
   				serviceName=''
   				appointmentTime=''
   				appointmentDate=''
@@ -124,6 +223,7 @@ export default {
   				window.location.href = "/appointments"
   			})
   			.catch(e => {
+<<<<<<< HEAD
   			  this.errorMakeAppointment = e.response.data
 
   			})
@@ -134,19 +234,52 @@ export default {
         AXIOS.delete('/cancel_appointment/',{
           params:{
             username:'bob',
+=======
+  			  swal("ERROR", e.response.data, "error");
+
+  			})
+
+  },
+
+  cancelAppointment(serviceName, startDate, startTime){
+
+        AXIOS.delete('/cancel_appointment/',{
+          params:{
+            username:localStorage.getItem('username'),
+>>>>>>> main
             appointmentDate:startDate,
             appointmentTime:startTime,
             serviceName:serviceName
         }})
         .then(response => {
+<<<<<<< HEAD
+=======
+          this.selectedCancel=''
+          AXIOS.get('/upcoming_appointmentsOf/', {
+            params:{
+            username: localStorage.getItem('username'),
+            }})
+            .then(response => {
+             this.appointments = response.data
+             this.appointments.sort((a, b) => ((a.timeSlot.startDate + a.timeSlot.startTime) > (b.timeSlot.startDate + b.timeSlot.startTime)) ? 1 : -1)
+           })
+           .catch(e => {
+             swal("ERROR", e.response.data, "error");
+          })
+          swal("Success", "You cancelled your appointment on " + startDate + " at " + startTime +" for " + serviceName, "success");
+>>>>>>> main
           serviceName=''
           appointmentTime=''
           appointmentDate=''
           window.location.href = "/appointments"
         })
         .catch(e => {
+<<<<<<< HEAD
           this.errorCancelAppointment = e.response.data
 
+=======
+         swal("ERROR", e.response.data, "error");
+>>>>>>> main
         })
 
   },
@@ -162,6 +295,7 @@ export default {
 
         // JSON responses are automatically parsed.
           this.availableTimeSlots = response.data
+<<<<<<< HEAD
       })
       .catch(e => {
          this.errorMakeAppointment=e.response.data
@@ -207,6 +341,15 @@ export default {
 //     }
 
 
+=======
+          this.availableTimeSlots.sort((a, b) => ((a.startDate + a.startTime) > (b.startDate + b.startTime)) ? 1 : -1)
+      })
+      .catch(e => {
+         swal("ERROR", e.response.data, "error");
+      })
+
+   }
+>>>>>>> main
   }
 }
 

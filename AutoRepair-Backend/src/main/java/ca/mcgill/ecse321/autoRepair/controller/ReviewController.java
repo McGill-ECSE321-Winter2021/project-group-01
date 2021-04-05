@@ -12,15 +12,7 @@ import ca.mcgill.ecse321.autoRepair.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-<<<<<<< HEAD
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-=======
 import org.springframework.web.bind.annotation.*;
->>>>>>> main
 
 import ca.mcgill.ecse321.autoRepair.dto.AppointmentDTO;
 import ca.mcgill.ecse321.autoRepair.dto.CarDTO;
@@ -36,15 +28,6 @@ import ca.mcgill.ecse321.autoRepair.model.Customer;
 import ca.mcgill.ecse321.autoRepair.model.Profile;
 import ca.mcgill.ecse321.autoRepair.model.Review;
 import ca.mcgill.ecse321.autoRepair.model.TimeSlot;
-<<<<<<< HEAD
-import ca.mcgill.ecse321.autoRepair.dao.AppointmentRepository;
-import ca.mcgill.ecse321.autoRepair.dao.ChosenServiceRepository;
-import ca.mcgill.ecse321.autoRepair.dao.CustomerRepository;
-import ca.mcgill.ecse321.autoRepair.service.AppointmentService;
-import ca.mcgill.ecse321.autoRepair.service.ReviewService;
-import ca.mcgill.ecse321.autoRepair.service.TimeSlotService;
-=======
->>>>>>> main
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -53,15 +36,6 @@ public class ReviewController {
 	@Autowired
 	private ReviewService reviewService;
 	
-<<<<<<< HEAD
-	@Autowired
-	private TimeSlotService timeSlotService;
-	
-	@Autowired
-	private AppointmentService appointmentService;
-
-=======
->>>>>>> main
 	@Autowired
 	private TimeSlotService timeSlotService;
 	

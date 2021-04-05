@@ -37,11 +37,7 @@ public class ReminderController {
 	CustomerService cusService;
 	@Autowired
 	ChosenServiceService csService;
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> main
 	/**
 	 * @author Robert Aprahamian
 	 * Gets all reminders associated with a given customer
@@ -49,14 +45,6 @@ public class ReminderController {
 	 * @return list of reminder DTO
 	 */
 	@GetMapping(value = { "/view_reminders_for_customer","/view_reminders_for_customer/" })
-<<<<<<< HEAD
-	public List<ReminderDTO> getAllRemindersForCustomer(@RequestParam String username) {
-		Customer customer = cusService.getCustomer(username);
-		
-		if (customer == null)
-			throw new IllegalArgumentException("The following user does not exist: " + username);
-		return reminderService.getCustomerReminders(customer).stream().map(reminder -> convertToDTO(reminder)).collect(Collectors.toList());
-=======
 	public ResponseEntity<?> getAllRemindersForCustomer(@RequestParam String username) {
 		try {
 			Customer customer = cusService.getCustomer(username);
@@ -85,7 +73,6 @@ public class ReminderController {
 		
 	
 		return reminderService.getAllReminders().stream().map(reminder -> convertToDTO(reminder)).collect(Collectors.toList());
->>>>>>> main
 	}
 	
 	/**

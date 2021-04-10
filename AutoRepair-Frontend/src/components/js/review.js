@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 import swal from 'sweetalert'
->>>>>>> main
 import axios from 'axios'
 import JQuery from 'jquery'
 let $ = JQuery
@@ -35,28 +32,6 @@ var AXIOS = axios.create({
 })
 
 export default {
-<<<<<<< HEAD
-    name: 'review',
-    data() {
-        return {
-			errorReview: '',
-            reviews: [],
-			response: []
-		}
-    },
-    created: function () {
-        // Initializing persons from backend
-        AXIOS.get('/view_all_reviews')
-        .then(response => {
-          // JSON responses are automatically parsed.
-          this.reviews = response.data
-        })
-        .catch(e => {
-          this.errorReview = e
-        })
-    }
-}
-=======
 	name: 'review',
 	data() {
 		return {
@@ -242,4 +217,3 @@ export default {
 
 	}
 }
->>>>>>> main

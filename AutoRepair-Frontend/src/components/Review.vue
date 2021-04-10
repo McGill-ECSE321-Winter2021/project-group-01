@@ -1,22 +1,4 @@
 <template>
-<<<<<<< HEAD
-	<div class="Review">
-		<h2>Review Appointment</h2>
-		
-	</div>
-</template>
-
-
-<script>
-export default {
-	
-}
-</script>
-
-<style scoped>
-
-</style>
-=======
   <div id="customer">
     
     <section
@@ -378,4 +360,3 @@ export default {
 
 <script src="./js/Review.js">
 </script>
->>>>>>> main

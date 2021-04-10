@@ -47,20 +47,6 @@ export default {
 			.then(response => {
 				this.user = response.data
 				if (response.status===200) {
-<<<<<<< HEAD
-					this.type = this.user.userType
-					
-					if(this.type.localeCompare("customer")==0){
-						window.location.href = "/customer"
-					}
-					else if(this.type.localeCompare("assistant")==0){
-						window.location.href = "/assistant"
-					}
-					else {
-						window.location.href = "/owner"
-					}
-					
-=======
 					
 					this.type = this.user.userType
 					window.localStorage.setItem('username', this.user.username)
@@ -78,17 +64,11 @@ export default {
 					} 
 
 					location.reload();
->>>>>>> main
 				}
 			})
 			.catch(e => {
 				
-<<<<<<< HEAD
-				this.errorLogin = e.response.data
-				console.log(this.errorLogin)
-=======
 				swal("ERROR", e.response.data, "error");
->>>>>>> main
 				
 			})
 		}

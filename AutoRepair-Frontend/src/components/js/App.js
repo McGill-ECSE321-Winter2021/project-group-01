@@ -1,26 +1,6 @@
 import axios from 'axios'
 import JQuery from 'jquery'
 let $ = JQuery
-<<<<<<< HEAD
-var config = require ('../../../config')
-
-var backendConfigurer = function(){
-	switch(process.env.NODE_ENV){
-      case 'development':
-          return 'http://' + config.dev.backendHost + ':' + config.dev.backendPort;
-      case 'production':
-          return 'https://' + config.build.backendHost + ':' + config.build.backendPort ;
-	}
-};
-
-var frontendConfigurer = function(){
-	switch(process.env.NODE_ENV){
-      case 'development':
-          return 'http://' + config.dev.host + ':' + config.dev.port;
-      case 'production':
-          return 'https://' + config.build.host + ':' + config.build.port ;
-	}
-=======
 var config = require('../../../config')
 
 var backendConfigurer = function () {
@@ -39,7 +19,6 @@ var frontendConfigurer = function () {
     case 'production':
       return 'https://' + config.build.host + ':' + config.build.port;
   }
->>>>>>> main
 };
 
 var backendUrl = backendConfigurer();
@@ -52,53 +31,6 @@ var AXIOS = axios.create({
 })
 
 export default {
-<<<<<<< HEAD
-	name:'app',
-	data () {
-		return {
-			businessName: '',
-            address: '',
-            email: '',
-            phoneNumber: '',
-            businessHours: [],
-            holidays: [],
-            services: [],
-			response: []
-		}
-	},
-    created: function () {
-        // Initializing persons from backend
-        AXIOS.get('/view_business_info')
-        .then(response => {
-          // JSON responses are automatically parsed.
-          this.businessName = response.data.name
-          this.address = response.data.address
-          this.email=response.data.email
-          this.phoneNumber=response.data.phoneNumber
-          this.businessHours = response.data.businessHours
-          this.holidays=response.data.holidays
-        })
-        .catch(e => {
-            this.businessName =''
-            this.address = ''
-            this.email= ''
-            this.phoneNumber= ''
-            this.businessHours = ''
-            this.holidays= ''      
-         })
-
-         AXIOS.get('/view_all_services')
-         .then(response => {
-           // JSON responses are automatically parsed.
-           this.services = response.data
-         })
-         .catch(e => {
-           this.services=[]
-         })
-    }
-	
-
-=======
   name: 'app',
   data() {
     return {
@@ -166,5 +98,4 @@ export default {
 		}
 
   }
->>>>>>> main
 }

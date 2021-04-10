@@ -45,14 +45,8 @@ export default {
             email:'',
             model:'',
             plateNumber:'',
-<<<<<<< HEAD
-            carTransmission:'',
-            errorSignup:'',
-            response:[]
-=======
             carTransmission:''
             
->>>>>>> main
         }
     },
     methods: {
@@ -60,14 +54,8 @@ export default {
                      firstName, lastName, address, zipCode, email,phoneNumber,
                      model, plateNumber, carTransmission){
             if(password!=confirmPassword){
-<<<<<<< HEAD
-                this.errorSignup="Passwords do not match."
-            }else{
-                this.errorSignup=''
-=======
                 swal("ERROR", "Passwords do not match.", "error");
             }else{
->>>>>>> main
                 AXIOS.post('/register_customer/', {}, {
                     params:{
                         firstName: firstName,
@@ -83,14 +71,6 @@ export default {
                         carTransmission:carTransmission
                 }})
                 .then(response => {
-<<<<<<< HEAD
-                    this.errorSignup=''
-                    if(response.status===201){
-                        window.location.href = "/customer"
-                     }})
-                .catch(e => {
-                   this.errorSignup = e.response.data
-=======
                     if(response.status===201){
                         this.username='',
                         this.password='',
@@ -108,7 +88,6 @@ export default {
                      }})
                 .catch(e => {
                     swal("ERROR", e.response.data, "error");
->>>>>>> main
                 })
 
             }

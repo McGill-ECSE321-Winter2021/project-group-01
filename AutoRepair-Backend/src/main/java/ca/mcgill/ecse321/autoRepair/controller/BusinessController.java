@@ -183,7 +183,7 @@ public class BusinessController {
  		return new OperatingHourDTO(operatingHour.getDayOfWeek(), operatingHour.getStartTime(), operatingHour.getEndTime());
  	}
      private BusinessDTO convertToDTO(Business business) {
-     	if(business==null) throw new IllegalArgumentException("Business not found.");
+     	if(business==null) return null;
     	List<OperatingHourDTO> operatingHours = new ArrayList<OperatingHourDTO>();
     	for(int i=0; i<business.getBusinessHours().size(); i++) {
     		operatingHours.add(convertToDTO(business.getBusinessHours().get(i)));

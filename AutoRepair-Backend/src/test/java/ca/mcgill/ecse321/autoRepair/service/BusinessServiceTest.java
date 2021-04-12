@@ -441,7 +441,7 @@ public class BusinessServiceTest {
 			error = e.getMessage();
 		}
 		assertNull(operatingHour);
-		assertEquals(error, "Start time cannot be before end time");
+		assertEquals(error, "Start time cannot be after end time");
 		
 	}
 	

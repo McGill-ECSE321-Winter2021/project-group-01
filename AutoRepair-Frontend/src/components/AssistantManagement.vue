@@ -266,8 +266,7 @@
       <div class="container">
         <div class="row d-md-flex justify-content-end">
           <div class="col-md-12 col-lg-6 half p-3 py-5 pl-lg-5">
-            <span class="subheading">Updating a service</span>
-            <h2 class="mb-4">Plese enter the new details below</h2>
+            <h2 class="mb-4">Update Service</h2>
             <form action="#" class="appointment">
               <div class="row">
                 <div class="col-md-12">
@@ -278,7 +277,7 @@
                           <span class="fa fa-chevron-down"></span>
                         </div>
                         <select name="" id="" class="form-control" v-model="serviceName7">
-                            <option disabled value="">Please select one</option>
+                            <option disabled value="">Select Service</option>
                             <option v-for="service in services" :key=service.serviceName>
                                 {{ service.name }}
                           </option>
@@ -319,8 +318,8 @@
 
                 <div class="col-md-12">
                   <div class="form-group">
-                  <button
-                      type="button"
+                  <button 
+                      type="button" 
                       class="btn btn-dark py-3 px-4"
                       v-bind:disabled="!serviceName7||!duration7||!price7"
                       @click="updateservice(serviceName7, duration7, price7)">Update the Service</button>
@@ -329,7 +328,7 @@
 
                   <div class="col-md-12">
 									<div class="form-group">
-                    <h5 v-if="errorUpdateService2" style="color:red; padding-top:20px">Error: {{errorUpdateService2}}</h5>
+                    <h5 v-if="errorUpdateService2" style="color:red; padding-top:20px">Error: {{errorUpdateService2}}</h5> 
                   </div>
 								  </div>
 
@@ -339,6 +338,7 @@
         </div>
       </div>
     </section>
+
 
     <div style="background-color: #262626">
         <br />
@@ -354,8 +354,7 @@
       <div class="container">
         <div class="row d-md-flex justify-content-end">
           <div class="col-md-12 col-lg-6 half p-3 py-5 pl-lg-5">
-            <span class="subheading">Adding a reminder</span>
-            <h2 class="mb-4">Plese enter the details for the reminder below</h2>
+            <h2 class="mb-4">Add reminder </h2>
             <form action="#" class="appointment">
               <div class="row">
                 <div class="col-md-12">
@@ -366,9 +365,9 @@
                           <span class="fa fa-chevron-down"></span>
                         </div>
                          <select name="" id="" class="form-control" v-model="username5">
-                            <option disabled value="">Please select one</option>
+                            <option disabled value="">Select Customer</option>
                             <option v-for="customer in customers"
-
+                             
                              :key=customer.username>
                                 {{ customer.username }}
                           </option>
@@ -386,9 +385,9 @@
                           <span class="fa fa-chevron-down"></span>
                         </div>
                           <select name="" id="" class="form-control" v-model="serviceName5">
-                            <option disabled value="">Please select one</option>
+                            <option disabled value="">Select Service</option>
                             <option v-for="service in services"
-
+                             
                              :key=service.serviceName>
                                 {{ service.name }}
                           </option>
@@ -441,16 +440,17 @@
                 <div class="col-md-12">
                   <div class="form-group">
 
-                    <button
-                      type="button"
+                    <button 
+                      type="button" 
                       class="btn btn-dark py-3 px-4"
+                      v-bind:disabled="!username5 || !serviceName5 || !datestring || !description || !timestring"
                       v-on:click="addreminder(username5, serviceName5, datestring , description, timestring)">Add the reminder</button>
                   </div>
                 </div>
 
                   <div class="col-md-12">
 									<div class="form-group">
-                    <h5 v-if="errorCreateReminder" style="color:red; padding-top:20px">Error: {{errorCreateReminder}}</h5>
+                    <h5 v-if="errorCreateReminder" style="color:red; padding-top:20px">Error: {{errorCreateReminder}}</h5> 
                   </div>
 								  </div>
 
@@ -465,50 +465,41 @@
       <div class="container">
         <div class="row d-md-flex justify-content-end">
           <div class="col-md-12 col-lg-6 half p-3 py-5 pl-lg-5">
-            <span class="subheading">Updating a reminder</span>
-            <h2 class="mb-4">Plese enter the details for the reminder below</h2>
+           
+            <h2 class="mb-4">Update reminder</h2>
             <form action="#" class="appointment">
               <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <div class="form-field">
-                      <div class="select-wrap">
-                        <div class="icon">
-                          <span class="fa fa-chevron-down"></span>
-                        </div>
-                          <select name="" id="" class="form-control" v-model="username6">
-                            <option disabled value="">Please select one</option>
-                            <option v-for="customer in customers"
 
-                             :key=customer.username>
-                                {{ customer.username }}
-                            </option>
-                          </select>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <div class="form-field">
+                    <div class="select-wrap">
+                      <div class="icon">
+                        <span class="fa fa-chevron-down"></span>
                       </div>
+                      <select
+                        name="selectedReminder"
+                        id=""
+                        class="form-control"
+                        v-model="selected2"
+                      >
+                        <option value="">Select Reminder</option>
+                        <option
+                          v-for="reminder in reminders"
+                          v-bind:value="{ username6: reminder.customer.username,
+                          oldServiceName: reminder.chosenService.name
+                          }"
+                          :key="reminder.id" 
+                        >
+                           {{ reminder.customer.username}}; {{ reminder.chosenService.name}}
+                        </option>
+                      </select>
                     </div>
                   </div>
                 </div>
+              </div>
 
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <div class="form-field">
-                      <div class="select-wrap">
-                        <div class="icon">
-                          <span class="fa fa-chevron-down"></span>
-                        </div>
-                          <select name="" id="" class="form-control" v-model="oldServiceName">
-                            <option disabled value="">Please select one</option>
-                            <option v-for="service in services"
-
-                             :key=service.serviceName>
-                                {{ service.name }}
-                          </option>
-                          </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
+               
                 <div class="col-md-12">
                   <div class="form-group">
                     <div class="form-field">
@@ -517,9 +508,9 @@
                           <span class="fa fa-chevron-down"></span>
                         </div>
                           <select name="" id="" class="form-control" v-model="newServiceName">
-                            <option disabled value="">Please select one</option>
+                            <option disabled value="">Select New Service</option>
                             <option v-for="service in services"
-
+                             
                              :key=service.serviceName>
                                 {{ service.name }}
                           </option>
@@ -570,16 +561,17 @@
                 </div>
                 <div class="col-md-12">
                   <div class="form-group">
-                    <button
-                      type="button"
+                    <button 
+                      type="button" 
                       class="btn btn-dark py-3 px-4"
-                      @click="updatereminder(oldServiceName, newServiceName,username6, datestring2, description2, timestring2)">Update the reminder</button>
+                      v-bind:disabled="!selected2 || !newServiceName || !datestring2 || !description2 || !timestring2"
+                      @click="updatereminder(selected2.oldServiceName, newServiceName, selected2.username6, datestring2, description2, timestring2)">Update the reminder</button>
                   </div>
                 </div>
 
                   <div class="col-md-12">
 									<div class="form-group">
-                    <h5 v-if="errorUpdateReminder" style="color:red; padding-top:20px">Error: {{errorUpdateReminder}}</h5>
+                    <h5 v-if="errorUpdateReminder" style="color:red; padding-top:20px">Error: {{errorUpdateReminder}}</h5> 
                   </div>
 								  </div>
 
@@ -594,64 +586,53 @@
       <div class="container">
         <div class="row d-md-flex justify-content-end">
           <div class="col-md-12 col-lg-6 half p-3 py-5 pl-lg-5">
-            <span class="subheading">Deleting a reminder</span>
-            <h2 class="mb-4">Plese enter the details for the reminder below</h2>
+           
+            <h2 class="mb-4">Delete Reminder</h2>
             <form action="#" class="appointment">
               <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <div class="form-field">
-                      <div class="select-wrap">
-                        <div class="icon">
-                          <span class="fa fa-chevron-down"></span>
-                        </div>
-                        <!-- <input type="text" class="form-control" v-model="username4" placeholder="Customer Name"> -->
-                        <select name="" id="" class="form-control" v-model="username4">
-                            <option disabled value="">Please select one</option>
-                            <option v-for="customer in customers"
-
-                             :key=customer.username>
-                                {{ customer.username }}
-                            </option>
-                          </select>
+                
+              <div class="col-md-12">
+                <div class="form-group">
+                  <div class="form-field">
+                    <div class="select-wrap">
+                      <div class="icon">
+                        <span class="fa fa-chevron-down"></span>
                       </div>
+                      <select
+                        name="selectedReminder"
+                        id=""
+                        class="form-control"
+                        v-model="selected"
+                      >
+                        <option value="">Select Reminder</option>
+                        <option
+                          v-for="reminder in reminders"
+                          v-bind:value="{ username4: reminder.customer.username,
+                          serviceName4: reminder.chosenService.name
+                          }"
+                          :key="reminder.id" 
+                        >
+                           {{ reminder.customer.username}}; {{ reminder.chosenService.name}}
+                        </option>
+                      </select>
                     </div>
                   </div>
                 </div>
-
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <div class="form-field">
-                      <div class="select-wrap">
-                        <div class="icon">
-                          <span class="fa fa-chevron-down"></span>
-                        </div>
-                          <select name="" id="" class="form-control" v-model="serviceName4">
-                            <option disabled value="">Please select one</option>
-                            <option v-for="service in services"
-
-                             :key=service.serviceName>
-                                {{ service.name }}
-                          </option>
-                          </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              </div>
 
                   <div class="col-md-12">
                     <div class="form-group">
-                      <button
-                      type="button"
+                      <button 
+                      type="button" 
                       class="btn btn-dark py-3 px-4"
-                      v-bind:disabled="!serviceName4 || !username4"
-                      v-on:click="deletereminder(username4, serviceName4)">delete the reminder</button>
+                      v-bind:disabled="!selected"
+                      v-on:click="deletereminder(selected.username4, selected.serviceName4)">delete the reminder</button>
                     </div>
-                  </div>
+                  </div> 
 
                   <div class="col-md-12">
 									<div class="form-group">
-                    <h5 v-if="errorDeleteReminder" style="color:red; padding-top:20px">Error: {{errorDeleteReminder}}</h5>
+                    <h5 v-if="errorDeleteReminder" style="color:red; padding-top:20px">Error: {{errorDeleteReminder}}</h5> 
                   </div>
 								  </div>
 
@@ -661,6 +642,8 @@
         </div>
       </div>
     </section>
+   
+   
     <div style="background-color: #262626">
       <br />
       <br />

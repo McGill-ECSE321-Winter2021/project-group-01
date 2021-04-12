@@ -111,7 +111,7 @@
                 <strong class="number" data-number="45">4</strong>
               </div>
               <div class="text">
-              	<span>Years of Experienced</span>
+              	<span>Years of Experience</span>
               </div>
             </div>
           </div>
@@ -204,7 +204,7 @@
     </section>
 
 
-    <section class="ftco-section bg-light">
+   <section class="ftco-section bg-light">
     	<div class="container">
     		<div class="row justify-content-center pb-5 mb-3">
           <div class="col-md-7 heading-section text-center ">
@@ -213,57 +213,11 @@
           </div>
         </div>
     		<div class="row">
-    			<div class="col-md-6 col-lg-3 ">
+    			<div class="col-md-6 col-lg-3 " v-for="service in services" :key=service.serviceName>
 	          <div class="block-7">
 	            <div class="text-center">
-            	<span class="excerpt d-block">Oil Change</span>
-	            <span class="price"><sup>$</sup> <span class="number">10.00</span></span>
-
-	            <div class="pricing-text">
-	              <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-	            </div>
-
-	            <a href="#/login" class="btn btn-secondary d-block px-2 py-3">Get Started</a>
-	            </div>
-	          </div>
-	        </div>
-	        <div class="col-md-6 col-lg-3 ">
-	          <div class="block-7">
-	            <div class="text-center">
-            	<span class="excerpt d-block">Batteries</span>
-	            <span class="price"><sup>$</sup> <span class="number">83.75</span></span>
-
-	            <div class="pricing-text">
-	              <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-	            </div>
-
-	            <a href="#/login" class="btn btn-secondary d-block px-2 py-3">Get Started</a>
-	            </div>
-	          </div>
-	        </div>
-	        <div class="col-md-6 col-lg-3 ">
-	          <div class="block-7">
-	            <div class="text-center">
-            	<span class="excerpt d-block">Tow Truck</span>
-	            <span class="price"><sup>$</sup> <span class="number">85.00</span></span>
-
-	            <div class="pricing-text">
-	              <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-	            </div>
-
-	            <a href="#/login" class="btn btn-secondary d-block px-2 py-3">Get Started</a>
-	            </div>
-	          </div>
-	        </div>
-	        <div class="col-md-6 col-lg-3 ">
-	          <div class="block-7">
-	            <div class="text-center">
-            	<span class="excerpt d-block">Car Wash</span>
-	            <span class="price"><sup>$</sup> <span class="number">30.50</span></span>
-
-	            <div class="pricing-text">
-	              <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-	            </div>
+            	<span class="excerpt d-block">{{ service.name }}</span>
+	            <span class="price"><sup>$</sup> <span class="number">{{ service.price }}</span></span>
 
 	            <a href="#/login" class="btn btn-secondary d-block px-2 py-3">Get Started</a>
 	            </div>

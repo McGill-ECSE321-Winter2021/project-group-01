@@ -35,10 +35,10 @@ export default {
     name:"OwnerSignup",
     data () {
         return {
-            username:'',
+            name:'',
             password:'',
             confirmPassword:'',
-            authentificationCode:'',
+            authentification:'',
             errorOwnerSignup:'',
             response:[]
         }
@@ -60,6 +60,10 @@ export default {
                 .then(response => {
                     this.errorSignup=''
                     if(response.status===201){
+                        this.username=''
+                        this.password=''
+                        this.confirmPassword=''
+                        this.authentificationCode=''
                         swal("Success", "Owner " + name + " created Successfully, Please Login Below",
                          "success");         
                  }})

@@ -37,7 +37,9 @@ export default {
         return {
             
             services: [],
-            reviews: []
+            reviews: [],
+            reminders: [],
+            errorReminder: ''
             
         }
     },
@@ -59,7 +61,18 @@ export default {
 				this.errorReview = e
 			})
 
-            
+            AXIOS.get('/view_reminders_for_customer',{
+                params:{
+                    username: window.localStorage.getItem('username')
+                }
+            })
+			.then(response => {
+				// JSON responses are automatically parsed.
+				this.reminders = response.data
+			})
+			.catch(e => {
+				this.errorReminder = e
+			})
     }
 
 }

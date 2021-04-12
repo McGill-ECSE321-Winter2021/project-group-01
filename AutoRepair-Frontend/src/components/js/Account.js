@@ -1,6 +1,6 @@
 import axios from 'axios'
 import JQuery from 'jquery'
-import { mapGetters } from 'vuex';
+//import { mapGetters } from 'vuex';
 let $ = JQuery
 var config = require('../../../config')
 
@@ -82,6 +82,11 @@ export default {
                 }
             })
                 .then(response => {
+                    this.firstName=''
+                    this.lastName=''
+                    this.address=''
+                    this.phoneNumber=''
+                    this.zipCode=''
                     this.profile = response.data.profile
                     swal("Success", "Profile edited successfully!", "success");
                 })

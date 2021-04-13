@@ -9,14 +9,14 @@
         android:id="@+id/login"
         android:name="ca.mcgill.ecse321.autoRepair.Login"
         android:label="@string/login"
-        tools:layout="@layout/login"/>
-
+        tools:layout="@layout/login" >
         <action
-            android:id="@+id/login_to_signup"
-            app:destination="@id/signup" />
+            android:id="@+id/action_login_to_Signup"
+            app:destination="@id/Signup" />
+    </fragment>
 
     <fragment
-        android:id="@+id/signup"
+        android:id="@+id/Signup"
         android:name="ca.mcgill.ecse321.autoRepair.Signup"
         android:label="@string/signup"
         tools:layout="@layout/signup"/>

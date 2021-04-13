@@ -7,6 +7,7 @@
     android:layout_height="match_parent">
 
 
+
     <EditText
         android:id="@+id/firstName"
         android:layout_width="164dp"
@@ -197,8 +198,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.808" />
 
-    <include layout="@layout/signup"
-        tools:ignore="ResourceCycle" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

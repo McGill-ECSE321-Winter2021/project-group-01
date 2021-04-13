@@ -27,7 +27,7 @@ public class FirstFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(FirstFragment.this)
-                        .navigate(R.id.login_to_signup);
+                        .navigate(R.id.action_login_to_Signup);
             }
         });
     }

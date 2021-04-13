@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.net.ssl.HttpsURLConnection;
+
 public class MainActivity extends AppCompatActivity {
     private String error = null;
 
@@ -187,6 +189,22 @@ public class MainActivity extends AppCompatActivity {
                 refreshErrorMessage();
             }
         });
+
+    }
+
+    public void addCar(View v){
+        error ="";
+        final EditText model = findViewById(R.id.model);
+        final EditText plateNumber = findViewById(R.id.plateNumber);
+        final EditText carTransmission = findViewById(R.id.carTransmission);
+
+        RequestParams rp = new RequestParams();
+        rp.put("model", model);
+        rp.put("carTransmission", carTransmission);
+        rp.pu
+
+        HttpUtils.post("add_car/"+"bob", );
+
 
     }
 

@@ -115,7 +115,7 @@
         android:id="@+id/edit_profile_button"
         android:layout_width="335dp"
         android:layout_height="38dp"
-        android:onClick="getProfile"
+        android:onClick="editProfile"
         android:text="Edit Profile"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

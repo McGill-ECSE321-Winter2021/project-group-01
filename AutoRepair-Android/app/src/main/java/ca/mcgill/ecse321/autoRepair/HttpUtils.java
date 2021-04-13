@@ -5,7 +5,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 public class HttpUtils {
-    public static final String DEFAULT_BASE_URL = "https://eventregistration-backend-123.herokuapp.com/";
+    public static final String DEFAULT_BASE_URL = "https://autorepair-backend-grp12021.herokuapp.com/";
 
     private static String baseUrl;
     private static AsyncHttpClient client = new AsyncHttpClient();
@@ -36,6 +36,9 @@ public class HttpUtils {
 
     public static void postByUrl(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         client.post(url, params, responseHandler);
+    }
+    public static void patch(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+        client.patch(getAbsoluteUrl(url), params, responseHandler);
     }
 
     private static String getAbsoluteUrl(String relativeUrl) {

@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -161,8 +163,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void login(View v){
-        String username = "grader";
-        String password = "Password1!";
+        String username = "bob";
+        String password = "Password123";
         RequestParams rp = new RequestParams();
         rp.add("username", username);
         rp.add("password", password);
@@ -172,6 +174,8 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                 try {
                     JSONObject serverResp = new JSONObject(response.toString());
+                    Navigation.findNavController(v)
+                            .navigate(R.id.action_Login_to_Profile);
                 } catch (JSONException e) {
                     error += e.getMessage();
                 }
@@ -192,21 +196,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void addCar(View v){
-        error ="";
-        final EditText model = findViewById(R.id.model);
-        final EditText plateNumber = findViewById(R.id.plateNumber);
-        final EditText carTransmission = findViewById(R.id.carTransmission);
-
-        RequestParams rp = new RequestParams();
-        rp.put("model", model);
-        rp.put("carTransmission", carTransmission);
-        rp.pu
-
-        HttpUtils.post("add_car/"+"bob", );
-
-
-    }
+//    public void addCar(View v){
+//        error ="";
+//        final EditText model = findViewById(R.id.model);
+//        final EditText plateNumber = findViewById(R.id.plateNumber);
+//        final EditText carTransmission = findViewById(R.id.carTransmission);
+//
+//        RequestParams rp = new RequestParams();
+//        rp.put("model", model);
+//        rp.put("carTransmission", carTransmission);
+//        rp.pu
+//
+//        HttpUtils.post("add_car/"+"bob", );
+//
+//
+//    }
 
 
     @Override

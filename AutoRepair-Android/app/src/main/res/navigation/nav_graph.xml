@@ -13,7 +13,7 @@
 
         <action
             android:id="@+id/action_FirstFragment_to_Signup"
-            app:destination="@id/Signup" />
+            app:destination="@id/Profile" />
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
@@ -27,9 +27,9 @@
     </fragment>
 
     <fragment
-        android:id="@+id/Signup"
-        android:name="ca.mcgill.ecse321.autoRepair.Signup"
-        android:label="@string/signup_label"
-        tools:layout="@layout/signup"/>
+        android:id="@+id/Profile"
+        android:name="ca.mcgill.ecse321.autoRepair.Profile"
+        android:label="@string/profile_label"
+        tools:layout="@layout/profile"/>
 
 </navigation>

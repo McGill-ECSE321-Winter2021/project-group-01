@@ -119,15 +119,25 @@ public class MainActivity extends AppCompatActivity {
 
     public void getProfile(View v) {
         error = "";
-        HttpUtils.get("profiles", new RequestParams(), new JsonHttpResponseHandler() {
-            ArrayList<JSONObject> profiles = new ArrayList<JSONObject>();
+        final TextView firstName = (TextView) findViewById(R.id.firstNameView);
+        final TextView lastName = (TextView) findViewById(R.id.lastNameView);
+        final TextView address = (TextView) findViewById(R.id.addressView);
+        final TextView phoneNumber = (TextView) findViewById(R.id.phoneNumberView);
+        final TextView zipCode = (TextView) findViewById(R.id.zipCodeView);
+        final TextView email = (TextView) findViewById(R.id.emailView);
+        HttpUtils.get("view_customer/" + "bob", new RequestParams(), new JsonHttpResponseHandler() {
             @Override
-            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONArray response) {
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
 
                 try {
-                        for (int i=0; i<response.length(); i++){
-                            profiles.add(response.getJSONObject(i));
-                        }
+
+                    JSONObject profile = response.getJSONObject("profile");
+                    firstName.setText(profile.getString("firstName"));
+                    lastName.setText(profile.getString("lastName"));
+                    address.setText(profile.getString("address"));
+                    phoneNumber.setText(profile.getString("phoneNumber"));
+                    zipCode.setText(profile.getString("zipCode"));
+                    email.setText(profile.getString("email"));
 
                 } catch (JSONException e) {
                     error += e.getMessage();

@@ -35,6 +35,8 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends AppCompatActivity {
     private String error = null;
+    private String customerUsername = null;
+    private String userType = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
         final TextView phoneNumber = (TextView) findViewById(R.id.phoneNumberView);
         final TextView zipCode = (TextView) findViewById(R.id.zipCodeView);
         final TextView email = (TextView) findViewById(R.id.emailView);
-        HttpUtils.get("view_customer/" + "bob", new RequestParams(), new JsonHttpResponseHandler() {
+        HttpUtils.get("view_customer/" + customerUsername, new RequestParams(), new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
 
@@ -163,19 +165,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void login(View v){
-        String username = "bob";
-        String password = "Password123";
+        final EditText username = (EditText) findViewById(R.id.Username);
+        final EditText password = (EditText) findViewById(R.id.Password);
         RequestParams rp = new RequestParams();
-        rp.add("username", username);
-        rp.add("password", password);
+        rp.put("username", username.getText());
+        rp.put("password", password.getText());
 
         HttpUtils.post("login", rp, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                 try {
                     JSONObject serverResp = new JSONObject(response.toString());
-                    Navigation.findNavController(v)
-                            .navigate(R.id.action_Login_to_Profile);
+                    customerUsername = serverResp.getString("username");
+                    userType = serverResp.getString("userType");
+                    if(!userType.equals("customer")){
+                        error = "Access denied";
+                        customerUsername = null;
+                        userType = null;
+                    }
+                    else{
+                        Navigation.findNavController(v)
+                                .navigate(R.id.action_Login_to_Profile);
+                       // getProfile(v);
+                    }
+
                 } catch (JSONException e) {
                     error += e.getMessage();
                 }

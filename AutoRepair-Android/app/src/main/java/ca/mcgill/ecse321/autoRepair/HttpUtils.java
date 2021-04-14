@@ -30,6 +30,14 @@ public class HttpUtils {
         client.post(getAbsoluteUrl(url), params, responseHandler);
     }
 
+    public static void patch(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+        client.patch(getAbsoluteUrl(url), params, responseHandler);
+    }
+
+    public static void delete(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+        client.delete(getAbsoluteUrl(url), params, responseHandler);
+    }
+
     public static void getByUrl(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         client.get(url, params, responseHandler);
     }
@@ -37,8 +45,9 @@ public class HttpUtils {
     public static void postByUrl(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         client.post(url, params, responseHandler);
     }
-    public static void patch(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-        client.patch(getAbsoluteUrl(url), params, responseHandler);
+
+    public static void patchByUrl(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+        client.patch(url, params, responseHandler);
     }
 
     private static String getAbsoluteUrl(String relativeUrl) {

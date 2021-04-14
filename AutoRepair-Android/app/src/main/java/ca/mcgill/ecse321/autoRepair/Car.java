@@ -25,14 +25,20 @@ public class Car extends Fragment  implements AdapterView.OnItemSelectedListener
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Spinner spinner = view.findViewById(R.id.carTransmission);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(),
+
+        Spinner carTransmissionSpinner = view.findViewById(R.id.carTransmission);
+        Spinner plateNumbers = view.findViewById(R.id.plateNumberRemove);
+
+        ArrayAdapter<CharSequence> transmissionAdapter = ArrayAdapter.createFromResource(this.getContext(),
                 R.array.carTransmission, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
+        transmissionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        carTransmissionSpinner.setAdapter(transmissionAdapter);
+        carTransmissionSpinner.setOnItemSelectedListener(this);
 
         ((MainActivity)getActivity()).getCars(view);
+
+
+
     }
 
     @Override

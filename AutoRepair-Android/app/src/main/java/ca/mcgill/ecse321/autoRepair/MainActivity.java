@@ -33,6 +33,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity{
     private String error = null;
     private String customerUsername = null;
     private String userType = null;
+    ArrayAdapter<String> plateNumberAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -263,13 +265,41 @@ public class MainActivity extends AppCompatActivity{
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONArray response) {
 
                 try {
+                    Spinner plateNumberSpinner = findViewById(R.id.plateNumberRemove);
                     String carsString = "";
+                    String plateNumbers[] = new String[response.length()];
                     for(int i=0; i<response.length(); i++){
                         JSONObject car = response.getJSONObject(i);
                         carsString+=car.getString("model")+", "
                                 +car.getString("transmission")+", "
                                 +car.getString("plateNumber")+"\n";
+                        plateNumbers[i]= car.getString("plateNumber");
                     }
+                    ArrayList<String> list = new ArrayList<String>(Arrays.asList(plateNumbers));
+
+                    plateNumberAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, list);
+                    plateNumberAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    plateNumberSpinner.setAdapter(plateNumberAdapter);
+                    plateNumberSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view,
+                                                   int position, long id) {
+                            Object item = adapterView.getItemAtPosition(position);
+                            if (item != null) {
+                                Toast.makeText(MainActivity.this, item.toString(),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                            Toast.makeText(MainActivity.this, "Selected",
+                                    Toast.LENGTH_SHORT).show();
+
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
                     cars.setText(carsString);
 
                 } catch (JSONException e) {
@@ -311,15 +341,30 @@ public class MainActivity extends AppCompatActivity{
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
 
                 try {
+                    Spinner plateNumberSpinner = findViewById(R.id.plateNumberRemove);
                     JSONObject serverResp = new JSONObject(response.toString());
                     JSONArray customerCars= serverResp.getJSONArray("cars");
                     String carsString = "";
+                    String plateNumbers[] = new String[response.length()];
                     for(int i=0; i<customerCars.length(); i++){
                         JSONObject car = customerCars.getJSONObject(i);
                         carsString+=car.getString("model")+", "
                                 +car.getString("transmission")+", "
                                 +car.getString("plateNumber")+"\n";
+                        plateNumbers[i]= car.getString("plateNumber");
                     }
+                    ArrayList<String> list = new ArrayList<String>(Arrays.asList(plateNumbers));
+                    plateNumberAdapter.clear();
+                    plateNumberAdapter.addAll(plateNumbers);
+                    plateNumberAdapter.notifyDataSetChanged();
+//                    plateNumberAdapter.add(plateNumber.getText().toString());
+//                    plateNumberAdapter.notifyDataSetChanged();
+
+
+//                    plateNumberAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, list);
+//                    plateNumberAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                    plateNumberSpinner.setAdapter(plateNumberAdapter);
+
                     cars.setText(carsString);
 
                 } catch (JSONException e) {
@@ -343,17 +388,60 @@ public class MainActivity extends AppCompatActivity{
 
     public void removeCar(View v) {
         error = "";
-        final EditText plateNumber = findViewById(R.id.plateNumberRemove);
+        final Spinner plateNumber = findViewById(R.id.plateNumberRemove);
+        final TextView cars = (TextView) findViewById(R.id.cars);
 
         RequestParams rp = new RequestParams();
-        rp.put("plateNumber", plateNumber.getText());
+        rp.put("plateNumber", plateNumber.getSelectedItem().toString());
 
         HttpUtils.delete("remove_car/" + customerUsername, rp, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
 
                 try {
+                    Spinner plateNumberSpinner = findViewById(R.id.plateNumberRemove);
                     JSONObject serverResp = new JSONObject(response.toString());
+                    JSONArray customerCars= serverResp.getJSONArray("cars");
+                    String carsString = "";
+                    String plateNumbers[] = new String[response.length()];
+                    for(int i=0; i<customerCars.length(); i++){
+                        JSONObject car = customerCars.getJSONObject(i);
+                        carsString+=car.getString("model")+", "
+                                +car.getString("transmission")+", "
+                                +car.getString("plateNumber")+"\n";
+                        plateNumbers[i]= car.getString("plateNumber");
+                    }
+                    ArrayList<String> list = new ArrayList<String>(Arrays.asList(plateNumbers));
+                    plateNumberAdapter.clear();
+                    plateNumberAdapter.addAll(list);
+                    plateNumberAdapter.notifyDataSetChanged();
+
+
+//                    plateNumberAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, list);
+//                    plateNumberAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                    plateNumberSpinner.setAdapter(plateNumberAdapter);
+                    //plateNumberSpinner.setAdapter(plateNumberAdapter);
+//                    plateNumberSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//
+//                        @Override
+//                        public void onItemSelected(AdapterView<?> adapterView, View view,
+//                                                   int position, long id) {
+//                            Object item = adapterView.getItemAtPosition(position);
+//                            if (item != null) {
+//                                Toast.makeText(MainActivity.this, item.toString(),
+//                                        Toast.LENGTH_SHORT).show();
+//                            }
+//                            Toast.makeText(MainActivity.this, "Selected",
+//                                    Toast.LENGTH_SHORT).show();
+//
+//                        }
+//
+//                        @Override
+//                        public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//                        }
+//                    });
+                    cars.setText(carsString);
 
                 } catch (JSONException e) {
                     error += e.getMessage();
@@ -393,6 +481,5 @@ public class MainActivity extends AppCompatActivity{
 
         return super.onOptionsItemSelected(item);
     }
-
 
 }

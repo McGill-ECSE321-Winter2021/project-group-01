@@ -29,7 +29,9 @@
     <string name = "password">password</string>
     <string name = "model">model</string>
     <string name = "plateNumber">plateNumber</string>
-    <string name = "carTransmission">carTransmission</string>
-
+    <string-array name="carTransmissionNew">
+        <item>Automatic</item>
+        <item>Manual</item>
+    </string-array>
 
 </resources>

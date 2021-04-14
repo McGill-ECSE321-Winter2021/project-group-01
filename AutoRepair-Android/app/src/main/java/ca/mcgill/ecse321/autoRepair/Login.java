@@ -19,19 +19,7 @@ public class Login extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.login, container, false);
     }
-
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-<<<<<<<< HEAD:AutoRepair-Android/app/src/main/java/ca/mcgill/ecse321/autoRepair/Login.java
-========
-
-        view.findViewById(R.id.button_first).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(FirstFragment.this)
-                        .navigate(R.id.action_login_to_Signup);
-            }
-        });
->>>>>>>> origin/android-eric:AutoRepair-Android/app/src/main/java/ca/mcgill/ecse321/autoRepair/FirstFragment.java
     }
 }

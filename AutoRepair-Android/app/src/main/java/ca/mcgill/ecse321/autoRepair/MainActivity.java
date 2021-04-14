@@ -105,6 +105,59 @@ public class MainActivity extends AppCompatActivity{
         }
 
     }
+    public void signup(View v){
+        final EditText firstName = findViewById(R.id.firstName);
+        final EditText lastName =  findViewById(R.id.lastName);
+        final EditText phoneNumber =  findViewById(R.id.phoneNumber);
+        final EditText address = findViewById(R.id.address);
+        final EditText zipCode = findViewById(R.id.zipCode);
+        final EditText username =  findViewById(R.id.username);
+        final EditText password =  findViewById(R.id.password);
+        final EditText model =  findViewById(R.id.model);
+        final EditText plateNumber = findViewById(R.id.plateNumber);
+        final Spinner carTransmissionNew = findViewById(R.id.carTransmissionNew);
+
+        RequestParams rp = new RequestParams();
+        rp.put("firstName", firstName.getText());
+        rp.put("lastName", lastName.getText());
+        rp.put("phoneNumber", phoneNumber.getText());
+        rp.put("address", address.getText());
+        rp.put("zipCode", zipCode.getText());
+        rp.put("username", username.getText());
+        rp.put("password", password.getText());
+        rp.put("model", model.getText());
+        rp.put("carTransmission", carTransmissionNew.getSelectedItem().toString());
+        rp.put("plateNumber", plateNumber.getText());
+
+
+        HttpUtils.post("register_customer/", rp, new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+        try {
+            if (firstName==null||lastName==null||phoneNumber==null||address==null||zipCode==null||username==null
+            ||password==null||model==null||carTransmissionNew==null){
+                error = "Missing sign up information";
+            }
+            else {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new Login()).commit();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+            }
+        });
+    }
+
 
     public void login(View v){
         final EditText username = (EditText) findViewById(R.id.Username);
@@ -155,6 +208,10 @@ public class MainActivity extends AppCompatActivity{
     public void goToSignup(View v){
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new Signup()).commit();
+    }
+    public void goToLogin(View v){
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                new Login()).commit();
     }
 
     public void logout(View v){
@@ -292,7 +349,6 @@ public class MainActivity extends AppCompatActivity{
         });
 
     }
-
 
     public void addCar(View v){
         error ="";

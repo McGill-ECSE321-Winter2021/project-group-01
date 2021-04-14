@@ -31,6 +31,8 @@ public class Car extends Fragment  implements AdapterView.OnItemSelectedListener
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
+
+        ((MainActivity)getActivity()).getCars(view);
     }
 
     @Override

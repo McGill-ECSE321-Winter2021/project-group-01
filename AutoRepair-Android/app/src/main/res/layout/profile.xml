@@ -190,18 +190,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.909" />
 
-    <Button
-        android:id="@+id/refresh_profile_button"
-        android:layout_width="335dp"
-        android:layout_height="38dp"
-        android:onClick="getProfile"
-        android:text="Refresh Profile"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.331" />
-
     <TextView
         android:id="@+id/error"
         android:layout_width="wrap_content"

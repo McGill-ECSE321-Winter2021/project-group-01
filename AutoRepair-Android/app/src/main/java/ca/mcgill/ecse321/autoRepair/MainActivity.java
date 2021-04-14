@@ -299,6 +299,7 @@ public class MainActivity extends AppCompatActivity{
         final EditText model = findViewById(R.id.model);
         final EditText plateNumber = findViewById(R.id.plateNumber);
         final Spinner carTransmission = findViewById(R.id.carTransmission);
+        final TextView cars = (TextView) findViewById(R.id.cars);
 
         RequestParams rp = new RequestParams();
         rp.put("model", model.getText());
@@ -311,6 +312,15 @@ public class MainActivity extends AppCompatActivity{
 
                 try {
                     JSONObject serverResp = new JSONObject(response.toString());
+                    JSONArray customerCars= serverResp.getJSONArray("cars");
+                    String carsString = "";
+                    for(int i=0; i<customerCars.length(); i++){
+                        JSONObject car = customerCars.getJSONObject(i);
+                        carsString+=car.getString("model")+", "
+                                +car.getString("transmission")+", "
+                                +car.getString("plateNumber")+"\n";
+                    }
+                    cars.setText(carsString);
 
                 } catch (JSONException e) {
                     error += e.getMessage();

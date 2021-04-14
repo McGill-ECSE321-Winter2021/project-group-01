@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="104dp"
         android:text=""
+        android:textSize="23sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
@@ -105,17 +106,6 @@
         app:layout_constraintHorizontal_bias="0.179"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/removeCar" />
-
-    <Button
-        android:id="@+id/refreshCarsButton"
-        android:layout_width="321dp"
-        android:layout_height="38dp"
-        android:layout_marginTop="136dp"
-        android:text="Refresh Cars"
-        android:onClick="getCars"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button3"

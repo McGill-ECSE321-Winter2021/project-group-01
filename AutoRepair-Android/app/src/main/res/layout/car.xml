@@ -78,14 +78,14 @@
         app:layout_constraintStart_toEndOf="@+id/model"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <Spinner
         android:id="@+id/carTransmission"
         android:layout_width="224dp"
         android:layout_height="39dp"
         android:layout_marginTop="36dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="Car Transmission"
+        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.192"
         app:layout_constraintStart_toStartOf="parent"

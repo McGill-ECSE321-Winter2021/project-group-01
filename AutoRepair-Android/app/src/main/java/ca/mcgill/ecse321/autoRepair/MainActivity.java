@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,7 +38,7 @@ import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
     private String error = null;
     private String customerUsername = null;
     private String userType = null;
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         //I added this if statement to keep the selected fragment when rotating the device
@@ -295,11 +298,11 @@ public class MainActivity extends AppCompatActivity {
         error ="";
         final EditText model = findViewById(R.id.model);
         final EditText plateNumber = findViewById(R.id.plateNumber);
-        final EditText carTransmission = findViewById(R.id.carTransmission);
+        final Spinner carTransmission = findViewById(R.id.carTransmission);
 
         RequestParams rp = new RequestParams();
         rp.put("model", model.getText());
-        rp.put("carTransmission", carTransmission.getText());
+        rp.put("carTransmission", carTransmission.getSelectedItem().toString());
         rp.put("plateNumber", plateNumber.getText());
 
         HttpUtils.post("add_car/"+customerUsername, rp, new JsonHttpResponseHandler(){
@@ -380,5 +383,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 
 }

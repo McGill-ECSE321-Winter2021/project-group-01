@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity{
         final EditText firstName = findViewById(R.id.firstName);
         final EditText lastName =  findViewById(R.id.lastName);
         final EditText phoneNumber =  findViewById(R.id.phoneNumber);
+        final EditText email =  findViewById(R.id.email);
         final EditText address = findViewById(R.id.address);
         final EditText zipCode = findViewById(R.id.zipCode);
         final EditText username =  findViewById(R.id.username);
@@ -120,6 +121,7 @@ public class MainActivity extends AppCompatActivity{
         RequestParams rp = new RequestParams();
         rp.put("firstName", firstName.getText());
         rp.put("lastName", lastName.getText());
+        rp.put("email", email.getText());
         rp.put("phoneNumber", phoneNumber.getText());
         rp.put("address", address.getText());
         rp.put("zipCode", zipCode.getText());

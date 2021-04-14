@@ -80,6 +80,7 @@
         android:layout_gravity="end"
         android:layout_marginStart="256dp"
         android:text="signup"
+        android:onClick="goToSignup"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/TextNoAccount"
         app:layout_constraintTop_toTopOf="parent"

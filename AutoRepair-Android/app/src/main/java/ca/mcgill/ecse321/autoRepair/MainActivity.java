@@ -10,11 +10,14 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -42,9 +45,49 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
+        //I added this if statement to keep the selected fragment when rotating the device
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    new Login()).commit();
+        }
+      bottomNav.setVisibility(View.GONE);
+
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    Fragment selectedFragment = null;
+                    switch (item.getItemId()) {
+
+                        case R.id.nav_home:
+                            selectedFragment = new Home();
+                            break;
+
+                        case R.id.nav_appointment:
+                            selectedFragment = new Appointment();
+                            break;
+
+                        case R.id.nav_review:
+                            selectedFragment = new Review();
+                            break;
+
+                        case R.id.nav_account:
+                            selectedFragment = new Profile();
+                            break;
+
+                        case R.id.nav_car:
+                            selectedFragment = new Car();
+                            break;
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            selectedFragment).commit();
+                    return true;
+                }
+            };
 
 
     private void refreshErrorMessage() {
@@ -60,27 +103,71 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void login(View v){
+        final EditText username = (EditText) findViewById(R.id.Username);
+        final EditText password = (EditText) findViewById(R.id.Password);
+        RequestParams rp = new RequestParams();
+        rp.put("username", username.getText());
+        rp.put("password", password.getText());
+
+        HttpUtils.post("login", rp, new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                try {
+                    JSONObject serverResp = new JSONObject(response.toString());
+                    customerUsername = serverResp.getString("username");
+                    userType = serverResp.getString("userType");
+                    if(!userType.equals("customer")){
+                        error = "Access denied";
+                        customerUsername = null;
+                        userType = null;
+                    }
+                    else{
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                                new Home()).commit();
+                        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+                        bottomNav.setVisibility(View.VISIBLE);
+                    }
+
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                // refreshErrorMessage();
+                //  ((TextView) v.findViewById(R.id.newevent_name)).setText("");
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+            }
+        });
+
+    }
+
+    public void goToSignup(View v){
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                new Signup()).commit();
+    }
+
+    public void logout(View v){
+        customerUsername=null;
+        userType=null;
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                new Login()).commit();
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav.setVisibility(View.GONE);
+    }
+
+
+
 
     public void editProfile(View view){
         error ="";
-
-//        TextView tv = (EditText) findViewById(R.id.firstName);
-//        String firstName = tv.getText().toString();
-//
-//        tv = (EditText) findViewById(R.id.lastName);
-//        String lastName = tv.getText().toString();
-//
-//        tv = (EditText) findViewById(R.id.address);
-//        String address = tv.getText().toString();
-//
-//        tv = (EditText) findViewById(R.id.phoneNumber);
-//        String phoneNumber = tv.getText().toString();
-//
-//        tv = (EditText) findViewById(R.id.zipCode);
-//        String zipCode = tv.getText().toString();
-//
-//        tv = (EditText) findViewById(R.id.email);
-//        String email = tv.getText().toString();
 
         final EditText firstName = (EditText) findViewById(R.id.firstName);
         final EditText lastName = (EditText) findViewById(R.id.lastName);
@@ -164,30 +251,63 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void login(View v){
-        final EditText username = (EditText) findViewById(R.id.Username);
-        final EditText password = (EditText) findViewById(R.id.Password);
-        RequestParams rp = new RequestParams();
-        rp.put("username", username.getText());
-        rp.put("password", password.getText());
+    public void getCars(View v){
+        error="";
+        final TextView cars = (TextView) findViewById(R.id.cars);
 
-        HttpUtils.post("login", rp, new JsonHttpResponseHandler(){
+        HttpUtils.get("cars/"+customerUsername, new RequestParams(), new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONArray response) {
+
+                try {
+                    String carsString = "";
+                    for(int i=0; i<response.length(); i++){
+                        JSONObject car = response.getJSONObject(i);
+                        carsString+=car.getString("model")+", "
+                                +car.getString("transmission")+", "
+                                +car.getString("plateNumber")+"\n";
+                    }
+                    cars.setText(carsString);
+
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                // refreshErrorMessage();
+                //  ((TextView) v.findViewById(R.id.newevent_name)).setText("");
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+            }
+
+        });
+
+    }
+
+
+    public void addCar(View v){
+        error ="";
+        final EditText model = findViewById(R.id.model);
+        final EditText plateNumber = findViewById(R.id.plateNumber);
+        final EditText carTransmission = findViewById(R.id.carTransmission);
+
+        RequestParams rp = new RequestParams();
+        rp.put("model", model.getText());
+        rp.put("carTransmission", carTransmission.getText());
+        rp.put("plateNumber", plateNumber.getText());
+
+        HttpUtils.post("add_car/"+customerUsername, rp, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+
                 try {
                     JSONObject serverResp = new JSONObject(response.toString());
-                    customerUsername = serverResp.getString("username");
-                    userType = serverResp.getString("userType");
-                    if(!userType.equals("customer")){
-                        error = "Access denied";
-                        customerUsername = null;
-                        userType = null;
-                    }
-                    else{
-                        Navigation.findNavController(v)
-                                .navigate(R.id.action_Login_to_Profile);
-                       // getProfile(v);
-                    }
 
                 } catch (JSONException e) {
                     error += e.getMessage();
@@ -206,25 +326,40 @@ public class MainActivity extends AppCompatActivity {
                 refreshErrorMessage();
             }
         });
-
     }
 
-//    public void addCar(View v){
-//        error ="";
-//        final EditText model = findViewById(R.id.model);
-//        final EditText plateNumber = findViewById(R.id.plateNumber);
-//        final EditText carTransmission = findViewById(R.id.carTransmission);
-//
-//        RequestParams rp = new RequestParams();
-//        rp.put("model", model);
-//        rp.put("carTransmission", carTransmission);
-//        rp.pu
-//
-//        HttpUtils.post("add_car/"+"bob", );
-//
-//
-//    }
+    public void removeCar(View v) {
+        error = "";
+        final EditText plateNumber = findViewById(R.id.plateNumberRemove);
 
+        RequestParams rp = new RequestParams();
+        rp.put("plateNumber", plateNumber.getText());
+
+        HttpUtils.delete("remove_car/" + customerUsername, rp, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+
+                try {
+                    JSONObject serverResp = new JSONObject(response.toString());
+
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                // refreshErrorMessage();
+                //  ((TextView) v.findViewById(R.id.newevent_name)).setText("");
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+            }
+        });
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -241,9 +376,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
 
         return super.onOptionsItemSelected(item);
     }

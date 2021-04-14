@@ -11,8 +11,8 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 <!--    <string name="username">Username</string>-->
 <!--    <string name="password">Password</string>-->
-    <string name="login">Login</string>
-    <string name="signup">Signup</string>
+    <string name="Login">Login</string>
+    <string name="Signup">Signup</string>
     <string name ="phoneNumber">phoneNumber</string>
     <string name = "email">email</string>
     <string name = "address">address</string>

@@ -8,17 +8,19 @@
     <fragment
         android:id="@+id/login"
         android:name="ca.mcgill.ecse321.autoRepair.Login"
-        android:label="@string/login"
+        android:label="@string/Login"
         tools:layout="@layout/login" >
         <action
             android:id="@+id/action_login_to_Signup"
             app:destination="@id/Signup" />
+<!--            app:popUpTo="@+id/Signup"-->
+<!--            app:popUpToInclusive="true"/>-->
     </fragment>
 
     <fragment
         android:id="@+id/Signup"
         android:name="ca.mcgill.ecse321.autoRepair.Signup"
-        android:label="@string/signup"
+        android:label="@string/Signup"
         tools:layout="@layout/signup"/>
 
 </navigation>

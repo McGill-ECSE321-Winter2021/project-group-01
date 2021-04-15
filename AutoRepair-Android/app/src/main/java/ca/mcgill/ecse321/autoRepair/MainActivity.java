@@ -364,6 +364,84 @@ public class MainActivity extends AppCompatActivity{
         });
     }
 
+    public void getReviews(View v) {
+        error = "";
+        final TextView reviews = (TextView) findViewById(R.id.reviews); //to be done
+
+        HttpUtils.get("/view_all_reviews", new RequestParams(), new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONArray response) {
+
+                try {
+                    String reviewsString = "";
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject review = response.getJSONObject(i);
+                        reviewsString += "Review " +
+                                review.getString("description") + ", "
+                                + ", rating: "
+                                + "\n";
+                    }
+                    reviews.setText(reviewsString);
+
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+            }
+
+        });
+    }
+
+    public void getAppointments(View v){
+        error="";
+        final TextView appointments = (TextView) findViewById(R.id.appointments);
+
+        HttpUtils.get("/view_all_appointments", new RequestParams(), new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONArray response) {
+
+                try {
+                    String appointmentsString = "";
+                    for(int i=0; i<response.length(); i++){
+                        JSONObject appointment = response.getJSONObject(i);
+                        JSONObject timeSlot = appointment.getJSONObject("timeSlot");
+                        JSONObject service = appointment.getJSONObject("chosenService");
+                        appointmentsString+=appointment.getString("serviceName")+", "
+                                +timeSlot.getString("startDate")+", "
+                                +timeSlot.getString("startTime")+", "
+                                +timeSlot.getString("endDate")+", "
+                                +timeSlot.getString("endTime")+"\n";
+                    }
+                    appointments.setText(appointmentsString);
+
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+            }
+
+        });
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.autoRepair;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import android.view.Menu;
@@ -10,9 +11,11 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -37,11 +40,14 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import android.graphics.Color;
 
 public class MainActivity extends AppCompatActivity{
     private String error = null;
     private String customerUsername = null;
     private String userType = null;
+    private Context context = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,11 +143,14 @@ public class MainActivity extends AppCompatActivity{
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
         try {
             if (firstName==null||lastName==null||phoneNumber==null||address==null||zipCode==null||username==null
-            ||password==null||model==null||carTransmissionNew==null){
+            ||password==null||model==null||carTransmissionNew==null||email==null){
                 error = "Missing sign up information";
             }
             else {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                new SweetAlertDialog(MainActivity.this)
+                        .setTitleText("Registration Successful, Login please!")
+                        .show();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new Login()).commit();
             }
         } catch (Exception e) {
@@ -181,6 +190,9 @@ public class MainActivity extends AppCompatActivity{
                         userType = null;
                     }
                     else{
+                        new SweetAlertDialog(MainActivity.this)
+                                .setTitleText("Login Successful!")
+                                .show();
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                                 new Home()).commit();
                         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);

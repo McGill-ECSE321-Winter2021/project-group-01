@@ -366,11 +366,11 @@ public class MainActivity extends AppCompatActivity{
 
     public void getReminders(View v){
         error="";
-        final TextView reminders = (TextView) findViewById(R.id.allReminders); //to be done
+        final TextView reminders = (TextView) findViewById(R.id.allReminders);
         RequestParams rp = new RequestParams();
         rp.put("username", customerUsername);
 
-        HttpUtils.get("/view_reminders_for_customer", new RequestParams(), new JsonHttpResponseHandler(){
+         HttpUtils.get("view_reminders_for_customer/", rp, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONArray response) {
 
@@ -379,9 +379,8 @@ public class MainActivity extends AppCompatActivity{
                     for(int i=0; i<response.length(); i++){
                         JSONObject reminder = response.getJSONObject(i);
                         remindersString+="Service: "+
-                               // reminder.getString("name")+", "
+                                reminder.getJSONObject("chosenService").getString("name")+", "+
                                 reminder.getString("description")+ "\n";
-                        // +service.getString(("rating"))+"\n";
                     }
                     reminders.setText(remindersString);
 

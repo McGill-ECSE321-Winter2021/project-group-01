@@ -1,6 +1,5 @@
 package ca.mcgill.ecse321.autoRepair.dao;
 
-
 import java.util.List;
 
 import ca.mcgill.ecse321.autoRepair.model.Appointment;

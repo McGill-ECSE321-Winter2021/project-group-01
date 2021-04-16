@@ -91,8 +91,8 @@ public class CarService {
 		if(car==null) throw new IllegalArgumentException("Car not found.");
 		
 		boolean found = false;
-		for(Car c : customer.getCars()) {
-			if (c.getPlateNumber() == car.getPlateNumber()) found=true;
+		for(Car car1 : customer.getCars()) {
+			if (car1.getPlateNumber() == car.getPlateNumber()) found=true;
 		}
 		if(found==false) throw new IllegalArgumentException("Car not found.");
 		

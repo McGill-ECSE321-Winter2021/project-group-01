@@ -37,56 +37,42 @@ public class TimeSlotService {
         List<TimeSlot> availableTimeSlots = new ArrayList<>();
         Locale locale = new Locale("en");
         OperatingHour operatingHour = operatingHourRepository.findByDayOfWeek(getDayString(startDate, locale));
-        TimeSlot ts = new TimeSlot();
-        ts.setStartTime(operatingHour.getStartTime());
-        ts.setEndTime(operatingHour.getEndTime());
-        ts.setStartDate(startDate);
-        ts.setEndDate(startDate);
-        availableTimeSlots.add(ts);
+        TimeSlot timeSlot = new TimeSlot();
+        timeSlot.setStartTime(operatingHour.getStartTime());
+        timeSlot.setEndTime(operatingHour.getEndTime());
+        timeSlot.setStartDate(startDate);
+        timeSlot.setEndDate(startDate);
+        availableTimeSlots.add(timeSlot);
 
         List<TimeSlot> timeSlotsPerDay = timeSlotRepository.findTimeSlotsByStartDate(startDate);
-        for(TimeSlot aTS: timeSlotsPerDay){
+        for(TimeSlot timeSlot1: timeSlotsPerDay){
             for (int j = 0; j < availableTimeSlots.size(); j++) {
-               TimeSlot TS = availableTimeSlots.get(j);
-                if (isOverlap(aTS, TS)) {
+               TimeSlot timeSlot2 = availableTimeSlots.get(j);
+                if (isOverlap(timeSlot1, timeSlot2)) {
 
-                    LocalTime S1 = aTS.getStartTime().toLocalTime();
-                    LocalTime S2 = TS.getStartTime().toLocalTime();
-                    LocalTime E1 = aTS.getEndTime().toLocalTime();
-                    LocalTime E2 = TS.getEndTime().toLocalTime();
+                    LocalTime startTime1 = timeSlot1.getStartTime().toLocalTime();
+                    LocalTime startTime2 = timeSlot2.getStartTime().toLocalTime();
+                    LocalTime endTime1 = timeSlot1.getEndTime().toLocalTime();
+                    LocalTime endTime2 = timeSlot2.getEndTime().toLocalTime();
 
-                    if (S1.compareTo(S2) == 0 && E1.compareTo(E2) == 0) {
-                        availableTimeSlots.remove(TS);
-                    } else if (S1.compareTo(S2) == 0) {
-                        TimeSlot tmp = new TimeSlot();
-                        tmp.setEndTime(TS.getEndTime());
-                        tmp.setStartTime(aTS.getEndTime());
-                        tmp.setEndDate(startDate);
-                        tmp.setStartDate(startDate);
-                        availableTimeSlots.add(tmp);
-                        availableTimeSlots.remove(TS);
-                    } else if (E1.compareTo(E2) == 0) {
-                        TimeSlot tmp = new TimeSlot();
-                        tmp.setEndTime(aTS.getStartTime());
-                        tmp.setStartTime(TS.getStartTime());
-                        tmp.setEndDate(startDate);
-                        tmp.setStartDate(startDate);
-                        availableTimeSlots.add(tmp);
-                        availableTimeSlots.remove(TS);
+                    TimeSlot temporaryTimeSlot = new TimeSlot();
+
+                    if (startTime1.compareTo(startTime2) == 0 && endTime1.compareTo(endTime2) == 0) {
+                        availableTimeSlots.remove(timeSlot2);
+                    } else if (startTime1.compareTo(startTime2) == 0) {
+                        temporaryTimeSlot=calculateTimeSlot(startDate,timeSlot1.getEndTime(),startDate,timeSlot2.getEndTime());
+                        availableTimeSlots.add(temporaryTimeSlot);
+                        availableTimeSlots.remove(timeSlot2);
+                    } else if (endTime1.compareTo(endTime2) == 0) {
+                        temporaryTimeSlot=calculateTimeSlot(startDate,timeSlot2.getStartTime(),startDate,timeSlot1.getStartTime());
+                        availableTimeSlots.add(temporaryTimeSlot);
+                        availableTimeSlots.remove(timeSlot2);
                     } else {
-                        TimeSlot tmp1 = new TimeSlot();
-                        tmp1.setEndTime(aTS.getStartTime());
-                        tmp1.setStartTime(TS.getStartTime());
-                        tmp1.setEndDate(startDate);
-                        tmp1.setStartDate(startDate);
-                        TimeSlot tmp2 = new TimeSlot();
-                        tmp2.setEndTime(TS.getEndTime());
-                        tmp2.setStartTime(aTS.getEndTime());
-                        tmp2.setEndDate(startDate);
-                        tmp2.setStartDate(startDate);
-                        availableTimeSlots.remove(TS);
-                        availableTimeSlots.add(tmp1);
-                        availableTimeSlots.add(tmp2);
+                        temporaryTimeSlot=calculateTimeSlot(startDate,timeSlot2.getStartTime(),startDate,timeSlot1.getStartTime());
+                        TimeSlot temporaryTimeSlot1 = calculateTimeSlot(startDate,timeSlot1.getEndTime(),startDate,timeSlot2.getEndTime());
+                        availableTimeSlots.remove(timeSlot2);
+                        availableTimeSlots.add(temporaryTimeSlot);
+                        availableTimeSlots.add(temporaryTimeSlot1);
                     }
                 }
             }
@@ -105,16 +91,27 @@ public class TimeSlotService {
         return timeSlotRepository.findTimeSlotsByStartDate(date);
     }
 
-    private static boolean isOverlap(TimeSlot TS1, TimeSlot TS2) {
-        LocalTime S1 = TS1.getStartTime().toLocalTime();
-        LocalTime S2 = TS2.getStartTime().toLocalTime();
-        LocalTime E1 = TS1.getEndTime().toLocalTime();
-        LocalTime E2 = TS2.getEndTime().toLocalTime();
+    /**
+     * This method checks if two time slots are overlapping
+     * @param timeSlot1
+     * @param timeSlot2
+     * @return
+     */
+    private static boolean isOverlap(TimeSlot timeSlot1, TimeSlot timeSlot2) {
+        LocalTime startTime1 = timeSlot1.getStartTime().toLocalTime();
+        LocalTime startTime2 = timeSlot2.getStartTime().toLocalTime();
+        LocalTime endTime1 = timeSlot1.getEndTime().toLocalTime();
+        LocalTime endTime2 = timeSlot2.getEndTime().toLocalTime();
 
-        return S1.isBefore(E2) && S2.isBefore(E1);
+        return startTime1.isBefore(endTime2) && startTime2.isBefore(endTime1);
     }
 
-
+    /**
+     * This method gets the day of the week of a specific date
+     * @param date
+     * @param locale
+     * @return
+     */
     public static OperatingHour.DayOfWeek getDayString(Date date, Locale locale) {
         DateFormat formatter = new SimpleDateFormat("EEEE", locale);
         String stringDate = formatter.format(date);
@@ -142,9 +139,32 @@ public class TimeSlotService {
         return null;
     }
 
+    /**
+     * This method gets a time slot by the start date and start time
+     * @param startDate
+     * @param startTime
+     * @return
+     */
     @Transactional
     public TimeSlot getTimeSlot(Date startDate, Time startTime){
         return timeSlotRepository.findTimeSlotByStartDateAndStartTime(startDate,startTime);
+    }
+
+    /**
+     * This helper method calculates a time slot
+     * @param startDate
+     * @param startTime
+     * @param endDate
+     * @param endTime
+     * @return
+     */
+    private TimeSlot calculateTimeSlot(Date startDate, Time startTime, Date endDate, Time endTime){
+        TimeSlot timeSlot=new TimeSlot();
+        timeSlot.setStartDate(startDate);
+        timeSlot.setStartTime(startTime);
+        timeSlot.setEndDate(endDate);
+        timeSlot.setEndTime(endTime);
+        return timeSlot;
     }
 
 }

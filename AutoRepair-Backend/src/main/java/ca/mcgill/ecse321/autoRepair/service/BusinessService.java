@@ -49,8 +49,8 @@ public class BusinessService {
 		business.setEmail(email);
 		business.setAddress(address);
 		business.setPhoneNumber(phoneNumber);
-		business.setBusinessHours(new ArrayList<OperatingHour>());
-		business.setHolidays(new ArrayList<TimeSlot>());
+		business.setBusinessHours(new ArrayList<>());
+		business.setHolidays(new ArrayList<>());
 		businessRepository.save(business);
 		return business;
 	}
@@ -59,14 +59,14 @@ public class BusinessService {
 	 * @author Fadi Tawfik Beshay
 	 * Edits the business information of a given business
 	 * @param name
-	 * @param name1
+	 * @param newName
 	 * @param email
 	 * @param address
 	 * @param phoneNumber
 	 * @return business
 	 */
 	@Transactional
-	public Business editBusiness(String name, String name1, String email, String address, String phoneNumber) {
+	public Business editBusiness(String name, String newName, String email, String address, String phoneNumber) {
 		if(name==null || name=="") throw new IllegalArgumentException("Name cannot be blank");
 		if(email==null || email=="") throw new IllegalArgumentException("Email cannot be blank");
 		if(address==null || address=="") throw new IllegalArgumentException("Address cannot be blank");
@@ -76,7 +76,7 @@ public class BusinessService {
 		}	
 		Business business = businessRepository.findBusinessByName(name);
 		if(business==null) throw new IllegalArgumentException("Business not found");
-		business.setName(name1);
+		business.setName(newName);
 		business.setEmail(email);
 		business.setAddress(address);
 		business.setPhoneNumber(phoneNumber);
@@ -86,8 +86,7 @@ public class BusinessService {
 
 	/**
 	 * @author Fadi Tawfik Beshay
-	 * Returns a business given a name
-	 * @param name
+	 * Returns the business
 	 * @return business
 	 */
 	@Transactional
@@ -118,6 +117,7 @@ public class BusinessService {
 		if(startTime.after(endTime)) throw new IllegalArgumentException
 		("Start time cannot be after end time");
 		if(operatingHourRepository.findByDayOfWeek(dayOfWeek)!=null) throw new IllegalArgumentException("Operating hour already exists");
+
 		OperatingHour operatingHour = new OperatingHour();
 		operatingHour.setDayOfWeek(dayOfWeek);
 		operatingHour.setStartTime(startTime);
@@ -126,6 +126,7 @@ public class BusinessService {
 		business.getBusinessHours().add(operatingHour);
 		operatingHourRepository.save(operatingHour);
 		businessRepository.save(business);
+
 		return operatingHour;
 	}
 
@@ -135,24 +136,26 @@ public class BusinessService {
 	 * @author Fadi Tawfik Beshay
 	 * edits the operating hour of a business
 	 * @param dayOfWeek
-	 * @param dayOfWeek1
-	 * @param startTime1
-	 * @param endTime1
+	 * @param newDayOfWeek
+	 * @param startTime
+	 * @param endTime
 	 * @return operatingHour
 	 */
 	@Transactional
-	public OperatingHour editOperatingHour(DayOfWeek dayOfWeek, DayOfWeek dayOfWeek1, Time startTime1, Time endTime1) {
+	public OperatingHour editOperatingHour(DayOfWeek dayOfWeek, DayOfWeek newDayOfWeek, Time startTime, Time endTime) {
 		
-		if(dayOfWeek==null || dayOfWeek1==null) throw new IllegalArgumentException("Day of week cannot be blank");
-		if(startTime1==null) throw new IllegalArgumentException("Start time cannot be blank");
-		if(endTime1==null) throw new IllegalArgumentException("End time cannot be blank");
-		if(startTime1.after(endTime1)) throw new IllegalArgumentException("Start time cannot be before end time");
+		if(dayOfWeek==null || newDayOfWeek==null) throw new IllegalArgumentException("Day of week cannot be blank");
+		if(startTime==null) throw new IllegalArgumentException("Start time cannot be blank");
+		if(endTime==null) throw new IllegalArgumentException("End time cannot be blank");
+		if(startTime.after(endTime)) throw new IllegalArgumentException("Start time cannot be before end time");
 		if(operatingHourRepository.findByDayOfWeek(dayOfWeek)==null) throw new IllegalArgumentException("Operating hour cannot be found");
+
 		OperatingHour operatingHour = operatingHourRepository.findByDayOfWeek(dayOfWeek);
-		operatingHour.setDayOfWeek(dayOfWeek1);
-		operatingHour.setStartTime(startTime1);
-		operatingHour.setEndTime(endTime1);
+		operatingHour.setDayOfWeek(newDayOfWeek);
+		operatingHour.setStartTime(startTime);
+		operatingHour.setEndTime(endTime);
 		operatingHourRepository.save(operatingHour);
+
 		return operatingHour;
 	}
 	
@@ -166,13 +169,17 @@ public class BusinessService {
 	@Transactional
 	public boolean deleteOperatingHour(String businessName, DayOfWeek dayOfWeek) {
 		if(dayOfWeek==null) throw new IllegalArgumentException("Day of week cannot be blank");
+
 		OperatingHour operatingHour = operatingHourRepository.findByDayOfWeek(dayOfWeek);
 		if(operatingHour==null) throw new IllegalArgumentException("Operating hour cannot be found");
+
 		Business business = businessRepository.findBusinessByName(businessName);
 		if(business==null) throw new IllegalArgumentException("Business not found");
+
 		business.getBusinessHours().remove(operatingHour);
 		businessRepository.save(business);
 		operatingHourRepository.delete(operatingHourRepository.findByDayOfWeek(dayOfWeek));
+
 		return true;
 	}
 	

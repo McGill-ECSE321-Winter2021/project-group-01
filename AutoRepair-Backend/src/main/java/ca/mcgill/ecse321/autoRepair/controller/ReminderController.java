@@ -113,8 +113,8 @@ public class ReminderController {
 		if(timestring == "")  return new ResponseEntity<>("The time cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
 		Date date = Date.valueOf(datestring);
 		Time time = Time.valueOf(timestring + ":00");
-		SystemTime.setSysDate(Date.valueOf(LocalDate.now()));
-		SystemTime.setSysTime(Time.valueOf(LocalTime.now()));
+		SystemTime.setSystemDate(Date.valueOf(LocalDate.now()));
+		SystemTime.setSystemTime(Time.valueOf(LocalTime.now()));
 		Reminder reminder = null;
 		try {
 			reminder = reminderService.createReminder(serviceName, username, date, description, time);			
@@ -146,8 +146,8 @@ public class ReminderController {
 		if(timestring == "")  return new ResponseEntity<>("The time cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
 		Date date = Date.valueOf(datestring);
 		Time time = Time.valueOf(timestring + ":00");
-		SystemTime.setSysDate(Date.valueOf(LocalDate.now()));
-		SystemTime.setSysTime(Time.valueOf(LocalTime.now()));
+		SystemTime.setSystemDate(Date.valueOf(LocalDate.now()));
+		SystemTime.setSystemTime(Time.valueOf(LocalTime.now()));
 		Reminder reminder = null;
 		try {
 			reminder = reminderService.editReminder(oldServiceName, newServiceName, username, date, description, time);			
@@ -191,8 +191,7 @@ public class ReminderController {
 			cars.add(convertToDTO(car));
 		}
 
-		return new CustomerDTO(customer.getUsername(), customer.getPassword(), customer.getNoShow(), 
-				customer.getShow(), cars, convertToDTO(customer.getProfile()));
+		return new CustomerDTO(customer.getUsername(), customer.getPassword(), cars, convertToDTO(customer.getProfile()));
 
 	}
 	

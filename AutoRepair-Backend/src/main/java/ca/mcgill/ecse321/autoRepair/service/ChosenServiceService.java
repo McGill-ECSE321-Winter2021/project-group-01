@@ -39,14 +39,15 @@ public class ChosenServiceService {
 			throw new IllegalArgumentException("Invalid Price");
 		}
 		
-		usernameIsValid(name);
+		serviceNameIsValid(name);
 		
-		ChosenService cService = new ChosenService();
-		cService.setName(name);
-		cService.setDuration(duration);
-		cService.setPayment(price);
-		chosenServiceRepository.save(cService);
-		return cService;
+		ChosenService chosenService = new ChosenService();
+		chosenService.setName(name);
+		chosenService.setDuration(duration);
+		chosenService.setPayment(price);
+		chosenServiceRepository.save(chosenService);
+
+		return chosenService;
 	}
 	
 	/**
@@ -69,13 +70,15 @@ public class ChosenServiceService {
 		if(price == null) {
 			throw new IllegalArgumentException("Invalid Price");
 		}
-		ChosenService cService = getChosenService(name);
-		if (cService==null) 
-			throw new IllegalArgumentException("Chosen Service invalid");
-		cService.setDuration(duration);
-		cService.setPayment(price);
-		chosenServiceRepository.save(cService);
-		return cService;
+
+		ChosenService chosenService = getChosenService(name);
+		if (chosenService==null) throw new IllegalArgumentException("Chosen Service invalid");
+
+		chosenService.setDuration(duration);
+		chosenService.setPayment(price);
+		chosenServiceRepository.save(chosenService);
+
+		return chosenService;
 	}
 	
 	/**
@@ -90,9 +93,9 @@ public class ChosenServiceService {
 		if(name == null || name.equals("") || containsCharacter(name)==false) {
 			throw new IllegalArgumentException("Invalid name");
 		}
-		ChosenService cs = getChosenService(name);
-		if(cs!=null) {
-		chosenServiceRepository.delete(cs);
+		ChosenService chosenService = getChosenService(name);
+		if(chosenService!=null) {
+		chosenServiceRepository.delete(chosenService);
 		return true;
 		}
 		else throw new IllegalArgumentException("Chosen Service invalid");
@@ -126,13 +129,23 @@ public class ChosenServiceService {
 		}
 		return resultList;
 	}
-	
-	private boolean usernameIsValid(String name) {
+
+	/**
+	 * This method checks whether the name of the service already exists
+	 * @param name
+	 * @return
+	 */
+	private boolean serviceNameIsValid(String name) {
 		if(chosenServiceRepository.findChosenServiceByName(name)==null) return true;
 		else throw new IllegalArgumentException("Name is already taken");
 	}
-	
-	public static boolean containsCharacter(String input){
+
+	/**
+	 * This method checks if the string input contains character or is only white spaces
+	 * @param input
+	 * @return
+	 */
+	private static boolean containsCharacter(String input){
 	    if(input != null){
 	        for(int i = 0; i < input.length(); i++){
 	            if(!(Character.isWhitespace(input.charAt(i)))){

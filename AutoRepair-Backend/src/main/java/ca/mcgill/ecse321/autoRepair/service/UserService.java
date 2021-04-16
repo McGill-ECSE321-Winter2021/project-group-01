@@ -16,35 +16,42 @@ import ca.mcgill.ecse321.autoRepair.model.User;
 public class UserService {
 
 	@Autowired
-	private CustomerRepository cusRepo;
+	private CustomerRepository customerRepository;
 
 	@Autowired
-	private OwnerRepository ownerRepo;
+	private OwnerRepository ownerRepository;
 
 	@Autowired
-	private AssistantRepository assistantRepo;
+	private AssistantRepository assistantRepository;
 
+	/**
+	 * This method is for logging in
+	 * @author Eric Chehata
+	 * @param username
+	 * @param password
+	 * @return
+	 */
 	@Transactional
 	public User login(String username, String password) {
 
-		if(!cusRepo.existsCustomerByUsername(username) && 
-				!ownerRepo.existsOwnerByUsername(username) &&
-				!assistantRepo.existsAssitantByUsername(username)) {
+		if(!customerRepository.existsCustomerByUsername(username) &&
+				!ownerRepository.existsOwnerByUsername(username) &&
+				!assistantRepository.existsAssitantByUsername(username)) {
 			throw new IllegalArgumentException("Invalid username");
 		}
 
-		Customer customer = cusRepo.findCustomerByUsername(username);
+		Customer customer = customerRepository.findCustomerByUsername(username);
 		if (customer!=null && customer.getPassword().equals(password))
 			return customer;
 
 
-		Owner owner = ownerRepo.findOwnerByUsername(username);
+		Owner owner = ownerRepository.findOwnerByUsername(username);
 		if(owner!=null && owner.getPassword().equals(password))
 			return owner;
 
 
 
-		Assistant assistant = assistantRepo.findAssistantByUsername(username);
+		Assistant assistant = assistantRepository.findAssistantByUsername(username);
 		if (assistant!=null && assistant.getPassword().equals(password))
 			return assistant;
 

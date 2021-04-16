@@ -63,8 +63,7 @@ public class UserController {
 			cars.add(convertToDTO(car));
 		}
 
-		return new CustomerDTO(customer.getUsername(), customer.getPassword(), customer.getNoShow(), 
-				customer.getShow(), cars, convertToDTO(customer.getProfile()));
+		return new CustomerDTO(customer.getUsername(), customer.getPassword(), cars, convertToDTO(customer.getProfile()));
 
 	}
 

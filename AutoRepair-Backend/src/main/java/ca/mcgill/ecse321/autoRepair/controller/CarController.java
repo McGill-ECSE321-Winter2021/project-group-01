@@ -137,14 +137,13 @@ public class CarController {
 			cars.add(convertToDTO(car));
 		}
 
-		return new CustomerDTO(customer.getUsername(), customer.getPassword(), customer.getNoShow(), 
-				customer.getShow(), cars, convertToDTO(customer.getProfile()));
+		return new CustomerDTO(customer.getUsername(), customer.getPassword(), cars, convertToDTO(customer.getProfile()));
 
 	}
 
 	/**
 	 * This method converts a Car object to a CarDTO
-	 * @param customer
+	 * @param car
 	 * @return
 	 */
 	private CarDTO convertToDTO(Car car) {
@@ -154,7 +153,7 @@ public class CarController {
 
 	/**
 	 * This method converts a Profile object to a ProfileDTO
-	 * @param customer
+	 * @param profile
 	 * @return
 	 */
 	private ProfileDTO convertToDTO(Profile profile) {

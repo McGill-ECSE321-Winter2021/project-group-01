@@ -184,7 +184,7 @@ public class BusinessController {
 
 	/**
 	 * This method converts an OperatingHour object to an OperatingHourDTO
-	 * @param timeSlot
+	 * @param operatingHour
 	 * @return
 	 */
 	private OperatingHourDTO convertToDTO(OperatingHour operatingHour) {
@@ -194,7 +194,7 @@ public class BusinessController {
 
 	/**
 	 * This method converts a Business object to a BusinessDTO
-	 * @param timeSlot
+	 * @param business
 	 * @return
 	 */
      private BusinessDTO convertToDTO(Business business) {

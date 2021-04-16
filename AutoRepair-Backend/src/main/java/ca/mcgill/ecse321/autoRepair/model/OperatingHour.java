@@ -19,6 +19,10 @@ public class OperatingHour
   //------------------------
 
   private Long id;
+  private DayOfWeek dayOfWeek;
+  private Time startTime;
+  private Time endTime;
+
   @Id
   @GeneratedValue(strategy=GenerationType.SEQUENCE)
   public Long getId() {
@@ -29,8 +33,6 @@ public class OperatingHour
     this.id = id;
   }
 
-  private DayOfWeek dayOfWeek;
-
   public DayOfWeek getDayOfWeek() {
     return dayOfWeek;
   }
@@ -39,8 +41,6 @@ public class OperatingHour
     this.dayOfWeek = dayOfWeek;
   }
 
-
-  private Time startTime;
   public Time getStartTime() {
     return startTime;
   }
@@ -48,8 +48,6 @@ public class OperatingHour
   public void setStartTime(Time startTime) {
     this.startTime = startTime;
   }
-
-  private Time endTime;
 
   public Time getEndTime() {
     return endTime;

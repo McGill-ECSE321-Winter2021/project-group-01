@@ -12,6 +12,7 @@ public class Car{
   public enum CarTransmission { Manual, Automatic }
   private String model;
   private CarTransmission transmission;
+  private String plateNumber;
 
   public String getModel() {
     return model;
@@ -38,7 +39,6 @@ public class Car{
     this.plateNumber = plateNumber;
   }
 
-  private String plateNumber;
 
   public String toString()
   {

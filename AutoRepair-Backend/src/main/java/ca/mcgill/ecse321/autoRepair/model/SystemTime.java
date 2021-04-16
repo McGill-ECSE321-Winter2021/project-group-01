@@ -8,6 +8,10 @@ import java.sql.Time;
 public class SystemTime
 {
 
+    private static Date systemDate;
+
+    private static Time systemTime;
+
     public SystemTime()
     {}
 
@@ -41,9 +45,7 @@ public class SystemTime
         systemTime = Time.valueOf(localTime);
     }
 
-    private static Date systemDate;
 
-    private static Time systemTime;
 
 
 }

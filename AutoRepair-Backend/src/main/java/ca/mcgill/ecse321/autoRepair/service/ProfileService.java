@@ -155,6 +155,13 @@ public class ProfileService {
 
 		return customer;
 	}
+
+	/**
+	 * @author Eric Chehata
+	 * This method deletes a profile
+	 * @param email
+	 * @return
+	 */
 	@Transactional
 	public boolean deleteByEmail(String email) {
 		Profile profile = profileRepository.findByEmail(email);
@@ -189,7 +196,12 @@ public class ProfileService {
 
 	}
 
-
+	/**
+	 * This method checks whether the email is available or not since an email has to be unique
+	 * @author Eric Chehata
+	 * @param email
+	 * @return
+	 */
 	private boolean emailIsValid(String email) {
 		String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+ 
 				"[a-zA-Z0-9_+&*-]+)*@" + 
@@ -201,10 +213,14 @@ public class ProfileService {
 		return pat.matcher(email).matches(); 
 	}
 
+	/**
+	 * This method checks if the input phone number is only numeric. It does not accept non numeric values.
+	 * @param phoneNumber
+	 * @return
+	 */
 	private boolean isNumeric(String phoneNumber) {
 		try {
-			@SuppressWarnings("unused")
-			int d = Integer.parseInt(phoneNumber);
+			Integer.parseInt(phoneNumber);
 		}catch(NumberFormatException nfe) {
 			return false;
 		}

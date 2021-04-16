@@ -84,11 +84,10 @@ public class ReminderService {
 		}
 		
 		Customer customer = customerRepository.findCustomerByUsername(customerName);
-        if (customer == null)
-            throw new IllegalArgumentException("The following user does not exist: " + customerName);
+        if (customer == null) throw new IllegalArgumentException("The following user does not exist: " + customerName);
         ChosenService chosenService = chosenServiceRepository.findChosenServiceByName(serviceName);
-        if (chosenService == null)
-            throw new IllegalArgumentException("The following service does not exist: " + serviceName);
+
+        if (chosenService == null) throw new IllegalArgumentException("The following service does not exist: " + serviceName);
         Reminder r = reminderRepository.findByCustomerAndChosenService(customer, chosenService);
 		if(r!=null) throw new IllegalArgumentException("This reminder is already created");
        
@@ -218,9 +217,9 @@ public class ReminderService {
 		if (chosenService == null)
 			throw new IllegalArgumentException("The following service does not exist: " + serviceName);
 
-		Reminder r = getReminder(customer, chosenService);
-		if(r!=null) {
-			reminderRepository.delete(r);
+		Reminder reminder = getReminder(customer, chosenService);
+		if(reminder!=null) {
+			reminderRepository.delete(reminder);
 			return true;
 		}
 		else throw new IllegalArgumentException("Reminder does not exist");
@@ -267,6 +266,11 @@ public class ReminderService {
 		return resultList;
 	}
 
+	/**
+	 * This method checks whether the input string contains any character or is only white spaces
+	 * @param input
+	 * @return
+	 */
 	public static boolean containsCharacter(String input){
 	    if(input != null){
 	        for(int i = 0; i < input.length(); i++){

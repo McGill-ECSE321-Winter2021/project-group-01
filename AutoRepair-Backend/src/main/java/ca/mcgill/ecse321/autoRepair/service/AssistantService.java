@@ -53,9 +53,6 @@ public class AssistantService {
 	@Transactional
 	public Assistant updateAssistant(String oldUsername,String newPassword) {
 		Assistant oldAssistant = assistantRepository.findAssistantByUsername(oldUsername);
-//		if(oldAssistant.getUsername() != newUsername && usernameIsValidAssistant(newUsername)) {
-//			oldAssistant.setUsername(newUsername);
-//		}
 		if(oldAssistant.getPassword() != newPassword && passwordIsValid(newPassword)) {
 			oldAssistant.setPassword(newPassword);
 		}
@@ -73,17 +70,12 @@ public class AssistantService {
 	 */
 	@Transactional
 	public boolean deleteAssistant(String username) {
-		boolean deleted = false;
 		Assistant assistant = assistantRepository.findAssistantByUsername(username);
 		if (assistant==null) {
-			deleted = false;
 			throw new IllegalArgumentException("assistant with username " + username + " does not exist");
-		}	
-		else {
-			assistantRepository.delete(assistant);
-			deleted = true;
 		}
-		return deleted;
+		assistantRepository.delete(assistant);
+		return true;
 
 	}
 
@@ -95,8 +87,7 @@ public class AssistantService {
 	 */
 	@Transactional
 	public Assistant getAssistant(String name) {
-		Assistant assistant = assistantRepository.findAssistantByUsername(name);
-		return assistant;
+		return assistantRepository.findAssistantByUsername(name);
 	}
 
 	/**
@@ -113,7 +104,6 @@ public class AssistantService {
 		else throw new IllegalArgumentException("Username is already taken.");
 	}
 
-	@SuppressWarnings("unused")
 	private boolean passwordIsValid(String password){
 		if (password.length()<8) throw new IllegalArgumentException("Password must have at least 8 characters");
 		if(password.length()>20) throw new IllegalArgumentException("Password must not have more than 20 characters");

@@ -208,11 +208,6 @@ public class ReviewService {
 		return toList(reviewRepository.findAll());
 	}
 
-//	@Transactional
-//	public List<Review> getServiceReviews(ChosenService service){
-//		return reviewRepository.findReviewByChosenService(service);
-//	}
-
 	private <T> List<T> toList(Iterable<T> iterable){
 		List<T> resultList = new ArrayList<T>();
 		for (T t : iterable) {

@@ -6,31 +6,12 @@ import java.util.*;
 public class Customer extends User
 {
 
+  private Profile profile;
+  private List<Car> cars;
+
   public Customer() {
     super();
   }
-
-  private int noShow;
-
-  public int getNoShow() {
-    return noShow;
-  }
-
-  public void setNoShow(int noShow) {
-    this.noShow = noShow;
-  }
-
-  private int show;
-
-  public int getShow() {
-    return show;
-  }
-
-  public void setShow(int show) {
-    this.show = show;
-  }
-
-  private List<Car> cars;
 
   @OneToMany(fetch = FetchType.EAGER)
   public List<Car> getCars() {
@@ -40,9 +21,6 @@ public class Customer extends User
   public void setCars(List<Car> cars) {
     this.cars = cars;
   }
-
-
-  private Profile profile;
 
   @OneToOne
   public Profile getProfile() {
@@ -55,10 +33,7 @@ public class Customer extends User
 
   public String toString()
   {
-    return super.toString() + "["+
-            "noShow" + ":" + getNoShow()+ "," +
-            "show" + ":" + getShow()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "profile = "+(getProfile()!=null?Integer.toHexString(System.identityHashCode(getProfile())):"null") + System.getProperties().getProperty("line.separator");
+    return super.toString() + "profile = "+(getProfile()!=null?Integer.toHexString(System.identityHashCode(getProfile())):"null") + System.getProperties().getProperty("line.separator");
   }
 
 }

@@ -23,16 +23,16 @@ public class OwnerService {
 	 * Creates an owner
 	 * @param username
 	 * @param password
-	 * @param authentificationCode
+	 * @param authenticationCode
 	 * @return owner
 	 */
 	@Transactional
-	public Owner createOwner(String username,String password,String authentificationCode) {
+	public Owner createOwner(String username,String password,String authenticationCode) {
 		
 		if(username=="") throw new IllegalArgumentException("Username cannot be blank");
 		if(password=="") throw new IllegalArgumentException("Password cannot be blank");
-		if(!authentificationCode.equals("1234")) throw new IllegalArgumentException
-		("wrong authentification code,please try again.");
+		if(!authenticationCode.equals("1234")) throw new IllegalArgumentException
+		("wrong authentication code,please try again.");
 
 		
 		Owner owner = new Owner();
@@ -55,9 +55,6 @@ public class OwnerService {
 	@Transactional
 	public Owner updateOwner(String oldUsername,String newPassword) {
 		Owner oldOwner = ownerRepository.findOwnerByUsername(oldUsername);
-//	 	if(oldOwner.getUsername() != newUsername && newUsername!="") {
-//			oldOwner.setUsername(newUsername);
-//		}
 		if(oldOwner.getPassword() != newPassword && newPassword!="") {
 			if (passwordIsValid(newPassword)) {
 				oldOwner.setPassword(newPassword);		
@@ -88,10 +85,13 @@ public class OwnerService {
 	@Transactional
 	public List<Owner> getAllOwners(){             
 		return toList(ownerRepository.findAll());
-	}	
+	}
 
-	
-	@SuppressWarnings("unused")
+	/**
+	 * This method checks whether the password is valid or not
+	 * @param password
+	 * @return
+	 */
 	private boolean passwordIsValid(String password){
 		if (password.length()<8) throw new IllegalArgumentException("Password must have at least 8 characters");
 		if(password.length()>20) throw new IllegalArgumentException("Password must not have more than 20 characters");

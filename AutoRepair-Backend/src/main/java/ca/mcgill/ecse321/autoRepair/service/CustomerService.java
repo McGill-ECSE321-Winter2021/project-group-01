@@ -45,8 +45,6 @@ public class CustomerService {
 		passwordIsValid(password);
 
 		Customer customer = new Customer();
-		customer.setNoShow(0);
-		customer.setShow(0);
 		customer.setUsername(username);
 		customer.setPassword(password);
 		customer.setCars(cars);
@@ -87,8 +85,8 @@ public class CustomerService {
 		Customer customer = getCustomer(username);
 		if(customer==null) throw new IllegalArgumentException("Customer not found.");
 		profileRepository.delete(customer.getProfile());
-		for (Car c : customer.getCars()) {
-			carRepository.delete(c);
+		for (Car car : customer.getCars()) {
+			carRepository.delete(car);
 		}
 		customerRepository.delete(customer);
 		return true;
@@ -131,11 +129,21 @@ public class CustomerService {
 
 	}
 
+	/**
+	 * This method checks if a username is valid or taken since a username has to be unique
+	 * @param username
+	 * @return
+	 */
 	private boolean usernameIsValid(String username) {
 		if(customerRepository.findCustomerByUsername(username)==null) return true;
 		else throw new IllegalArgumentException("Username is already taken");
 	}
 
+	/**
+	 * This method checks whether a password is valid or not
+	 * @param password
+	 * @return
+	 */
 	private boolean passwordIsValid(String password){
 		if (password.length()<8) throw new IllegalArgumentException("Password must have at least 8 characters");
 		if(password.length()>20) throw new IllegalArgumentException("Password must not have more than 20 characters");

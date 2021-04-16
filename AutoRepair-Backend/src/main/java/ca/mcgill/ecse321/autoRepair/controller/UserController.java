@@ -42,51 +42,19 @@ public class UserController {
 		}
 		if(user instanceof Customer) {
 
-			return new ResponseEntity<>(convertToDTO((Customer) user), HttpStatus.OK);
+			return new ResponseEntity<>(Conversion.convertToDTO((Customer) user), HttpStatus.OK);
 		}
 		
 		if(user instanceof Assistant) {
-			return new ResponseEntity<>(convertToDTO((Assistant) user), HttpStatus.OK);
+			return new ResponseEntity<>(Conversion.convertToDTO((Assistant) user), HttpStatus.OK);
 		}
 		
 		if(user instanceof Owner) {
-			return new ResponseEntity<>(convertToDTO((Owner) user), HttpStatus.OK);
+			return new ResponseEntity<>(Conversion.convertToDTO((Owner) user), HttpStatus.OK);
 		}
 		return null;
 	}
 	
-	private CustomerDTO convertToDTO(Customer customer) {
-		if(customer==null) throw new IllegalArgumentException("Customer not found.");
-		List<CarDTO> cars = new ArrayList<CarDTO>();
 
-		for (Car car : customer.getCars()) {
-			cars.add(convertToDTO(car));
-		}
-
-		return new CustomerDTO(customer.getUsername(), customer.getPassword(), customer.getNoShow(), 
-				customer.getShow(), cars, convertToDTO(customer.getProfile()));
-
-	}
-
-	private CarDTO convertToDTO(Car car) {
-		if(car==null) throw new IllegalArgumentException("Car not found.");
-		return new CarDTO(car.getModel(), car.getTransmission(), car.getPlateNumber());
-	}
-
-	private ProfileDTO convertToDTO(Profile profile) {
-		if(profile == null) throw new IllegalArgumentException("Profile not found.");
-		return new ProfileDTO(profile.getFirstName(), profile.getLastName(), profile.getAddress(), 
-				profile.getZipCode(), profile.getPhoneNumber(), profile.getEmail());
-	}
-	
-	private AssistantDTO convertToDTO(Assistant assistant) {
-		if(assistant == null) throw new IllegalArgumentException("Assistant not found.");
-		return new AssistantDTO(assistant.getUsername(),assistant.getPassword());
-	}
-
-	private OwnerDTO convertToDTO(Owner owner) {
-		if(owner == null) throw new IllegalArgumentException("Owner not found.");
-		return new OwnerDTO(owner.getUsername(),owner.getPassword());
-	}
 
 }

@@ -1,4 +1,3 @@
-  
 package ca.mcgill.ecse321.autoRepair.controller;
 
 import java.util.List;
@@ -29,7 +28,7 @@ public class AssistantController {
 	 */
 	@GetMapping(value = { "/view_assistants"})
 	public List<AssistantDTO> getAllAssitants() {
-		return assisService.getAllAssistants().stream().map(assistant -> convertToDTO(assistant)).collect(Collectors.toList());
+		return assisService.getAllAssistants().stream().map(assistant -> Conversion.convertToDTO(assistant)).collect(Collectors.toList());
 	}
 
 	/**
@@ -41,7 +40,7 @@ public class AssistantController {
 	 */
 	@GetMapping(value = {"/view_assistant/{username}"})
 	public AssistantDTO viewAssistant(@PathVariable("username") String username) {
-		return convertToDTO(assisService.getAssistant(username));
+		return Conversion.convertToDTO(assisService.getAssistant(username));
 	}
 
 	/**
@@ -66,7 +65,7 @@ public class AssistantController {
 		}catch(IllegalArgumentException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>(convertToDTO(assistant), HttpStatus.CREATED);
+		return new ResponseEntity<>(Conversion.convertToDTO(assistant), HttpStatus.CREATED);
 
 	}
 
@@ -82,7 +81,7 @@ public class AssistantController {
 	public AssistantDTO updateAssistant(@PathVariable("oldUsername") String oldUsername,
 			@RequestParam("newPassword") String newPassword) {
 		Assistant assistant = assisService.updateAssistant(oldUsername,newPassword);
-		return convertToDTO(assistant);
+		return Conversion.convertToDTO(assistant);
 	}
 
 	/**
@@ -97,12 +96,15 @@ public class AssistantController {
 		return assistant;
 	}
 
-	private AssistantDTO convertToDTO(Assistant assistant) {
-		if(assistant == null) throw new IllegalArgumentException("Assistant not found.");
-		return new AssistantDTO(assistant.getUsername(),assistant.getPassword());
-	}
-
-
+//	/**
+//	 * This method converts an Assistant object to an Assistant DTO.
+//	 * @param assistant
+//	 * @return AssistantDTO
+//	 */
+//	public static AssistantDTO convertToDTO(Assistant assistant) {
+//		if(assistant == null) throw new IllegalArgumentException("Assistant not found.");
+//		return new AssistantDTO(assistant.getUsername(),assistant.getPassword());
+//	}
 
 
 

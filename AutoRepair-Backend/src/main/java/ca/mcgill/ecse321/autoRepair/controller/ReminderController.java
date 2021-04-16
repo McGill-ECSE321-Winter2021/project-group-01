@@ -54,7 +54,7 @@ public class ReminderController {
 				if(reminder.getDate().toLocalDate().isBefore(LocalDate.now()) ||
 						(reminder.getDate().toLocalDate().isEqual(LocalDate.now()) && 
 								reminder.getTime().toLocalTime().isBefore(LocalTime.now()))) {
-					reminders.add(convertToDTO(reminder));
+					reminders.add(Conversion.convertToDTO(reminder));
 
 				}
 			}
@@ -71,7 +71,7 @@ public class ReminderController {
 	 */
 	@GetMapping(value = { "/view_reminders","/view_reminders/" })
 	public List<ReminderDTO> getAllReminders() {
-		return reminderService.getAllReminders().stream().map(reminder -> convertToDTO(reminder)).collect(Collectors.toList());
+		return reminderService.getAllReminders().stream().map(reminder -> Conversion.convertToDTO(reminder)).collect(Collectors.toList());
 	}
 	
 	/**
@@ -89,7 +89,7 @@ public class ReminderController {
 		ChosenService chosenService = chosenServiceService.getChosenService(serviceName);
 		if (chosenService == null)
 			throw new IllegalArgumentException("The following service does not exist: " + serviceName);
-		return convertToDTO(reminderService.getReminder(customer,chosenService ));
+		return Conversion.convertToDTO(reminderService.getReminder(customer,chosenService ));
 	}
 
 	/**
@@ -120,7 +120,7 @@ public class ReminderController {
 		}catch (IllegalArgumentException e){
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>(convertToDTO(reminder), HttpStatus.CREATED);
+		return new ResponseEntity<>(Conversion.convertToDTO(reminder), HttpStatus.CREATED);
 	}
 
 	/**
@@ -153,7 +153,7 @@ public class ReminderController {
 		}catch(IllegalArgumentException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>(convertToDTO(reminder), HttpStatus.OK);
+		return new ResponseEntity<>(Conversion.convertToDTO(reminder), HttpStatus.OK);
 	}
 
 	/**
@@ -177,47 +177,47 @@ public class ReminderController {
 		
 	}
 
-	private ReminderDTO convertToDTO(Reminder reminder) {
-		if(reminder==null) throw new IllegalArgumentException("Service not found.");
-		return new ReminderDTO(convertToDTO(reminder.getCustomer()), convertToDTO(reminder.getChosenService()), reminder.getDate(), reminder.getTime(),reminder.getDescription());
-	}
-	
-	private CustomerDTO convertToDTO(Customer customer) {
-		if(customer==null) throw new IllegalArgumentException("Customer not found.");
-		List<CarDTO> cars = new ArrayList<CarDTO>();
-
-		for (Car car : customer.getCars()) {
-			cars.add(convertToDTO(car));
-		}
-
-		return new CustomerDTO(customer.getUsername(), customer.getPassword(), customer.getNoShow(), 
-				customer.getShow(), cars, convertToDTO(customer.getProfile()));
-
-	}
-	
-	private CarDTO convertToDTO(Car car) {
-		if(car==null) throw new IllegalArgumentException("Car not found.");
-		return new CarDTO(car.getModel(), car.getTransmission(), car.getPlateNumber());
-	}
-
-	private ProfileDTO convertToDTO(Profile profile) {
-		if(profile == null) throw new IllegalArgumentException("Profile not found.");
-		return new ProfileDTO(profile.getFirstName(), profile.getLastName(), profile.getAddress(), 
-				profile.getZipCode(), profile.getPhoneNumber(), profile.getEmail());
-	}
-
-	private ChosenServiceDTO convertToDTO(ChosenService service) {
-		if(service==null) throw new IllegalArgumentException("Service not found.");
-		 Double averageRating = null;
-		try {
-			averageRating = reviewService.getAverageServiceReview(service.getName());
-		}
-		catch (Exception e){
-			averageRating = -1.0;
-		}
-	
-		return new ChosenServiceDTO(service.getName(), service.getDuration(), service.getPayment(), averageRating);
-	}
+//	private ReminderDTO convertToDTO(Reminder reminder) {
+//		if(reminder==null) throw new IllegalArgumentException("Service not found.");
+//		return new ReminderDTO(convertToDTO(reminder.getCustomer()), convertToDTO(reminder.getChosenService()), reminder.getDate(), reminder.getTime(),reminder.getDescription());
+//	}
+//	
+//	private CustomerDTO convertToDTO(Customer customer) {
+//		if(customer==null) throw new IllegalArgumentException("Customer not found.");
+//		List<CarDTO> cars = new ArrayList<CarDTO>();
+//
+//		for (Car car : customer.getCars()) {
+//			cars.add(convertToDTO(car));
+//		}
+//
+//		return new CustomerDTO(customer.getUsername(), customer.getPassword(), customer.getNoShow(), 
+//				customer.getShow(), cars, convertToDTO(customer.getProfile()));
+//
+//	}
+//	
+//	private CarDTO convertToDTO(Car car) {
+//		if(car==null) throw new IllegalArgumentException("Car not found.");
+//		return new CarDTO(car.getModel(), car.getTransmission(), car.getPlateNumber());
+//	}
+//
+//	private ProfileDTO convertToDTO(Profile profile) {
+//		if(profile == null) throw new IllegalArgumentException("Profile not found.");
+//		return new ProfileDTO(profile.getFirstName(), profile.getLastName(), profile.getAddress(), 
+//				profile.getZipCode(), profile.getPhoneNumber(), profile.getEmail());
+//	}
+//
+//	private ChosenServiceDTO convertToDTO(ChosenService service) {
+//		if(service==null) throw new IllegalArgumentException("Service not found.");
+//		 Double averageRating = null;
+//		try {
+//			averageRating = reviewService.getAverageServiceReview(service.getName());
+//		}
+//		catch (Exception e){
+//			averageRating = -1.0;
+//		}
+//	
+//		return new ChosenServiceDTO(service.getName(), service.getDuration(), service.getPayment(), averageRating);
+//	}
 
 
 }

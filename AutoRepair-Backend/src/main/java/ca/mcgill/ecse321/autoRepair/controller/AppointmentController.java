@@ -66,7 +66,7 @@ public class AppointmentController {
 			Time startTime = Time.valueOf(appointmentTime + ":00");
 
 			Appointment appointment = appointmentService.makeAppointment(username, serviceName, date, startTime);
-			return new ResponseEntity<>(convertToDTO(appointment), HttpStatus.CREATED);
+			return new ResponseEntity<>(Conversion.convertToDTO(appointment), HttpStatus.CREATED);
 
 		}catch (IllegalArgumentException e){
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -149,7 +149,7 @@ public class AppointmentController {
 					appointmentService.updateAppointment(timeSlot.getStartDate(), timeSlot.getStartTime(), oldService.getName(), newDate, newStartTime, oldService.getName());
 				}
 			}
-			return new ResponseEntity<>(convertToDTO(appointment), HttpStatus.OK);
+			return new ResponseEntity<>(Conversion.convertToDTO(appointment), HttpStatus.OK);
 
 		}catch (IllegalArgumentException e){
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -209,7 +209,7 @@ public class AppointmentController {
 	public List<AppointmentDTO> getAllAppointments() {
 		List<AppointmentDTO> appointmentDtos = new ArrayList<>();
 		for (Appointment appointment: appointmentService.getAllAppointments()) {
-			appointmentDtos.add(convertToDTO(appointment));
+			appointmentDtos.add(Conversion.convertToDTO(appointment));
 		}
 		return appointmentDtos;
 	}
@@ -230,7 +230,7 @@ public class AppointmentController {
 				if(appointment.getTimeSlot().getStartDate().toLocalDate().isAfter(LocalDate.now()) ||
 						(appointment.getTimeSlot().getStartDate().toLocalDate().isEqual(LocalDate.now()) && 
 								appointment.getTimeSlot().getEndTime().toLocalTime().isAfter(LocalTime.now()))) {
-					appointments.add(convertToDTO(appointment));
+					appointments.add(Conversion.convertToDTO(appointment));
 
 				}
 			}
@@ -258,7 +258,7 @@ public class AppointmentController {
 				if(appointment.getTimeSlot().getStartDate().toLocalDate().isBefore(LocalDate.now()) ||
 						(appointment.getTimeSlot().getStartDate().toLocalDate().isEqual(LocalDate.now()) && 
 								appointment.getTimeSlot().getEndTime().toLocalTime().isBefore(LocalTime.now()))) {
-					appointments.add(convertToDTO(appointment));
+					appointments.add(Conversion.convertToDTO(appointment));
 
 				}
 			}
@@ -282,7 +282,7 @@ public class AppointmentController {
 			List<Appointment> appointmentsForCustomer = appointmentService.getAppointmentsOfCustomer(customer);
 			List<AppointmentDTO> appointments = new ArrayList<>();
 			for (Appointment appointment : appointmentsForCustomer) {
-				appointments.add(convertToDTO(appointment));
+				appointments.add(Conversion.convertToDTO(appointment));
 			}
 			return new ResponseEntity<>(appointments, HttpStatus.CREATED);
 		}catch (IllegalArgumentException e){
@@ -307,7 +307,7 @@ public class AppointmentController {
 				if(appointment.getTimeSlot().getStartDate().toLocalDate().isAfter(LocalDate.now()) ||
 						(appointment.getTimeSlot().getStartDate().toLocalDate().isEqual(LocalDate.now()) && 
 								appointment.getTimeSlot().getEndTime().toLocalTime().isAfter(LocalTime.now()))) {
-					appointments.add(convertToDTO(appointment));
+					appointments.add(Conversion.convertToDTO(appointment));
 
 				}
 			}
@@ -334,7 +334,7 @@ public class AppointmentController {
 				if(appointment.getTimeSlot().getStartDate().toLocalDate().isBefore(LocalDate.now()) ||
 						(appointment.getTimeSlot().getStartDate().toLocalDate().isEqual(LocalDate.now()) && 
 								appointment.getTimeSlot().getEndTime().toLocalTime().isBefore(LocalTime.now()))) {
-					appointments.add(convertToDTO(appointment));
+					appointments.add(Conversion.convertToDTO(appointment));
 
 				}
 			}
@@ -357,7 +357,7 @@ public class AppointmentController {
 		List<TimeSlot> timeSlotsList = timeSlotService.getAvailableTimeSlots(date1);
 		List<TimeSlotDTO> availableTimeSlots = new ArrayList<>();
 		for(TimeSlot timeSlot : timeSlotsList ){
-			availableTimeSlots.add(convertToDTO(timeSlot));
+			availableTimeSlots.add(Conversion.convertToDTO(timeSlot));
 		}
 		return new ResponseEntity<>(availableTimeSlots, HttpStatus.OK);
 	}
@@ -374,7 +374,7 @@ public class AppointmentController {
 		List<TimeSlot> timeSlotsList = timeSlotService.getUnavailableTimeSlots(date);
 		List<TimeSlotDTO> unavailableTimeSlots = new ArrayList<>();
 		for(TimeSlot timeSlot : timeSlotsList ){
-			unavailableTimeSlots.add(convertToDTO(timeSlot));
+			unavailableTimeSlots.add(Conversion.convertToDTO(timeSlot));
 		}
 		return new ResponseEntity<>(unavailableTimeSlots, HttpStatus.OK);
 	}
@@ -395,59 +395,59 @@ public class AppointmentController {
 	}
 
 
-	private AppointmentDTO convertToDTO(Appointment appointment){
-		if(appointment==null)throw new IllegalArgumentException("There is no such appointment");
-		AppointmentDTO appointmentDTO= new AppointmentDTO();
-		appointmentDTO.setService(convertToDTO(appointment.getChosenService()));
-		appointmentDTO.setTimeSlot(convertToDTO(appointment.getTimeSlot()));
-		appointmentDTO.setCustomer(convertToDTO(appointment.getCustomer()));
-		return appointmentDTO;
-	}
-
-	private TimeSlotDTO convertToDTO(TimeSlot timeSlot){
-		if(timeSlot==null) throw new IllegalArgumentException("There is no such time slot");
-		TimeSlotDTO timeSlotDTO = new TimeSlotDTO(timeSlot.getStartTime(), timeSlot.getEndTime()
-				,timeSlot.getStartDate(), timeSlot.getEndDate());
-
-		return timeSlotDTO;
-	}
-
-	private ChosenServiceDTO convertToDTO(ChosenService service) {
-		if(service==null) throw new IllegalArgumentException("Service not found.");
-		Double avRating = null;
-		try {
-			avRating = reviewService.getAverageServiceReview(service.getName());
-		}
-		catch (Exception e){
-
-		}
-
-		return new ChosenServiceDTO(service.getName(), service.getDuration(), service.getPayment(), avRating);
-	}
-
-	private CustomerDTO convertToDTO(Customer customer) {
-		if(customer==null) throw new IllegalArgumentException("Customer not found.");
-		List<CarDTO> cars = new ArrayList<CarDTO>();
-
-		for (Car car : customer.getCars()) {
-			cars.add(convertToDTO(car));
-		}
-
-		return new CustomerDTO(customer.getUsername(), customer.getPassword(), customer.getNoShow(),
-				customer.getShow(), cars, convertToDTO(customer.getProfile()));
-
-	}
-
-	private CarDTO convertToDTO(Car car) {
-		if(car==null) throw new IllegalArgumentException("Car not found.");
-		return new CarDTO(car.getModel(), car.getTransmission(), car.getPlateNumber());
-	}
-
-	private ProfileDTO convertToDTO(Profile profile) {
-		if(profile == null) throw new IllegalArgumentException("Profile not found.");
-		return new ProfileDTO(profile.getFirstName(), profile.getLastName(), profile.getAddress(),
-				profile.getZipCode(), profile.getPhoneNumber(), profile.getEmail());
-	}
+//	private AppointmentDTO convertToDTO(Appointment appointment){
+//		if(appointment==null)throw new IllegalArgumentException("There is no such appointment");
+//		AppointmentDTO appointmentDTO= new AppointmentDTO();
+//		appointmentDTO.setService(convertToDTO(appointment.getChosenService()));
+//		appointmentDTO.setTimeSlot(convertToDTO(appointment.getTimeSlot()));
+//		appointmentDTO.setCustomer(convertToDTO(appointment.getCustomer()));
+//		return appointmentDTO;
+//	}
+//
+//	private TimeSlotDTO convertToDTO(TimeSlot timeSlot){
+//		if(timeSlot==null) throw new IllegalArgumentException("There is no such time slot");
+//		TimeSlotDTO timeSlotDTO = new TimeSlotDTO(timeSlot.getStartTime(), timeSlot.getEndTime()
+//				,timeSlot.getStartDate(), timeSlot.getEndDate());
+//
+//		return timeSlotDTO;
+//	}
+//
+//	private ChosenServiceDTO convertToDTO(ChosenService service) {
+//		if(service==null) throw new IllegalArgumentException("Service not found.");
+//		Double avRating = null;
+//		try {
+//			avRating = reviewService.getAverageServiceReview(service.getName());
+//		}
+//		catch (Exception e){
+//
+//		}
+//
+//		return new ChosenServiceDTO(service.getName(), service.getDuration(), service.getPayment(), avRating);
+//	}
+//
+//	private CustomerDTO convertToDTO(Customer customer) {
+//		if(customer==null) throw new IllegalArgumentException("Customer not found.");
+//		List<CarDTO> cars = new ArrayList<CarDTO>();
+//
+//		for (Car car : customer.getCars()) {
+//			cars.add(convertToDTO(car));
+//		}
+//
+//		return new CustomerDTO(customer.getUsername(), customer.getPassword(), customer.getNoShow(),
+//				customer.getShow(), cars, convertToDTO(customer.getProfile()));
+//
+//	}
+//
+//	private CarDTO convertToDTO(Car car) {
+//		if(car==null) throw new IllegalArgumentException("Car not found.");
+//		return new CarDTO(car.getModel(), car.getTransmission(), car.getPlateNumber());
+//	}
+//
+//	private ProfileDTO convertToDTO(Profile profile) {
+//		if(profile == null) throw new IllegalArgumentException("Profile not found.");
+//		return new ProfileDTO(profile.getFirstName(), profile.getLastName(), profile.getAddress(),
+//				profile.getZipCode(), profile.getPhoneNumber(), profile.getEmail());
+//	}
 
 
 }

@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,7 +31,8 @@ public class ChosenServiceController {
 	 */
 	@GetMapping(value = { "/view_all_services", "/view_all_services/" })
 	public List<ChosenServiceDTO> getAllServices() {
-		return chosenService.getAllChosenService().stream().map(service -> convertToDTO(service)).collect(Collectors.toList());
+		List<ChosenServiceDTO> services = new ArrayList<ChosenServiceDTO>();
+		return chosenService.getAllChosenService().stream().map(service -> Conversion.convertToDTO(service)).collect(Collectors.toList());
 	}
 	
 	/**
@@ -41,7 +43,14 @@ public class ChosenServiceController {
 	 */
 	@GetMapping(value = { "/get_service","/get_service/" })
 	public ChosenServiceDTO getService(@RequestParam String name) {
-		return convertToDTO(chosenService.getChosenService(name));//.stream().map(service -> convertToDTO(service)).collect(Collectors.toList());
+      Double averageRating = null;
+      try {
+          averageRating = reviewService.getAverageServiceReview(name);
+      }
+      catch (Exception e){
+      	averageRating = -1.0;
+      }
+		return Conversion.convertToDTO(chosenService.getChosenService(name) );//.stream().map(service -> convertToDTO(service)).collect(Collectors.toList());
 	}
 
 	/**
@@ -66,7 +75,7 @@ public class ChosenServiceController {
 		}catch(IllegalArgumentException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>(convertToDTO(service), HttpStatus.CREATED);
+		return new ResponseEntity<>(Conversion.convertToDTO(service), HttpStatus.CREATED);
 		//return convertToDTO(service);
 	}
 
@@ -92,7 +101,7 @@ public class ChosenServiceController {
 		}catch(IllegalArgumentException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>(convertToDTO(service), HttpStatus.OK);
+		return new ResponseEntity<>(Conversion.convertToDTO(service), HttpStatus.OK);
 	}
 
 	/**
@@ -114,17 +123,17 @@ public class ChosenServiceController {
 
 	}
 
-	private ChosenServiceDTO convertToDTO(ChosenService service) {
-		if(service==null) throw new IllegalArgumentException("Service not found.");
-		 Double averageRating = null;
-		try {
-			averageRating = reviewService.getAverageServiceReview(service.getName());
-		}
-		catch (Exception e){
-			averageRating = -1.0;
-		}
-	
-		return new ChosenServiceDTO(service.getName(), service.getDuration(), service.getPayment(), averageRating);
-	}
+//	private ChosenServiceDTO convertToDTO(ChosenService service) {
+//		if(service==null) throw new IllegalArgumentException("Service not found.");
+//		 Double averageRating = null;
+//		try {
+//			averageRating = reviewService.getAverageServiceReview(service.getName());
+//		}
+//		catch (Exception e){
+//			averageRating = -1.0;
+//		}
+//	
+//		return new ChosenServiceDTO(service.getName(), service.getDuration(), service.getPayment(), averageRating);
+//	}
 
 }

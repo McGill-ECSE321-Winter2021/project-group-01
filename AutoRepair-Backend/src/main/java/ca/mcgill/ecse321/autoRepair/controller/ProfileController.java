@@ -55,7 +55,7 @@ public class ProfileController {
 			return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
-		return new ResponseEntity<>(convertToDTO(customer), HttpStatus.OK);
+		return new ResponseEntity<>(Conversion.convertToDTO(customer), HttpStatus.OK);
 	}
 	
 	/**
@@ -66,7 +66,7 @@ public class ProfileController {
 	 */
 	@GetMapping(value = {"/profile","/profile/"})
 	public ProfileDTO getProfile (@RequestParam String email) {
-		return convertToDTO(profileService.getProfile(email));
+		return Conversion.convertToDTO(profileService.getProfile(email));
 	}
 	
 	/**
@@ -78,35 +78,35 @@ public class ProfileController {
 	public List<ProfileDTO> getAllProfiles(){
 		List<ProfileDTO> profiles = new ArrayList<ProfileDTO>();
 		for(Profile profile : profileService.getAllProfiles()) {
-			profiles.add(convertToDTO(profile));
+			profiles.add(Conversion.convertToDTO(profile));
 		}
 		return profiles;
 	}
 
 
 
-	private CustomerDTO convertToDTO(Customer customer) {
-		if(customer==null) throw new IllegalArgumentException("Customer not found.");
-		List<CarDTO> cars = new ArrayList<CarDTO>();
-
-		for (Car car : customer.getCars()) {
-			cars.add(convertToDTO(car));
-		}
-
-		return new CustomerDTO(customer.getUsername(), customer.getPassword(), customer.getNoShow(), 
-				customer.getShow(), cars, convertToDTO(customer.getProfile()));
-	}
-
-	private CarDTO convertToDTO(Car car) {
-		if(car==null) throw new IllegalArgumentException("Car not found.");
-		return new CarDTO(car.getModel(), car.getTransmission(), car.getPlateNumber());
-	}
-
-	private ProfileDTO convertToDTO(Profile profile) {
-		if(profile == null) throw new IllegalArgumentException("Profile not found.");
-		return new ProfileDTO(profile.getFirstName(), profile.getLastName(), profile.getAddress(), 
-				profile.getZipCode(), profile.getPhoneNumber(), profile.getEmail());
-	}
+//	private CustomerDTO convertToDTO(Customer customer) {
+//		if(customer==null) throw new IllegalArgumentException("Customer not found.");
+//		List<CarDTO> cars = new ArrayList<CarDTO>();
+//
+//		for (Car car : customer.getCars()) {
+//			cars.add(convertToDTO(car));
+//		}
+//
+//		return new CustomerDTO(customer.getUsername(), customer.getPassword(), customer.getNoShow(), 
+//				customer.getShow(), cars, convertToDTO(customer.getProfile()));
+//	}
+//
+//	private CarDTO convertToDTO(Car car) {
+//		if(car==null) throw new IllegalArgumentException("Car not found.");
+//		return new CarDTO(car.getModel(), car.getTransmission(), car.getPlateNumber());
+//	}
+//
+//	private ProfileDTO convertToDTO(Profile profile) {
+//		if(profile == null) throw new IllegalArgumentException("Profile not found.");
+//		return new ProfileDTO(profile.getFirstName(), profile.getLastName(), profile.getAddress(), 
+//				profile.getZipCode(), profile.getPhoneNumber(), profile.getEmail());
+//	}
 
 
 

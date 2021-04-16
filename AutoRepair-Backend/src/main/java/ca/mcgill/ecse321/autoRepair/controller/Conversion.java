@@ -12,10 +12,10 @@ import ca.mcgill.ecse321.autoRepair.service.ReviewService;
 
 
 public class Conversion {
-   
-	@Autowired
-	private static ReviewService reviewService;
-	
+//   
+//	@Autowired
+//	private static ReviewService reviewService;
+//	
 	
 	/**
      * This method converts an Appointment object to an Appointment DTO.
@@ -49,17 +49,18 @@ public class Conversion {
      * @param service
      * @return
      */
-    public static ChosenServiceDTO convertToDTO(ChosenService service) {
+    public static ChosenServiceDTO convertToDTO(ChosenService service, Double rating) {
         if(service==null) throw new IllegalArgumentException("Service not found.");
-        Double averageRating = null;
-        try {
-            averageRating = reviewService.getAverageServiceReview(service.getName());
-        }
-        catch (Exception e){
-        	averageRating = -1.0;
-        }
+        
+//        Double averageRating = null;
+//        try {
+//            averageRating = reviewService.getAverageServiceReview(service.getName());
+//        }
+//        catch (Exception e){
+//        	averageRating = -1.0;
+//        }
 
-        return new ChosenServiceDTO(service.getName(), service.getDuration(), service.getPayment(), averageRating);
+        return new ChosenServiceDTO(service.getName(), service.getDuration(), service.getPayment(), rating);
     }
 
     /**
@@ -109,7 +110,55 @@ public class Conversion {
 		if(assistant == null) throw new IllegalArgumentException("Assistant not found.");
 		return new AssistantDTO(assistant.getUsername(),assistant.getPassword());
 	}
+	
+	/**
+	 * This method converts an Owner object to an Owner DTO.
+	 * @param owner
+	 * @return OwnerDTO
+	 */
+	public static OwnerDTO convertToDTO(Owner owner) {
+		if(owner == null) throw new IllegalArgumentException("Owner not found.");
+		return new OwnerDTO(owner.getUsername(),owner.getPassword());
+	}
 
+	/**
+	 * This method converts an Review object to an Review DTO.
+	 * @param review
+	 * @return ReviewDTO
+	 */
+	public static ReviewDTO convertToDTO(Review review) {
+	if(review==null) throw new IllegalArgumentException("Review not found.");
+	return new ReviewDTO(review.getDescription(), review.getServiceRating(),
+			convertToDTO(review.getCustomer()), convertToDTO(review.getAppointment()),
+			convertToDTO(review.getChosenService()));
+}
 
-
+	/**
+	 * This method converts an Reminder object to an Reminder DTO.
+	 * @param reminder
+	 * @return ReminderDTO
+	 */
+	public static ReminderDTO convertToDTO(Reminder reminder) {
+	if(reminder==null) throw new IllegalArgumentException("Service not found.");
+	return new ReminderDTO(convertToDTO(reminder.getCustomer()), convertToDTO(reminder.getChosenService()), reminder.getDate(), reminder.getTime(),reminder.getDescription());
+}
+	
+  public static BusinessDTO convertToDTO(Business business) {
+ 	if(business==null) throw new IllegalArgumentException("Business not found.");
+	List<OperatingHourDTO> operatingHours = new ArrayList<OperatingHourDTO>();
+	for(int i=0; i<business.getBusinessHours().size(); i++) {
+		operatingHours.add(convertToDTO(business.getBusinessHours().get(i)));
+	}
+	List<TimeSlotDTO> holidays = new ArrayList<TimeSlotDTO>();
+	for(int i=0; i<business.getHolidays().size(); i++) {
+		holidays.add(convertToDTO(business.getHolidays().get(i)));
+	}
+	return new BusinessDTO(business.getName(), business.getEmail(), business.getAddress(), business.getPhoneNumber(), operatingHours, holidays);
+}
+  
+  public static OperatingHourDTO convertToDTO(OperatingHour operatingHour) {
+	if(operatingHour==null) throw new IllegalArgumentException("Operating hour not found.");
+	return new OperatingHourDTO(operatingHour.getDayOfWeek(), operatingHour.getStartTime(), operatingHour.getEndTime());
+}
+	
 }

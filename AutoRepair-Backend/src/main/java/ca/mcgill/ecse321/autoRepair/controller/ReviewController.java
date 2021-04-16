@@ -97,7 +97,7 @@ public class ReviewController {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-		return new ResponseEntity<>(convertToDTO(review), HttpStatus.CREATED);
+		return new ResponseEntity<>(Conversion.convertToDTO(review), HttpStatus.CREATED);
 	}
 
 
@@ -122,11 +122,11 @@ public class ReviewController {
 		Review review = null;
 		try {
 			 review = reviewService.editReview(appointment, newDescription, newRating);
-		}catch (IllegalArgumentException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}catch (IllegalArgumentException exception) {
+			return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		return new ResponseEntity<>(convertToDTO(review), HttpStatus.OK);
+		return new ResponseEntity<>(Conversion.convertToDTO(review), HttpStatus.OK);
 	}
 
 	/**
@@ -156,7 +156,7 @@ public class ReviewController {
 	@GetMapping(value = {"/view_all_reviews"})
 	public List<ReviewDTO> getAllReviews() {
 		return reviewService.getAllReviews().stream().map(review -> 
-		convertToDTO(review)).collect(Collectors.toList());
+		Conversion.convertToDTO(review)).collect(Collectors.toList());
 	}
 
 	/**
@@ -169,7 +169,7 @@ public class ReviewController {
 	public List<ReviewDTO> viewReviewsForService(@RequestParam("serviceName") String serviceName) {
 		ChosenService service = serviceRepository.findChosenServiceByName(serviceName);
 		return reviewService.viewReviewsForService(service).stream().map(review -> 
-		convertToDTO(review)).collect(Collectors.toList());
+		Conversion.convertToDTO(review)).collect(Collectors.toList());
 	}
 
 	/**
@@ -182,7 +182,7 @@ public class ReviewController {
 	public List<ReviewDTO> viewReviewsOfCustomer(@RequestParam("username") String username) {
 		Customer customer = customerRepository.findCustomerByUsername(username);
 		return reviewService.viewReviewsOfCustomer(customer).stream().map(review -> 
-		convertToDTO(review)).collect(Collectors.toList());
+		Conversion.convertToDTO(review)).collect(Collectors.toList());
 	}
 
 	/**
@@ -211,69 +211,69 @@ public class ReviewController {
 		TimeSlot timeSlot = timeSlotRepoisoty.findTimeSlotByStartDateAndStartTime(date, time);
 		Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
 		Review review = reviewService.getReview(appointment);
-		return convertToDTO(review);
+		return Conversion.convertToDTO(review);
 	}
 
-	private CustomerDTO convertToDTO(Customer customer) {
-		if(customer==null) throw new IllegalArgumentException("Customer not found.");
-		List<CarDTO> cars = new ArrayList<CarDTO>();
-
-		for (Car car : customer.getCars()) {
-			cars.add(convertToDTO(car));
-		}
-
-		return new CustomerDTO(customer.getUsername(), customer.getPassword(), customer.getNoShow(), 
-				customer.getShow(), cars, convertToDTO(customer.getProfile()));
-
-	}
-
-	private CarDTO convertToDTO(Car car) {
-		if(car==null) throw new IllegalArgumentException("Car not found.");
-		return new CarDTO(car.getModel(), car.getTransmission(), car.getPlateNumber());
-	}
-
-	private ProfileDTO convertToDTO(Profile profile) {
-		if(profile == null) throw new IllegalArgumentException("Profile not found.");
-		return new ProfileDTO(profile.getFirstName(), profile.getLastName(), profile.getAddress(), 
-				profile.getZipCode(), profile.getPhoneNumber(), profile.getEmail());
-	}
-
-	private ChosenServiceDTO convertToDTO(ChosenService service) {
-		if(service==null) throw new IllegalArgumentException("Service not found.");
-		 Double avRating = null;
-		try {
-			avRating = reviewService.getAverageServiceReview(service.getName());
-		}
-		catch (Exception e){
-			
-		}
-	
-		return new ChosenServiceDTO(service.getName(), service.getDuration(), service.getPayment(), avRating);
-	}
-
-
-	private AppointmentDTO convertToDTO(Appointment appointment){
-		if(appointment==null)throw new IllegalArgumentException("There is no such appointment");
-		AppointmentDTO appointmentDTO= new AppointmentDTO();
-		appointmentDTO.setService(convertToDTO(appointment.getChosenService()));
-		appointmentDTO.setTimeSlot(convertToDTO(appointment.getTimeSlot()));
-		appointmentDTO.setCustomer(convertToDTO(appointment.getCustomer()));
-		return appointmentDTO;
-	}
-
-	private TimeSlotDTO convertToDTO(TimeSlot timeSlot){
-		if(timeSlot==null) throw new IllegalArgumentException("There is no such time slot");
-		TimeSlotDTO timeSlotDTO = new TimeSlotDTO(timeSlot.getStartTime(), timeSlot.getEndTime()
-				,timeSlot.getStartDate(), timeSlot.getEndDate());
-
-		return timeSlotDTO;
-	}
-
-	private ReviewDTO convertToDTO(Review review) {
-		if(review==null) throw new IllegalArgumentException("Review not found.");
-		return new ReviewDTO(review.getDescription(), review.getServiceRating(),
-				convertToDTO(review.getCustomer()), convertToDTO(review.getAppointment()),
-				convertToDTO(review.getChosenService()));
-	}
+//	private CustomerDTO convertToDTO(Customer customer) {
+//		if(customer==null) throw new IllegalArgumentException("Customer not found.");
+//		List<CarDTO> cars = new ArrayList<CarDTO>();
+//
+//		for (Car car : customer.getCars()) {
+//			cars.add(convertToDTO(car));
+//		}
+//
+//		return new CustomerDTO(customer.getUsername(), customer.getPassword(), customer.getNoShow(), 
+//				customer.getShow(), cars, convertToDTO(customer.getProfile()));
+//
+//	}
+//
+//	private CarDTO convertToDTO(Car car) {
+//		if(car==null) throw new IllegalArgumentException("Car not found.");
+//		return new CarDTO(car.getModel(), car.getTransmission(), car.getPlateNumber());
+//	}
+//
+//	private ProfileDTO convertToDTO(Profile profile) {
+//		if(profile == null) throw new IllegalArgumentException("Profile not found.");
+//		return new ProfileDTO(profile.getFirstName(), profile.getLastName(), profile.getAddress(), 
+//				profile.getZipCode(), profile.getPhoneNumber(), profile.getEmail());
+//	}
+//
+//	private ChosenServiceDTO convertToDTO(ChosenService service) {
+//		if(service==null) throw new IllegalArgumentException("Service not found.");
+//		 Double avRating = null;
+//		try {
+//			avRating = reviewService.getAverageServiceReview(service.getName());
+//		}
+//		catch (Exception e){
+//			
+//		}
+//	
+//		return new ChosenServiceDTO(service.getName(), service.getDuration(), service.getPayment(), avRating);
+//	}
+//
+//
+//	private AppointmentDTO convertToDTO(Appointment appointment){
+//		if(appointment==null)throw new IllegalArgumentException("There is no such appointment");
+//		AppointmentDTO appointmentDTO= new AppointmentDTO();
+//		appointmentDTO.setService(convertToDTO(appointment.getChosenService()));
+//		appointmentDTO.setTimeSlot(convertToDTO(appointment.getTimeSlot()));
+//		appointmentDTO.setCustomer(convertToDTO(appointment.getCustomer()));
+//		return appointmentDTO;
+//	}
+//
+//	private TimeSlotDTO convertToDTO(TimeSlot timeSlot){
+//		if(timeSlot==null) throw new IllegalArgumentException("There is no such time slot");
+//		TimeSlotDTO timeSlotDTO = new TimeSlotDTO(timeSlot.getStartTime(), timeSlot.getEndTime()
+//				,timeSlot.getStartDate(), timeSlot.getEndDate());
+//
+//		return timeSlotDTO;
+//	}
+//
+//	private ReviewDTO convertToDTO(Review review) {
+//		if(review==null) throw new IllegalArgumentException("Review not found.");
+//		return new ReviewDTO(review.getDescription(), review.getServiceRating(),
+//				convertToDTO(review.getCustomer()), convertToDTO(review.getAppointment()),
+//				convertToDTO(review.getChosenService()));
+//	}
 
 }

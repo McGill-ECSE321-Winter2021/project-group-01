@@ -32,7 +32,7 @@ public class OwnerController {
 	 */
 	@GetMapping(value = { "/view_owner" })
 	public List<OwnerDTO> getAllOwners() {
-		return ownerService.getAllOwners().stream().map(owner -> convertToDTO(owner)).collect(Collectors.toList());
+		return ownerService.getAllOwners().stream().map(owner -> Conversion.convertToDTO(owner)).collect(Collectors.toList());
 	}
 	
 	/**
@@ -43,7 +43,7 @@ public class OwnerController {
 	 */
 	@GetMapping(value = {"/view_owner/{username}"})
 	public OwnerDTO viewOwner(@PathVariable("username") String username) {
-		return convertToDTO(ownerService.getOwner(username));
+		return Conversion.convertToDTO(ownerService.getOwner(username));
 	}
 	
 	/**
@@ -65,8 +65,7 @@ public class OwnerController {
 		}catch(IllegalArgumentException exception) {
 			return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>(convertToDTO(owner), HttpStatus.CREATED);
-
+		return new ResponseEntity<>(Conversion.convertToDTO(owner), HttpStatus.CREATED);
 	}
 	
 	/**
@@ -80,13 +79,10 @@ public class OwnerController {
 	public OwnerDTO updateOwner(@PathVariable("oldUsername") String oldUsername,
 			@RequestParam("newPassword") String newPassword) {
         Owner owner = ownerService.updateOwner(oldUsername, newPassword);
-		return convertToDTO(owner);
+		return Conversion.convertToDTO(owner);
 	}
 	
-	private OwnerDTO convertToDTO(Owner owner) {
-		if(owner == null) throw new IllegalArgumentException("Owner not found.");
-		return new OwnerDTO(owner.getUsername(),owner.getPassword());
-	}
+	
 
 
 }

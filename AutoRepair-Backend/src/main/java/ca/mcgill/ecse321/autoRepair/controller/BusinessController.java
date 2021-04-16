@@ -70,7 +70,7 @@ public class BusinessController {
 		catch(IllegalArgumentException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>(convertToDTO(business), HttpStatus.CREATED);
+		return new ResponseEntity<>(Conversion.convertToDTO(business), HttpStatus.CREATED);
 
 	}
 	
@@ -96,7 +96,7 @@ public class BusinessController {
 		catch(IllegalArgumentException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>(convertToDTO(business), HttpStatus.OK);
+		return new ResponseEntity<>(Conversion.convertToDTO(business), HttpStatus.OK);
 
 	}
 	
@@ -120,7 +120,7 @@ public class BusinessController {
 	return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 
 			}
-		return new ResponseEntity<>(convertToDTO(opHour), HttpStatus.CREATED);
+		return new ResponseEntity<>(Conversion.convertToDTO(opHour), HttpStatus.CREATED);
 	}
 	/**
 	 * @author Fadi Tawfik Beshay
@@ -142,7 +142,7 @@ public class BusinessController {
       	return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 
-		return new ResponseEntity<>(convertToDTO(opHourToEdit), HttpStatus.CREATED);
+		return new ResponseEntity<>(Conversion.convertToDTO(opHourToEdit), HttpStatus.CREATED);
 		
 
 	}
@@ -159,18 +159,7 @@ public class BusinessController {
 		String businessName = businessService.getBusiness().getName();
 	return  businessService.deleteOperatingHour(businessName, DayOfWeek.valueOf(dayOfWeek));
 
-	}
-
-//	@PostMapping(value = {"/add_holiday"})
-//	public  ResponseEntity<?> addHoliday(
-//@RequestParam String dateString, @RequestParam String startTimeString,@RequestParam String endTimeString){
-//String businessName = businessService.getBusiness().getName();
-//Business holidayToAdd = null;
-//holidayToAdd =businessService.addHoliday(businessName,DayOfWeek.valueOf(dateString),Time.valueOf(startTimeString+":00"),
-//              Time.valueOf(endTimeString+":00"));
-//return new ResponseEntity<>(convertToDTO(holidayToAdd), HttpStatus.CREATED);
-//}
-//		  
+	}  
 
 	
 	/**
@@ -182,7 +171,7 @@ public class BusinessController {
 	@GetMapping(value = {"/view_business_info", "/view_business_info/"})
 	public BusinessDTO viewBusinessInfo(){
 
-		return convertToDTO(businessService.getBusiness());
+		return Conversion.convertToDTO(businessService.getBusiness());
 	
 	}
 	
@@ -195,7 +184,7 @@ public class BusinessController {
 	public List<OperatingHourDTO> viewOperatingHours(){
 
 		return businessService.getAllOperatingHour().stream().map(c ->
-		convertToDTO(c)).collect(Collectors.toList());
+		Conversion.convertToDTO(c)).collect(Collectors.toList());
 	
 	}
 	
@@ -208,29 +197,29 @@ public class BusinessController {
 	@GetMapping(value = {"/view_operating_hour_by_day", "/view_operating_hour_by_day/"})
 	public OperatingHourDTO viewOperatingHourByDay(@RequestParam String dayOfWeek){
 
-		return convertToDTO(businessService.getOperatingHour(DayOfWeek.valueOf(dayOfWeek)));
+		return Conversion.convertToDTO(businessService.getOperatingHour(DayOfWeek.valueOf(dayOfWeek)));
 	
 	}
 	
-	
-	private TimeSlotDTO convertToDTO(TimeSlot timeSlot) {
-    	if(timeSlot==null) throw new IllegalArgumentException("Time slot not found.");
-    	return new TimeSlotDTO(timeSlot.getStartTime(), timeSlot.getEndTime(), timeSlot.getStartDate(), timeSlot.getEndDate());
-     }
-	private OperatingHourDTO convertToDTO(OperatingHour operatingHour) {
- 		if(operatingHour==null) throw new IllegalArgumentException("Operating hour not found.");
- 		return new OperatingHourDTO(operatingHour.getDayOfWeek(), operatingHour.getStartTime(), operatingHour.getEndTime());
- 	}
-     private BusinessDTO convertToDTO(Business business) {
-     	if(business==null) throw new IllegalArgumentException("Business not found.");
-    	List<OperatingHourDTO> operatingHours = new ArrayList<OperatingHourDTO>();
-    	for(int i=0; i<business.getBusinessHours().size(); i++) {
-    		operatingHours.add(convertToDTO(business.getBusinessHours().get(i)));
-    	}
-    	List<TimeSlotDTO> holidays = new ArrayList<TimeSlotDTO>();
-    	for(int i=0; i<business.getHolidays().size(); i++) {
-    		holidays.add(convertToDTO(business.getHolidays().get(i)));
-    	}
-		return new BusinessDTO(business.getName(), business.getEmail(), business.getAddress(), business.getPhoneNumber(), operatingHours, holidays);
-    }
+//	
+//	private TimeSlotDTO convertToDTO(TimeSlot timeSlot) {
+//    	if(timeSlot==null) throw new IllegalArgumentException("Time slot not found.");
+//    	return new TimeSlotDTO(timeSlot.getStartTime(), timeSlot.getEndTime(), timeSlot.getStartDate(), timeSlot.getEndDate());
+//     }
+//	private OperatingHourDTO convertToDTO(OperatingHour operatingHour) {
+// 		if(operatingHour==null) throw new IllegalArgumentException("Operating hour not found.");
+// 		return new OperatingHourDTO(operatingHour.getDayOfWeek(), operatingHour.getStartTime(), operatingHour.getEndTime());
+// 	}
+//     private BusinessDTO convertToDTO(Business business) {
+//     	if(business==null) throw new IllegalArgumentException("Business not found.");
+//    	List<OperatingHourDTO> operatingHours = new ArrayList<OperatingHourDTO>();
+//    	for(int i=0; i<business.getBusinessHours().size(); i++) {
+//    		operatingHours.add(convertToDTO(business.getBusinessHours().get(i)));
+//    	}
+//    	List<TimeSlotDTO> holidays = new ArrayList<TimeSlotDTO>();
+//    	for(int i=0; i<business.getHolidays().size(); i++) {
+//    		holidays.add(convertToDTO(business.getHolidays().get(i)));
+//    	}
+//		return new BusinessDTO(business.getName(), business.getEmail(), business.getAddress(), business.getPhoneNumber(), operatingHours, holidays);
+//    }
 }

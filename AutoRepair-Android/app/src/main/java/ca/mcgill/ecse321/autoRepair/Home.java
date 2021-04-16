@@ -24,5 +24,7 @@ public class Home extends Fragment {
 
         ((MainActivity)getActivity()).getAppointments(view);
         ((MainActivity)getActivity()).getReviews(view);
+        ((MainActivity)getActivity()).getServices(view);
+        ((MainActivity)getActivity()).getReminders(view);
     }
 }

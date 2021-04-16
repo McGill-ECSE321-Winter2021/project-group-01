@@ -181,13 +181,50 @@ public class MainActivity extends AppCompatActivity{
         final EditText zipCode = (EditText) findViewById(R.id.zipCode);
         final EditText email = (EditText) findViewById(R.id.email);
 
+        final TextView firstNameText = (TextView) findViewById(R.id.firstNameView);
+        final TextView lastNameText = (TextView) findViewById(R.id.lastNameView);
+        final TextView addressText = (TextView) findViewById(R.id.addressView);
+        final TextView phoneNumberText = (TextView) findViewById(R.id.phoneNumberView);
+        final TextView zipCodeText = (TextView) findViewById(R.id.zipCodeView);
+        final TextView emailText = (TextView) findViewById(R.id.emailView);
+
         RequestParams rp = new RequestParams();
-        rp.put("firstName", firstName.getText());
-        rp.put("lastName", lastName.getText());
-        rp.put("phoneNumber", phoneNumber.getText());
-        rp.put("email", email.getText());
-        rp.put("address", address.getText());
-        rp.put("zipCode", zipCode.getText());
+        if(firstName.getText().toString().equals("")){
+            rp.put("firstName", firstNameText.getText());
+        }else{
+            rp.put("firstName", firstName.getText());
+        }
+
+        if(lastName.getText().toString().equals("")){
+            rp.put("lastName", lastNameText.getText());
+        }else{
+            rp.put("lastName", lastName.getText());
+        }
+
+        if(phoneNumber.getText().toString().equals("")){
+            rp.put("phoneNumber", phoneNumberText.getText());
+        }else{
+            rp.put("phoneNumber", phoneNumber.getText());
+        }
+
+        if(email.getText().toString().equals("")){
+            rp.put("email", emailText.getText());
+        }else{
+            rp.put("email", email.getText());
+        }
+
+        if(address.getText().toString().equals("")){
+            rp.put("address", addressText.getText());
+        }else{
+            rp.put("address", address.getText());
+        }
+
+        if(zipCode.getText().toString().equals("")){
+            rp.put("zipCode", zipCodeText.getText());
+        }else{
+            rp.put("zipCode", zipCode.getText());
+        }
+
 
 
         HttpUtils.patch("edit_profile/" + "bob", rp, new JsonHttpResponseHandler() {
@@ -196,6 +233,13 @@ public class MainActivity extends AppCompatActivity{
                 try {
                     //JSONObject server = response.getJSONObject(0);
                     JSONObject serverResp = new JSONObject(response.toString());
+                    firstName.setText("");
+                    lastName.setText("");
+                    phoneNumber.setText("");
+                    email.setText("");
+                    address.setText("");
+                    zipCode.setText("");
+                    getProfile(view);
                 } catch (JSONException e) {
                     error += e.getMessage();
                 }
@@ -354,16 +398,7 @@ public class MainActivity extends AppCompatActivity{
                         plateNumbers[i]= car.getString("plateNumber");
                     }
                     ArrayList<String> list = new ArrayList<String>(Arrays.asList(plateNumbers));
-                    plateNumberAdapter.clear();
-                    plateNumberAdapter.addAll(plateNumbers);
-                    plateNumberAdapter.notifyDataSetChanged();
-//                    plateNumberAdapter.add(plateNumber.getText().toString());
-//                    plateNumberAdapter.notifyDataSetChanged();
 
-
-//                    plateNumberAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, list);
-//                    plateNumberAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                    plateNumberSpinner.setAdapter(plateNumberAdapter);
 
                     cars.setText(carsString);
 
@@ -412,35 +447,7 @@ public class MainActivity extends AppCompatActivity{
                         plateNumbers[i]= car.getString("plateNumber");
                     }
                     ArrayList<String> list = new ArrayList<String>(Arrays.asList(plateNumbers));
-                    plateNumberAdapter.clear();
-                    plateNumberAdapter.addAll(list);
-                    plateNumberAdapter.notifyDataSetChanged();
 
-
-//                    plateNumberAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, list);
-//                    plateNumberAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                    plateNumberSpinner.setAdapter(plateNumberAdapter);
-                    //plateNumberSpinner.setAdapter(plateNumberAdapter);
-//                    plateNumberSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//
-//                        @Override
-//                        public void onItemSelected(AdapterView<?> adapterView, View view,
-//                                                   int position, long id) {
-//                            Object item = adapterView.getItemAtPosition(position);
-//                            if (item != null) {
-//                                Toast.makeText(MainActivity.this, item.toString(),
-//                                        Toast.LENGTH_SHORT).show();
-//                            }
-//                            Toast.makeText(MainActivity.this, "Selected",
-//                                    Toast.LENGTH_SHORT).show();
-//
-//                        }
-//
-//                        @Override
-//                        public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//                        }
-//                    });
                     cars.setText(carsString);
 
                 } catch (JSONException e) {

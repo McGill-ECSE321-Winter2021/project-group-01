@@ -88,36 +88,35 @@ public class BusinessController {
 	@PostMapping(value = {"/add_business_hours"})
 	public  ResponseEntity<?> addBusinessHours(@RequestParam String dayOfWeek, @RequestParam String startTime, @RequestParam String endTime) {
 		String businessName = businessService.getBusiness().getName();
-		OperatingHour opHour = null;
+		OperatingHour operatingHour = null;
 		try {
-		opHour =businessService.createOperatingHour(businessName, DayOfWeek.valueOf(dayOfWeek), Time.valueOf(startTime+":00"), Time.valueOf(endTime+":00"));
+		 operatingHour =businessService.createOperatingHour(businessName, DayOfWeek.valueOf(dayOfWeek), Time.valueOf(startTime+":00"), Time.valueOf(endTime+":00"));
 		}		
 			catch(IllegalArgumentException e) {
 	return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 
 			}
-		return new ResponseEntity<>(convertToDTO(opHour), HttpStatus.CREATED);
+		return new ResponseEntity<>(convertToDTO(operatingHour), HttpStatus.CREATED);
 	}
 	/**
 	 * @author Fadi Tawfik Beshay
 	 * Edits the business hours of a business
 	 * @param dayOfWeek
-	 * @param startTime1
-	 * @param endTime1
+	 * @param startTime
+	 * @param endTime
 	 * @return operatingHourDTO
 	 */
 	@PatchMapping(value = {"/edit_business_hours"})
-	public ResponseEntity<?> editBusinessHours(@RequestParam String dayOfWeek,@RequestParam String startTime1, @RequestParam String endTime1) {
-		String dayOfWeek1 = dayOfWeek;
-		OperatingHour opHourToEdit = null;
+	public ResponseEntity<?> editBusinessHours(@RequestParam String dayOfWeek,@RequestParam String startTime, @RequestParam String endTime) {
+		OperatingHour operatingHourToEdit = null;
 		try{
-			opHourToEdit =businessService.editOperatingHour(DayOfWeek.valueOf(dayOfWeek), DayOfWeek.valueOf(dayOfWeek1), Time.valueOf(startTime1+":00"), Time.valueOf(endTime1+":00"));
+			operatingHourToEdit =businessService.editOperatingHour(DayOfWeek.valueOf(dayOfWeek), DayOfWeek.valueOf(dayOfWeek), Time.valueOf(startTime+":00"), Time.valueOf(endTime+":00"));
 		}
 		catch(IllegalArgumentException e) {
       	return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 
-		return new ResponseEntity<>(convertToDTO(opHourToEdit), HttpStatus.CREATED);
+		return new ResponseEntity<>(convertToDTO(operatingHourToEdit), HttpStatus.CREATED);
 		
 
 	}
@@ -172,16 +171,32 @@ public class BusinessController {
 		return convertToDTO(businessService.getOperatingHour(DayOfWeek.valueOf(dayOfWeek)));
 	
 	}
-	
-	
+
+	/**
+	 * This method converts a TimeSlot object to a TimeSlotDTO
+	 * @param timeSlot
+	 * @return
+	 */
 	private TimeSlotDTO convertToDTO(TimeSlot timeSlot) {
     	if(timeSlot==null) throw new IllegalArgumentException("Time slot not found.");
     	return new TimeSlotDTO(timeSlot.getStartTime(), timeSlot.getEndTime(), timeSlot.getStartDate(), timeSlot.getEndDate());
      }
+
+	/**
+	 * This method converts an OperatingHour object to an OperatingHourDTO
+	 * @param timeSlot
+	 * @return
+	 */
 	private OperatingHourDTO convertToDTO(OperatingHour operatingHour) {
  		if(operatingHour==null) throw new IllegalArgumentException("Operating hour not found.");
  		return new OperatingHourDTO(operatingHour.getDayOfWeek(), operatingHour.getStartTime(), operatingHour.getEndTime());
  	}
+
+	/**
+	 * This method converts a Business object to a BusinessDTO
+	 * @param timeSlot
+	 * @return
+	 */
      private BusinessDTO convertToDTO(Business business) {
      	if(business==null) return null;
     	List<OperatingHourDTO> operatingHours = new ArrayList<OperatingHourDTO>();

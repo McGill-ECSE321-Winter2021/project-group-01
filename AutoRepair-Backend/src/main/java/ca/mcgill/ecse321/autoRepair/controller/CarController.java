@@ -30,7 +30,6 @@ import ca.mcgill.ecse321.autoRepair.service.CustomerService;
 public class CarController {
 
 
-
 	@Autowired
 	private CustomerService customerService;
 
@@ -94,8 +93,8 @@ public class CarController {
 	public List<CarDTO> getCustomerCars(@PathVariable("username") String username){
 		Customer customer = customerService.getCustomer(username);
 		List<CarDTO> cars = new ArrayList<CarDTO>();
-		for(Car c : customer.getCars()) {
-			cars.add(convertToDTO(c));
+		for(Car car : customer.getCars()) {
+			cars.add(convertToDTO(car));
 		}
 		return cars;
 	}
@@ -119,13 +118,17 @@ public class CarController {
 	@GetMapping(value = {"/cars" , "/cars/"})
 	public List<CarDTO> getAllCars(){
 		List<CarDTO> cars = new ArrayList<CarDTO>();
-		for(Car c : carService.getAllCars()) {
-			cars.add(convertToDTO(c));
+		for(Car car : carService.getAllCars()) {
+			cars.add(convertToDTO(car));
 		}
 		return cars;
 	}
 
-
+	/**
+	 * This method converts a Customer object to a CustomerDTO
+	 * @param customer
+	 * @return
+	 */
 	private CustomerDTO convertToDTO(Customer customer) {
 		if(customer==null) throw new IllegalArgumentException("Customer not found.");
 		List<CarDTO> cars = new ArrayList<CarDTO>();
@@ -139,11 +142,21 @@ public class CarController {
 
 	}
 
+	/**
+	 * This method converts a Car object to a CarDTO
+	 * @param customer
+	 * @return
+	 */
 	private CarDTO convertToDTO(Car car) {
 		if(car==null) throw new IllegalArgumentException("Car not found.");
 		return new CarDTO(car.getModel(), car.getTransmission(), car.getPlateNumber());
 	}
 
+	/**
+	 * This method converts a Profile object to a ProfileDTO
+	 * @param customer
+	 * @return
+	 */
 	private ProfileDTO convertToDTO(Profile profile) {
 		if(profile == null) throw new IllegalArgumentException("Profile not found.");
 		return new ProfileDTO(profile.getFirstName(), profile.getLastName(), profile.getAddress(), 

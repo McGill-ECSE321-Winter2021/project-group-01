@@ -22,8 +22,9 @@ public class AssistantController {
 
 	/**
 	 * @author Marc Saber
-	 * returns a list of all the assistants 
+	 * Returns a list of all the assistants
 	 * @return list of all assistants
+	 * @throws IllegalArgumentException
 	 */
 	@GetMapping(value = { "/view_assistants"})
 	public List<AssistantDTO> getAllAssitants() {
@@ -32,9 +33,10 @@ public class AssistantController {
 
 	/**
 	 * @author Marc Saber
-	 * Gets an assistant DTO given a name
+	 * Gets an assistant DTO given a username
 	 * @param username
 	 * @return assistantDTO
+	 * @throws IllegalArgumentException
 	 */
 	@GetMapping(value = {"/view_assistant/{username}"})
 	public AssistantDTO viewAssistant(@PathVariable("username") String username) {
@@ -43,10 +45,12 @@ public class AssistantController {
 
 	/**
 	 * @author Marc Saber
-	 * Creates an Assistant
+	 * This method creates an Assistant
 	 * @param username
 	 * @param password
+	 * @param authentificationCode
 	 * @return assistantDTO
+	 * @throws IllegalArgumentException
 	 */
 	@PostMapping(value = {"/create_assistant"})
 	public ResponseEntity<?> createAssitant
@@ -92,12 +96,15 @@ public class AssistantController {
 		return assistant;
 	}
 
+	/**
+	 * This method converts an Assistant object to an Assistant DTO.
+	 * @param assistant
+	 * @return AssistantDTO
+	 */
 	private AssistantDTO convertToDTO(Assistant assistant) {
 		if(assistant == null) throw new IllegalArgumentException("Assistant not found.");
 		return new AssistantDTO(assistant.getUsername(),assistant.getPassword());
 	}
-
-
 
 
 

@@ -43,7 +43,7 @@ public class ChosenServiceController {
 	 */
 	@GetMapping(value = { "/get_service","/get_service/" })
 	public ChosenServiceDTO getService(@RequestParam String name) {
-		return convertToDTO(chosenService.getChosenService(name));//.stream().map(service -> convertToDTO(service)).collect(Collectors.toList());
+		return convertToDTO(chosenService.getChosenService(name));
 	}
 
 	/**
@@ -54,21 +54,19 @@ public class ChosenServiceController {
 	 * @return chosenServiceDTO
 	 */
 	@PostMapping(value = { "/create_service","/create_service/" })
-	public ResponseEntity<?> createChosenService
-	(@RequestParam String serviceName,@RequestParam String duration,@RequestParam String price) {
+	public ResponseEntity<?> createChosenService(@RequestParam String serviceName,@RequestParam String duration,@RequestParam String price) {
 		if(serviceName == "")  return new ResponseEntity<>("The service name cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
 		if(duration == "")  return new ResponseEntity<>("The service duration cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
 		if(price == "")  return new ResponseEntity<>("The service price cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
 		int duration2 =  Integer.parseInt(duration);
-		Double d = Double.parseDouble(price);
+		Double price2 = Double.parseDouble(price);
 		ChosenService service = null;
 		try {
-		service = chosenService.createChosenService(serviceName, duration2, d);
+		service = chosenService.createChosenService(serviceName, duration2, price2);
 		}catch(IllegalArgumentException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(convertToDTO(service), HttpStatus.CREATED);
-		//return convertToDTO(service);
 	}
 
 	/**
@@ -85,10 +83,10 @@ public class ChosenServiceController {
 		if(duration == "")  return new ResponseEntity<>("The service duration cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
 		if(price == "")  return new ResponseEntity<>("The service price cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
 		int duration2 =  Integer.parseInt(duration);
-		Double d = Double.parseDouble(price);
+		Double price2 = Double.parseDouble(price);
 		ChosenService service = null;
 		try {
-		service = chosenService.editChosenService(serviceName, duration2, d);
+		service = chosenService.editChosenService(serviceName, duration2, price2);
 		}catch(IllegalArgumentException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -113,6 +111,11 @@ public class ChosenServiceController {
 
 	}
 
+	/**
+	 * This method converts a ChosenService object to a ChosenServiceDTO
+	 * @param service
+	 * @return
+	 */
 	private ChosenServiceDTO convertToDTO(ChosenService service) {
 		if(service==null) throw new IllegalArgumentException("Service not found.");
 		 Double avRating = null;

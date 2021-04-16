@@ -163,6 +163,7 @@ public class CustomerController {
 		return new ResponseEntity<>(convertToDTO(customer), HttpStatus.OK);
 	}
 
+
 	private CustomerDTO convertToDTO(Customer customer) {
 		if(customer==null) throw new IllegalArgumentException("Customer not found.");
 		List<CarDTO> cars = new ArrayList<CarDTO>();

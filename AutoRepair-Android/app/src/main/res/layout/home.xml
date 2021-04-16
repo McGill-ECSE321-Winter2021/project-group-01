@@ -28,8 +28,8 @@
                 android:fontFamily="@font/comfortaa_bold"
                 android:onClick="logout"
                 android:text="Logout"
-                android:layout_gravity="top||right"
                 android:textColor="#FF9800" />
+            <!--                android:layout_gravity="top||right"-->
 
             <TextView
                 android:id="@+id/textView"

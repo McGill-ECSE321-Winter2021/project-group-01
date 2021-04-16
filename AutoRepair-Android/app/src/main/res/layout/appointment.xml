@@ -11,8 +11,10 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -64,6 +66,14 @@
                 android:layout_marginRight="100dp"
                 android:onClick="makeAppointment"
                 android:text="Book" />
+            <TextView
+                android:id="@+id/updateAppointmentText"
+                android:layout_width="308dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:text="Update Appointment"
+                android:textSize="30sp" />
+
 
             <TextView
                 android:id="@+id/error"

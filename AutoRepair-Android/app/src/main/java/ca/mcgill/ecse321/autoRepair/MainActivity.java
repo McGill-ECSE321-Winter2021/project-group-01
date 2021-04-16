@@ -1110,7 +1110,7 @@ public class MainActivity extends AppCompatActivity{
                     String[] appointmentsArray = new String[response.length()];
                     for (int i = 0; i < response.length(); i++) {
                         JSONObject appointment = response.getJSONObject(i);
-                        appointmentString += appointment.getJSONObject("service").getString("name") + ";"
+                        appointmentString = appointment.getJSONObject("service").getString("name") + ";"
                                 + appointment.getJSONObject("timeSlot").getString("startDate") + ";"
                                 + appointment.getJSONObject("timeSlot").getString("startTime");
                         appointmentsArray[i] = appointmentString;

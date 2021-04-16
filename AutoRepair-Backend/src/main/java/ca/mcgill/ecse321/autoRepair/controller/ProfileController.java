@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import ca.mcgill.ecse321.autoRepair.dto.CarDTO;
-import ca.mcgill.ecse321.autoRepair.dto.CustomerDTO;
+
 import ca.mcgill.ecse321.autoRepair.dto.ProfileDTO;
-import ca.mcgill.ecse321.autoRepair.model.Car;
 import ca.mcgill.ecse321.autoRepair.model.Profile;
 import ca.mcgill.ecse321.autoRepair.model.Customer;
 import ca.mcgill.ecse321.autoRepair.service.ProfileService;
@@ -50,11 +48,11 @@ public class ProfileController {
 		Customer customer = null;
 		try {
 			customer=profileService.updateProfile(username, firstName, lastName, address, zipCode, phoneNumber, email);
-		}catch(IllegalArgumentException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}catch(IllegalArgumentException exception) {
+			return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
-		return new ResponseEntity<>(convertToDTO(customer), HttpStatus.OK);
+		return new ResponseEntity<>(Conversion.convertToDTO(customer), HttpStatus.OK);
 	}
 	
 	/**
@@ -65,7 +63,7 @@ public class ProfileController {
 	 */
 	@GetMapping(value = {"/profile","/profile/"})
 	public ProfileDTO getProfile (@RequestParam String email) {
-		return convertToDTO(profileService.getProfile(email));
+		return Conversion.convertToDTO(profileService.getProfile(email));
 	}
 	
 	/**
@@ -76,37 +74,9 @@ public class ProfileController {
 	@GetMapping(value = {"/profiles" , "/profiles/"})
 	public List<ProfileDTO> getAllProfiles(){
 		List<ProfileDTO> profiles = new ArrayList<ProfileDTO>();
-		for(Profile p : profileService.getAllProfiles()) {
-			profiles.add(convertToDTO(p));
+		for(Profile profile : profileService.getAllProfiles()) {
+			profiles.add(Conversion.convertToDTO(profile));
 		}
 		return profiles;
 	}
-
-
-
-	private CustomerDTO convertToDTO(Customer customer) {
-		if(customer==null) throw new IllegalArgumentException("Customer not found.");
-		List<CarDTO> cars = new ArrayList<CarDTO>();
-
-		for (Car car : customer.getCars()) {
-			cars.add(convertToDTO(car));
-		}
-
-		return new CustomerDTO(customer.getUsername(), customer.getPassword(), customer.getNoShow(), 
-				customer.getShow(), cars, convertToDTO(customer.getProfile()));
-	}
-
-	private CarDTO convertToDTO(Car car) {
-		if(car==null) throw new IllegalArgumentException("Car not found.");
-		return new CarDTO(car.getModel(), car.getTransmission(), car.getPlateNumber());
-	}
-
-	private ProfileDTO convertToDTO(Profile profile) {
-		if(profile == null) throw new IllegalArgumentException("Profile not found.");
-		return new ProfileDTO(profile.getFirstName(), profile.getLastName(), profile.getAddress(), 
-				profile.getZipCode(), profile.getPhoneNumber(), profile.getEmail());
-	}
-
-
-
 }

@@ -1,24 +1,29 @@
-
 package ca.mcgill.ecse321.autoRepair.controller;
 
 import java.sql.Time;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+import ca.mcgill.ecse321.autoRepair.dao.TimeSlotRepository;
 import ca.mcgill.ecse321.autoRepair.dto.BusinessDTO;
 import ca.mcgill.ecse321.autoRepair.dto.OperatingHourDTO;
-import ca.mcgill.ecse321.autoRepair.dto.TimeSlotDTO;
 import ca.mcgill.ecse321.autoRepair.model.Business;
 import ca.mcgill.ecse321.autoRepair.model.OperatingHour;
 import ca.mcgill.ecse321.autoRepair.model.OperatingHour.DayOfWeek;
-import ca.mcgill.ecse321.autoRepair.model.TimeSlot;
 import ca.mcgill.ecse321.autoRepair.service.BusinessService;
+
+
+
+
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -27,7 +32,9 @@ public class BusinessController {
 	
 	@Autowired
 	BusinessService businessService;
-
+	
+	@Autowired
+	TimeSlotRepository timeSlotRepository;
 	
 	/**
 	 * @author Fadi Tawfik Beshay
@@ -49,19 +56,21 @@ public class BusinessController {
 		catch(IllegalArgumentException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>(convertToDTO(business), HttpStatus.CREATED);
+		return new ResponseEntity<>(Conversion.convertToDTO(business), HttpStatus.CREATED);
 
 	}
 	
 	/**
 	 * @author Fadi Tawfik Beshay
 	 * Edits the business information of a given business
+	 * @param name
+	 * @param name1
 	 * @param email
 	 * @param address
 	 * @param phoneNumber
 	 * @return businessDTO
 	 */
-	@PatchMapping(value = {"/edit_business"})
+	@PostMapping(value = {"/edit_business"})
 	public ResponseEntity<?> editBusiness(@RequestParam String email, @RequestParam String address,
 			@RequestParam String phoneNumber) {
 		
@@ -73,13 +82,14 @@ public class BusinessController {
 		catch(IllegalArgumentException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>(convertToDTO(business), HttpStatus.OK);
+		return new ResponseEntity<>(Conversion.convertToDTO(business), HttpStatus.OK);
 
 	}
 	
 	/**
 	 * @author Fadi Tawfik Beshay
 	 * Adds the business hours of a business
+	 * @param businessName
 	 * @param dayOfWeek
 	 * @param startTime
 	 * @param endTime
@@ -96,17 +106,18 @@ public class BusinessController {
 	return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 
 			}
-		return new ResponseEntity<>(convertToDTO(opHour), HttpStatus.CREATED);
+		return new ResponseEntity<>(Conversion.convertToDTO(opHour), HttpStatus.CREATED);
 	}
 	/**
 	 * @author Fadi Tawfik Beshay
 	 * Edits the business hours of a business
 	 * @param dayOfWeek
+	 * @param dayOfWeek1
 	 * @param startTime1
 	 * @param endTime1
 	 * @return operatingHourDTO
 	 */
-	@PatchMapping(value = {"/edit_business_hours"})
+	@PostMapping(value = {"/edit_business_hours"})
 	public ResponseEntity<?> editBusinessHours(@RequestParam String dayOfWeek,@RequestParam String startTime1, @RequestParam String endTime1) {
 		String dayOfWeek1 = dayOfWeek;
 		OperatingHour opHourToEdit = null;
@@ -117,7 +128,7 @@ public class BusinessController {
       	return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 
-		return new ResponseEntity<>(convertToDTO(opHourToEdit), HttpStatus.CREATED);
+		return new ResponseEntity<>(Conversion.convertToDTO(opHourToEdit), HttpStatus.CREATED);
 		
 
 	}
@@ -125,25 +136,28 @@ public class BusinessController {
 	/**
 	 * @author Fadi Tawfik Beshay
 	 * Deletes the business hours of a given business
+	 * @param businessName
 	 * @param dayOfWeek
 	 * @return true when successfully deleted
 	 */
-	@DeleteMapping(value = {"/delete_business_hours"})
+	@PostMapping(value = {"/delete_business_hours"})
 	public boolean deleteBusinessHours( @RequestParam String dayOfWeek) {
 		String businessName = businessService.getBusiness().getName();
 	return  businessService.deleteOperatingHour(businessName, DayOfWeek.valueOf(dayOfWeek));
 
-	}
+	}  
+
 	
 	/**
 	 * @author Fadi Tawfik Beshay
 	 * Returns the business information of a business given a business name
+	 * @param businessName
 	 * @return businessDTO
 	 */
 	@GetMapping(value = {"/view_business_info", "/view_business_info/"})
 	public BusinessDTO viewBusinessInfo(){
 
-		return convertToDTO(businessService.getBusiness());
+		return Conversion.convertToDTO(businessService.getBusiness());
 	
 	}
 	
@@ -156,7 +170,7 @@ public class BusinessController {
 	public List<OperatingHourDTO> viewOperatingHours(){
 
 		return businessService.getAllOperatingHour().stream().map(c ->
-		convertToDTO(c)).collect(Collectors.toList());
+		Conversion.convertToDTO(c)).collect(Collectors.toList());
 	
 	}
 	
@@ -169,29 +183,7 @@ public class BusinessController {
 	@GetMapping(value = {"/view_operating_hour_by_day", "/view_operating_hour_by_day/"})
 	public OperatingHourDTO viewOperatingHourByDay(@RequestParam String dayOfWeek){
 
-		return convertToDTO(businessService.getOperatingHour(DayOfWeek.valueOf(dayOfWeek)));
+		return Conversion.convertToDTO(businessService.getOperatingHour(DayOfWeek.valueOf(dayOfWeek)));
 	
 	}
-	
-	
-	private TimeSlotDTO convertToDTO(TimeSlot timeSlot) {
-    	if(timeSlot==null) throw new IllegalArgumentException("Time slot not found.");
-    	return new TimeSlotDTO(timeSlot.getStartTime(), timeSlot.getEndTime(), timeSlot.getStartDate(), timeSlot.getEndDate());
-     }
-	private OperatingHourDTO convertToDTO(OperatingHour operatingHour) {
- 		if(operatingHour==null) throw new IllegalArgumentException("Operating hour not found.");
- 		return new OperatingHourDTO(operatingHour.getDayOfWeek(), operatingHour.getStartTime(), operatingHour.getEndTime());
- 	}
-     private BusinessDTO convertToDTO(Business business) {
-     	if(business==null) return null;
-    	List<OperatingHourDTO> operatingHours = new ArrayList<OperatingHourDTO>();
-    	for(int i=0; i<business.getBusinessHours().size(); i++) {
-    		operatingHours.add(convertToDTO(business.getBusinessHours().get(i)));
-    	}
-    	List<TimeSlotDTO> holidays = new ArrayList<TimeSlotDTO>();
-    	for(int i=0; i<business.getHolidays().size(); i++) {
-    		holidays.add(convertToDTO(business.getHolidays().get(i)));
-    	}
-		return new BusinessDTO(business.getName(), business.getEmail(), business.getAddress(), business.getPhoneNumber(), operatingHours, holidays);
-    }
 }

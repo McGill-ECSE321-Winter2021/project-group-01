@@ -1,10 +1,6 @@
 package ca.mcgill.ecse321.autoRepair.controller;
 
 import ca.mcgill.ecse321.autoRepair.dto.ReminderDTO;
-import ca.mcgill.ecse321.autoRepair.dto.CarDTO;
-import ca.mcgill.ecse321.autoRepair.dto.ChosenServiceDTO;
-import ca.mcgill.ecse321.autoRepair.dto.CustomerDTO;
-import ca.mcgill.ecse321.autoRepair.dto.ProfileDTO;
 import ca.mcgill.ecse321.autoRepair.model.*;
 import ca.mcgill.ecse321.autoRepair.service.ChosenServiceService;
 import ca.mcgill.ecse321.autoRepair.service.CustomerService;
@@ -34,10 +30,10 @@ public class ReminderController {
 	@Autowired
 	ReviewService reviewService;
 	@Autowired
-	CustomerService cusService;
+	CustomerService customerService;
 	@Autowired
-	ChosenServiceService csService;
-
+	ChosenServiceService chosenServiceService;
+	
 	/**
 	 * @author Robert Aprahamian
 	 * Gets all reminders associated with a given customer
@@ -47,32 +43,31 @@ public class ReminderController {
 	@GetMapping(value = { "/view_reminders_for_customer","/view_reminders_for_customer/" })
 	public ResponseEntity<?> getAllRemindersForCustomer(@RequestParam String username) {
 		try {
-			Customer customer = cusService.getCustomer(username);
+			Customer customer = customerService.getCustomer(username);
 			List<Reminder> remindersForCustomer = reminderService.getCustomerReminders(customer);
 			List<ReminderDTO> reminders = new ArrayList<>();
 			for (Reminder reminder : remindersForCustomer) {
 				if(reminder.getDate().toLocalDate().isBefore(LocalDate.now()) ||
 						(reminder.getDate().toLocalDate().isEqual(LocalDate.now()) && 
 								reminder.getTime().toLocalTime().isBefore(LocalTime.now()))) {
-					reminders.add(convertToDTO(reminder));
+					reminders.add(Conversion.convertToDTO(reminder, reviewService));
 
 				}
 			}
 			return new ResponseEntity<>(reminders, HttpStatus.CREATED);
-		}catch (IllegalArgumentException e){
+		}catch (IllegalArgumentException exception){
 			return new ResponseEntity<>("The customer does not exist", HttpStatus.INTERNAL_SERVER_ERROR);
 		}}
 	
 	/**
 	 * @author Robert Aprahamian
 	 * Gets all reminders associated with a given customer
+	 * @param username
 	 * @return list of reminder DTO
 	 */
 	@GetMapping(value = { "/view_reminders","/view_reminders/" })
 	public List<ReminderDTO> getAllReminders() {
-		
-	
-		return reminderService.getAllReminders().stream().map(reminder -> convertToDTO(reminder)).collect(Collectors.toList());
+		return reminderService.getAllReminders().stream().map(reminder -> Conversion.convertToDTO(reminder, reviewService)).collect(Collectors.toList());
 	}
 	
 	/**
@@ -84,13 +79,13 @@ public class ReminderController {
 	 */
 	@GetMapping(value = { "/get_reminder","/get_reminder/" })
 	public ReminderDTO getReminder(@RequestParam String username, @RequestParam String serviceName) {
-		Customer customer = cusService.getCustomer(username);
+		Customer customer = customerService.getCustomer(username);
 		if (customer == null)
 			throw new IllegalArgumentException("The following user does not exist: " + username);
-		ChosenService chosenService = csService.getChosenService(serviceName);
+		ChosenService chosenService = chosenServiceService.getChosenService(serviceName);
 		if (chosenService == null)
 			throw new IllegalArgumentException("The following service does not exist: " + serviceName);
-		return convertToDTO(reminderService.getReminder(customer,chosenService ));
+		return Conversion.convertToDTO(reminderService.getReminder(customer,chosenService), reviewService);
 	}
 
 	/**
@@ -113,15 +108,15 @@ public class ReminderController {
 		if(timestring == "")  return new ResponseEntity<>("The time cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
 		Date date = Date.valueOf(datestring);
 		Time time = Time.valueOf(timestring + ":00");
-		SystemTime.setSysDate(Date.valueOf(LocalDate.now()));
-		SystemTime.setSysTime(Time.valueOf(LocalTime.now()));
+		SystemTime.setSystemDate(Date.valueOf(LocalDate.now()));
+		SystemTime.setSystemTime(Time.valueOf(LocalTime.now()));
 		Reminder reminder = null;
 		try {
 			reminder = reminderService.createReminder(serviceName, username, date, description, time);			
 		}catch (IllegalArgumentException e){
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>(convertToDTO(reminder), HttpStatus.CREATED);
+		return new ResponseEntity<>(Conversion.convertToDTO(reminder, reviewService), HttpStatus.CREATED);
 	}
 
 	/**
@@ -135,7 +130,7 @@ public class ReminderController {
 	 * @param timestring
 	 * @return reminderDTO
 	 */
-	@PatchMapping(value = { "/update_reminder","/update_reminder/" })
+	@PostMapping(value = { "/update_reminder","/update_reminder/" })
 	public ResponseEntity<?> updateReminder
 	(@RequestParam String username,@RequestParam String oldServiceName, @RequestParam String newServiceName ,@RequestParam String datestring,@RequestParam String description, @RequestParam String timestring ) {
 		if(username == "")  return new ResponseEntity<>("The customer name cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -146,15 +141,15 @@ public class ReminderController {
 		if(timestring == "")  return new ResponseEntity<>("The time cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
 		Date date = Date.valueOf(datestring);
 		Time time = Time.valueOf(timestring + ":00");
-		SystemTime.setSysDate(Date.valueOf(LocalDate.now()));
-		SystemTime.setSysTime(Time.valueOf(LocalTime.now()));
+		SystemTime.setSystemDate(Date.valueOf(LocalDate.now()));
+		SystemTime.setSystemTime(Time.valueOf(LocalTime.now()));
 		Reminder reminder = null;
 		try {
 			reminder = reminderService.editReminder(oldServiceName, newServiceName, username, date, description, time);			
 		}catch(IllegalArgumentException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>(convertToDTO(reminder), HttpStatus.OK);
+		return new ResponseEntity<>(Conversion.convertToDTO(reminder, reviewService), HttpStatus.OK);
 	}
 
 	/**
@@ -164,7 +159,7 @@ public class ReminderController {
 	 * @param serviceName
 	 * @return true if reminder is successfully deleted
 	 */
-	@DeleteMapping(value = { "/delete_reminder","/delete_reminder/" })
+	@PostMapping(value = { "/delete_reminder","/delete_reminder/" })
 	public ResponseEntity<?> deleteReminder
 	(@RequestParam String username,@RequestParam String serviceName) {	
 		if(username == "")  return new ResponseEntity<>("The customer name cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -172,53 +167,9 @@ public class ReminderController {
 		try {
 			reminderService.deleteReminder(serviceName, username);
 			return new ResponseEntity<>(true, HttpStatus.OK);
-		}catch(IllegalArgumentException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}catch(IllegalArgumentException exception) {
+			return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 	}
-
-	private ReminderDTO convertToDTO(Reminder reminder) {
-		if(reminder==null) throw new IllegalArgumentException("Service not found.");
-		return new ReminderDTO(convertToDTO(reminder.getCustomer()), convertToDTO(reminder.getChosenService()), reminder.getDate(), reminder.getTime(),reminder.getDescription());
-	}
-	
-	private CustomerDTO convertToDTO(Customer customer) {
-		if(customer==null) throw new IllegalArgumentException("Customer not found.");
-		List<CarDTO> cars = new ArrayList<CarDTO>();
-
-		for (Car car : customer.getCars()) {
-			cars.add(convertToDTO(car));
-		}
-
-		return new CustomerDTO(customer.getUsername(), customer.getPassword(), customer.getNoShow(), 
-				customer.getShow(), cars, convertToDTO(customer.getProfile()));
-
-	}
-	
-	private CarDTO convertToDTO(Car car) {
-		if(car==null) throw new IllegalArgumentException("Car not found.");
-		return new CarDTO(car.getModel(), car.getTransmission(), car.getPlateNumber());
-	}
-
-	private ProfileDTO convertToDTO(Profile profile) {
-		if(profile == null) throw new IllegalArgumentException("Profile not found.");
-		return new ProfileDTO(profile.getFirstName(), profile.getLastName(), profile.getAddress(), 
-				profile.getZipCode(), profile.getPhoneNumber(), profile.getEmail());
-	}
-
-	private ChosenServiceDTO convertToDTO(ChosenService service) {
-		if(service==null) throw new IllegalArgumentException("Service not found.");
-		 Double avRating = null;
-		try {
-			avRating = reviewService.getAverageServiceReview(service.getName());
-		}
-		catch (Exception e){
-			
-		}
-	
-		return new ChosenServiceDTO(service.getName(), service.getDuration(), service.getPayment(), avRating);
-	}
-
-
 }

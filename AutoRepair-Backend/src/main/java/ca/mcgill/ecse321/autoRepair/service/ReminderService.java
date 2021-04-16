@@ -68,7 +68,7 @@ public class ReminderService {
 		}
 		else {
 		LocalDate localDate = date.toLocalDate();
-		Date now = SystemTime.getSysDate();
+		Date now = SystemTime.getSystemDate();
 		LocalDate now2 = now.toLocalDate();
 		if(localDate.isBefore(now2)) {
 			throw new IllegalArgumentException("Date has passed");
@@ -77,7 +77,7 @@ public class ReminderService {
 	
 		if(localDate.isEqual(now2)) {
 			LocalTime localTime = time.toLocalTime();
-			if(localTime.isBefore(SystemTime.getSysTime().toLocalTime())) {
+			if(localTime.isBefore(SystemTime.getSystemTime().toLocalTime())) {
 				throw new IllegalArgumentException("Time has passed");
 			}
 		}
@@ -146,7 +146,7 @@ public class ReminderService {
 				}
 				else {
 				LocalDate localDate = newDate.toLocalDate();
-				Date now = SystemTime.getSysDate();
+				Date now = SystemTime.getSystemDate();
 				LocalDate now2 = now.toLocalDate();
 				if(localDate.isBefore(now2)) {
 					throw new IllegalArgumentException("Date has passed");
@@ -155,7 +155,7 @@ public class ReminderService {
 			
 				if(localDate.isEqual(now2)) {
 					LocalTime localTime = newTime.toLocalTime();
-					if(localTime.isBefore(SystemTime.getSysTime().toLocalTime())) {
+					if(localTime.isBefore(SystemTime.getSystemTime().toLocalTime())) {
 						throw new IllegalArgumentException("Time has passed");
 					}
 				}

@@ -22,8 +22,6 @@ public class ChosenServiceController {
 	private ChosenServiceService chosenService;
 	@Autowired
 	private ReviewService reviewService;
-
-	
 	
 	/**
 	 * @author Robert Aprahamian
@@ -32,7 +30,8 @@ public class ChosenServiceController {
 	 */
 	@GetMapping(value = { "/view_all_services", "/view_all_services/" })
 	public List<ChosenServiceDTO> getAllServices() {
-		return chosenService.getAllChosenService().stream().map(service -> convertToDTO(service)).collect(Collectors.toList());
+		//List<ChosenServiceDTO> services = new ArrayList<ChosenServiceDTO>();
+		return chosenService.getAllChosenService().stream().map(service -> Conversion.convertToDTO(service, reviewService)).collect(Collectors.toList());
 	}
 	
 	/**
@@ -43,12 +42,14 @@ public class ChosenServiceController {
 	 */
 	@GetMapping(value = { "/get_service","/get_service/" })
 	public ChosenServiceDTO getService(@RequestParam String name) {
-		return convertToDTO(chosenService.getChosenService(name));//.stream().map(service -> convertToDTO(service)).collect(Collectors.toList());
+
+		return Conversion.convertToDTO(chosenService.getChosenService(name), reviewService);
 	}
 
 	/**
 	 * @author Robert Aprahamian
 	 * Creates a chosen service
+	 * @param name
 	 * @param duration
 	 * @param price
 	 * @return chosenServiceDTO
@@ -67,18 +68,19 @@ public class ChosenServiceController {
 		}catch(IllegalArgumentException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>(convertToDTO(service), HttpStatus.CREATED);
+		return new ResponseEntity<>(Conversion.convertToDTO(service, reviewService), HttpStatus.CREATED);
 		//return convertToDTO(service);
 	}
 
 	/**
 	 * @author Robert Aprahamian
 	 * Updates a chosen service
+	 * @param name
 	 * @param duration
 	 * @param price
 	 * @return chosenServiceDTO
 	 */
-	@PatchMapping(value = { "/update_service","/update_service/" })
+	@PostMapping(value = { "/update_service","/update_service/" })
 	public ResponseEntity<?> updateChosenService
 	(@RequestParam String serviceName,@RequestParam String duration,@RequestParam String price) {
 		if(serviceName == "")  return new ResponseEntity<>("The service name cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -92,15 +94,16 @@ public class ChosenServiceController {
 		}catch(IllegalArgumentException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>(convertToDTO(service), HttpStatus.OK);
+		return new ResponseEntity<>(Conversion.convertToDTO(service, reviewService), HttpStatus.OK);
 	}
 
 	/**
 	 * @author Robert Aprahamian
 	 * Deletes a chosen service given a service name
+	 * @param name
 	 * @return true if chosen service is successfully deleted
 	 */
-	@DeleteMapping(value = { "/delete_service","/delete_service/" })
+	@PostMapping(value = { "/delete_service","/delete_service/" })
 	public ResponseEntity<?> deleteChosenService
 	(@RequestParam String serviceName) {
 		if(serviceName == "")  return new ResponseEntity<>("The service name cannot be null", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -112,18 +115,4 @@ public class ChosenServiceController {
 		}
 
 	}
-
-	private ChosenServiceDTO convertToDTO(ChosenService service) {
-		if(service==null) throw new IllegalArgumentException("Service not found.");
-		 Double avRating = null;
-		try {
-			avRating = reviewService.getAverageServiceReview(service.getName());
-		}
-		catch (Exception e){
-			avRating = -1.0;
-		}
-	
-		return new ChosenServiceDTO(service.getName(), service.getDuration(), service.getPayment(), avRating);
-	}
-
 }

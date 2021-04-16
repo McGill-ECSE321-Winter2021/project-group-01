@@ -22,5 +22,9 @@ public class Home extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ((MainActivity)getActivity()).getAppointments(view);
+        ((MainActivity)getActivity()).getReviews(view);
+        ((MainActivity)getActivity()).getServices(view);
+        ((MainActivity)getActivity()).getReminders(view);
     }
 }

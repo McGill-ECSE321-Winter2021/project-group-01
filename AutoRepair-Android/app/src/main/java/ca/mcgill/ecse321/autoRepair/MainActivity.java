@@ -405,7 +405,7 @@ public class MainActivity extends AppCompatActivity{
         error="";
         final TextView appointments = (TextView) findViewById(R.id.appointments);
 
-        HttpUtils.get("/view_all_appointments", new RequestParams(), new JsonHttpResponseHandler(){
+        HttpUtils.get("upcoming_appointments", new RequestParams(), new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONArray response) {
 
@@ -414,11 +414,10 @@ public class MainActivity extends AppCompatActivity{
                     for(int i=0; i<response.length(); i++){
                         JSONObject appointment = response.getJSONObject(i);
                         JSONObject timeSlot = appointment.getJSONObject("timeSlot");
-                        JSONObject service = appointment.getJSONObject("chosenService");
-                        appointmentsString+=appointment.getString("serviceName")+", "
+                        JSONObject service = appointment.getJSONObject("service");
+                        appointmentsString+=service.getString("name")+", "
                                 +timeSlot.getString("startDate")+", "
-                                +timeSlot.getString("startTime")+", "
-                                +timeSlot.getString("endDate")+", "
+                                +timeSlot.getString("startTime")+"-"
                                 +timeSlot.getString("endTime")+"\n";
                     }
                     appointments.setText(appointmentsString);
@@ -435,7 +434,7 @@ public class MainActivity extends AppCompatActivity{
                 } catch (JSONException e) {
                     error += e.getMessage();
                 }
-                refreshErrorMessage();
+//                refreshErrorMessage();
             }
 
         });

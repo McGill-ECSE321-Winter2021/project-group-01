@@ -17,12 +17,12 @@ This project consists on building a system for an Auto-repair car shop. Customer
 
 | Name                    | Roles/Tasks                                | Sprint 1           | Sprint 2 | Sprint 3 | Sprint 4|
 | ------------------------| -------------------------------------------|--------------------|----------|----------|---------|
-| Robert Aprahamian       | Software Developer, Testing, Documentation |                35  | 40       | 45       | -       |
-| Fadi Tawfik Beshay      | Software Developer, Testing, Documentation |                35  | 40       | 45       | -       |
-| Eric Chehata            | Software Developer, Testing, Documentation |                35  | 40       | 45       | -       |  
-| Mohammad Saeid Nafar    | Software Developer, Testing, Documentation |                35  | 40       | 45       | -       |
-| Marc Saber              | Software Developer, Testing, Documentation |                35  | 40       | 45       | -       |
-| Tamara Zard Aboujaoudeh | Software Developer, Testing, Documentation |                35  | 40       | 45       | -       |
+| Robert Aprahamian       | Software Developer, Testing, Documentation |                35  | 40       | 45       | 40      |
+| Fadi Tawfik Beshay      | Software Developer, Testing, Documentation |                35  | 40       | 45       | 40      |
+| Eric Chehata            | Software Developer, Testing, Documentation |                35  | 40       | 45       | 40      |  
+| Mohammad Saeid Nafar    | Software Developer, Testing, Documentation |                35  | 40       | 45       | 40      |
+| Marc Saber              | Software Developer, Testing, Documentation |                35  | 40       | 45       | 40      |
+| Tamara Zard Aboujaoudeh | Software Developer, Testing, Documentation |                35  | 40       | 45       | 40      |
 
 
 ## Sprint 1 
@@ -61,4 +61,17 @@ To access the wiki>>[Sprint 3](https://github.com/McGill-ECSE321-Winter2021/proj
 | Mohammad Saeid Nafar    | Web Frontend Implementation and Integration with Backend Services of _Review_ class, Documentation                       |             
 | Marc Saber              | Web Frontend Implementation and Integration with Backend Services of _OperatingHour_ class, Documentation                |            
 | Tamara Zard Aboujaoudeh | Web Frontend Implementation and Integration with Backend Services of _Appointment_ & _TimeSlot_ class, Documentation     | 
+
+
+## Sprint 4
+To access the wiki>>[Sprint 4](https://github.com/McGill-ECSE321-Winter2021/project-group-01/wiki#sprint-4)
+### Roles and Time Spent
+| Name                    | Roles/Tasks                                                                                                                               |
+| ------------------------| ------------------------------------------------------------------------------------------------------------------------------------------|
+| Robert Aprahamian       | Android Frontend Implementation and Integration with Backend Services of View Reminders and View Services in the Home Page, Documentation |         
+| Fadi Tawfik Beshay      | Android Frontend Implementation and Integration with Backend Services of View Appointments/Reviews in the Home Page, Documentation        |         
+| Eric Chehata            | Android Frontend Implementation and Integration with Backend Services of Car and Profile Pages, Documentation                             |    
+| Mohammad Saeid Nafar    | Android Frontend Implementation and Integration with Backend Services of Review Page, Documentation                                       |  
+| Marc Saber              | Android Frontend Implementation and Integration with Backend Services of Login and Signup Pages, Documentation                            |         
+| Tamara Zard Aboujaoudeh | Android Frontend Implementation and Integration with Backend Services of Appointment Page, Documentation                                  |              
 

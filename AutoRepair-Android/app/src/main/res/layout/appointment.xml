@@ -6,18 +6,13 @@
     android:layout_height="wrap_content">
 
 
-
-
     <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,40 +20,66 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/bookAppointmentText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:id="@+id/appointmentsText"
+                android:layout_width="308dp"
+                android:layout_height="match_parent"
                 android:layout_marginTop="16dp"
-                android:text="Book An Appointment"
+                android:text="My Appointments"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/myAppointments"
+                android:layout_width="513dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="12dp"
+                android:text=""
+                android:textSize="30sp" />
+
+
+            <TextView
+                android:id="@+id/bookAppointmentText"
+                android:layout_width="308dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="50dp"
+                android:text="Book an Appointment"
                 android:textSize="30sp" />
 
             <Spinner
-                android:id="@+id/bookAppointmentService"
-                android:layout_width="224dp"
-                android:layout_height="39dp"
+                android:id="@+id/serviceBookAppointment"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
                 android:ems="10"
-                android:hint="Service"
-                android:inputType="text" />
+                android:hint="Service" />
 
             <TextView
                 android:id="@+id/dateBookAppointmentText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Select a  New Date and a New Time"
-                android:textSize="20sp" />
+                android:text="Select a Date and a Time"
+                android:textSize="25sp" />
 
             <DatePicker
-                android:id="@+id/datePickerBookAppointment"
+                android:id="@+id/dateBookAppointment"
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
                 android:datePickerMode="spinner" />
 
             <TimePicker
-                android:id="@+id/timePickerBookAppointment"
+                android:id="@+id/timeBookAppointment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:timePickerMode="spinner" />
+
+            <Button
+                android:id="@+id/bookAppointmentButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
+                android:layout_marginRight="100dp"
+                android:onClick="makeAppointment"
+                android:text="Book" />
 
             <TextView
                 android:id="@+id/error"
@@ -67,58 +88,89 @@
                 android:text=""
                 android:textColor="#FF0000"
                 android:visibility="gone" />
-        </LinearLayout>
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="vertical">-->
-
-            <TextView
-                android:id="@+id/updateAppointmentText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Update An Appointment"
-                android:textSize="30sp" />
+<!--            <TextView-->
+<!--                android:id="@+id/updateAppointmentText"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="50dp"-->
+<!--                android:text="Update an Appointment"-->
+<!--                android:textSize="30sp" />-->
 
             <Spinner
-                android:id="@+id/updateAppointmentNewService"
-                android:layout_width="224dp"
-                android:layout_height="39dp"
+                android:id="@+id/appointmentUpdateAppointment"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
                 android:ems="10"
-                android:hint="Service"
-                android:inputType="text" />
+                android:hint="Select an Appointment" />
+
+            <Spinner
+                android:id="@+id/newServiceUpdateAppointment"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="New Service" />
 
             <TextView
                 android:id="@+id/newDateUpdateAppointmentText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Select a Date and a Time"
-                android:textSize="20sp" />
+                android:text="Select a new Date and a new Time"
+                android:textSize="25sp" />
 
             <DatePicker
-                android:id="@+id/newDatePickerUpdateAppointment"
+                android:id="@+id/newDateUpdateAppointment"
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
                 android:datePickerMode="spinner" />
 
             <TimePicker
-                android:id="@+id/newTimePickerUpdateAppointment"
+                android:id="@+id/newTimeUpdateAppointment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:timePickerMode="spinner" />
 
-            <TextView
-                android:id="@+id/error2"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/updateAppointmentButton"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="#FF0000"
-                android:visibility="gone" />
-<!--        </LinearLayout>-->
-    </ScrollView>
+                android:layout_marginLeft="100dp"
+                android:layout_marginRight="100dp"
+                android:onClick="updateAppointment"
+                android:text="Update" />
 
+            <TextView
+                android:id="@+id/cancelAppointmentText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="Cancel an Appointment"
+                android:textSize="30sp" />
+
+            <Spinner
+                android:id="@+id/appointmentCancelAppointment"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="Select an Appointment" />
+
+            <Button
+                android:id="@+id/cancelAppointmentButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
+                android:layout_marginRight="100dp"
+                android:onClick="cancelAppointment"
+                android:text="Cancel" />
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

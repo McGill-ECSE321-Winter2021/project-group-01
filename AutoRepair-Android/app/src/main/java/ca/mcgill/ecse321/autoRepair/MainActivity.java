@@ -1261,6 +1261,165 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
+    public void getReviews(View v) {
+        error = "";
+        final TextView reviews = (TextView) findViewById(R.id.reviews); //to be done
+
+        HttpUtils.get("view_all_reviews", new RequestParams(), new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONArray response) {
+
+                try {
+                    String reviewsString = "";
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject review = response.getJSONObject(i);
+                        reviewsString += review.getJSONObject("service").getString("name") + ": "
+                                + review.getString("description") + ", "
+                                + review.getString("serviceRating")
+                                + "/5"
+                                + "\n";
+                    }
+                    reviews.setText(reviewsString);
+
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+            }
+
+        });
+    }
+
+    public void getAppointments(View v){
+        error="";
+        final TextView appointments = (TextView) findViewById(R.id.appointments);
+
+        HttpUtils.get("upcoming_appointments", new RequestParams(), new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONArray response) {
+
+                try {
+                    String appointmentsString = "";
+                    for(int i=0; i<response.length(); i++){
+                        JSONObject appointment = response.getJSONObject(i);
+                        JSONObject timeSlot = appointment.getJSONObject("timeSlot");
+                        JSONObject service = appointment.getJSONObject("service");
+                        appointmentsString+=service.getString("name")+", "
+                                +timeSlot.getString("startDate")+", "
+                                +timeSlot.getString("startTime")+"-"
+                                +timeSlot.getString("endTime")+"\n";
+                    }
+                    appointments.setText(appointmentsString);
+
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+            }
+
+        });
+
+    }
+    public void getReminders(View v){
+        error="";
+        final TextView reminders = (TextView) findViewById(R.id.allReminders);
+        RequestParams rp = new RequestParams();
+        rp.put("username", customerUsername);
+
+        HttpUtils.get("view_reminders_for_customer/", rp, new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONArray response) {
+
+                try {
+                    String remindersString = "";
+                    for(int i=0; i<response.length(); i++){
+                        JSONObject reminder = response.getJSONObject(i);
+                        remindersString+="Service: "+
+                                reminder.getJSONObject("chosenService").getString("name")+", "+
+                                reminder.getString("description")+ "\n";
+                    }
+                    reminders.setText(remindersString);
+
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                // refreshErrorMessage();
+                //  ((TextView) v.findViewById(R.id.newevent_name)).setText("");
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+            }
+
+        });
+
+    }
+
+    public void getServicesHome(View v){
+        error="";
+        final TextView services = (TextView) findViewById(R.id.allServices); //to be done
+
+        HttpUtils.get("/view_all_services", new RequestParams(), new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONArray response) {
+
+                try {
+                    String servicesString = "";
+                    for(int i=0; i<response.length(); i++){
+                        JSONObject service = response.getJSONObject(i);
+                        servicesString+="Service "+
+                                service.getString("name")+", "
+                                +"lasts "+service.getString("duration")+" minutes"+", costs "
+                                +service.getString("price")+"$"+", rating: "
+                                +service.getString("rating")+"\n";
+                        // +service.getString(("rating"))+"\n";
+                    }
+                    services.setText(servicesString);
+
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                // refreshErrorMessage();
+                //  ((TextView) v.findViewById(R.id.newevent_name)).setText("");
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+            }
+
+        });
+
+    }
+
 
 
     @Override

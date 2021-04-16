@@ -111,9 +111,9 @@
         android:id="@+id/button3"
         android:layout_width="321dp"
         android:layout_height="38dp"
-        android:layout_marginTop="444dp"
-        android:text="Add Car"
+        android:layout_marginTop="432dp"
         android:onClick="addCar"
+        android:text="Add Car"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -122,11 +122,10 @@
         android:id="@+id/removeButtonRemove"
         android:layout_width="321dp"
         android:layout_height="38dp"
-        android:layout_marginTop="184dp"
-        android:text="Remove Car"
+        android:layout_marginTop="152dp"
         android:onClick="removeCar"
+        android:text="Remove Car"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button3" />
 

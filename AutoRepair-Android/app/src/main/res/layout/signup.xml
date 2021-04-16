@@ -87,7 +87,7 @@
         app:layout_constraintVertical_bias="0.452" />
 
     <EditText
-        android:id="@+id/Username"
+        android:id="@+id/username"
         android:layout_width="164dp"
         android:layout_height="49dp"
         android:ems="10"
@@ -103,7 +103,7 @@
         app:layout_constraintVertical_bias="0.568" />
 
     <EditText
-        android:id="@+id/Password"
+        android:id="@+id/password"
         android:layout_width="164dp"
         android:layout_height="49dp"
         android:ems="10"
@@ -150,21 +150,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.671" />
 
-    <EditText
-        android:id="@+id/carTransmission"
-        android:layout_width="177dp"
-        android:layout_height="50dp"
+
+    <Spinner
+        android:id="@+id/carTransmissionNew"
+        android:layout_width="224dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:fontFamily="@font/comfortaa_bold"
         android:hint="Car Transmission"
         android:inputType="textPersonName"
         android:textColor="#F7292626"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.064"
+        app:layout_constraintHorizontal_bias="0.085"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.776" />
+        app:layout_constraintTop_toBottomOf="@+id/model" />
 
     <EditText
         android:id="@+id/lastName"

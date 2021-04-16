@@ -66,8 +66,6 @@ public class TestCustomerPersistence {
 		testCustomer.setUsername(username);
 		testCustomer.setPassword(password);
 		testCustomer.setCars(carList);
-		testCustomer.setNoShow(0);
-		testCustomer.setShow(0);
 		testCustomer.setProfile(testProfile);
 
 		profileRepository.save(testProfile);
@@ -91,8 +89,6 @@ public class TestCustomerPersistence {
 		assertEquals(testProfile.getPhoneNumber(),testCustomer.getProfile().getPhoneNumber());
 		assertEquals(testProfile.getZipCode(),testCustomer.getProfile().getZipCode());
 		assertEquals(carList.get(0).getTransmission(),testCustomer.getCars().get(0).getTransmission());
-		assertEquals(0,testCustomer.getNoShow());
-		assertEquals(0,testCustomer.getShow());
 	}
 
 }

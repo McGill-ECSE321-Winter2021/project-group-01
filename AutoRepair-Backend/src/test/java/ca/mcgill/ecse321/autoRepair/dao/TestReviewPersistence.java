@@ -81,8 +81,6 @@ public class TestReviewPersistence {
 		testCustomer.setUsername(username);
 		testCustomer.setPassword(password);
 		testCustomer.setCars(carList);
-		testCustomer.setNoShow(0);
-		testCustomer.setShow(0);
 		testCustomer.setProfile(testProfile);
 
 		TimeSlot testSlot = new TimeSlot();

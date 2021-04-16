@@ -102,7 +102,7 @@ public class OwnerServiceTest {
 		error = e.getMessage();
 	}
 	assertNull(owner);
-	assertEquals("wrong authentification code,please try again.",error);
+	assertEquals("wrong authentication code,please try again.",error);
 	}
 	
 	

@@ -81,8 +81,6 @@ public class TestAppointmentPersistence {
 		testCustomer.setUsername(username);
 		testCustomer.setPassword(password);
 		testCustomer.setCars(carList);
-		testCustomer.setNoShow(0);
-		testCustomer.setShow(0);
 		testCustomer.setProfile(testProfile);
 
 		TimeSlot testSlot = new TimeSlot();
@@ -118,8 +116,6 @@ public class TestAppointmentPersistence {
 		assertNotNull(testAppointment);
 		assertEquals(testCustomer.getUsername(), testAppointment.getCustomer().getUsername());
 		assertEquals(testCustomer.getPassword(), testAppointment.getCustomer().getPassword());
-		assertEquals(testCustomer.getNoShow(), testAppointment.getCustomer().getNoShow());
-		assertEquals(testCustomer.getShow(), testAppointment.getCustomer().getShow());
 		assertEquals(testService.getName(),testAppointment.getChosenService().getName());
 		ChosenService testService1 = testAppointment.getChosenService();
 		assertEquals(testService.getDuration(),testService1.getDuration());

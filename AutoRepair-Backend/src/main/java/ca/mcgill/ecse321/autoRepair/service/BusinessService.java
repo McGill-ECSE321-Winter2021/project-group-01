@@ -4,7 +4,6 @@ import ca.mcgill.ecse321.autoRepair.dao.BusinessRepository;
 import ca.mcgill.ecse321.autoRepair.dao.OperatingHourRepository;
 import ca.mcgill.ecse321.autoRepair.model.Business;
 import ca.mcgill.ecse321.autoRepair.model.OperatingHour;
-import ca.mcgill.ecse321.autoRepair.model.TimeSlot;
 import ca.mcgill.ecse321.autoRepair.model.OperatingHour.DayOfWeek;
 
 import java.sql.Time;

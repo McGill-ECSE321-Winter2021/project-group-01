@@ -89,8 +89,6 @@ public class TestReminderPersistence {
 		testCustomer.setUsername(username);
 		testCustomer.setPassword(password);
 		testCustomer.setCars(carList);
-		testCustomer.setNoShow(0);
-		testCustomer.setShow(0);
 		testCustomer.setProfile(testProfile);
 
 		
@@ -118,8 +116,6 @@ public class TestReminderPersistence {
 		assertNotNull(reminder);
 		assertEquals(testCustomer.getUsername(), reminder.getCustomer().getUsername());
 		assertEquals(testCustomer.getPassword(), reminder.getCustomer().getPassword());
-		assertEquals(testCustomer.getNoShow(), reminder.getCustomer().getNoShow());
-		assertEquals(testCustomer.getShow(), reminder.getCustomer().getShow());
 		assertEquals(testDate, reminder.getDate());
 		assertEquals(testDescription, reminder.getDescription());
 		assertEquals(testTime, reminder.getTime());

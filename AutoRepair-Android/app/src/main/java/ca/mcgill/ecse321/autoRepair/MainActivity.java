@@ -376,10 +376,10 @@ public class MainActivity extends AppCompatActivity{
                     String reviewsString = "";
                     for (int i = 0; i < response.length(); i++) {
                         JSONObject review = response.getJSONObject(i);
-                        reviewsString += "Review " +
-                                review.getString("description") + ", "
-                                + ", rating: "
-                                + review.getString("serviceRating") + ", "
+                        reviewsString += review.getJSONObject("service").getString("name") + ": "
+                                + review.getString("description") + ", "
+                                + review.getString("serviceRating")
+                                + "/5"
                                 + "\n";
                     }
                     reviews.setText(reviewsString);

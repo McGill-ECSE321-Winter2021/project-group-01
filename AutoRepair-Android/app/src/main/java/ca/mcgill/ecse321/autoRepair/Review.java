@@ -34,7 +34,14 @@ public class Review extends Fragment implements AdapterView.OnItemSelectedListen
         ratingSpinner.setAdapter(ratingAdapter);
         ratingSpinner.setOnItemSelectedListener(this);
 
+        Spinner newRatingSpinner = view.findViewById(R.id.newRating);
+
+
+        newRatingSpinner.setAdapter(ratingAdapter);
+        newRatingSpinner.setOnItemSelectedListener(this);
+
         ((MainActivity)getActivity()).getPreviousAppointments(view);
+        ((MainActivity)getActivity()).getCustomerReviews(view);
     }
 
     @Override

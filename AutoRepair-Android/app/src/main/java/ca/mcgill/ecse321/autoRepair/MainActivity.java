@@ -584,8 +584,8 @@ public class MainActivity extends AppCompatActivity{
                         JSONObject timeSlot = appointment.getJSONObject("timeSlot");
 
                         String appointmentString = "";
-                        appointmentString+=service.getString("name")+", "
-                                +timeSlot.getString("startDate")+", "
+                        appointmentString+=service.getString("name")+","
+                                +timeSlot.getString("startDate")+","
                                 +timeSlot.getString("startTime")+"-"
                                 +timeSlot.getString("endTime");
                         appointments[i]=appointmentString;
@@ -636,6 +636,251 @@ public class MainActivity extends AppCompatActivity{
         });
 
     }
+
+    public void addReview(View v){
+        Spinner appointmentSpinner = findViewById(R.id.pastAppointments);
+        Spinner ratingSpinner = findViewById(R.id.rating);
+        EditText description = findViewById(R.id.description);
+
+        String appointment = appointmentSpinner.getSelectedItem().toString();
+        String appointmentAttributes[] = appointment.split(",");
+        String appointmentTimes [] = appointmentAttributes[2].split("-");
+
+        RequestParams parameters = new RequestParams();
+        parameters.put("startDate", appointmentAttributes[1]);
+        parameters.put("startTime", appointmentTimes[0]);
+        parameters.put("description", description.getText());
+        parameters.put("serviceRating", ratingSpinner.getSelectedItem().toString());
+
+        HttpUtils.post("create_review/", parameters, new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+
+                try {
+                    JSONObject serverResp = new JSONObject(response.toString());
+                    new SweetAlertDialog(MainActivity.this)
+                            .setTitleText("Thank you for your feedback!")
+                            .show();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                // refreshErrorMessage();
+                //  ((TextView) v.findViewById(R.id.newevent_name)).setText("");
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, String errorMessage, Throwable throwable) {
+                try {
+                    new SweetAlertDialog(MainActivity.this)
+                            .setTitleText(errorMessage)
+                            .show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+        });
+
+    }
+
+    public void getCustomerReviews(View view){
+        RequestParams parameters = new RequestParams();
+        parameters.put("username", customerUsername);
+
+        HttpUtils.get("view_reviews_of_customer", parameters, new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONArray response) {
+
+                try {
+                    Spinner reviewSpinner = findViewById(R.id.reviewsSpinner);
+
+                    String reviews[] = new String[response.length()];
+
+                    for(int i=0; i<response.length(); i++){
+                        JSONObject review = response.getJSONObject(i);
+                        JSONObject appointment = review.getJSONObject("appointment");
+                        JSONObject service = review.getJSONObject("service");
+                        JSONObject timeSlot = appointment.getJSONObject("timeSlot");
+
+
+                        String reviewString = "";
+                        reviewString+=service.getString("name")+","
+                                +timeSlot.getString("startDate")+","
+                                +timeSlot.getString("startTime")+","
+                                +review.getString("serviceRating");
+                        reviews[i]=reviewString;
+                    }
+                    ArrayList<String> list = new ArrayList<String>(Arrays.asList(reviews));
+
+                    ArrayAdapter<String> reviewsAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, list);
+                    reviewsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    reviewSpinner.setAdapter(reviewsAdapter);
+                    reviewSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view,
+                                                   int position, long id) {
+                            Object item = adapterView.getItemAtPosition(position);
+                            if (item != null) {
+                                Toast.makeText(MainActivity.this, item.toString(),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                            Toast.makeText(MainActivity.this, "Selected",
+                                    Toast.LENGTH_SHORT).show();
+
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
+
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                // refreshErrorMessage();
+                //  ((TextView) v.findViewById(R.id.newevent_name)).setText("");
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+            }
+
+        });
+    }
+
+    public void editReview(View v){
+        Spinner reviewSpinner = findViewById(R.id.reviewsSpinner);
+        Spinner ratingSpinner = findViewById(R.id.newRating);
+        EditText description = findViewById(R.id.newDescription);
+
+        String review = reviewSpinner.getSelectedItem().toString();
+        String reviewAttributes[] = review.split(",");
+
+        RequestParams parameters = new RequestParams();
+        parameters.put("startDate", reviewAttributes[1]);
+        parameters.put("startTime", reviewAttributes[2]);
+        parameters.put("newDescription", description.getText());
+        parameters.put("newRating", ratingSpinner.getSelectedItem().toString());
+
+        HttpUtils.patch("edit_review/", parameters, new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+
+                try {
+
+                    new SweetAlertDialog(MainActivity.this)
+                            .setTitleText("Thank you for your feedback!")
+                            .show();
+                } catch (Exception e) {
+                    error += e.getMessage();
+                }
+                // refreshErrorMessage();
+                //  ((TextView) v.findViewById(R.id.newevent_name)).setText("");
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, String errorMessage, Throwable throwable) {
+                try {
+                    new SweetAlertDialog(MainActivity.this)
+                            .setTitleText(errorMessage)
+                            .show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+        });
+
+    }
+
+
+    public void deleteReview(View v){
+        Spinner reviewSpinner = findViewById(R.id.reviewsSpinner);
+
+        String review = reviewSpinner.getSelectedItem().toString();
+        String reviewAttributes[] = review.split(",");
+
+        RequestParams parameters = new RequestParams();
+        parameters.put("startDate", reviewAttributes[1]);
+        parameters.put("startTime", reviewAttributes[2]);
+
+        HttpUtils.delete("delete_review/", parameters, new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+
+                try {
+
+                    new SweetAlertDialog(MainActivity.this)
+                            .setTitleText("Review deleted successfully")
+                            .show();
+                } catch (Exception e) {
+                    error += e.getMessage();
+                }
+                // refreshErrorMessage();
+                //  ((TextView) v.findViewById(R.id.newevent_name)).setText("");
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, String errorMessage, Throwable throwable) {
+                try {
+                    if(errorMessage.equals(true)){
+                        new SweetAlertDialog(MainActivity.this)
+                                .setTitleText("Review deleted successfully")
+                                .show();
+                    }
+                    else{
+                        new SweetAlertDialog(MainActivity.this)
+                                .setTitleText(errorMessage)
+                                .show();
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+        });
+
+    }
+
 
 
     @Override

@@ -31,6 +31,7 @@ var AXIOS = axios.create({
 })
 
 
+
 export default {
     name: 'Owner',
     data() {
@@ -41,6 +42,11 @@ export default {
             
         }
     },
+
+/**
+   * @author Marc Saber
+   * @description displays all the services on the assistant page 
+   */
     created: function () {
         AXIOS.get('/view_all_services')
             .then(response => {

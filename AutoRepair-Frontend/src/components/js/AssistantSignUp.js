@@ -44,7 +44,12 @@ export default {
         }
     },
 
+
     methods: {
+ /**
+   * @author Marc Saber
+   * @description logs in for an assistan if the correct inputs are provided
+   */
         assistantsignup: function (username, password, confirmPassword,authentificationCode){
             if(password!=confirmPassword){
                 swal("ERROR", "Passwords do not match.", "error");  

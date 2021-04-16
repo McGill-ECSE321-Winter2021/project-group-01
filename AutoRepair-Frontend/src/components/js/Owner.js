@@ -63,6 +63,10 @@ export default {
             errorAppointment: ''
         }
     },
+    /**
+     * @author Marc Saber
+     * @description Initializes the page with the owners in the system
+     */
     created: function () {
         AXIOS.get('/view_all_services')
             .then(response => {
@@ -118,6 +122,14 @@ export default {
 
     },
     methods: {
+        /**
+         * @author Fadi Tawfik Beshay
+         * @param {String} name 
+         * @param {String} email 
+         * @param {String} address 
+         * @param {String} phoneNumber 
+         * @description Registers the business info of the Autorepair shop given the above parameters
+         */
         registerBusiness(name, email, address, phoneNumber) {
             AXIOS.post('/register_business/', $.param({ name: name, email: email, address: address, phoneNumber: phoneNumber }))
                 .then(response => {
@@ -159,7 +171,13 @@ export default {
 
                 })
         },
-
+        /**
+         * @author Robert Aprahamian
+         * @param {String} serviceName 
+         * @param {String} duration 
+         * @param {String} price 
+         * @description Adds a service to the system given the above paramters
+         */
         addservice(serviceName, duration, price) {
             AXIOS.post('/create_service/', $.param({ serviceName: serviceName, duration: duration, price: price }))
                 .then(response => {

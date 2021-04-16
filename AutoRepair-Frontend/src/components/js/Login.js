@@ -42,6 +42,12 @@ export default {
 		}
 	},
 	methods: {
+		/**
+		 * @author Eric Chehata
+		 * @param {String} username 
+		 * @param {String} password 
+		 * @description Logs in a user given a correct username and password
+		 */
 		login (username, password) {
 			AXIOS.post('/login/',$.param({username: username, password: password}))
 			.then(response => {

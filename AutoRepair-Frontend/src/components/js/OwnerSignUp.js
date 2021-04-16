@@ -45,6 +45,14 @@ export default {
     },
 
     methods: {
+        /**
+         * @author Marc Saber
+         * @param {String} name 
+         * @param {String} password 
+         * @param {String} confirmPassword 
+         * @param {String} authentification 
+         * @description Signs up an owner given the above paramters
+         */
         ownersignup: function (name, password, confirmPassword,authentification){
             if(password!=confirmPassword){
                 swal("ERROR", "Passwords do not match.", "error");  

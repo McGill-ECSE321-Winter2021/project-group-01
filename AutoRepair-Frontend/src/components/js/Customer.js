@@ -43,6 +43,11 @@ export default {
             
         }
     },
+
+/**
+   * @author Eric Chehata
+   * @description initializes page with the all the services, reviews and reminders for the logged in customer in the system
+   */
     created: function () {
         AXIOS.get('/view_all_services')
             .then(response => {

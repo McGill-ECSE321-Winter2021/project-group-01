@@ -50,6 +50,22 @@ export default {
         }
     },
     methods: {
+        /**
+         * @author Eric Chehata 
+         * @param {String} username 
+         * @param {String} password 
+         * @param {String} confirmPassword 
+         * @param {String} firstName 
+         * @param {String} lastName 
+         * @param {String} address 
+         * @param {String} zipCode 
+         * @param {String} email 
+         * @param {String} phoneNumber 
+         * @param {String} model 
+         * @param {String} plateNumber 
+         * @param {String} carTransmission 
+         * @description Signs up a customer given the above parameters
+         */
         signup: function (username, password, confirmPassword,
                      firstName, lastName, address, zipCode, email,phoneNumber,
                      model, plateNumber, carTransmission){

@@ -51,6 +51,10 @@ export default {
 			response: []
 		}
 	},
+	/**
+	 * @author Mohammad Saeid Nafar
+	 * @description Initializes the page with all the reviews in the system
+	 */
 	created: function () {
 		// Initializing persons from backend
 		AXIOS.get('/view_all_reviews')
@@ -89,6 +93,14 @@ export default {
 			})
 	},
 	methods: {
+		/**
+		 * @author Mohammad Saeid Nafar
+		 * @param {String} description 
+		 * @param {int} serviceRating 
+		 * @param {String} appointmentDate 
+		 * @param {String} appointmentTime
+		 * @description Creates a customer review of an appointment given the above paramters 
+		 */
 		createReview: function (description, serviceRating, appointmentDate, appointmentTime) {
 
 			AXIOS.post('/create_review/', {}, {
@@ -132,6 +144,14 @@ export default {
 				})
 
 		},
+		/**
+		 * @author Mohammad Saeid Nafar
+		 * @param {String} description 
+		 * @param {String} serviceRating 
+		 * @param {String} appointmentDate 
+		 * @param {String} appointmentTime 
+		 * @description Edits a customer review of an appointment given the above customers
+		 */
 		editReview: function (description, serviceRating, appointmentDate, appointmentTime) {
 
 			AXIOS.patch('/edit_review/', {}, {
@@ -175,6 +195,12 @@ export default {
 				})
 
 		},
+		/**
+		 * @author Mohammad Saeid Nafar
+		 * @param {String} appointmentDate 
+		 * @param {String} appointmentTime 
+		 * @description Deletes a customer review of an appointment given the above parameters
+		 */
 		deleteReview: function (appointmentDate, appointmentTime) {
 
 			AXIOS.delete('/delete_review/', {

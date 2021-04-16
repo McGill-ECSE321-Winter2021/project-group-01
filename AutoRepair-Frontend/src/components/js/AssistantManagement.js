@@ -83,6 +83,12 @@ export default {
       errorReminder: ''
     }
   },
+
+
+   /**
+   * @author Eric Chehata
+   * @description initializes page with the all the services, customers and reminders in the system
+   */
   created: function () {
     // Initializing persons from backend
     AXIOS.get('/view_all_services')
@@ -116,7 +122,13 @@ export default {
 
 
   methods: {
-
+  /**
+     * @author Fadi Beshay
+     * @param {String} dayOfWeek 
+     * @param {String} startTime
+     * @param {String} endTime
+     * @description adds an operating hour for the system
+     */
     addOpHours: function (dayOfWeek, startTime, endTime) {
       this.errorAddOpHours = ''
       AXIOS.post('/add_business_hours/', {}, {
@@ -146,7 +158,11 @@ export default {
 
     }
 
-
+  /**
+     * @author Fadi Beshay
+     * @param {String} dayOfWeek2 
+     * @description delete an operating hour for the system on a given day of the week
+     */
     , deleteOpHours: function (dayOfWeek2) {
       this.errorDeleteOpHours = ''
       AXIOS.delete('/delete_business_hours/', {
@@ -170,6 +186,13 @@ export default {
         })
     }
 
+      /**
+     * @author Fadi Beshay
+     * @param {String} dayOfWeek1 
+     * @param {String} startTime1
+     * @param {String} endTime1
+     * @description editss an operating hour for the system
+     */
     , editOpHours: function (dayOfWeek1, startTime1, endTime1) {
       this.errorEditOpHours = ''
       AXIOS.patch('/edit_business_hours/', {}, {
@@ -198,7 +221,15 @@ export default {
         })
     },
 
-
+  /**
+     * @author Robert Aprahamian
+     * @param {String} username5
+     * @param {String} serviceName5 
+     * @param {String} datestring 
+     * @param {String} description 
+     * @param {String} timestring 
+     * @description adding a reminder for a certain customer for a certain service
+     */
     addreminder(username5, serviceName5, datestring, description, timestring) {
       AXIOS.post('/create_reminder/', $.param({ username: username5, serviceName: serviceName5, datestring: datestring, description: description, timestring: timestring }))
         .then(response => {
@@ -222,6 +253,16 @@ export default {
           swal("ERROR", e.response.data, "error");
         })
     },
+    /**
+     * @author Robert Aprahamian
+     * @param {String} oldServiceName
+     * @param {String} newServiceName 
+     * @param {String} username6 
+     * @param {String} datestring2 
+     * @param {String} description2
+     * @param {String} timestring2
+     * @description updating a reminder for a certain customer for a certain service
+     */
     updatereminder(oldServiceName, newServiceName, username6, datestring2, description2, timestring2) {
       AXIOS.patch('/update_reminder/', $.param({ oldServiceName: oldServiceName, newServiceName: newServiceName, username: username6, datestring: datestring2, description: description2, timestring: timestring2 }))
         .then(response => {
@@ -245,6 +286,12 @@ export default {
           swal("ERROR", e.response.data, "error");
         })
     },
+    /**
+     * @author Robert Aprahamian
+     * @param {String} username4
+     * @param {String} serviceName4 
+     * @description deleting a reminder for a certain customer for a certain service
+     */
     deletereminder(username4, serviceName4) {
       AXIOS.delete('/delete_reminder/', {
         params: {
@@ -270,6 +317,13 @@ export default {
         })
     },
 
+    /**
+     * @author Robert Aprahamian
+     * @param {String} serviceName7
+     * @param {String} duration7
+     * @param {String} price7
+     * @description updating a service for a new duration and/or price
+     */
     updateservice(serviceName7, duration7, price7) {
       AXIOS.patch('/update_service/', $.param({ serviceName: serviceName7, duration: duration7, price: price7 }))
         .then(response => {

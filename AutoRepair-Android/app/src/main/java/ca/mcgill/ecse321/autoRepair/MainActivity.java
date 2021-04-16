@@ -974,9 +974,12 @@ public class MainActivity extends AppCompatActivity{
         requestParams.put("username", customerUsername);
         requestParams.put("appointmentDate", appointmentElements[1]);
         requestParams.put("appointmentTime", appointmentElements[2]);
-        requestParams.put("newServiceName", newService.getSelectedItem().toString());
         requestParams.put("newAppointmentDate", newStartDateString);
+        requestParams.put("serviceName", appointmentElements[0]);
         requestParams.put("newAppointmentTime", newStartTimeString);
+        requestParams.put("newServiceName", newService.getSelectedItem().toString());
+
+
 
         HttpUtils.patch("update_appointment/", requestParams, new JsonHttpResponseHandler() {
             @Override
@@ -1065,9 +1068,16 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, String errorMessage, Throwable throwable) {
                 try {
-                    new SweetAlertDialog(MainActivity.this)
-                            .setTitleText(errorMessage)
-                            .show();
+                    if(errorMessage.equals("true")){
+                        new SweetAlertDialog(MainActivity.this)
+                                .setTitleText("Appointment canceled successfully!")
+                                .show();
+                    }
+                    else {
+                        new SweetAlertDialog(MainActivity.this)
+                                .setTitleText(errorMessage)
+                                .show();
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -1095,7 +1105,7 @@ public class MainActivity extends AppCompatActivity{
                         JSONObject appointment = response.getJSONObject(i);
                         appointmentString += appointment.getJSONObject("service").getString("name") + ";"
                                 + appointment.getJSONObject("timeSlot").getString("startDate") + ";"
-                                + appointment.getJSONObject("timeSlot").getString("startTime") + "\n";
+                                + appointment.getJSONObject("timeSlot").getString("startTime");
                         appointmentsArray[i] = appointmentString;
                     }
                     ArrayList<String> list = new ArrayList<String>(Arrays.asList(appointmentsArray));
@@ -1208,7 +1218,7 @@ public class MainActivity extends AppCompatActivity{
 
                         }
                     });
-                    serviceUpdateAppointmentSpinner.setAdapter(appointmentAdapter);
+                    serviceUpdateAppointmentSpinner.setAdapter(serviceAdapter);
                     serviceUpdateAppointmentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
                         @Override

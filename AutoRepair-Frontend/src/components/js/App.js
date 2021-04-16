@@ -22,7 +22,6 @@ var frontendConfigurer = function () {
 };
 
 var backendUrl = backendConfigurer();
-//var frontendUrl = frontendConfigurer();
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
 
 var AXIOS = axios.create({
@@ -47,8 +46,14 @@ export default {
       response: []
     }
   },
+
+
+  /**
+   * @author Fadi Tawfik Beshay
+   * @description intializes the header and the footer of all the pages with the businness information and services
+   */
   created: function () {
-    // Initializing persons from backend
+    
     this.username=localStorage.getItem('username')
     this.type=localStorage.getItem('type')
     AXIOS.get('/view_business_info')
@@ -82,13 +87,28 @@ export default {
 
   methods: {
 
+    /**
+     * @author Eric Chehata
+     * @param {String} menuItem 
+     * @returns boolean that check is a navigation bar item is selected
+     */
     isActive: function (menuItem) {
       return this.activeItem === menuItem
     },
+
+    /**
+     * @author Eric Chehata
+     * @param {String} menuItem 
+     * @description  sets a navigation bar item to active
+     */
     setActive: function (menuItem) {
       this.activeItem = menuItem 
     },
 		
+    /**
+     * @author Eric Chehata
+     * @description logs out a user
+     */
     logout () {
       this.activeItem = 'home'
       window.localStorage.removeItem('username')

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import JQuery from 'jquery'
-//import { mapGetters } from 'vuex';
+
 let $ = JQuery
 var config = require('../../../config')
 
@@ -23,7 +23,6 @@ var frontendConfigurer = function () {
 };
 
 var backendUrl = backendConfigurer();
-//var frontendUrl = frontendConfigurer();
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
 
 var AXIOS = axios.create({
@@ -54,8 +53,12 @@ export default {
         }
     },
 
+    /**
+     * @author Eric Chehata
+     * Created function that initializes the customer's information
+     */
     created: function () {
-        // Initializing persons from backend
+        // Initializing customers from backend
         AXIOS.get('/view_customer/'.concat(localStorage.getItem('username')))
             .then(response => {
                 // JSON responses are automatically parsed.
@@ -65,10 +68,20 @@ export default {
             })
             .catch(e => {
                 this.profile = [],
-                    this.cars = []
+                this.cars = []
             })
     },
     methods: {
+        /**
+         * @author Eric Chehata
+         * @param {String} firstName 
+         * @param {String} lastName 
+         * @param {String} address 
+         * @param {String} zipCode 
+         * @param {String} email 
+         * @param {String} phoneNumber 
+         * @description edits customer's profile
+         */
         editProfile: function (firstName, lastName, address, zipCode, email, phoneNumber) {
 
             AXIOS.patch('/edit_profile/'.concat(localStorage.getItem('username')), {}, {
@@ -94,10 +107,15 @@ export default {
                     swal("ERROR", e.response.data, "error");
                 })
 
-
-
         },
 
+        /**
+         * @author Eric Chehata
+         * @param {String} oldPassword 
+         * @param {String} newPassword 
+         * @param {String} confirmPassword 
+         * @description changes customer's password
+         */
         changePassword: function (oldPassword, newPassword, confirmPassword) {
             if (newPassword != confirmPassword) {
                 swal("ERROR", "Passwords do not match.", "error");
@@ -122,6 +140,13 @@ export default {
 
         },
 
+        /**
+         * @author Eric Chehata
+         * @param {String} modelAdd 
+         * @param {String} plateNumberAdd 
+         * @param {String} carTransmissionAdd 
+         * @description adds a car to the customer
+         */
         addCar: function (modelAdd, plateNumberAdd, carTransmissionAdd) {
 
             AXIOS.post('/add_car/'.concat(localStorage.getItem('username')), {}, {
@@ -144,6 +169,11 @@ export default {
 
         },
 
+        /**
+         * @author Eric Chehata
+         * @param {String} plateNumber 
+         * @description removes a car from a customer
+         */
         removeCar: function (plateNumber) {
 
             AXIOS.delete('/remove_car/'.concat(localStorage.getItem('username')), {
@@ -161,9 +191,6 @@ export default {
                 })
 
         }
-
-
-
 
     }
 }

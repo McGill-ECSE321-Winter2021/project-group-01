@@ -31,8 +31,8 @@ public class ChosenServiceController {
 	 */
 	@GetMapping(value = { "/view_all_services", "/view_all_services/" })
 	public List<ChosenServiceDTO> getAllServices() {
-		List<ChosenServiceDTO> services = new ArrayList<ChosenServiceDTO>();
-		return chosenService.getAllChosenService().stream().map(service -> Conversion.convertToDTO(service)).collect(Collectors.toList());
+		//List<ChosenServiceDTO> services = new ArrayList<ChosenServiceDTO>();
+		return chosenService.getAllChosenService().stream().map(service -> Conversion.convertToDTO(service, reviewService)).collect(Collectors.toList());
 	}
 	
 	/**
@@ -50,7 +50,7 @@ public class ChosenServiceController {
       catch (Exception e){
       	averageRating = -1.0;
       }
-		return Conversion.convertToDTO(chosenService.getChosenService(name) );//.stream().map(service -> convertToDTO(service)).collect(Collectors.toList());
+		return Conversion.convertToDTO(chosenService.getChosenService(name), reviewService);//.stream().map(service -> convertToDTO(service)).collect(Collectors.toList());
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class ChosenServiceController {
 		}catch(IllegalArgumentException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>(Conversion.convertToDTO(service), HttpStatus.CREATED);
+		return new ResponseEntity<>(Conversion.convertToDTO(service, reviewService), HttpStatus.CREATED);
 		//return convertToDTO(service);
 	}
 
@@ -101,7 +101,7 @@ public class ChosenServiceController {
 		}catch(IllegalArgumentException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>(Conversion.convertToDTO(service), HttpStatus.OK);
+		return new ResponseEntity<>(Conversion.convertToDTO(service, reviewService), HttpStatus.OK);
 	}
 
 	/**

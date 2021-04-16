@@ -1,10 +1,6 @@
 package ca.mcgill.ecse321.autoRepair.controller;
 
 import ca.mcgill.ecse321.autoRepair.dto.ReminderDTO;
-import ca.mcgill.ecse321.autoRepair.dto.CarDTO;
-import ca.mcgill.ecse321.autoRepair.dto.ChosenServiceDTO;
-import ca.mcgill.ecse321.autoRepair.dto.CustomerDTO;
-import ca.mcgill.ecse321.autoRepair.dto.ProfileDTO;
 import ca.mcgill.ecse321.autoRepair.model.*;
 import ca.mcgill.ecse321.autoRepair.service.ChosenServiceService;
 import ca.mcgill.ecse321.autoRepair.service.CustomerService;
@@ -54,7 +50,7 @@ public class ReminderController {
 				if(reminder.getDate().toLocalDate().isBefore(LocalDate.now()) ||
 						(reminder.getDate().toLocalDate().isEqual(LocalDate.now()) && 
 								reminder.getTime().toLocalTime().isBefore(LocalTime.now()))) {
-					reminders.add(Conversion.convertToDTO(reminder));
+					reminders.add(Conversion.convertToDTO(reminder, reviewService));
 
 				}
 			}
@@ -71,7 +67,7 @@ public class ReminderController {
 	 */
 	@GetMapping(value = { "/view_reminders","/view_reminders/" })
 	public List<ReminderDTO> getAllReminders() {
-		return reminderService.getAllReminders().stream().map(reminder -> Conversion.convertToDTO(reminder)).collect(Collectors.toList());
+		return reminderService.getAllReminders().stream().map(reminder -> Conversion.convertToDTO(reminder, reviewService)).collect(Collectors.toList());
 	}
 	
 	/**
@@ -89,7 +85,7 @@ public class ReminderController {
 		ChosenService chosenService = chosenServiceService.getChosenService(serviceName);
 		if (chosenService == null)
 			throw new IllegalArgumentException("The following service does not exist: " + serviceName);
-		return Conversion.convertToDTO(reminderService.getReminder(customer,chosenService ));
+		return Conversion.convertToDTO(reminderService.getReminder(customer,chosenService), reviewService);
 	}
 
 	/**
@@ -120,7 +116,7 @@ public class ReminderController {
 		}catch (IllegalArgumentException e){
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>(Conversion.convertToDTO(reminder), HttpStatus.CREATED);
+		return new ResponseEntity<>(Conversion.convertToDTO(reminder, reviewService), HttpStatus.CREATED);
 	}
 
 	/**
@@ -153,7 +149,7 @@ public class ReminderController {
 		}catch(IllegalArgumentException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>(Conversion.convertToDTO(reminder), HttpStatus.OK);
+		return new ResponseEntity<>(Conversion.convertToDTO(reminder, reviewService), HttpStatus.OK);
 	}
 
 	/**

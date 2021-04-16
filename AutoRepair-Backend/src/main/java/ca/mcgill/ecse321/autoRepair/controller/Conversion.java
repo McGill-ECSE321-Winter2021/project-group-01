@@ -12,20 +12,20 @@ import ca.mcgill.ecse321.autoRepair.service.ReviewService;
 
 
 public class Conversion {
-//   
+   
 //	@Autowired
 //	private static ReviewService reviewService;
-//	
+	
 	
 	/**
      * This method converts an Appointment object to an Appointment DTO.
      * @param appointment
      * @return
      */
-    public static AppointmentDTO convertToDTO(Appointment appointment){
+    public static AppointmentDTO convertToDTO(Appointment appointment, ReviewService reviewService){
         if(appointment==null)throw new IllegalArgumentException("There is no such appointment");
         AppointmentDTO appointmentDTO= new AppointmentDTO();
-        appointmentDTO.setService(convertToDTO(appointment.getChosenService()));
+        appointmentDTO.setService(convertToDTO(appointment.getChosenService(), reviewService));
         appointmentDTO.setTimeSlot(convertToDTO(appointment.getTimeSlot()));
         appointmentDTO.setCustomer(convertToDTO(appointment.getCustomer()));
         return appointmentDTO;
@@ -49,18 +49,18 @@ public class Conversion {
      * @param service
      * @return
      */
-    public static ChosenServiceDTO convertToDTO(ChosenService service, Double rating) {
+    public static ChosenServiceDTO convertToDTO(ChosenService service, ReviewService reviewService) {
         if(service==null) throw new IllegalArgumentException("Service not found.");
         
-//        Double averageRating = null;
-//        try {
-//            averageRating = reviewService.getAverageServiceReview(service.getName());
-//        }
-//        catch (Exception e){
-//        	averageRating = -1.0;
-//        }
+        Double averageRating = null;
+        try {
+            averageRating = reviewService.getAverageServiceReview(service.getName());
+        }
+        catch (Exception e){
+        	averageRating = -1.0;
+        }
 
-        return new ChosenServiceDTO(service.getName(), service.getDuration(), service.getPayment(), rating);
+        return new ChosenServiceDTO(service.getName(), service.getDuration(), service.getPayment(), averageRating);
     }
 
     /**
@@ -126,11 +126,11 @@ public class Conversion {
 	 * @param review
 	 * @return ReviewDTO
 	 */
-	public static ReviewDTO convertToDTO(Review review) {
+	public static ReviewDTO convertToDTO(Review review, ReviewService reviewService) {
 	if(review==null) throw new IllegalArgumentException("Review not found.");
 	return new ReviewDTO(review.getDescription(), review.getServiceRating(),
-			convertToDTO(review.getCustomer()), convertToDTO(review.getAppointment()),
-			convertToDTO(review.getChosenService()));
+			convertToDTO(review.getCustomer()), convertToDTO(review.getAppointment(), reviewService),
+			convertToDTO(review.getChosenService(), reviewService));
 }
 
 	/**
@@ -138,9 +138,9 @@ public class Conversion {
 	 * @param reminder
 	 * @return ReminderDTO
 	 */
-	public static ReminderDTO convertToDTO(Reminder reminder) {
+	public static ReminderDTO convertToDTO(Reminder reminder, ReviewService reviewService) {
 	if(reminder==null) throw new IllegalArgumentException("Service not found.");
-	return new ReminderDTO(convertToDTO(reminder.getCustomer()), convertToDTO(reminder.getChosenService()), reminder.getDate(), reminder.getTime(),reminder.getDescription());
+	return new ReminderDTO(convertToDTO(reminder.getCustomer()), convertToDTO(reminder.getChosenService(), reviewService), reminder.getDate(), reminder.getTime(),reminder.getDescription());
 }
 	
   public static BusinessDTO convertToDTO(Business business) {

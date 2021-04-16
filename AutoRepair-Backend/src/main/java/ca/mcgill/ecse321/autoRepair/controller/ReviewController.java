@@ -97,7 +97,7 @@ public class ReviewController {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-		return new ResponseEntity<>(Conversion.convertToDTO(review), HttpStatus.CREATED);
+		return new ResponseEntity<>(Conversion.convertToDTO(review, reviewService), HttpStatus.CREATED);
 	}
 
 
@@ -126,7 +126,7 @@ public class ReviewController {
 			return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		return new ResponseEntity<>(Conversion.convertToDTO(review), HttpStatus.OK);
+		return new ResponseEntity<>(Conversion.convertToDTO(review, reviewService), HttpStatus.OK);
 	}
 
 	/**
@@ -156,7 +156,7 @@ public class ReviewController {
 	@GetMapping(value = {"/view_all_reviews"})
 	public List<ReviewDTO> getAllReviews() {
 		return reviewService.getAllReviews().stream().map(review -> 
-		Conversion.convertToDTO(review)).collect(Collectors.toList());
+		Conversion.convertToDTO(review, reviewService)).collect(Collectors.toList());
 	}
 
 	/**
@@ -169,7 +169,7 @@ public class ReviewController {
 	public List<ReviewDTO> viewReviewsForService(@RequestParam("serviceName") String serviceName) {
 		ChosenService service = serviceRepository.findChosenServiceByName(serviceName);
 		return reviewService.viewReviewsForService(service).stream().map(review -> 
-		Conversion.convertToDTO(review)).collect(Collectors.toList());
+		Conversion.convertToDTO(review, reviewService)).collect(Collectors.toList());
 	}
 
 	/**
@@ -182,7 +182,7 @@ public class ReviewController {
 	public List<ReviewDTO> viewReviewsOfCustomer(@RequestParam("username") String username) {
 		Customer customer = customerRepository.findCustomerByUsername(username);
 		return reviewService.viewReviewsOfCustomer(customer).stream().map(review -> 
-		Conversion.convertToDTO(review)).collect(Collectors.toList());
+		Conversion.convertToDTO(review, reviewService)).collect(Collectors.toList());
 	}
 
 	/**
@@ -211,7 +211,7 @@ public class ReviewController {
 		TimeSlot timeSlot = timeSlotRepoisoty.findTimeSlotByStartDateAndStartTime(date, time);
 		Appointment appointment = appointmentRepository.findAppointmentByTimeSlot(timeSlot);
 		Review review = reviewService.getReview(appointment);
-		return Conversion.convertToDTO(review);
+		return Conversion.convertToDTO(review, reviewService);
 	}
 
 //	private CustomerDTO convertToDTO(Customer customer) {

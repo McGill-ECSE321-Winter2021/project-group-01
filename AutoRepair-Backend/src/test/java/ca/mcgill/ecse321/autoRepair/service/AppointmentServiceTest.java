@@ -268,7 +268,7 @@ public class AppointmentServiceTest {
         assertEquals(0, appointmentService.getAllAppointments().size());
 
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         String serviceName = "TestService";
         String customerName = "TestCustomer";
@@ -296,7 +296,7 @@ public class AppointmentServiceTest {
         String customerName = "TestCustomer";
         Date startDate = Date.valueOf("2021-03-31");
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
         Time startTime = Time.valueOf("10:00:00");
 
         Appointment appointment = null;
@@ -320,7 +320,7 @@ public class AppointmentServiceTest {
         String customerName = "TestCustomer";
         Date startDate = Date.valueOf("2021-03-31");
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
         Time startTime = Time.valueOf("11:00:00");
 
         Appointment appointment = null;
@@ -341,7 +341,7 @@ public class AppointmentServiceTest {
     @Test
     public void testMakeAppointmentCustomerNull() {
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         String serviceName = null;
         String customerName = null;
@@ -363,7 +363,7 @@ public class AppointmentServiceTest {
     @Test
     public void testMakeAppointmentServiceNull() {
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         String serviceName = null;
         String customerName = "TestCustomer";
@@ -384,7 +384,7 @@ public class AppointmentServiceTest {
     @Test
     public void testMakeAppointmentTimeNull() {
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         String serviceName = "TestService";
         String customerName = "TestCustomer";
@@ -405,7 +405,7 @@ public class AppointmentServiceTest {
     @Test
     public void testMakeAppointmentDateNull() {
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         String serviceName = "TestService";
         String customerName = "TestCustomer";
@@ -427,7 +427,7 @@ public class AppointmentServiceTest {
     @Test
     public void testMakeAppointmentCustomerEmpty() {
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         String serviceName = "";
         String customerName = "";
@@ -449,7 +449,7 @@ public class AppointmentServiceTest {
     @Test
     public void testMakeAppointmentServiceEmpty() {
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         String serviceName = "";
         String customerName = "TestCustomer";
@@ -471,7 +471,7 @@ public class AppointmentServiceTest {
     @Test
     public void testMakeAppointmentCustomerSpace() {
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         String serviceName = " ";
         String customerName = " ";
@@ -492,7 +492,7 @@ public class AppointmentServiceTest {
     @Test
     public void testMakeAppointmentServiceSpace() {
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         String serviceName = " ";
         String customerName = "TestCustomer";
@@ -514,7 +514,7 @@ public class AppointmentServiceTest {
     @Test
     public void testMakeAppointmentOverlappingTimeSlot() {
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         String serviceName = "TestService";
         String customerName = "TestCustomer";
@@ -537,7 +537,7 @@ public class AppointmentServiceTest {
     @Test
     public void testMakeAppointmentNotInOperatingHours() {
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         String serviceName = "TestService";
         String customerName = "TestCustomer";
@@ -560,7 +560,7 @@ public class AppointmentServiceTest {
     @Test
     public void testMakeAppointmentNonExistingService() {
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         String serviceName = "Oil Change";
         String customerName = "TestCustomer";
@@ -583,7 +583,7 @@ public class AppointmentServiceTest {
     @Test
     public void testMakeAppointmentNonExistingCustomer() {
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         String serviceName = "TestService";
         String customerName = "Tamara";
@@ -606,7 +606,7 @@ public class AppointmentServiceTest {
     @Test
     public void testMakeAppointmentOldDate() {
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         String serviceName = "TestService";
         String customerName = "TestCustomer";
@@ -629,7 +629,7 @@ public class AppointmentServiceTest {
     @Test
     public void testMakeAppointmentSameDayOldTime() {
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         String serviceName = "TestService";
         String customerName = "TestCustomer";
@@ -652,7 +652,7 @@ public class AppointmentServiceTest {
     @Test
     public void testMakeAppointmentSameDayNotTwoHoursDiffTime() {
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         String serviceName = "TestService";
         String customerName = "TestCustomer";
@@ -675,7 +675,7 @@ public class AppointmentServiceTest {
     @Test
     public void testUpdateAppointmentServiceDifferentDays() {
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         Date oldStartDate = Date.valueOf("2021-04-30");
         Time oldStartTime = Time.valueOf("10:00:00");
@@ -699,7 +699,7 @@ public class AppointmentServiceTest {
     @Test
     public void testUpdateAppointmentServiceSameDay() {
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         Date oldStartDate = Date.valueOf("2021-03-31");
         Time oldStartTime = Time.valueOf("10:00:00");
@@ -723,7 +723,7 @@ public class AppointmentServiceTest {
     @Test
     public void testUpdateAppointmentDateTimeSameDay() {
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         Date oldStartDate = Date.valueOf("2021-04-30");
         Time oldStartTime = Time.valueOf("10:00:00");
@@ -748,7 +748,7 @@ public class AppointmentServiceTest {
     @Test
     public void testUpdateAppointmentToDifferentDayDifferentServiceDifferentTime() {
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         Date oldStartDate = Date.valueOf("2021-04-30");
         Time oldStartTime = Time.valueOf("10:00:00");
@@ -774,7 +774,7 @@ public class AppointmentServiceTest {
     @Test
     public void testUpdateAppointmentToDifferentDayDifferentServiceAtFirstHour() {
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         Date oldStartDate = Date.valueOf("2021-04-30");
         Time oldStartTime = Time.valueOf("10:00:00");
@@ -799,7 +799,7 @@ public class AppointmentServiceTest {
     @Test
     public void testUpdateAppointmentToDifferentDayDifferentServiceBeforeOpening() {
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         Date oldStartDate = Date.valueOf("2021-04-30");
         Time oldStartTime = Time.valueOf("10:00:00");
@@ -822,7 +822,7 @@ public class AppointmentServiceTest {
     @Test
     public void testUpdateAppointmentToSameDayDifferentServiceBeforeOpening2() {
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         Date oldStartDate = Date.valueOf("2021-04-30");
         Time oldStartTime = Time.valueOf("10:00:00");
@@ -845,7 +845,7 @@ public class AppointmentServiceTest {
     @Test
     public void testUpdateAppointmentToSameDayDifferentServiceAtOpening() {
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         Date oldStartDate = Date.valueOf("2021-04-30");
         Time oldStartTime = Time.valueOf("10:00:00");
@@ -870,7 +870,7 @@ public class AppointmentServiceTest {
     @Test
     public void testUpdateAppointmentNullOldService(){
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         Date oldStartDate = null;
         Time oldStartTime =  null;
@@ -895,7 +895,7 @@ public class AppointmentServiceTest {
     @Test
     public void testUpdateAppointmentNullNewService(){
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         Date oldStartDate = null;
         Time oldStartTime =  null;
@@ -920,7 +920,7 @@ public class AppointmentServiceTest {
     @Test
     public void testUpdateAppointmentNullOldTime(){
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         Date oldStartDate = null;
         Time oldStartTime =  null;
@@ -944,7 +944,7 @@ public class AppointmentServiceTest {
     @Test
     public void testUpdateAppointmentNullOldDate(){
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         Date oldStartDate = null;
         Time oldStartTime =  Time.valueOf("10:00:00");
@@ -968,7 +968,7 @@ public class AppointmentServiceTest {
     @Test
     public void testUpdateAppointmentNullNewTime(){
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         Date oldStartDate = Date.valueOf("2021-04-30");
         Time oldStartTime =  Time.valueOf("10:00:00");
@@ -992,7 +992,7 @@ public class AppointmentServiceTest {
     @Test
     public void testUpdateAppointmentNullNewDate(){
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         Date oldStartDate = Date.valueOf("2021-04-30");
         Time oldStartTime =  Time.valueOf("10:00:00");
@@ -1018,7 +1018,7 @@ public class AppointmentServiceTest {
     @Test
     public void testUpdateAppointmentSpacesNewService(){
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         Date oldStartDate = null;
         Time oldStartTime =  null;
@@ -1043,7 +1043,7 @@ public class AppointmentServiceTest {
     @Test
     public void testUpdateAppointmentSpacesOldService(){
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         Date oldStartDate = null;
         Time oldStartTime =  null;
@@ -1069,7 +1069,7 @@ public class AppointmentServiceTest {
     @Test
     public void testUpdateAppointmentEmptyNewService(){
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         Date oldStartDate = null;
         Time oldStartTime =  null;
@@ -1094,7 +1094,7 @@ public class AppointmentServiceTest {
     @Test
     public void testUpdateAppointmentEmptyOldService(){
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         Date oldStartDate = null;
         Time oldStartTime =  null;
@@ -1120,7 +1120,7 @@ public class AppointmentServiceTest {
     @Test
     public void testUpdateAppointmentAppDoesNotExist(){
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         Date oldStartDate = Date.valueOf("2021-05-04");
         Time oldStartTime =  Time.valueOf("10:00:00");
@@ -1145,7 +1145,7 @@ public class AppointmentServiceTest {
     public void testUpdateAppointmentServiceDoesNotExist(){
 
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         Date oldStartDate = Date.valueOf("2021-04-30");
         Time oldStartTime =  Time.valueOf("10:00:00");
@@ -1169,7 +1169,7 @@ public class AppointmentServiceTest {
     @Test
     public void testUpdateAppointmentUnavailableTimeSlotOldService(){
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         Date oldStartDate = Date.valueOf("2021-03-31");
         Time oldStartTime = Time.valueOf("10:00:00");
@@ -1192,7 +1192,7 @@ public class AppointmentServiceTest {
     @Test
     public void testUpdateAppointmentUnavailableTimeSlotNewService(){
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         Date oldStartDate = Date.valueOf("2021-03-31");
         Time oldStartTime = Time.valueOf("10:00:00");
@@ -1216,7 +1216,7 @@ public class AppointmentServiceTest {
     @Test
     public void testUpdateAppointmentTimeSlotNotInOH(){
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         Date oldStartDate = Date.valueOf("2021-03-31");
         Time oldStartTime = Time.valueOf("10:00:00");
@@ -1239,7 +1239,7 @@ public class AppointmentServiceTest {
     @Test
     public void testUpdateAppointmentDatePassed(){
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         Date oldStartDate = Date.valueOf("2021-03-31");
         Time oldStartTime = Time.valueOf("10:00:00");
@@ -1261,7 +1261,7 @@ public class AppointmentServiceTest {
     @Test
     public void testUpdateAppointmentSameDayAppStartsLessThan2Hours(){
         SystemTime.setSystemTime(Time.valueOf("09:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         Date oldStartDate = Date.valueOf("2021-03-31");
         Time oldStartTime = Time.valueOf("10:00:00");
@@ -1284,7 +1284,7 @@ public class AppointmentServiceTest {
     @Test
     public void testUpdateAppointmentSameDayNot2Hours(){
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         Date oldStartDate = Date.valueOf("2021-03-31");
         Time oldStartTime = Time.valueOf("10:00:00");
@@ -1308,7 +1308,7 @@ public class AppointmentServiceTest {
     @Test
     public void testUpdateAppointmentSameDayTimePassed(){
         SystemTime.setSystemTime(Time.valueOf("08:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         Date oldStartDate = Date.valueOf("2021-03-31");
         Time oldStartTime = Time.valueOf("10:00:00");
@@ -1333,7 +1333,7 @@ public class AppointmentServiceTest {
     @Test
     public void testCancelAppointmentDifferentDay(){
         SystemTime.setSystemTime(Time.valueOf("09:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         String serviceName = "Test Service 2";
         Date startDate = Date.valueOf("2021-04-30");
@@ -1358,7 +1358,7 @@ public class AppointmentServiceTest {
     @Test
     public void testCancelAppointmentSameDay(){
         SystemTime.setSystemTime(Time.valueOf("07:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         String serviceName = "Test Service 2";
         Date startDate = Date.valueOf("2021-03-31");
@@ -1384,7 +1384,7 @@ public class AppointmentServiceTest {
     @Test
     public void testCancelAppointmentSameDayNot2Hours(){
         SystemTime.setSystemTime(Time.valueOf("09:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         String serviceName = "Test Service 2";
         Date startDate = Date.valueOf("2021-03-31");
@@ -1404,7 +1404,7 @@ public class AppointmentServiceTest {
     @Test
     public void testCancelAppointmentAppDoesNotExist(){
         SystemTime.setSystemTime(Time.valueOf("09:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         String serviceName = "Test Service 2";
         Date startDate = Date.valueOf("2021-05-31");
@@ -1424,7 +1424,7 @@ public class AppointmentServiceTest {
     @Test
     public void testCancelAppointmentServiceNull(){
         SystemTime.setSystemTime(Time.valueOf("09:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         String serviceName = null;
         Date startDate = null;
@@ -1444,7 +1444,7 @@ public class AppointmentServiceTest {
     @Test
     public void testCancelAppointmentDateNull(){
         SystemTime.setSystemTime(Time.valueOf("09:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         String serviceName = "TestService";
         Date startDate = null;
@@ -1464,7 +1464,7 @@ public class AppointmentServiceTest {
     @Test
     public void testCancelAppointmentTimeNull(){
         SystemTime.setSystemTime(Time.valueOf("09:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         String serviceName = "TestService";
         Date startDate = Date.valueOf("2021-04-30");
@@ -1485,7 +1485,7 @@ public class AppointmentServiceTest {
     @Test
     public void testCancelAppointmentSpaces(){
         SystemTime.setSystemTime(Time.valueOf("09:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         String serviceName = " ";
         Date startDate = null;
@@ -1506,7 +1506,7 @@ public class AppointmentServiceTest {
     @Test
     public void testCancelAppointmentEmpty(){
         SystemTime.setSystemTime(Time.valueOf("09:00:00"));
-        SystemTime.setSysDate(Date.valueOf("2021-03-31"));
+        SystemTime.setSystemDate(Date.valueOf("2021-03-31"));
 
         String serviceName = "";
         Date startDate = null;

@@ -66,7 +66,7 @@ public class AppointmentController {
 			Time startTime = Time.valueOf(appointmentTime + ":00");
 
 			Appointment appointment = appointmentService.makeAppointment(username, serviceName, date, startTime);
-			return new ResponseEntity<>(Conversion.convertToDTO(appointment), HttpStatus.CREATED);
+			return new ResponseEntity<>(Conversion.convertToDTO(appointment, reviewService), HttpStatus.CREATED);
 
 		}catch (IllegalArgumentException e){
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -149,7 +149,7 @@ public class AppointmentController {
 					appointmentService.updateAppointment(timeSlot.getStartDate(), timeSlot.getStartTime(), oldService.getName(), newDate, newStartTime, oldService.getName());
 				}
 			}
-			return new ResponseEntity<>(Conversion.convertToDTO(appointment), HttpStatus.OK);
+			return new ResponseEntity<>(Conversion.convertToDTO(appointment, reviewService), HttpStatus.OK);
 
 		}catch (IllegalArgumentException e){
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -209,7 +209,7 @@ public class AppointmentController {
 	public List<AppointmentDTO> getAllAppointments() {
 		List<AppointmentDTO> appointmentDtos = new ArrayList<>();
 		for (Appointment appointment: appointmentService.getAllAppointments()) {
-			appointmentDtos.add(Conversion.convertToDTO(appointment));
+			appointmentDtos.add(Conversion.convertToDTO(appointment, reviewService));
 		}
 		return appointmentDtos;
 	}
@@ -230,7 +230,7 @@ public class AppointmentController {
 				if(appointment.getTimeSlot().getStartDate().toLocalDate().isAfter(LocalDate.now()) ||
 						(appointment.getTimeSlot().getStartDate().toLocalDate().isEqual(LocalDate.now()) && 
 								appointment.getTimeSlot().getEndTime().toLocalTime().isAfter(LocalTime.now()))) {
-					appointments.add(Conversion.convertToDTO(appointment));
+					appointments.add(Conversion.convertToDTO(appointment, reviewService));
 
 				}
 			}
@@ -258,7 +258,7 @@ public class AppointmentController {
 				if(appointment.getTimeSlot().getStartDate().toLocalDate().isBefore(LocalDate.now()) ||
 						(appointment.getTimeSlot().getStartDate().toLocalDate().isEqual(LocalDate.now()) && 
 								appointment.getTimeSlot().getEndTime().toLocalTime().isBefore(LocalTime.now()))) {
-					appointments.add(Conversion.convertToDTO(appointment));
+					appointments.add(Conversion.convertToDTO(appointment, reviewService));
 
 				}
 			}
@@ -282,7 +282,7 @@ public class AppointmentController {
 			List<Appointment> appointmentsForCustomer = appointmentService.getAppointmentsOfCustomer(customer);
 			List<AppointmentDTO> appointments = new ArrayList<>();
 			for (Appointment appointment : appointmentsForCustomer) {
-				appointments.add(Conversion.convertToDTO(appointment));
+				appointments.add(Conversion.convertToDTO(appointment, reviewService));
 			}
 			return new ResponseEntity<>(appointments, HttpStatus.CREATED);
 		}catch (IllegalArgumentException e){
@@ -307,7 +307,7 @@ public class AppointmentController {
 				if(appointment.getTimeSlot().getStartDate().toLocalDate().isAfter(LocalDate.now()) ||
 						(appointment.getTimeSlot().getStartDate().toLocalDate().isEqual(LocalDate.now()) && 
 								appointment.getTimeSlot().getEndTime().toLocalTime().isAfter(LocalTime.now()))) {
-					appointments.add(Conversion.convertToDTO(appointment));
+					appointments.add(Conversion.convertToDTO(appointment, reviewService));
 
 				}
 			}
@@ -334,7 +334,7 @@ public class AppointmentController {
 				if(appointment.getTimeSlot().getStartDate().toLocalDate().isBefore(LocalDate.now()) ||
 						(appointment.getTimeSlot().getStartDate().toLocalDate().isEqual(LocalDate.now()) && 
 								appointment.getTimeSlot().getEndTime().toLocalTime().isBefore(LocalTime.now()))) {
-					appointments.add(Conversion.convertToDTO(appointment));
+					appointments.add(Conversion.convertToDTO(appointment, reviewService));
 
 				}
 			}

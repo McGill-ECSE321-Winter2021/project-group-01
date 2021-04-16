@@ -27,7 +27,7 @@ public class Signup extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Spinner spinner = view.findViewById(R.id.carTransmissionNew);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(),
-                R.array.carTransmissionNew, android.R.layout.simple_spinner_item);
+                R.array.carTransmission, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 //        spinner.setOnItemSelectedListener(this);

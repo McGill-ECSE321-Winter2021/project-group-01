@@ -33,6 +33,8 @@ public class Review extends Fragment implements AdapterView.OnItemSelectedListen
         ratingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ratingSpinner.setAdapter(ratingAdapter);
         ratingSpinner.setOnItemSelectedListener(this);
+
+        ((MainActivity)getActivity()).getPreviousAppointments(view);
     }
 
     @Override

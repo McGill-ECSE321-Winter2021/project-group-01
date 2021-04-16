@@ -564,6 +564,80 @@ public class MainActivity extends AppCompatActivity{
         });
     }
 
+    public void getPreviousAppointments(View v){
+
+        RequestParams parameters = new RequestParams();
+        parameters.put("username", customerUsername);
+
+        HttpUtils.get("past_appointmentsOf/", parameters, new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONArray response) {
+
+                try {
+                    Spinner appointmentSpinner = findViewById(R.id.pastAppointments);
+
+                    String appointments[] = new String[response.length()];
+
+                    for(int i=0; i<response.length(); i++){
+                        JSONObject appointment = response.getJSONObject(i);
+                        JSONObject service = appointment.getJSONObject("service");
+                        JSONObject timeSlot = appointment.getJSONObject("timeSlot");
+
+                        String appointmentString = "";
+                        appointmentString+=service.getString("name")+", "
+                                +timeSlot.getString("startDate")+", "
+                                +timeSlot.getString("startTime")+"-"
+                                +timeSlot.getString("endTime");
+                        appointments[i]=appointmentString;
+                    }
+                    ArrayList<String> list = new ArrayList<String>(Arrays.asList(appointments));
+
+                    ArrayAdapter<String> appointmentsAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, list);
+                    appointmentsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    appointmentSpinner.setAdapter(appointmentsAdapter);
+                    appointmentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view,
+                                                   int position, long id) {
+                            Object item = adapterView.getItemAtPosition(position);
+                            if (item != null) {
+                                Toast.makeText(MainActivity.this, item.toString(),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                            Toast.makeText(MainActivity.this, "Selected",
+                                    Toast.LENGTH_SHORT).show();
+
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
+
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                // refreshErrorMessage();
+                //  ((TextView) v.findViewById(R.id.newevent_name)).setText("");
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+            }
+
+        });
+
+    }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

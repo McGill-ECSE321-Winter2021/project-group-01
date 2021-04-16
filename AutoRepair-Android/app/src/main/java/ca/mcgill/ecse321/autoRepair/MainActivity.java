@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -48,6 +50,8 @@ public class MainActivity extends AppCompatActivity{
     private String customerUsername = null;
     private String userType = null;
     private Context context = null;
+    ArrayAdapter<String> appointmentAdapter;
+    ArrayAdapter<String> serviceAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +115,7 @@ public class MainActivity extends AppCompatActivity{
         }
 
     }
+
     public void signup(View v){
         final EditText firstName = findViewById(R.id.firstName);
         final EditText lastName =  findViewById(R.id.lastName);
@@ -443,6 +448,316 @@ public class MainActivity extends AppCompatActivity{
             }
         });
     }
+
+    public void makeAppointment(View v){
+        final Spinner service = findViewById(R.id.serviceBookAppointment);
+        final DatePicker startDate = findViewById(R.id.dateBookAppointment);
+        final TimePicker startTime = findViewById(R.id.timeBookAppointment);
+
+        String day = "" + startDate.getDayOfMonth();
+        String month = "" + (startDate.getMonth() + 1);
+        String year = "" + startDate.getYear();
+
+        String startDateString = year + "-" + month + "-" + day;
+
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("serviceName", service.getSelectedItem().toString());
+        requestParams.put("appointmentDate", startDateString);
+
+        String hour = "" + startTime.getCurrentHour();
+        String minute =  "" + startTime.getCurrentMinute();
+
+        String startTimeString = hour+":"+minute;
+
+        requestParams.put("appointmentTime",startTimeString);
+
+        HttpUtils.post("make_appointment/"+customerUsername, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+
+                try {
+                    JSONObject serverResp = new JSONObject(response.toString());
+                    getAppointmentsOfCustomer(v);
+
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                // refreshErrorMessage();
+                //  ((TextView) v.findViewById(R.id.newevent_name)).setText("");
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+            }
+        });
+
+    }
+
+    public void updateAppointment(View v){
+        final Spinner appointment = findViewById(R.id.appointmentUpdateAppointment);
+        final Spinner newService = findViewById(R.id.newServiceUpdateAppointment);
+        final DatePicker newStartDate = findViewById(R.id.newDateUpdateAppointment);
+        final TimePicker newStartTime = findViewById(R.id.newTimeUpdateAppointment);
+
+
+        String day = "" + newStartDate.getDayOfMonth();
+        String month = "" + (newStartDate.getMonth() + 1);
+        String year = "" + newStartDate.getYear();
+
+        String newStartDateString = year + "-" + month + "-" + day;
+
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("newServiceName", newService.getSelectedItem().toString());
+        requestParams.put("newAppointmentDate", newStartDateString);
+
+        String hour = "" + newStartTime.getCurrentHour();
+        String minute =  "" + newStartTime.getCurrentMinute();
+
+        String newStartTimeString = hour+":"+minute;
+
+        requestParams.put("newAppointmentTime",newStartTimeString);
+
+        HttpUtils.patch("update_appointment/"+customerUsername, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+
+                try {
+                    JSONObject serverResp = new JSONObject(response.toString());
+                    getAppointmentsOfCustomer(v);
+
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                // refreshErrorMessage();
+                //  ((TextView) v.findViewById(R.id.newevent_name)).setText("");
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+            }
+        });
+
+    }
+
+    public void cancelAppointment(View v){
+        final Spinner appointment = findViewById(R.id.appointmentCancelAppointment);
+
+        RequestParams requestParams = new RequestParams();
+
+
+        HttpUtils.delete("cancel_appointment/"+customerUsername, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+
+                try {
+                    JSONObject serverResp = new JSONObject(response.toString());
+                    getAppointmentsOfCustomer(v);
+
+
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                // refreshErrorMessage();
+                //  ((TextView) v.findViewById(R.id.newevent_name)).setText("");
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+            }
+        });
+
+    }
+
+    public void getAppointmentsOfCustomer(View v){
+        error="";
+        final TextView appointments = (TextView) findViewById(R.id.myAppointments);
+
+        HttpUtils.get("appointmentsOf/"+customerUsername, new RequestParams() ,new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONArray response) {
+
+                try {
+                    Spinner updateAppointmentSpinner = findViewById(R.id.appointmentUpdateAppointment);
+                    Spinner cancelAppointmentSpinner = findViewById(R.id.appointmentCancelAppointment);
+                    String appointmentString = "";
+                    String appointmentsArray[] = new String[response.length()];
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject appointment = response.getJSONObject(i);
+                        appointmentString += appointment.getString("chosenService") + "; "
+                                + appointment.getJSONObject("timeSlot").getString("startDate") + "; " +
+                                appointment.getJSONObject("timeSlot").getString("startTime") + "\n";
+                        appointmentsArray[i] = appointmentString;
+                    }
+                    ArrayList<String> list = new ArrayList<String>(Arrays.asList(appointmentsArray));
+
+                    appointmentAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, list);
+                    appointmentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    updateAppointmentSpinner.setAdapter(appointmentAdapter);
+                    updateAppointmentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view,
+                                                   int position, long id) {
+                            Object item = adapterView.getItemAtPosition(position);
+                            if (item != null) {
+                                Toast.makeText(MainActivity.this, item.toString(),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                            Toast.makeText(MainActivity.this, "Selected",
+                                    Toast.LENGTH_SHORT).show();
+
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
+                    cancelAppointmentSpinner.setAdapter(appointmentAdapter);
+                    cancelAppointmentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view,
+                                                   int position, long id) {
+                            Object item = adapterView.getItemAtPosition(position);
+                            if (item != null) {
+                                Toast.makeText(MainActivity.this, item.toString(),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                            Toast.makeText(MainActivity.this, "Selected",
+                                    Toast.LENGTH_SHORT).show();
+
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
+
+                    String displayAppointmentStrings = appointmentString + "\n";
+                    appointments.setText(displayAppointmentStrings);
+
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                // refreshErrorMessage();
+                //  ((TextView) v.findViewById(R.id.newevent_name)).setText("");
+            }
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+            }
+        });
+
+    }
+
+    public void getServices(View v){
+        error="";
+
+        HttpUtils.get("view_all_services/", new RequestParams() ,new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONArray response) {
+
+                try {
+                    Spinner serviceBookAppointmentSpinner = findViewById(R.id.serviceBookAppointment);
+                    Spinner serviceUpdateAppointmentSpinner = findViewById(R.id.newServiceUpdateAppointment);
+                    String serviceArray[] = new String[response.length()];
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject service = response.getJSONObject(i);
+                        serviceArray[i] = service.getString("name");
+                    }
+                    ArrayList<String> list = new ArrayList<String>(Arrays.asList(serviceArray));
+
+                    serviceAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, list);
+                    serviceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    serviceBookAppointmentSpinner.setAdapter(serviceAdapter);
+                    serviceBookAppointmentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view,
+                                                   int position, long id) {
+                            Object item = adapterView.getItemAtPosition(position);
+                            if (item != null) {
+                                Toast.makeText(MainActivity.this, item.toString(),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                            Toast.makeText(MainActivity.this, "Selected",
+                                    Toast.LENGTH_SHORT).show();
+
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
+                    serviceUpdateAppointmentSpinner.setAdapter(appointmentAdapter);
+                    serviceUpdateAppointmentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view,
+                                                   int position, long id) {
+                            Object item = adapterView.getItemAtPosition(position);
+                            if (item != null) {
+                                Toast.makeText(MainActivity.this, item.toString(),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                            Toast.makeText(MainActivity.this, "Selected",
+                                    Toast.LENGTH_SHORT).show();
+
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
+
+
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                // refreshErrorMessage();
+                //  ((TextView) v.findViewById(R.id.newevent_name)).setText("");
+            }
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+            }
+        });
+
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

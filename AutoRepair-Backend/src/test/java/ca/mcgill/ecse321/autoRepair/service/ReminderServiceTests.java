@@ -336,8 +336,8 @@ public class ReminderServiceTests {
 	public void testCreateReminder() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String chosenServiceName = CSName2;
@@ -365,8 +365,8 @@ public class ReminderServiceTests {
 	public void testNullDescriptionCreateReminder() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String chosenServiceName = CSName;
@@ -391,8 +391,8 @@ public class ReminderServiceTests {
 	public void testEmptyDescriptionCreateReminder() {
 	assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String chosenServiceName = CSName;
@@ -417,8 +417,8 @@ public class ReminderServiceTests {
 	public void testSpacesDescriptionCreateReminder() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String chosenServiceName = CSName;
@@ -443,8 +443,8 @@ public class ReminderServiceTests {
 	public void testLongDescriptionCreateReminder() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 	
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String chosenServiceName = CSName;
@@ -469,8 +469,8 @@ public class ReminderServiceTests {
 	public void testNullDateCreateReminder() {
 		assertEquals(0, reminderService.getAllReminders().size());
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String chosenServiceName = CSName;
@@ -495,8 +495,8 @@ public class ReminderServiceTests {
 	public void testNullTimeCreateReminder() {
 		assertEquals(0, reminderService.getAllReminders().size());
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String chosenServiceName = CSName;
@@ -521,8 +521,8 @@ public class ReminderServiceTests {
 	public void testDatePassedCreateReminder() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String chosenServiceName = CSName;
@@ -548,8 +548,8 @@ public class ReminderServiceTests {
 	public void testTimePassedSameDayCreateReminder() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String chosenServiceName = CSName;
@@ -575,8 +575,8 @@ public class ReminderServiceTests {
 	public void testNullCustomerCreateReminder() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = null;
 		String chosenServiceName = CSName;
@@ -601,8 +601,8 @@ public class ReminderServiceTests {
 	public void testEmptyCustomerCreateReminder() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = "";
 		String chosenServiceName = CSName;
@@ -627,8 +627,8 @@ public class ReminderServiceTests {
 	public void testSpacesCustomerCreateReminder() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = "          ";
 		String chosenServiceName = CSName;
@@ -653,8 +653,8 @@ public class ReminderServiceTests {
 	public void testNullChosenServiceCreateReminder() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String chosenServiceName = null;
@@ -679,8 +679,8 @@ public class ReminderServiceTests {
 	public void testEmptyChosenServiceCreateReminder() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String chosenServiceName = "";
@@ -705,8 +705,8 @@ public class ReminderServiceTests {
 	public void testSpacesChosenServiceCreateReminder() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String chosenServiceName = "  ";
@@ -731,8 +731,8 @@ public class ReminderServiceTests {
 	public void testNotExistingCustomerCreateReminder() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = "Me";
 		String chosenServiceName = CSName;
@@ -757,8 +757,8 @@ public class ReminderServiceTests {
 	public void testNotExistingChosenServiceCreateReminder() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String chosenServiceName = "change tire";
@@ -784,8 +784,8 @@ public class ReminderServiceTests {
 	public void testCreateSameReminder() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String chosenServiceName = CSName;
@@ -811,8 +811,8 @@ public class ReminderServiceTests {
 	public void testEditReminder() {//STILL
 		assertEquals(0, reminderService.getAllReminders().size());
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String oldServiceName = CSName;
@@ -842,8 +842,8 @@ public class ReminderServiceTests {
 	public void testEditReminderLateDate() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String oldServiceName = CSName;
@@ -869,8 +869,8 @@ public class ReminderServiceTests {
 	public void testEditReminderEarlyDate() {
 		assertEquals(0, reminderService.getAllReminders().size());
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String oldServiceName = CSName;
@@ -896,8 +896,8 @@ public class ReminderServiceTests {
 	public void testEditReminderTodayEarlyTime() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String oldServiceName = CSName;
@@ -923,8 +923,8 @@ public class ReminderServiceTests {
 	public void testEditReminderSameDateLateTime() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String oldServiceName = CSName;
@@ -950,8 +950,8 @@ public class ReminderServiceTests {
 	public void testEditReminderNullCustomer() {
 		assertEquals(0, reminderService.getAllReminders().size());
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = null;
 		String oldServiceName = CSName;
@@ -977,8 +977,8 @@ public class ReminderServiceTests {
 	public void testEditReminderEmptyCustomer() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = "";
 		String oldServiceName = CSName;
@@ -1004,8 +1004,8 @@ public class ReminderServiceTests {
 	public void testEditReminderSpacesCustomer() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = "       ";
 		String oldServiceName = CSName;
@@ -1031,8 +1031,8 @@ public class ReminderServiceTests {
 	public void testEditReminderNotExistCustomer() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = "theCustomer";
 		String oldServiceName = CSName;
@@ -1061,8 +1061,8 @@ public class ReminderServiceTests {
 	public void testEditReminderNullOldService() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String oldServiceName = null;
@@ -1088,8 +1088,8 @@ public class ReminderServiceTests {
 	public void testEditReminderEmptyOldService() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String oldServiceName = "";
@@ -1115,8 +1115,8 @@ public class ReminderServiceTests {
 	public void testEditReminderSpacesOldService() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String oldServiceName = "    ";
@@ -1143,8 +1143,8 @@ public class ReminderServiceTests {
 	public void testEditReminderNotExistOldService() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String oldServiceName = "maintenance";
@@ -1170,8 +1170,8 @@ public class ReminderServiceTests {
 	public void testEditReminderEmptyNullNewService() {
 		assertEquals(0, reminderService.getAllReminders().size());
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String oldServiceName = CSName;
@@ -1197,8 +1197,8 @@ public class ReminderServiceTests {
 	public void testEditReminderEmptyNewService() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String oldServiceName = CSName;
@@ -1225,8 +1225,8 @@ public class ReminderServiceTests {
 	public void testEditReminderSpacesNewService() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String oldServiceName = CSName;
@@ -1252,8 +1252,8 @@ public class ReminderServiceTests {
 	public void testEditReminderNotExistNewService() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String oldServiceName = CSName;
@@ -1280,8 +1280,8 @@ public class ReminderServiceTests {
 	public void testEditReminderNullDate() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String oldServiceName = CSName;
@@ -1307,8 +1307,8 @@ public class ReminderServiceTests {
 	public void testEditReminderNullTime() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String oldServiceName = CSName;
@@ -1334,8 +1334,8 @@ public class ReminderServiceTests {
 	public void testEditReminderNullDescription() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String oldServiceName = CSName;
@@ -1361,8 +1361,8 @@ public class ReminderServiceTests {
 	public void testEditReminderLongDescription() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String oldServiceName = CSName;
@@ -1388,8 +1388,8 @@ public class ReminderServiceTests {
 	public void testEditReminderEmptyDescription() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String oldServiceName = CSName;
@@ -1415,8 +1415,8 @@ public class ReminderServiceTests {
 	public void testEditReminderSpacesDescription() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 		String customerName = CUSTOMER_USERNAME;
 		String oldServiceName = CSName;
@@ -1443,8 +1443,8 @@ public class ReminderServiceTests {
 	public void testDeleteReminder() {//STILL
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 	    String customerName = CUSTOMER_USERNAME;
 		String serviceName = CSName;
@@ -1463,8 +1463,8 @@ public class ReminderServiceTests {
 	public void testDeleteReminderNullCustomerName() {//STILL
 		assertEquals(0, reminderService.getAllReminders().size());
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 	    String customerName = null;
 		String serviceName = CSName;
@@ -1485,8 +1485,8 @@ public class ReminderServiceTests {
 	public void testDeleteReminderEmptyCustomerName() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 	    String customerName = "";
 		String serviceName = CSName;
@@ -1507,8 +1507,8 @@ public class ReminderServiceTests {
 	public void testDeleteReminderSpacesCustomerName() {
 		assertEquals(0, reminderService.getAllReminders().size());
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 	    String customerName = "          ";
 		String serviceName = CSName;
@@ -1529,8 +1529,8 @@ public class ReminderServiceTests {
 	public void testDeleteReminderCustomerNotExist() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 	    String customerName = "Messi";
 		String serviceName = CSName;
@@ -1552,8 +1552,8 @@ public class ReminderServiceTests {
 	public void testDeleteReminderNullServiceName() {
 		assertEquals(0, reminderService.getAllReminders().size());
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 	    String customerName = CUSTOMER_USERNAME;
 		String serviceName = null;
@@ -1574,8 +1574,8 @@ public class ReminderServiceTests {
 	public void testDeleteReminderEmptyServiceName() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 	    String customerName = CUSTOMER_USERNAME;
 		String serviceName = "";
@@ -1596,8 +1596,8 @@ public class ReminderServiceTests {
 	public void testDeleteReminderSpacesServiceName() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 	    String customerName = CUSTOMER_USERNAME;
 		String serviceName = "      ";
@@ -1618,8 +1618,8 @@ public class ReminderServiceTests {
 	public void testDeleteReminderServiceNotExist() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 	    String customerName = CUSTOMER_USERNAME;
 		String serviceName = "Change door";
@@ -1640,8 +1640,8 @@ public class ReminderServiceTests {
 	public void testDeleteReminderNotExist() {
 		assertEquals(0, reminderService.getAllReminders().size()); 
 		
-		SystemTime.setSysTime(Time.valueOf("08:00:00"));
-	    SystemTime.setSysDate(Date.valueOf("2021-05-31"));
+		SystemTime.setSystemTime(Time.valueOf("08:00:00"));
+	    SystemTime.setSystemDate(Date.valueOf("2021-05-31"));
 		
 	    String customerName = CUSTOMER_USERNAME;
 		String serviceName = CSName2;

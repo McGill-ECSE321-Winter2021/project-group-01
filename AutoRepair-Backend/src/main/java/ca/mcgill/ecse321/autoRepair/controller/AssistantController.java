@@ -1,3 +1,4 @@
+  
 package ca.mcgill.ecse321.autoRepair.controller;
 
 import java.util.List;
@@ -6,29 +7,25 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import ca.mcgill.ecse321.autoRepair.dto.AssistantDTO;
 import ca.mcgill.ecse321.autoRepair.model.Assistant;
-import ca.mcgill.ecse321.autoRepair.model.Owner;
 import ca.mcgill.ecse321.autoRepair.service.AssistantService;
 
 
 @CrossOrigin(origins = "*")
 @RestController
 public class AssistantController {
+
 	@Autowired
 	private AssistantService assisService;
 
 	/**
 	 * @author Marc Saber
-	 * returns a list of all the assistants 
+	 * Returns a list of all the assistants
 	 * @return list of all assistants
+	 * @throws IllegalArgumentException
 	 */
 	@GetMapping(value = { "/view_assistants"})
 	public List<AssistantDTO> getAllAssitants() {
@@ -37,9 +34,10 @@ public class AssistantController {
 
 	/**
 	 * @author Marc Saber
-	 * Gets an assistant DTO given a name
+	 * Gets an assistant DTO given a username
 	 * @param username
 	 * @return assistantDTO
+	 * @throws IllegalArgumentException
 	 */
 	@GetMapping(value = {"/view_assistant/{username}"})
 	public AssistantDTO viewAssistant(@PathVariable("username") String username) {
@@ -48,10 +46,12 @@ public class AssistantController {
 
 	/**
 	 * @author Marc Saber
-	 * Creates an Assistant
+	 * This method creates an Assistant
 	 * @param username
 	 * @param password
+	 * @param authentificationCode
 	 * @return assistantDTO
+	 * @throws IllegalArgumentException
 	 */
 	@PostMapping(value = {"/create_assistant"})
 	public ResponseEntity<?> createAssitant
@@ -78,7 +78,7 @@ public class AssistantController {
 	 * @param newPassword
 	 * @return assistantDTO
 	 */
-	@PostMapping(value = { "/update_assistant/{oldUsername}" })
+	@PatchMapping(value = { "/update_assistant/{oldUsername}" })
 	public AssistantDTO updateAssistant(@PathVariable("oldUsername") String oldUsername,
 			@RequestParam("newPassword") String newPassword) {
 		Assistant assistant = assisService.updateAssistant(oldUsername,newPassword);
@@ -91,7 +91,7 @@ public class AssistantController {
 	 * @param username
 	 * @return true when assistant is successfully deleted
 	 */
-	@PostMapping(value = { "/delete_assistant/{username}" })
+	@DeleteMapping(value = { "/delete_assistant/{username}" })
 	public boolean deleteAssistant(@PathVariable("username") String username){
 		boolean assistant = assisService.deleteAssistant(username);
 		return assistant;

@@ -50,10 +50,10 @@ public class AppointmentService {
         if(serviceName == null || !containsCharacter(serviceName)) throw new IllegalArgumentException("The chosen service cannot be empty or null");
 
         LocalTime toCompare = LocalTime.parse("02:00:00");
-        if (startDate.toLocalDate().isBefore(SystemTime.getSysDate().toLocalDate())) {
+        if (startDate.toLocalDate().isBefore(SystemTime.getSystemDate().toLocalDate())) {
             throw new IllegalArgumentException("The date has already passed.");
-        } else if (startDate.toLocalDate().isEqual(SystemTime.getSysDate().toLocalDate())) {
-            if (startTime.toLocalTime().isBefore(SystemTime.getSysTime().toLocalTime())) {
+        } else if (startDate.toLocalDate().isEqual(SystemTime.getSystemDate().toLocalDate())) {
+            if (startTime.toLocalTime().isBefore(SystemTime.getSystemTime().toLocalTime())) {
                 throw new IllegalArgumentException("The time has already passed.");
             } 
 //            else if ((startTime.toLocalTime().minusHours(SystemTime.getSysTime().toLocalTime().getHour()).compareTo(toCompare)) < 0) {
@@ -117,17 +117,17 @@ public class AppointmentService {
 
 
         LocalTime toCompare = LocalTime.parse("02:00:00");
-        if(oldStartDate.toLocalDate().isEqual(SystemTime.getSysDate().toLocalDate())){
-            if((oldStartTime.toLocalTime().minusHours(SystemTime.getSysTime().toLocalTime().getHour()).compareTo(toCompare))<0){
+        if(oldStartDate.toLocalDate().isEqual(SystemTime.getSystemDate().toLocalDate())){
+            if((oldStartTime.toLocalTime().minusHours(SystemTime.getSystemTime().toLocalTime().getHour()).compareTo(toCompare))<0){
                 throw new IllegalArgumentException("Updating an appointment on the same day has to be at least 2 hours before the appointment.");
             }
         }
-        if (newStartDate.toLocalDate().isBefore(SystemTime.getSysDate().toLocalDate())) {
+        if (newStartDate.toLocalDate().isBefore(SystemTime.getSystemDate().toLocalDate())) {
             throw new IllegalArgumentException("The date has already passed.");
-        } else if (newStartDate.toLocalDate().isEqual(SystemTime.getSysDate().toLocalDate())) {
-            if (newStartTime.toLocalTime().isBefore(SystemTime.getSysTime().toLocalTime())) {
+        } else if (newStartDate.toLocalDate().isEqual(SystemTime.getSystemDate().toLocalDate())) {
+            if (newStartTime.toLocalTime().isBefore(SystemTime.getSystemTime().toLocalTime())) {
                 throw new IllegalArgumentException("The time has already passed.");
-            } else if ((newStartTime.toLocalTime().minusHours(SystemTime.getSysTime().toLocalTime().getHour()).compareTo(toCompare)) < 0) {
+            } else if ((newStartTime.toLocalTime().minusHours(SystemTime.getSystemTime().toLocalTime().getHour()).compareTo(toCompare)) < 0) {
                 throw new IllegalArgumentException("Updating an appointment on the same day has to be at least 2 hours before the appointment.");
             }
         }
@@ -196,8 +196,8 @@ public class AppointmentService {
         if(startDate==null) throw new IllegalArgumentException("The start date cannot be null");
         if(startTime==null) throw new IllegalArgumentException("The start time cannot be null");
         LocalTime localTime = LocalTime.parse("02:00:00");
-        if(startDate.toLocalDate().equals(SystemTime.getSysDate().toLocalDate())){
-            if((startTime.toLocalTime().minusHours(SystemTime.getSysTime().toLocalTime().getHour())).compareTo(localTime)<0){
+        if(startDate.toLocalDate().equals(SystemTime.getSystemDate().toLocalDate())){
+            if((startTime.toLocalTime().minusHours(SystemTime.getSystemTime().toLocalTime().getHour())).compareTo(localTime)<0){
                 throw new IllegalArgumentException("An appointment can be cancelled on the same day of the appointment with a 2 hours notice.");
             }
         }

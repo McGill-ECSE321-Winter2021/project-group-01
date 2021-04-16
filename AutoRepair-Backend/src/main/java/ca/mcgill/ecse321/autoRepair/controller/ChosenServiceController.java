@@ -22,8 +22,6 @@ public class ChosenServiceController {
 	private ChosenServiceService chosenService;
 	@Autowired
 	private ReviewService reviewService;
-
-	
 	
 	/**
 	 * @author Robert Aprahamian
@@ -118,15 +116,15 @@ public class ChosenServiceController {
 
 	private ChosenServiceDTO convertToDTO(ChosenService service) {
 		if(service==null) throw new IllegalArgumentException("Service not found.");
-		 Double avRating = null;
+		 Double averageRating = null;
 		try {
-			avRating = reviewService.getAverageServiceReview(service.getName());
+			averageRating = reviewService.getAverageServiceReview(service.getName());
 		}
 		catch (Exception e){
-			avRating = -1.0;
+			averageRating = -1.0;
 		}
 	
-		return new ChosenServiceDTO(service.getName(), service.getDuration(), service.getPayment(), avRating);
+		return new ChosenServiceDTO(service.getName(), service.getDuration(), service.getPayment(), averageRating);
 	}
 
 }

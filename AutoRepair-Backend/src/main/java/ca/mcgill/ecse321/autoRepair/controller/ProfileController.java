@@ -51,8 +51,8 @@ public class ProfileController {
 		Customer customer = null;
 		try {
 			customer=profileService.updateProfile(username, firstName, lastName, address, zipCode, phoneNumber, email);
-		}catch(IllegalArgumentException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}catch(IllegalArgumentException exception) {
+			return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 		return new ResponseEntity<>(convertToDTO(customer), HttpStatus.OK);
@@ -77,8 +77,8 @@ public class ProfileController {
 	@GetMapping(value = {"/profiles" , "/profiles/"})
 	public List<ProfileDTO> getAllProfiles(){
 		List<ProfileDTO> profiles = new ArrayList<ProfileDTO>();
-		for(Profile p : profileService.getAllProfiles()) {
-			profiles.add(convertToDTO(p));
+		for(Profile profile : profileService.getAllProfiles()) {
+			profiles.add(convertToDTO(profile));
 		}
 		return profiles;
 	}

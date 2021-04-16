@@ -368,7 +368,7 @@ public class MainActivity extends AppCompatActivity{
         error = "";
         final TextView reviews = (TextView) findViewById(R.id.reviews); //to be done
 
-        HttpUtils.get("/view_all_reviews", new RequestParams(), new JsonHttpResponseHandler() {
+        HttpUtils.get("view_all_reviews", new RequestParams(), new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONArray response) {
 
@@ -379,6 +379,7 @@ public class MainActivity extends AppCompatActivity{
                         reviewsString += "Review " +
                                 review.getString("description") + ", "
                                 + ", rating: "
+                                + review.getString("serviceRating") + ", "
                                 + "\n";
                     }
                     reviews.setText(reviewsString);

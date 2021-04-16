@@ -8,49 +8,50 @@
 
     <TextView
         android:id="@+id/reviews"
-        android:layout_width="333dp"
-        android:layout_height="48dp"
+        android:layout_width="297dp"
+        android:layout_height="103dp"
         android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.099" />
-
-    <Button
-        android:id="@+id/view_reviews_button"
-        android:layout_width="335dp"
-        android:layout_height="38dp"
-        android:onClick="getReviews"
-        android:text="View Reviews"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.22" />
+        app:layout_constraintVertical_bias="0.417" />
 
     <TextView
         android:id="@+id/appointments"
-        android:layout_width="335dp"
-        android:layout_height="50dp"
+        android:layout_width="298dp"
+        android:layout_height="100dp"
         android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.332" />
+        app:layout_constraintVertical_bias="0.129" />
 
-    <Button
-        android:id="@+id/view_appointments_button"
-        android:layout_width="335dp"
-        android:layout_height="38dp"
-        android:onClick="getAppointments"
-        android:text="View appointments"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="204dp"
+        android:layout_height="46dp"
+        android:text="Reviews"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.089"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.291" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="359dp"
+        android:layout_height="47dp"
+        android:text="Upcoming Appointments"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.427" />
+        app:layout_constraintVertical_bias="0.023" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

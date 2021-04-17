@@ -156,6 +156,16 @@ public class MainActivity extends AppCompatActivity{
 
     /**
      * @author Marc Saber
+     * Takes you to the login page
+     * @param view :
+     */
+    public void goToLogin(View view){
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                new Login()).commit();
+    }
+
+    /**
+     * @author Marc Saber
      * Signs up the customer
      * @param view :
      */

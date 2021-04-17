@@ -12,21 +12,21 @@
     <item
         android:id="@+id/nav_appointment"
         android:icon="@drawable/ic_baseline_calendar_today_24"
-        android:title="Home" />
+        android:title="Appointment" />
 
     <item
         android:id="@+id/nav_account"
         android:icon="@drawable/ic_baseline_account_circle_24"
-        android:title="Home" />
+        android:title="Account" />
 
     <item
         android:id="@+id/nav_review"
         android:icon="@drawable/ic_baseline_rate_review_24"
-        android:title="Home" />
+        android:title="Review" />
 
     <item
         android:id="@+id/nav_car"
         android:icon="@drawable/ic_baseline_directions_car_24"
-        android:title="Home" />
+        android:title="Car" />
 
 </menu>

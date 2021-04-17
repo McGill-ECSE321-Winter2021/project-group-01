@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity{
                         selectedFragment = new Car();
                         break;
                 }
+                assert selectedFragment != null;
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         selectedFragment).commit();
                 return true;
@@ -337,6 +338,17 @@ public class MainActivity extends AppCompatActivity{
                     e.printStackTrace();
                 }
             }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, String errorMessage, Throwable throwable) {
+                try {
+                    new SweetAlertDialog(MainActivity.this)
+                            .setTitleText(errorMessage)
+                            .show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         });
     }
 
@@ -480,6 +492,8 @@ public class MainActivity extends AppCompatActivity{
                         JSONObject car = customerCars.getJSONObject(i);
                         carsString.append(car.getString("model")).append(", ").append(car.getString("transmission")).append(", ").append(car.getString("plateNumber")).append("\n");
                     }
+                    model.setText("");
+                    plateNumber.setText("");
                     cars.setText(carsString.toString());
 
                 } catch (JSONException e) {
@@ -494,6 +508,17 @@ public class MainActivity extends AppCompatActivity{
                             .setTitleText(errorResponse.get("message").toString())
                             .show();
                 } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, String errorMessage, Throwable throwable) {
+                try {
+                    new SweetAlertDialog(MainActivity.this)
+                            .setTitleText(errorMessage)
+                            .show();
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -538,6 +563,17 @@ public class MainActivity extends AppCompatActivity{
                             .setTitleText(errorResponse.get("message").toString())
                             .show();
                 } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, String errorMessage, Throwable throwable) {
+                try {
+                    new SweetAlertDialog(MainActivity.this)
+                            .setTitleText(errorMessage)
+                            .show();
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -649,6 +685,7 @@ public class MainActivity extends AppCompatActivity{
                     new SweetAlertDialog(MainActivity.this)
                             .setTitleText("Thank you for your feedback!")
                             .show();
+                    description.setText("");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -785,6 +822,7 @@ public class MainActivity extends AppCompatActivity{
                     new SweetAlertDialog(MainActivity.this)
                             .setTitleText("Thank you for your feedback!")
                             .show();
+                    description.setText("");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -863,8 +901,8 @@ public class MainActivity extends AppCompatActivity{
                 try {
                     if(errorMessage.equals("true"))
                         new SweetAlertDialog(MainActivity.this)
-                            .setTitleText("Review deleted successfully")
-                            .show();
+                                .setTitleText("Review deleted successfully")
+                                .show();
                     else{
                         new SweetAlertDialog(MainActivity.this)
                                 .setTitleText(errorMessage)
@@ -883,7 +921,7 @@ public class MainActivity extends AppCompatActivity{
     /**
      * @author Tamara Zard Aboujaoudeh
      * Makes an appointment
-     * @param view
+     * @param view :
      */
     public void makeAppointment(View view) {
         final Spinner service = findViewById(R.id.serviceBookAppointment);
@@ -914,12 +952,12 @@ public class MainActivity extends AppCompatActivity{
 
                 try {
                     new SweetAlertDialog(MainActivity.this)
-                            .setTitleText(response.get("message").toString())
+                            .setTitleText("Appointment booked!")
                             .show();
                     getAppointmentsOfCustomer(view);
 
-                } catch (JSONException e) {
-                   e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 
@@ -951,7 +989,7 @@ public class MainActivity extends AppCompatActivity{
     /**
      * @author Tamara Zard Aboujaoudeh
      * This method is to update an appointment
-     * @param view
+     * @param view :
      */
     public void updateAppointment(View view) {
         final Spinner appointmentSpinner = findViewById(R.id.appointmentUpdateAppointment);
@@ -990,12 +1028,12 @@ public class MainActivity extends AppCompatActivity{
 
                 try {
                     new SweetAlertDialog(MainActivity.this)
-                            .setTitleText(response.get("message").toString())
+                            .setTitleText("Appointment updated!")
                             .show();
                     getAppointmentsOfCustomer(view);
 
 
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -1028,7 +1066,7 @@ public class MainActivity extends AppCompatActivity{
     /**
      * @author Tamara Zard Aboujaoudeh
      * This method is to cancel an appointment
-     * @param view
+     * @param view :
      */
     public void cancelAppointment(View view) {
         final Spinner appointmentSpinner = findViewById(R.id.appointmentCancelAppointment);
@@ -1048,12 +1086,12 @@ public class MainActivity extends AppCompatActivity{
 
                 try {
                     new SweetAlertDialog(MainActivity.this)
-                            .setTitleText(response.get("message").toString())
+                            .setTitleText("Appointment canceled!")
                             .show();
                     getAppointmentsOfCustomer(view);
 
 
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -1093,7 +1131,7 @@ public class MainActivity extends AppCompatActivity{
     /**
      * @author Tamara Zard Aboujaoudeh
      * This method is to get all the appointments of a specific customer for the spinners
-     * @param view
+     * @param view :
      */
     public void getAppointmentsOfCustomer(View view) {
         RequestParams requestParams = new RequestParams();
@@ -1106,11 +1144,11 @@ public class MainActivity extends AppCompatActivity{
                 try {
                     Spinner updateAppointmentSpinner = findViewById(R.id.appointmentUpdateAppointment);
                     Spinner cancelAppointmentSpinner = findViewById(R.id.appointmentCancelAppointment);
-                    String appointmentString = "";
+
                     String[] appointmentsArray = new String[response.length()];
                     for (int i = 0; i < response.length(); i++) {
                         JSONObject appointment = response.getJSONObject(i);
-                        appointmentString += appointment.getJSONObject("service").getString("name") + ";"
+                        String appointmentString = appointment.getJSONObject("service").getString("name") + ";"
                                 + appointment.getJSONObject("timeSlot").getString("startDate") + ";"
                                 + appointment.getJSONObject("timeSlot").getString("startTime");
                         appointmentsArray[i] = appointmentString;
@@ -1184,7 +1222,7 @@ public class MainActivity extends AppCompatActivity{
     /**
      * @author Tamara Zard Aboujaoudeh
      * This method is to get all the available services
-     * @param view
+     * @param view :
      */
     public void getServices(View view) {
 
@@ -1261,7 +1299,7 @@ public class MainActivity extends AppCompatActivity{
                             .show();
 
                 } catch (JSONException e) {
-                  e.printStackTrace();
+                    e.printStackTrace();
                 }
 
             }
@@ -1272,7 +1310,7 @@ public class MainActivity extends AppCompatActivity{
     /**
      * @author Fadi Tawfik Beshay
      * This method gets all the reviews in the system
-     * @param view
+     * @param view :
      */
     public void getReviews(View view) {
         final TextView reviews = findViewById(R.id.reviews);
@@ -1282,16 +1320,15 @@ public class MainActivity extends AppCompatActivity{
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONArray response) {
 
                 try {
-                    String reviewsString = "";
+                    StringBuilder reviewsString = new StringBuilder();
                     for (int i = 0; i < response.length(); i++) {
                         JSONObject review = response.getJSONObject(i);
-                        reviewsString += review.getJSONObject("service").getString("name") + ": "
-                                + review.getString("description") + ", "
-                                + review.getString("serviceRating")
-                                + "/5"
-                                + "\n";
+                        reviewsString.append(review.getJSONObject("service").getString("name"))
+                                .append(": ").append(review.getString("description"))
+                                .append(", ").append(review.getString("serviceRating"))
+                                .append("/5").append("\n\n");
                     }
-                    reviews.setText(reviewsString);
+                    reviews.setText(reviewsString.toString());
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1315,30 +1352,32 @@ public class MainActivity extends AppCompatActivity{
     /**
      * @author Fadi Tawfik Beshay
      * This method gets all the upcoming appointments for a customer for the home page
-     * @param view
+     * @param view :
      */
     public void getAppointments(View view){
         final TextView appointments = findViewById(R.id.appointments);
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("username",customerUsername);
 
-        HttpUtils.get("upcoming_appointments", new RequestParams(), new JsonHttpResponseHandler(){
+        HttpUtils.get("upcoming_appointmentsOf/",requestParams, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONArray response) {
 
                 try {
-                    String appointmentsString = "";
+                    StringBuilder appointmentsString = new StringBuilder();
                     for(int i=0; i<response.length(); i++){
                         JSONObject appointment = response.getJSONObject(i);
                         JSONObject timeSlot = appointment.getJSONObject("timeSlot");
                         JSONObject service = appointment.getJSONObject("service");
-                        appointmentsString+=service.getString("name")+", "
-                                +timeSlot.getString("startDate")+", "
-                                +timeSlot.getString("startTime")+"-"
-                                +timeSlot.getString("endTime")+"\n";
+                        appointmentsString.append(service.getString("name")).append(", ")
+                                .append(timeSlot.getString("startDate")).append(", ")
+                                .append(timeSlot.getString("startTime")).append("-")
+                                .append(timeSlot.getString("endTime")).append("\n\n");
                     }
-                    appointments.setText(appointmentsString);
+                    appointments.setText(appointmentsString.toString());
 
                 } catch (JSONException e) {
-                   e.printStackTrace();
+                    e.printStackTrace();
                 }
             }
 
@@ -1360,7 +1399,7 @@ public class MainActivity extends AppCompatActivity{
     /**
      * @author Robert Aprahamia
      * This method gets all the reminders in the system
-     * @param view
+     * @param view :
      */
     public void getReminders(View view){
         final TextView reminders = findViewById(R.id.allReminders);
@@ -1372,14 +1411,13 @@ public class MainActivity extends AppCompatActivity{
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONArray response) {
 
                 try {
-                    String remindersString = "";
+                    StringBuilder remindersString = new StringBuilder();
                     for(int i=0; i<response.length(); i++){
                         JSONObject reminder = response.getJSONObject(i);
-                        remindersString+="Service: "+
-                                reminder.getJSONObject("chosenService").getString("name")+", "+
-                                reminder.getString("description")+ "\n";
+                        remindersString.append("Service: ").append(reminder.getJSONObject("chosenService").getString("name"))
+                                .append(", ").append(reminder.getString("description")).append("\n\n");
                     }
-                    reminders.setText(remindersString);
+                    reminders.setText(remindersString.toString());
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1404,7 +1442,7 @@ public class MainActivity extends AppCompatActivity{
     /**
      * @author Robert Aprahamian
      * This method gets all the available services to display on the home
-     * @param view
+     * @param view :
      */
     public void getServicesHome(View view){
         final TextView services =  findViewById(R.id.allServices);
@@ -1414,16 +1452,16 @@ public class MainActivity extends AppCompatActivity{
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONArray response) {
 
                 try {
-                    String servicesString = "";
+                    StringBuilder servicesString = new StringBuilder();
                     for(int i=0; i<response.length(); i++){
                         JSONObject service = response.getJSONObject(i);
-                        servicesString+="Service "+
-                                service.getString("name")+", "
-                                +"lasts "+service.getString("duration")+" minutes"+", costs "
-                                +service.getString("price")+"$"+", rating: "
-                                +service.getString("rating")+"\n";
+                        servicesString.append("Service ").append(service.getString("name")).append(", ")
+                                .append("lasts ").append(service.getString("duration"))
+                                .append(" minutes").append(", costs ")
+                                .append(service.getString("price")).append("$")
+                                .append(", rating: ").append(service.getString("rating")).append("\n\n");
                     }
-                    services.setText(servicesString);
+                    services.setText(servicesString.toString());
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1437,7 +1475,7 @@ public class MainActivity extends AppCompatActivity{
                             .setTitleText(errorResponse.get("message").toString())
                             .show();
                 } catch (JSONException e) {
-                   e.printStackTrace();
+                    e.printStackTrace();
                 }
             }
 

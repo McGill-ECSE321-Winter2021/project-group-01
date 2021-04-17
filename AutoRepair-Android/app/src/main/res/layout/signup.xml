@@ -104,12 +104,12 @@
 
     <EditText
         android:id="@+id/password"
+        android:inputType="textPassword"
         android:layout_width="164dp"
         android:layout_height="49dp"
         android:ems="10"
         android:fontFamily="@font/comfortaa_bold"
         android:hint="Password"
-        android:inputType="textPersonName"
         android:textColor="#F7292626"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

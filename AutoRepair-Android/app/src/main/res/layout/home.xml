@@ -28,7 +28,6 @@
                 android:fontFamily="@font/comfortaa_bold"
                 android:onClick="logout"
                 android:text="Logout"
-                android:layout_gravity="top||right"
                 android:textColor="#FF9800" />
 
             <TextView
@@ -48,8 +47,8 @@
 
             <TextView
                 android:id="@+id/reviews"
-                android:layout_width="339dp"
-                android:layout_height="103dp"
+                android:layout_width="337dp"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/comfortaa_bold"
                 android:text=""
                 android:textColor="#F7292626"
@@ -94,7 +93,7 @@
             <TextView
                 android:id="@+id/appointments"
                 android:layout_width="337dp"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/comfortaa_bold"
                 android:text=""
                 android:textColor="#F7292626"
@@ -135,8 +134,8 @@
 
             <TextView
                 android:id="@+id/allServices"
-                android:layout_width="342dp"
-                android:layout_height="109dp"
+                android:layout_width="337dp"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/comfortaa_bold"
                 android:text=""
                 android:textColor="#F7292626"
@@ -179,8 +178,8 @@
 
             <TextView
                 android:id="@+id/allReminders"
-                android:layout_width="354dp"
-                android:layout_height="128dp"
+                android:layout_width="337dp"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/comfortaa_bold"
                 android:text=""
                 android:textColor="#F7292626"

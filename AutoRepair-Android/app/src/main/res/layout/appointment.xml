@@ -47,7 +47,7 @@
             <DatePicker
                 android:id="@+id/dateBookAppointment"
                 android:layout_width="wrap_content"
-                android:layout_height="200dp"
+                android:layout_height="320dp"
                 android:datePickerMode="spinner" />
 
             <TimePicker
@@ -73,13 +73,14 @@
                 android:textColor="#FF0000"
                 android:visibility="gone" />
 
-            <!--            <TextView-->
-            <!--                android:id="@+id/updateAppointmentText"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginTop="50dp"-->
-            <!--                android:text="Update an Appointment"-->
-            <!--                android:textSize="30sp" />-->
+            <TextView
+                android:id="@+id/updateAppointmentText"
+                android:layout_width="308dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:text="Update Appointment"
+                android:textSize="30sp" />
+
 
             <Spinner
                 android:id="@+id/appointmentUpdateAppointment"

@@ -19,14 +19,21 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
             <TextView
                 android:id="@+id/bookAppointmentText"
-                android:layout_width="308dp"
+                android:layout_width="371dp"
                 android:layout_height="match_parent"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/comfortaa_bold"
                 android:text="Book an Appointment"
+                android:textColor="#FF9800"
                 android:textSize="30sp" />
+
+            <DatePicker
+                android:id="@+id/dateBookAppointment"
+                android:layout_width="wrap_content"
+                android:layout_height="320dp"
+                android:datePickerMode="spinner" />
 
             <Spinner
                 android:id="@+id/serviceBookAppointment"
@@ -41,14 +48,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/comfortaa_bold"
                 android:text="Select a Date and a Time"
+                android:textColor="#FF9800"
                 android:textSize="25sp" />
-
-            <DatePicker
-                android:id="@+id/dateBookAppointment"
-                android:layout_width="wrap_content"
-                android:layout_height="320dp"
-                android:datePickerMode="spinner" />
 
             <TimePicker
                 android:id="@+id/timeBookAppointment"
@@ -62,23 +65,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="100dp"
                 android:layout_marginRight="100dp"
+                android:backgroundTint="#F7292626"
                 android:onClick="makeAppointment"
-                android:text="Book" />
-
-            <TextView
-                android:id="@+id/error"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="#FF0000"
-                android:visibility="gone" />
+                android:text="Book"
+                android:textColor="#FF9800" />
 
             <TextView
                 android:id="@+id/updateAppointmentText"
-                android:layout_width="308dp"
+                android:layout_width="371dp"
                 android:layout_height="match_parent"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/comfortaa_bold"
                 android:text="Update Appointment"
+                android:textColor="#FF9800"
                 android:textSize="30sp" />
 
 
@@ -103,13 +102,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Select a new Date and a new Time"
+                android:fontFamily="@font/comfortaa_bold"
+                android:text="Select a New Date and Time"
+                android:textColor="#FF9800"
                 android:textSize="25sp" />
 
             <DatePicker
                 android:id="@+id/newDateUpdateAppointment"
                 android:layout_width="wrap_content"
-                android:layout_height="200dp"
+                android:layout_height="320dp"
                 android:datePickerMode="spinner" />
 
             <TimePicker
@@ -124,15 +125,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="100dp"
                 android:layout_marginRight="100dp"
+                android:fontFamily="@font/comfortaa_bold"
                 android:onClick="updateAppointment"
-                android:text="Update" />
+                android:text="Update"
+                android:textColor="#FF9800" />
 
             <TextView
                 android:id="@+id/cancelAppointmentText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
+                android:fontFamily="@font/comfortaa_bold"
                 android:text="Cancel an Appointment"
+                android:textColor="#FF9800"
                 android:textSize="30sp" />
 
             <Spinner
@@ -149,8 +154,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="100dp"
                 android:layout_marginRight="100dp"
+                android:fontFamily="@font/comfortaa_bold"
                 android:onClick="cancelAppointment"
-                android:text="Cancel" />
+                android:text="Cancel"
+                android:textColor="#FF9800" />
 
 
         </LinearLayout>

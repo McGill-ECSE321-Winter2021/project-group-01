@@ -59,7 +59,6 @@ public class ProfileService {
 			throw new IllegalArgumentException("Invalid email.");
 		
 		if(profileRepository.findByEmail(email)!=null) {
-			profileRepository.delete(profileRepository.findByEmail(email));
 			throw new IllegalArgumentException("Customer with email entered already exists.");
 		}
 		

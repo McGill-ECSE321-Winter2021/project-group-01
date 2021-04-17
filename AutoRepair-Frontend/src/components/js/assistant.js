@@ -22,7 +22,6 @@ var frontendConfigurer = function () {
 };
 
 var backendUrl = backendConfigurer();
-//var frontendUrl = frontendConfigurer();
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
 
 var AXIOS = axios.create({
@@ -36,16 +35,16 @@ export default {
     name: 'Owner',
     data() {
         return {
-            
+
             services: [],
             reviews: []
-            
+
         }
     },
 
 /**
    * @author Marc Saber
-   * @description displays all the services on the assistant page 
+   * @description displays all the services on the assistant page
    */
     created: function () {
         AXIOS.get('/view_all_services')
@@ -65,7 +64,7 @@ export default {
 				this.errorReview = e
 			})
 
-            
+
     }
 
 }

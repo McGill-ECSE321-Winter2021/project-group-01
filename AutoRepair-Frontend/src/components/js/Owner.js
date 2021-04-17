@@ -22,7 +22,6 @@ var frontendConfigurer = function () {
 };
 
 var backendUrl = backendConfigurer();
-//var frontendUrl = frontendConfigurer();
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
 
 var AXIOS = axios.create({
@@ -124,10 +123,10 @@ export default {
     methods: {
         /**
          * @author Fadi Tawfik Beshay
-         * @param {String} name 
-         * @param {String} email 
-         * @param {String} address 
-         * @param {String} phoneNumber 
+         * @param {String} name
+         * @param {String} email
+         * @param {String} address
+         * @param {String} phoneNumber
          * @description Registers the business info of the Autorepair shop given the above parameters
          */
         registerBusiness(name, email, address, phoneNumber) {
@@ -137,7 +136,7 @@ export default {
                     this.email = ''
                     this.address = ''
                     this.phoneNumber = ''
-                    
+
                     swal("Success", "Business " + name + " created Successfully", "success")
                     .then(okay => {
                         if(okay){
@@ -153,13 +152,13 @@ export default {
                                 this.email = ''
                                 this.address = ''
                                 this.phoneNumber = ''
-                                
+
                                 swal("Success", "Business Info Successfully Updated", "success")
                                 .then(okay => {
                                     if(okay){
                                         location.reload();
                                     }
-                                });    
+                                });
                             })
                             .catch(error => {
                                 swal("ERROR", e.response.data, "error");
@@ -173,9 +172,9 @@ export default {
         },
         /**
          * @author Robert Aprahamian
-         * @param {String} serviceName 
-         * @param {String} duration 
-         * @param {String} price 
+         * @param {String} serviceName
+         * @param {String} duration
+         * @param {String} price
          * @description Adds a service to the system given the above paramters
          */
         addservice(serviceName, duration, price) {

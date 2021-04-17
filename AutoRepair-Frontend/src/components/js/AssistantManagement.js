@@ -1,6 +1,5 @@
 import swal from 'sweetalert';
 import axios from 'axios'
-//import { response } from 'express';
 import JQuery from 'jquery'
 let $ = JQuery
 var config = require('../../../config')
@@ -24,7 +23,6 @@ var frontendConfigurer = function () {
 };
 
 var backendUrl = backendConfigurer();
-//var frontendUrl = frontendConfigurer();
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
 
 var AXIOS = axios.create({
@@ -124,7 +122,7 @@ export default {
   methods: {
   /**
      * @author Fadi Beshay
-     * @param {String} dayOfWeek 
+     * @param {String} dayOfWeek
      * @param {String} startTime
      * @param {String} endTime
      * @description adds an operating hour for the system
@@ -160,7 +158,7 @@ export default {
 
   /**
      * @author Fadi Beshay
-     * @param {String} dayOfWeek2 
+     * @param {String} dayOfWeek2
      * @description delete an operating hour for the system on a given day of the week
      */
     , deleteOpHours: function (dayOfWeek2) {
@@ -188,7 +186,7 @@ export default {
 
       /**
      * @author Fadi Beshay
-     * @param {String} dayOfWeek1 
+     * @param {String} dayOfWeek1
      * @param {String} startTime1
      * @param {String} endTime1
      * @description editss an operating hour for the system
@@ -224,10 +222,10 @@ export default {
   /**
      * @author Robert Aprahamian
      * @param {String} username5
-     * @param {String} serviceName5 
-     * @param {String} datestring 
-     * @param {String} description 
-     * @param {String} timestring 
+     * @param {String} serviceName5
+     * @param {String} datestring
+     * @param {String} description
+     * @param {String} timestring
      * @description adding a reminder for a certain customer for a certain service
      */
     addreminder(username5, serviceName5, datestring, description, timestring) {
@@ -256,9 +254,9 @@ export default {
     /**
      * @author Robert Aprahamian
      * @param {String} oldServiceName
-     * @param {String} newServiceName 
-     * @param {String} username6 
-     * @param {String} datestring2 
+     * @param {String} newServiceName
+     * @param {String} username6
+     * @param {String} datestring2
      * @param {String} description2
      * @param {String} timestring2
      * @description updating a reminder for a certain customer for a certain service
@@ -289,7 +287,7 @@ export default {
     /**
      * @author Robert Aprahamian
      * @param {String} username4
-     * @param {String} serviceName4 
+     * @param {String} serviceName4
      * @description deleting a reminder for a certain customer for a certain service
      */
     deletereminder(username4, serviceName4) {

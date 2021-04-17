@@ -22,7 +22,6 @@ var frontendConfigurer = function () {
 };
 
 var backendUrl = backendConfigurer();
-//var frontendUrl = frontendConfigurer();
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
 
 var AXIOS = axios.create({
@@ -35,10 +34,10 @@ export default {
     name: 'Owner',
     data() {
         return {
-            
+
             services: [],
             reviews: []
-            
+
         }
     },
 

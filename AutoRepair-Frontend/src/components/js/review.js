@@ -23,7 +23,6 @@ var frontendConfigurer = function () {
 };
 
 var backendUrl = backendConfigurer();
-//var frontendUrl = frontendConfigurer();
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
 
 var AXIOS = axios.create({
@@ -95,11 +94,11 @@ export default {
 	methods: {
 		/**
 		 * @author Mohammad Saeid Nafar
-		 * @param {String} description 
-		 * @param {int} serviceRating 
-		 * @param {String} appointmentDate 
+		 * @param {String} description
+		 * @param {int} serviceRating
+		 * @param {String} appointmentDate
 		 * @param {String} appointmentTime
-		 * @description Creates a customer review of an appointment given the above paramters 
+		 * @description Creates a customer review of an appointment given the above paramters
 		 */
 		createReview: function (description, serviceRating, appointmentDate, appointmentTime) {
 
@@ -146,10 +145,10 @@ export default {
 		},
 		/**
 		 * @author Mohammad Saeid Nafar
-		 * @param {String} description 
-		 * @param {String} serviceRating 
-		 * @param {String} appointmentDate 
-		 * @param {String} appointmentTime 
+		 * @param {String} description
+		 * @param {String} serviceRating
+		 * @param {String} appointmentDate
+		 * @param {String} appointmentTime
 		 * @description Edits a customer review of an appointment given the above customers
 		 */
 		editReview: function (description, serviceRating, appointmentDate, appointmentTime) {
@@ -197,8 +196,8 @@ export default {
 		},
 		/**
 		 * @author Mohammad Saeid Nafar
-		 * @param {String} appointmentDate 
-		 * @param {String} appointmentTime 
+		 * @param {String} appointmentDate
+		 * @param {String} appointmentTime
 		 * @description Deletes a customer review of an appointment given the above parameters
 		 */
 		deleteReview: function (appointmentDate, appointmentTime) {

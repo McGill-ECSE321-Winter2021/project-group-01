@@ -22,7 +22,6 @@ var frontendConfigurer = function(){
 };
 var backendUrl = backendConfigurer();
 var frontendUrl = frontendConfigurer();
-//var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
 
 var AXIOS = axios.create({
   baseURL: backendUrl,
@@ -44,8 +43,8 @@ export default {
 	methods: {
 		/**
 		 * @author Eric Chehata
-		 * @param {String} username 
-		 * @param {String} password 
+		 * @param {String} username
+		 * @param {String} password
 		 * @description Logs in a user given a correct username and password
 		 */
 		login (username, password) {
@@ -53,13 +52,13 @@ export default {
 			.then(response => {
 				this.user = response.data
 				if (response.status===200) {
-					
+
 					this.type = this.user.userType
 					window.localStorage.setItem('username', this.user.username)
 					window.localStorage.setItem('type', this.type)
-					
+
 					if(this.type.localeCompare("customer")==0){
-						
+
 						window.location.href = "/#/customer"
 					}
 					else if(this.type.localeCompare("assistant")==0){
@@ -67,15 +66,15 @@ export default {
 					}
 					else {
 						window.location.href = "/#/owner"
-					} 
+					}
 
 					location.reload();
 				}
 			})
 			.catch(e => {
-				
+
 				swal("ERROR", e.response.data, "error");
-				
+
 			})
 		}
 	}
